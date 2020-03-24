@@ -1,0 +1,203 @@
+<?php
+    if ($_POST['function']=="addaccount") {
+        $body=[
+            'phone'=> $_POST['phone'],
+            'api_hash' => $_POST['api_hash'],
+            'api_id' => $_POST['api_id']
+        ];
+        $url='localhost:3000/telegram/addusertelegram';
+        $curl=curl_init($url);
+        curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($curl, CURLOPT_HTTPHEADER, [
+            'X-RapidAPI-Host: contextualwebsearch-websearch-v1.p.rapidapi.com',
+            'X-RapidAPI-Key: 7xxxxxxxxxxxxxxxxxxxxxxxxxxx'
+        ]);
+        curl_setopt($curl, CURLOPT_POST,1);
+        curl_setopt($curl, CURLOPT_POSTFIELDS, http_build_query($body));
+        $response = json_decode(curl_exec($curl), true);
+        $httpcode=curl_getinfo($curl,CURLINFO_HTTP_CODE);
+        curl_close($curl);
+        if ($httpcode==200) 
+            echo $response['id'];
+        else echo null;
+    }
+    if ($_POST['function']=="authcode") {
+        $body=[
+            'id'=> $_POST['id'],
+            'code' => $_POST['code'],
+        ];
+        $url='localhost:3000/telegram/authsendcode';
+        $curl=curl_init($url);
+        curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($curl, CURLOPT_HTTPHEADER, [
+            'X-RapidAPI-Host: contextualwebsearch-websearch-v1.p.rapidapi.com',
+            'X-RapidAPI-Key: 7xxxxxxxxxxxxxxxxxxxxxxxxxxx'
+        ]);
+        curl_setopt($curl, CURLOPT_POST,1);
+        curl_setopt($curl, CURLOPT_POSTFIELDS, http_build_query($body));
+        $response = curl_exec($curl);
+        $httpcode=curl_getinfo($curl,CURLINFO_HTTP_CODE);
+        curl_close($curl);
+        if ($httpcode==200) echo "success";
+        else echo null;
+    }
+    if ($_POST['function']=="addbot") {
+        $body=[
+            "token" => $_POST['token'],
+            "idbaocao" => $_POST['idbaocao'],
+            "greeting" => $_POST['greeting'],
+            "invitation" => $_POST['invitation'],
+            "connect" => $_POST['connect']
+        ];
+        $url="localhost:3000/telbot/addbot";
+        $curl=curl_init($url);
+        curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($curl, CURLOPT_HTTPHEADER, [
+            'X-RapidAPI-Host: contextualwebsearch-websearch-v1.p.rapidapi.com',
+            'X-RapidAPI-Key: 7xxxxxxxxxxxxxxxxxxxxxxxxxxx'
+        ]);
+        curl_setopt($curl, CURLOPT_POST,1);
+        curl_setopt($curl, CURLOPT_POSTFIELDS, http_build_query($body));
+        $response = curl_exec($curl);
+        $httpcode=curl_getinfo($curl,CURLINFO_HTTP_CODE);
+        curl_close($curl);
+        if ($httpcode==200) echo "success";
+        else if ($httpcode==202) echo "exist";
+        else echo null;
+    }
+    if ($_POST['function']=="updatebot") {
+        $body=[
+            "id" => $_POST['id'],
+            "idbaocao" => $_POST['idbaocao'],
+            "greeting" => $_POST['greeting'],
+            "invitation" => $_POST['invitation'],
+            "connect" => $_POST['connect']
+        ];
+        $url="localhost:3000/telbot/updatebot";
+        $curl=curl_init($url);
+        curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($curl, CURLOPT_HTTPHEADER, [
+            'X-RapidAPI-Host: contextualwebsearch-websearch-v1.p.rapidapi.com',
+            'X-RapidAPI-Key: 7xxxxxxxxxxxxxxxxxxxxxxxxxxx'
+        ]);
+        curl_setopt($curl, CURLOPT_POST,1);
+        curl_setopt($curl, CURLOPT_POSTFIELDS, http_build_query($body));
+        $response = curl_exec($curl);
+        $httpcode=curl_getinfo($curl,CURLINFO_HTTP_CODE);
+        curl_close($curl);
+        if ($httpcode==200) echo "success";
+        else echo null;
+    }
+    if ($_POST['function']=="sendMessage") {
+        $body=[
+            "id" => $_POST['id'],
+            "type" => $_POST['type'],
+            "chat_id" => $_POST['chat_id'],
+            "user_id" => $_POST['user_id'],
+            "access_hash" => $_POST['access_hash'],
+            "message"=> $_POST['message'],
+            "type_time"=> $_POST['type_time'],
+            "time_send_one"=> $_POST['time_send_one'],
+            "type_send_auto"=> $_POST['type_send_auto'],
+            "time_start"=> $_POST['time_start'],
+            "time_stop"=> $_POST['time_stop'],
+            "at"=> $_POST['at'],
+            "hours"=> $_POST['hours'],
+        ];
+        $url="localhost:3000/telegram/sendMessage";
+        $curl=curl_init($url);
+        curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($curl, CURLOPT_HTTPHEADER, [
+            'X-RapidAPI-Host: contextualwebsearch-websearch-v1.p.rapidapi.com',
+            'X-RapidAPI-Key: 7xxxxxxxxxxxxxxxxxxxxxxxxxxx'
+        ]);
+        curl_setopt($curl, CURLOPT_POST,1);
+        curl_setopt($curl, CURLOPT_POSTFIELDS, http_build_query($body));
+        $response = curl_exec($curl);
+        $httpcode=curl_getinfo($curl,CURLINFO_HTTP_CODE);
+        curl_close($curl);
+        if ($httpcode==200) echo "success";
+        else echo null;
+    }
+    if ($_POST['function']=="getlistgroup") {
+        $curl = curl_init();
+        curl_setopt_array($curl, array(
+          CURLOPT_URL => "localhost:3000/telegram/getlistgroupcontact?idgroup=".$_POST['idgroup'],
+          CURLOPT_RETURNTRANSFER => true,
+          CURLOPT_MAXREDIRS => 10,
+          CURLOPT_FOLLOWLOCATION => true,
+          CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+          CURLOPT_CUSTOMREQUEST => "GET",
+        ));
+        $response = curl_exec($curl);
+        curl_close($curl);
+        echo $response;
+    }
+    if ($_POST['function']=="joingroup") {
+        $body=[
+            "id" => $_POST['id'],
+            "chat_id" => $_POST["chat_id"],
+            "user_id" => $_POST["user_id"],
+            "access_hash" => $_POST["access_hash"]
+        ];
+        $url="localhost:3000/telegram/joingroup";
+        $curl=curl_init($url);
+        curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($curl, CURLOPT_HTTPHEADER, [
+            'X-RapidAPI-Host: contextualwebsearch-websearch-v1.p.rapidapi.com',
+            'X-RapidAPI-Key: 7xxxxxxxxxxxxxxxxxxxxxxxxxxx'
+        ]);
+        curl_setopt($curl, CURLOPT_POST,1);
+        curl_setopt($curl, CURLOPT_POSTFIELDS, http_build_query($body));
+        $response = curl_exec($curl);
+        $httpcode=curl_getinfo($curl,CURLINFO_HTTP_CODE);
+        curl_close($curl);
+        if ($httpcode==200) echo "success";
+        else echo null;
+    }
+    if ($_POST['function']=="pushgroupcontact") {
+        $body=[
+            "id" => $_POST['id'],
+            "group" => $_POST["group"],
+            "user_id" => $_POST['user_id'],
+            "first_name" => $_POST['first_name'],
+            "last_name"=> $_POST['last_name'],
+            "access_hash" => $_POST['access_hash'],
+            "phone"=> $_POST['phone']
+        ];
+        $url="localhost:3000/telegram/pushgroupcontact";
+        $curl=curl_init($url);
+        curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($curl, CURLOPT_HTTPHEADER, [
+            'X-RapidAPI-Host: contextualwebsearch-websearch-v1.p.rapidapi.com',
+            'X-RapidAPI-Key: 7xxxxxxxxxxxxxxxxxxxxxxxxxxx'
+        ]);
+        curl_setopt($curl, CURLOPT_POST,1);
+        curl_setopt($curl, CURLOPT_POSTFIELDS, http_build_query($body));
+        $response = json_decode(curl_exec($curl));
+        $httpcode=curl_getinfo($curl,CURLINFO_HTTP_CODE);
+        curl_close($curl);
+        if ($httpcode==200) echo '1';
+        else echo '0';
+    }
+    if ($_POST['function']=="addgroupcontact") {
+        $body=[
+            "id" => $_POST['id'],
+            "name" => $_POST["name"],
+        ];
+        $url="localhost:3000/telegram/addgroupcontact";
+        $curl=curl_init($url);
+        curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($curl, CURLOPT_HTTPHEADER, [
+            'X-RapidAPI-Host: contextualwebsearch-websearch-v1.p.rapidapi.com',
+            'X-RapidAPI-Key: 7xxxxxxxxxxxxxxxxxxxxxxxxxxx'
+        ]);
+        curl_setopt($curl, CURLOPT_POST,1);
+        curl_setopt($curl, CURLOPT_POSTFIELDS, http_build_query($body));
+        $response=curl_exec($curl);
+        $httpcode=curl_getinfo($curl,CURLINFO_HTTP_CODE);
+        curl_close($curl);
+        if ($httpcode==200) echo '1';
+        else echo null;
+    }
+?>

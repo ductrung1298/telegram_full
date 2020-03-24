@@ -1,0 +1,8 @@
+@import url('https://fonts.googleapis.com/css?family=K2D:400,700&display=swap');
+body {
+    font-family: 'K2D', sans-serif !important;
+}
+
+.display-block {
+    display: block!important;
+}
