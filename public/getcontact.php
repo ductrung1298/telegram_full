@@ -4,7 +4,7 @@
     $id = isset($_GET['id']) ? intval($_GET['id']) : 0;
     if ($id != 0)
     {
-    $url='http://192.168.1.13:3000/telegram/getcontact?id='.$id;
+    $url='http://192.168.1.13:3000/telegram/get_friend?id='.$id;
         $curl = curl_init($url);
         curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
         curl_setopt($curl, CURLOPT_HTTPHEADER, [
@@ -123,7 +123,7 @@
                                                             </thead>
                                                             <tbody>
                                                                 <?php
-                                                                $url2='http://192.168.1.13:3000/telegram/getlistgroupcontact?id='.$id;
+                                                                $url2='http://192.168.1.13:3000/telegram/get_contact?id='.$id;
                                                                 $curl2=curl_init($url2);
                                                                 curl_setopt($curl2, CURLOPT_RETURNTRANSFER, true);
                                                                 curl_setopt($curl2, CURLOPT_HTTPHEADER, [
@@ -243,7 +243,7 @@
                                                             name="groupcontact">
                                                             <option value=-1>-Không sử dụng-</option>
                                                             <?php
-                                                                $url2='http://192.168.1.13:3000/telegram/getlistgroupcontact?id='.$id;
+                                                                $url2='http://192.168.1.13:3000/telegram/get_contact?id='.$id;
                                                                 $curl2=curl_init($url2);
                                                                 curl_setopt($curl2, CURLOPT_RETURNTRANSFER, true);
                                                                 curl_setopt($curl2, CURLOPT_HTTPHEADER, [

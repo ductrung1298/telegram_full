@@ -76,7 +76,7 @@ else header('Location: badrequest.php');
                                 <?php
                                     if ($user_id !=0 && $access_hash!=0 )
                                     {
-                                        $user=curl_init('http://192.168.1.13:3000/telegram/getinfobyuserid?id='.$id.'&user_id='.$user_id.'&access_hash='.$access_hash);
+                                        $user=curl_init('http://192.168.1.13:3000/telegram/get_user_telegram?id='.$id.'&user_id='.$user_id.'&access_hash='.$access_hash);
                                         curl_setopt($user, CURLOPT_RETURNTRANSFER, true);
                                         curl_setopt($user, CURLOPT_HTTPHEADER, [
                                             'X-RapidAPI-Host: contextualwebsearch-websearch-v1.p.rapidapi.com',
@@ -89,7 +89,7 @@ else header('Location: badrequest.php');
                                             echo '<label><font color="#33ccff"><b><big>'.$info['first_name'].'</big></b></font></label>';
                                         }
                                     else if ($chat_id!=0 ) {
-                                        $urlgroup='http://192.168.1.13:3000/telegram/getusergroup?id='.$id.'&chat_id='.$chat_id;
+                                        $urlgroup='http://192.168.1.13:3000/telegram/get_user_in_group_chat?id='.$id.'&chat_id='.$chat_id;
                                         $curlgroup=curl_init($urlgroup);
                                         curl_setopt($curlgroup, CURLOPT_RETURNTRANSFER, true);
                                         curl_setopt($curlgroup, CURLOPT_HTTPHEADER, [
@@ -176,7 +176,7 @@ else header('Location: badrequest.php');
                                                         </td>
                                         </tr>
                                         <?php
-                                        $curl2=curl_init('http://192.168.1.13:3000/telegram/getuserid?id='.$id);
+                                        $curl2=curl_init('http://192.168.1.13:3000/telegram/get_profile_user_telegram?id='.$id);
                                         curl_setopt($curl2, CURLOPT_RETURNTRANSFER, true);
                                         curl_setopt($curl2, CURLOPT_HTTPHEADER, [
                                             'X-RapidAPI-Host: contextualwebsearch-websearch-v1.p.rapidapi.com',

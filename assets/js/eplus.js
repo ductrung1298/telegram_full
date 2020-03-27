@@ -318,17 +318,17 @@ $(document).ready(function () {
     $('.loichao').on('click touch', '.delete-loichao', function (event) {
         $(this).parent().remove();
     });
-    $('.loichao').on('click touch', '.add-loichao2', function (event) {
+    $('.loichao2').on('click touch', '.add-loichao2', function (event) {
         let rdom = `<div class="col-lg-12 kt-margin-t-20 row">
         <div class="col-lg-9 col-md-7 kt-margin-b-5">
             <div class="input-group">
                 <input type="text" class="form-control"
-                    name="loichao" placeholder="Chào mừng bạn đã đến với ...">
+                    name="loichao2" placeholder="Chào mừng bạn đã đến với ...">
             </div>
         </div>
         <div class="col-lg-2 col-md-1">
             <div class="input-group">
-                <label for="checkid" class="form-control"><input type="checkbox" id="checkid" name="checkid"> Đính kèm mã ID</label> 
+                <label for="checkid2" class="form-control"><input type="checkbox" id="checkid2" name="checkid2"> Đính kèm mã ID</label> 
             </div>
         </div>
         <div class="col-lg-1 col-md-1 add-loichao2 kt-margin-b-5">
@@ -346,6 +346,130 @@ $(document).ready(function () {
         $('.loichao2').append(rdom);
     });
     $('.loichao2').on('click touch', '.delete-loichao2', function (event) {
+        $(this).parent().remove();
+    });
+    $('.autosendmes').on('click touch', '.add-automsg', function (event) {
+        let rdom = `<div class="col-lg-12 kt-margin-t-20 row">
+        <div class="col-lg-6 col-md-7 kt-margin-b-5">
+            <div class="input-group">
+                <textarea rows="1" cols="10" class="form-control"
+                    name="message" placeholder="Tin nhắn"></textarea>
+            </div>
+        </div>
+        <div class="col-lg-1">
+            <input type="checkbox" class="form-control" name="attach">
+        </div>
+        <div class="col-lg-4 col-md-1">
+            <div class="input-group">
+            <div class="input-group-prepend">
+                <span class="input-group-text">Sau</span>
+            </div>
+            <input type="number" name="day" class="form-control col-lg-2">
+            <div class="input-group-prepend">
+                <span class="input-group-text">ngày subscribe. Lúc</span>
+            </div>
+            <input type="time" name="hours" class="form-control col-lg-4">
+            </div>
+        </div>
+        <div class="col-lg-1 col-md-1 add-automsg kt-margin-b-5">
+            <i class="far fa-plus-square"
+                style=" font-size: 3rem; color: #1dc9b7; cursor: pointer;"></i>
+        </div>
+        <div class="col-lg-1 col-md-1 delete-automsg kt-margin-b-5" style="display:none;">
+            <i class="far fa-minus-square"
+                style=" font-size: 3rem; color: #fd1361; cursor: pointer;"></i>
+        </div>
+        <div class="col-lg-7 mt-2 row col-md-2 link_url" style="display:none;">
+            <div class="col-lg-12 kt-margin-t-20 row">
+                <div class="col-lg-5 col-md-2">
+                    <div class="input-group">
+                        <textarea rows="1" cols="10" name="link_text" class="form-control" placeholder="Đường dẫn hiển thị"></textarea>
+                    </div>
+                </div>
+                <div class="col-lg-6 col-md-2">
+                    <div class="input-group">
+                        <textarea rows="1" cols="10" name="link" class="form-control" placeholder="Liên kết"></textarea>
+                    </div>
+                </div>
+                <div class="col-lg-1 col-md-1 add-link_url kt-margin-b-5">
+                    <i class="far fa-plus-square"
+                        style=" font-size: 3rem; color: #1dc9b7; cursor: pointer;"></i>
+                </div>
+                <div class="col-lg-1 col-md-1 delete-link_url kt-margin-b-5" style="display:none;">
+                    <i class="far fa-minus-square"
+                        style=" font-size: 3rem; color: #fd1361; cursor: pointer;"></i>
+                </div>
+            </div>
+        </div>
+    </div>`;
+        $('.autosendmes .add-automsg').remove();
+        $('.autosendmes .delete-automsg').last().addClass('display-block');
+        $('.autosendmes').append(rdom);
+        $('input[name="attach"]').click(function() {
+            if ($(this).is(":checked"))
+                $(this).parent().parent().children().last().addClass('display-block');
+            else $(this).parent().parent().children().last().removeClass('display-block');
+        })
+        $('.link_url').on('click touch', '.add-link_url', function (event) {
+            let rdom = `<div class="col-lg-12 kt-margin-t-20 row">
+            <div class="col-lg-5 col-md-2">
+                <div class="input-group">
+                    <textarea rows="1" cols="10" name="link_text" class="form-control" placeholder="Đường dẫn hiển thị"></textarea>
+                </div>
+            </div>
+            <div class="col-lg-6 col-md-2">
+                <div class="input-group">
+                    <textarea rows="1" cols="10" name="link" class="form-control" placeholder="Liên kết"></textarea>
+                </div>
+            </div>
+            <div class="col-lg-1 col-md-1 add-link_url kt-margin-b-5">
+                <i class="far fa-plus-square"
+                    style=" font-size: 3rem; color: #1dc9b7; cursor: pointer;"></i>
+            </div>
+            <div class="col-lg-1 col-md-1 delete-link_url kt-margin-b-5" style="display:none;">
+                <i class="far fa-minus-square"
+                    style=" font-size: 3rem; color: #fd1361; cursor: pointer;"></i>
+            </div>
+        </div>
+    </div>`;
+            $(this).parent().children().last().addClass('display-block');
+            $(this).parent().parent().append(rdom);
+            $(this).remove();
+        });
+        $('.link_url').on('click touch', '.delete-link_url', function (event) {
+            $(this).parent().remove();
+        });
+    });
+    $('.autosendmes').on('click touch', '.delete-automsg', function (event) {
+        $(this).parent().remove();
+    });
+    $('.link_url').on('click touch', '.add-link_url', function (event) {
+        let rdom = `<div class="col-lg-12 kt-margin-t-20 row">
+        <div class="col-lg-5 col-md-2">
+            <div class="input-group">
+                <textarea rows="1" cols="10" name="link_text" class="form-control" placeholder="Đường dẫn hiển thị"></textarea>
+            </div>
+        </div>
+        <div class="col-lg-6 col-md-2">
+            <div class="input-group">
+                <textarea rows="1" cols="10" name="link" class="form-control" placeholder="Liên kết"></textarea>
+            </div>
+        </div>
+        <div class="col-lg-1 col-md-1 add-link_url kt-margin-b-5">
+            <i class="far fa-plus-square"
+                style=" font-size: 3rem; color: #1dc9b7; cursor: pointer;"></i>
+        </div>
+        <div class="col-lg-1 col-md-1 delete-link_url kt-margin-b-5" style="display:none;">
+            <i class="far fa-minus-square"
+                style=" font-size: 3rem; color: #fd1361; cursor: pointer;"></i>
+        </div>
+    </div>
+</div>`;
+        $(this).parent().children().last().addClass('display-block');
+        $(this).parent().parent().append(rdom);
+        $(this).remove();
+    });
+    $('.link_url').on('click touch', '.delete-link_url', function (event) {
         $(this).parent().remove();
     });
 }); //end ready

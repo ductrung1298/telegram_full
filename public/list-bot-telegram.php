@@ -3,9 +3,7 @@
     include 'connection.php';
     $status = new Connection();
     $resbot = $status->connect('telbot/get');
-    
 ?>
-
 <div class="kt-body kt-grid__item kt-grid__item--fluid kt-grid kt-grid--hor kt-grid--stretch" id="kt_body">
     <div class="kt-content kt-content--fit-top  kt-grid__item kt-grid__item--fluid kt-grid kt-grid--hor"
         id="kt_content">
@@ -63,7 +61,7 @@
                                                     echo '<tr>'.'<th scope="row">'.((int)$index+1).'</th>';
                                                     echo '<td> <label>'.str_replace("<","&lt;",$post['first_name']).'</label> </td>';
                                                     echo '<td> <label>'.str_replace("<","&lt;",$post['username']).'</label> </td>';
-                                                    echo '<td> <span> <a title="Edit" data-id='.$post['id'].' class="btn btn-sm btn-clean btn-icon btn-icon-sm editbot"><i class="fas fa-edit"></i></a>';
+                                                    echo '<td> <span> <a title="Edit" data-id='.$post['id'].' class="btn btn-sm btn-clean btn-icon btn-icon-sm editbot"><i class="fas fa-tools"></i></a>';
                                                                 echo '<a title="Delete" class="btn btn-sm btn-clean btn-icon btn-icon-sm del-bot" data-id='.$post['id'].'><i class="fas fa-trash"></i></a>'; 
                                                     echo '</tr>';
                                                 }
@@ -156,79 +154,20 @@
 ?>
 <script>
 jQuery(document).ready(function($) {
-
-    $('#kt_modal_5').on('show.bs.modal', function(e) {
-        var Id = $(e.relatedTarget).data('id');
-        if (Id)
-            $("#data-id").val(Id).trigger("change");
-    });
-});
-</script>
-<script type="text/javascript">
-jQuery(document).ready(function($) {
-    $('.btn-del-wb').on('click', function() {
+    $('.del-bot').on('click', function() {
         var ok = prompt('Vui lòng nhập mã CODE quản trị viên để xóa cấu hình', '');
         if (ok!='' && ok!=null) 
-            window.location.href = "deletewb.php?id="+$(this).data('id')+"&code="+ok;
+            window.location.href = "deletebot.php?id="+$(this).data('id')+"&code="+ok;
         else if (ok=='') 
         alert("Vui lòng nhập mã CODE để xóa. Liên hệ quản trị viên để có được mã CODE");
     });
-})
-</script>
-<script type="text/javascript">
-jQuery(document).ready(function($) {
-    $('.btn-stop-wb').on('click', function() {
-        return confirm('Dừng quét website?');
-    });
-
-    $('.btn-del-wp').on('click', function() {
-        var ok = prompt('Vui lòng nhập mã CODE quản trị viên để xóa cấu hình', '');
+    $('.editbot').on('click', function() {
+        var ok = prompt('Vui lòng nhập mã CODE quản trị viên để chỉnh sửa cấu hình', '');
         if (ok!='' && ok!=null) 
-            window.location.href = "deleteconfig.php?id="+$(this).data('id')+"&code="+ok;
-        else if (ok=='')
-            alert("Vui lòng nhập mã CODE để xóa. Liên hệ quản trị viên để có được mã CODE");
+            window.location.href = "editbot.php?id="+$(this).data('id')+"&code="+ok;
+        else if (ok=='') 
+        alert("Vui lòng nhập mã CODE để chỉnh sửa. Liên hệ quản trị viên để có được mã CODE");
     });
 })
 </script>
-<script type="text/javascript">
-jQuery(document).ready(function($) {
-    $('.btn-success').on('click', function() {
-        // xoa khoang trang kieu danh so
-        let numberpage = $('input[name="NumberPage"]').val();
-        numberpage = numberpage.replace(" ", "");
-        $('input[name="NumberPage"]').val(numberpage);
-        // gan gia tri mac dinh cho so trang
-        let page = $('input[name="countPage"]').val();
-        if (page == "") $('input[name="countPage"]').val(1);
-        //thay doi dau nhay kep thanh nhay don
-        let value = $('input[name="selectlist"]').val();
-        value = value.replace(/"/g, "\'");
-        $('input[name="selectlist"]').val(value);
-        $('input[name="select[]"]').each(function() {
-            let value = $(this).val();
-            value = value.replace(/"/g, "\'");
-            $(this).val(value);
-        })
-        $('input[name="string[]"]').each(function() {
-            let value = $(this).val();
-            value = value.replace(/"/g, "\'");
-            $(this).val(value);
-        })
-        $('input[name="stringreplace[]"]').each(function() {
-            let value = $(this).val();
-            value = value.replace(/"/g, "\'");
-            $(this).val(value);
-        })
-        $('input[name="selectsel[]"]').each(function() {
-            let value = $(this).val();
-            value = value.replace(/"/g, "\'");
-            $(this).val(value);
-        })
-        $('input[name="stringreplacesel[]"]').each(function() {
-            let value = $(this).val();
-            value = value.replace(/"/g, "\'");
-            $(this).val(value);
-        })
-    })
-})
-</script>
+

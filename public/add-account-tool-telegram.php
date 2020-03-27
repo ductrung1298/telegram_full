@@ -195,7 +195,7 @@
                                                 <button type="button" class="btn btn-outline-brand btn-elevate btn-pill vertify_pending">Xác thực </button>
                                             </div>
                                         </div>
-                                        <div class="id_account" style="display:none;">
+                                        <div class="id_account" style="display:none;"></div>
                                         <div class="row verify_hide">
                                             <div class="col-6 form-group ">
                                                 <label>Mã OTP</label>
@@ -207,7 +207,7 @@
                                             <div class="col-6 form-group d-flex align-items-end">
                                                 <button type="button" class="btn btn-outline-success btn-elevate btn-pill sendcodeotp">Đăng nhập </button>
                                             </div>
-                                        </div>
+                                        
                                     </div>
                                 </div>
                             </div>
@@ -334,30 +334,32 @@ jQuery(document).ready(function($) {
         else if (ok=='') 
         alert("Vui lòng nhập mã CODE để chỉnh sửa. Liên hệ quản trị viên để có được mã CODE");
     });
+
+    $(".verify_hide").hide();
+    $(".vertify_pending").click(function(){
+        let phone_number = $('input[name="phone_number"]').val();
+        $(this).append(`<i style="padding:unset" class="fas fa-circle-notch fa-spin"></i>`);
+        $(this).prop('disabled', true);
+        console.log(phone_number);
+        // $.ajax({
+        //         type: "POST",
+        //         url: "./createapp.php",
+        //         data: {
+        //             "phone": phone_number,
+        //             "function": "addaccount",
+        //             "api_id": '',
+        //             "api_hash": '',
+        //         },
+        //         success: function(data) {
+        //             if (data) {
+        //                 console.log(data);
+        //             } else Swal.fire('Lỗi', 'Đã xảy ra lỗi, xin thử lại sau', 'error');
+        //         }
+        //     })
+        $(".verify_show").hide(2000);
+        
+        $(".verify_hide").show(1000);
+    });
 })
-$(".verify_hide").hide();
-$(".vertify_pending").click(function(){
-    let phone_number = $('input[name="phone_number"]').val();
-    $(this).append(`<i style="padding:unset" class="fas fa-circle-notch fa-spin"></i>`);
-    $(this).prop('disabled', true);
-    console.log(phone_number);
-    // $.ajax({
-    //         type: "POST",
-    //         url: "./createapp.php",
-    //         data: {
-    //             "phone": phone_number,
-    //             "function": "addaccount",
-    //             "api_id": '',
-    //             "api_hash": '',
-    //         },
-    //         success: function(data) {
-    //             if (data) {
-    //                 console.log(data);
-    //             } else Swal.fire('Lỗi', 'Đã xảy ra lỗi, xin thử lại sau', 'error');
-    //         }
-    //     })
-    $(".verify_show").hide(2000);
-    
-    $(".verify_hide").show(4000);
-});
+
 </script>

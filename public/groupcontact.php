@@ -3,7 +3,7 @@ $id=isset($_GET['id'])?intval($_GET['id']):0;
 $user=isset($_GET['user'])?intval($_GET['user']):0;
 include 'header.php';
 if ($id!=0 && $user!=0) {
-    $url='http://192.168.1.13:3000/telegram/getlistgroupcontact?idgroupcontact='.$id;
+    $url='http://192.168.1.13:3000/telegram/get_contact?idgroupcontact='.$id;
     $curl=curl_init($url);
     curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
     curl_setopt($curl, CURLOPT_HTTPHEADER, [
@@ -17,7 +17,7 @@ if ($id!=0 && $user!=0) {
 
     include 'connection.php';
     $group = new Connection();
-    $value = $group->connect('telegram/getlistgroupcontact?idcontact='.$id);
+    $value = $group->connect('telegram/get_contact?idcontact='.$id);
 
     if ($httpcode==500)
             header('Location: loginerror.php');
@@ -100,7 +100,7 @@ if ($id!=0 && $user!=0) {
                                                 </thead>
                                                 <tbody>
                                                     <?php
-                                                    $url2='http://192.168.1.13:3000/telegram/getlistusergroup?id='.$user.'&group='.$id;
+                                                    $url2='http://192.168.1.13:3000/telegram/get_list_user_telegramgroup?id='.$user.'&group='.$id;
                                                     $curl2=curl_init($url2);
                                                     curl_setopt($curl2, CURLOPT_RETURNTRANSFER, true);
                                                     curl_setopt($curl2, CURLOPT_HTTPHEADER, [
@@ -170,7 +170,7 @@ if ($id!=0 && $user!=0) {
                                                                 </thead>
                                                                 <tbody>
                                                                     <?php
-                                                                $url3='http://192.168.1.13:3000/telegram/getcontact?id='.$user;
+                                                                $url3='http://192.168.1.13:3000/telegram/get_friend?id='.$user;
                                                                 $curl3=curl_init($url3);
                                                                 curl_setopt($curl3, CURLOPT_RETURNTRANSFER, true);
                                                                 curl_setopt($curl3, CURLOPT_HTTPHEADER, [

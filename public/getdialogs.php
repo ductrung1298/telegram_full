@@ -4,7 +4,7 @@
     date_default_timezone_set('Asia/Ho_Chi_Minh');
     $id=isset($_GET['id'])?intval($_GET['id']):0;
     if ($id != 0) {
-        $url = 'http://192.168.1.13:3000/telegram/getdialogs?id='.$id;
+        $url = 'http://192.168.1.13:3000/telegram/get_list_group_chat_telegram?id='.$id;
         $curl = curl_init($url);
         curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
         curl_setopt($curl, CURLOPT_HTTPHEADER, [
@@ -31,7 +31,7 @@
             exit;
         }
         else {
-            $url2='http://192.168.1.13:3000/telegram/getcontact?id='.$id;
+            $url2='http://192.168.1.13:3000/telegram/get_friend?id='.$id;
             $curl2=curl_init($url2);
             curl_setopt($curl2, CURLOPT_RETURNTRANSFER, true);
             curl_setopt($curl2, CURLOPT_HTTPHEADER, [
@@ -41,7 +41,7 @@
             ]);
             $response2=json_decode(curl_exec($curl2), true);
             curl_close($curl2);
-            $curl3=curl_init('http://192.168.1.13:3000/telegram/getuserid?id='.$id);
+            $curl3=curl_init('http://192.168.1.13:3000/telegram/get_profile_user_telegram?id='.$id);
             curl_setopt($curl3, CURLOPT_RETURNTRANSFER, true);
             curl_setopt($curl3, CURLOPT_HTTPHEADER, [
                 'X-RapidAPI-Host: contextualwebsearch-websearch-v1.p.rapidapi.com',
@@ -210,7 +210,7 @@
                                                         </tr>
                                                         <tbody>
                                                         <?php 
-                                                            $curl=curl_init('http://192.168.1.13:3000/telegram/getcontact?id='.$id);
+                                                            $curl=curl_init('http://192.168.1.13:3000/telegram/get_friend?id='.$id);
                                                             curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
                                                             curl_setopt($curl, CURLOPT_HTTPHEADER, [
                                                                 'X-RapidAPI-Host: contextualwebsearch-websearch-v1.p.rapidapi.com',
@@ -269,7 +269,7 @@
                                                 </td>
                                             </tr>
                                             <?php
-                                            $curl2=curl_init('http://192.168.1.13:3000/telegram/getdialogs?id='.$id);
+                                            $curl2=curl_init('http://192.168.1.13:3000/telegram/get_list_group_chat_telegram?id='.$id);
                                             curl_setopt($curl2, CURLOPT_RETURNTRANSFER, true);
                                             curl_setopt($curl2, CURLOPT_HTTPHEADER, [
                                                 'X-RapidAPI-Host: contextualwebsearch-websearch-v1.p.rapidapi.com',
@@ -311,7 +311,7 @@
                                                     <select class="kt-input form-control groupcontact">
                                                         <option value=-1>-Không sử dụng-</option>
                                                         <?php
-                                                            $url3='http://192.168.1.13:3000/telegram/getlistgroupcontact?id='.$id;
+                                                            $url3='http://192.168.1.13:3000/telegram/get_contact?id='.$id;
                                                             $curl3=curl_init($url3);
                                                             curl_setopt($curl3, CURLOPT_RETURNTRANSFER, true);
                                                             curl_setopt($curl3, CURLOPT_HTTPHEADER, [

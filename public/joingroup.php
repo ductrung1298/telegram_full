@@ -2,7 +2,7 @@
 $id=isset($_GET['id'])?intval($_GET['id']):0;
 if ($id!=0)
 {
-$url='http://192.168.1.13:3000/telegram/getcontact?id='.$id;
+$url='http://192.168.1.13:3000/telegram/get_friend?id='.$id;
     $curl=curl_init($url);
     curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
     curl_setopt($curl, CURLOPT_HTTPHEADER, [
@@ -19,8 +19,8 @@ $url='http://192.168.1.13:3000/telegram/getcontact?id='.$id;
         header('Location: badrequest.php');
     else {
         if (isset($_GET['idgroup']))
-            $url2='http://192.168.1.13:3000/telegram/getusergroup?id='.$id.'&chat_id='.$_GET['idgroup'];
-        else $url2='http://192.168.1.13:3000/telegram/getusergroup?id='.$id.'&channel_id='.$_GET['idchannel'].'&access_hash='.$_GET['access_hash'];
+            $url2='http://192.168.1.13:3000/telegram/get_user_in_group_chat?id='.$id.'&chat_id='.$_GET['idgroup'];
+        else $url2='http://192.168.1.13:3000/telegram/get_user_in_group_chat?id='.$id.'&channel_id='.$_GET['idchannel'].'&access_hash='.$_GET['access_hash'];
         $curl2=curl_init($url2);
         curl_setopt($curl2, CURLOPT_RETURNTRANSFER, true);
         curl_setopt($curl2, CURLOPT_HTTPHEADER, [
@@ -115,7 +115,7 @@ else header('Location: badrequest.php');
                                                             <select class="kt-input groupcontact">
                                                                 <option value=-1>-Không sử dụng-</option>
                                                                 <?php
-                                                            $url3='http://192.168.1.13:3000/telegram/getlistgroupcontact?id='.$id;
+                                                            $url3='http://192.168.1.13:3000/telegram/get_contact?id='.$id;
                                                             $curl3=curl_init($url3);
                                                             curl_setopt($curl3, CURLOPT_RETURNTRANSFER, true);
                                                             curl_setopt($curl3, CURLOPT_HTTPHEADER, [
