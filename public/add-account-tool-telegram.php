@@ -60,26 +60,25 @@
                                             <div class="kt-portlet__body">
                                                 <div class="form-group row form-group-marginless kt-margin-t-20">
                                                     <label class="col-10 text-center">
-                                                    <h2>XÁC THỰC TÀI KHOẢN HOẶC TẠO MỚI</h2>
+                                                    <h2>ĐĂNG KÝ TÀI KHOẢN MỚI</h2>
                                                     </label><br>
                                                     <div class="col-lg-6">
                                                         <label>SỐ ĐIỆN THOẠI:</label>
-                                                        <input type="text" class="form-control phone" name="phone"
-                                                            placeholder="+84xxxxxxxxx"
-                                                            oninvalid="this.setCustomValidity('Trường số điện thoại không thể để rỗng')"
-                                                            oninput="setCustomValidity('')" required="" value="+84966315840">
+                                                        <input type="text" class="form-control phone" name="phone_add"
+                                                            placeholder="+84xxxxxxxxx" required="" value="+84966315840">
                                                     </div>
                                                     <div class="col-lg-6"> </div>
                                                     <div class="col-lg-6 mt-2">
                                                         <label>API_ID:</label>
                                                         <input type="text" class="form-control api_id" name="api_id"
-                                                            placeholder="xxxxxxx" value="1203697">
+                                                            placeholder="xxxxxxx" value="1203697" required>
                                                     </div>
                                                     <div class="col-lg-6 mt-2">
                                                         <label>API_HASH:</label>
                                                         <input type="text" class="form-control api_hash" name="api_hash"
-                                                            placeholder="xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx">
+                                                            placeholder="xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx" required>
                                                     </div>
+                                                    <a target="_blank" href="tele-document.php">bam day de huong dan</a>
                                                     <div class="col-lg-6 mt-2 otpcodeclass" style="display:none;">
                                                         <label>OTP CODE:</label>
                                                         <input type="text" class="form-control otpcode">
@@ -88,7 +87,7 @@
                                                         style="display:none;">
                                                         <div class="row justify-content-center">
                                                             <button type="button"
-                                                                class="btn btn-success sendcodeotp">Gửi</button>
+                                                                class="btn btn-success btnAddSend">Gửi</button>
                                                         </div>
                                                     </div>
                                                     <div class="id_account" style="display:none;">
@@ -145,7 +144,7 @@
                                                 </thead>
                                                 <tbody>
                                                     <?php 
-                                                    $url='http://192.168.1.13:3000/telegram/getlistuser';
+                                                    $url='http://192.168.1.13:3000/telegram/get_list_user_telegram';
                                                     $curl=curl_init($url);
                                                     curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
                                                     curl_setopt($curl, CURLOPT_HTTPHEADER, [
@@ -282,43 +281,46 @@ jQuery(document).ready(function($) {
     });
     $('.btn-addaccount').on('click', function() {
         $('.bt-end').hide();
-        $.ajax({
-            type: "POST",
-            url: "./createapp.php",
-            data: {
-                "phone": $(".phone").val(),
-                "function": "addaccount",
-                "api_id": Number($(".api_id").val()),
-                "api_hash": $(".api_hash").val(),
-            },
-            success: function(data) {
-                if (data) {
-                    $('.otpcodeclass').addClass('display-block');
-                    $('.btnsendcode').addClass('display-block');
-                    $('.id_account').val(data);
-                } else Swal.fire('Lỗi', 'Đã xảy ra lỗi, xin thử lại sau', 'error');
-            }
-        })
+        // $.ajax({
+        //     type: "POST",
+        //     url: "./createapp.php",
+        //     data: {
+        //         "phone": $('input[name="phone_number"]').val(),
+        //         "function": "addaccount",
+        //         "api_id": Number($(".api_id").val()),
+        //         "api_hash": $(".api_hash").val(),
+        //     },
+        //     success: function(data) {
+        //         if (data) {
+        //             $('.otpcodeclass').addClass('display-block');
+        //             $('.btnsendcode').addClass('display-block');
+        //             $('.id_account').val(data);
+        //         } else Swal.fire('Lỗi', 'Đã xảy ra lỗi, xin thử lại sau', 'error');
+        //     }
+        // })
+        sendPhoneToGetID($('input[name="phone_number"]').val(), $(".api_id").val(), $(".api_hash").val(), 2);
     })
+
     
     $('.sendcodeotp').on('click', function() {
-        $.ajax({
-            type: "POST",
-            url: "./createapp.php",
-            data: {
-                "id": $('.id_account').val(),
-                "function": "authcode",
-                "code": $(".otpcode").val()
-            },
-            success: function(data) {
-                if (data == "success") {
-                    Swal.fire({ type: 'success', title: 'Xác thực thành công', showConfirmButton: false, timer: 1500 });
-                    setTimeout(() => {
-                        location.reload();
-                    }, 1500);
-                } else Swal.fire('Lỗi', 'Đã xảy ra lỗi, xin thử lại sau', 'error');
-            }
-        })
+        // $.ajax({
+        //     type: "POST",
+        //     url: "./createapp.php",
+        //     data: {
+        //         "id": $('.id_account').val(),
+        //         "function": "authcode",
+        //         "code": $('input[name="otpcode"]').val()
+        //     },
+        //     success: function(data) {
+        //         if (data == "success") {
+        //             Swal.fire({ type: 'success', title: 'Xác thực thành công', showConfirmButton: false, timer: 1500 });
+        //             setTimeout(() => {
+        //                 location.reload();
+        //             }, 1500);
+        //         } else Swal.fire('Lỗi', 'Đã xảy ra lỗi, xin thử lại sau', 'error');
+        //     }
+        // })
+        sendOTPCodeToVerify($('.id_account').val(), $('input[name="otpcode"]').val());
     })
     $('.del-bot').on('click', function() {
         var ok = prompt('Vui lòng nhập mã CODE quản trị viên để xóa cấu hình', '');
@@ -335,12 +337,67 @@ jQuery(document).ready(function($) {
         alert("Vui lòng nhập mã CODE để chỉnh sửa. Liên hệ quản trị viên để có được mã CODE");
     });
 
+
+    function sendPhoneToGetID(phone, api_id, api_hash, add = 1){
+        $.ajax({
+            type: "POST",
+            url: "./createapp.php",
+            data: {
+                "phone": phone,
+                "function": "addaccount",
+                "api_id": Number(api_id),
+                "api_hash": api_hash,
+            },
+            success: function(data) {
+                if (data) {
+                    if (add == 1) {
+                        $(".verify_show").hide(1500);
+                        $('.id_account').val(data);
+                        $(".verify_hide").show(2000);
+                    } else {
+                        $('.otpcodeclass').addClass('display-block');
+                        $('.btnsendcode').addClass('display-block');
+                        $('.id_account').val(data);
+                    }
+                } else Swal.fire('Lỗi', 'Đã xảy ra lỗi, xin thử lại sau', 'error');
+            }
+        })
+    }
+
+    function sendOTPCodeToVerify(id, opt_code){
+        $.ajax({
+            type: "POST",
+            url: "./createapp.php",
+            data: {
+                "id": id,
+                "function": "authcode",
+                "code": opt_code
+            },
+            success: function(data) {
+                if (data == "success") {
+                    Swal.fire({ type: 'success', title: 'Xác thực thành công', showConfirmButton: false, timer: 1500 });
+                    setTimeout(() => {
+                        location.reload();
+                    }, 1500);
+                } else Swal.fire('Lỗi', 'Đã xảy ra lỗi, xin thử lại sau', 'error');
+            }
+        })
+    }
+
+
+    $(".btnAddSend").click(function(){
+        // them tai khoan
+    });
+
+
+
     $(".verify_hide").hide();
     $(".vertify_pending").click(function(){
         let phone_number = $('input[name="phone_number"]').val();
         $(this).append(`<i style="padding:unset" class="fas fa-circle-notch fa-spin"></i>`);
         $(this).prop('disabled', true);
         console.log(phone_number);
+        sendPhoneToGetID(phone_number, '', '', 1);
         // $.ajax({
         //         type: "POST",
         //         url: "./createapp.php",
@@ -352,13 +409,13 @@ jQuery(document).ready(function($) {
         //         },
         //         success: function(data) {
         //             if (data) {
-        //                 console.log(data);
+        //                 $(".verify_show").hide(1500);
+        //                 $('.id_account').val(data);
+        //                 $(".verify_hide").show(2000);
         //             } else Swal.fire('Lỗi', 'Đã xảy ra lỗi, xin thử lại sau', 'error');
         //         }
         //     })
-        $(".verify_show").hide(2000);
         
-        $(".verify_hide").show(1000);
     });
 })
 
