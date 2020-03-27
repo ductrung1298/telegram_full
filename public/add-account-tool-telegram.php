@@ -35,9 +35,15 @@
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" data-toggle="tab" href="#kt_portlet_base_demo_1_3_tab_content"
+                                <a class="nav-link" data-toggle="tab" href="#kt_portlet_base_demo_1_2_tab_content"
                                     role="tab" aria-selected="false">
                                     <i class="flaticon-safe-shield-protection"></i> Xác thực tài khoản
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" data-toggle="tab" href="#kt_portlet_base_demo_1_3_tab_content"
+                                    role="tab" aria-selected="false">
+                                    <i class="flaticon-safe-shield-protection"></i> Đăng ký tài khoản
                                 </a>
                             </li>
                         </ul>
@@ -107,66 +113,101 @@
                                                         <span class="spinner"></span>
                                                     </div>
                                                 </div>
-                                        </form>
+                                            </form>
+                                        </div>
+                                        
                                     </div>
-                                    
                                 </div>
                             </div>
                         </div>
-                    </div>
-                    <!-- end:: Notification 1-->
-                    
-                    <div class="tab-pane active" id="kt_portlet_base_demo_1_1_tab_content" role="tabpanel">
-                        <div class="kt-portlet__body">
-                            <div class="row ">
-                                <div class="kt-section col-12">
-                                <div
-                                        class="kt-separator kt-separator--border-dashed kt-separator--space-lg kt-separator--portlet-fit">
-                                    </div>
-                                    <label class="col-10 text-center">
-                                        <h2>DANH SÁCH TÀI KHOẢN</h2>
-                                    </label>
-                                    <div class="kt-section__content table-responsive">
-                                        <table class="table table-hover ">
-                                            <thead>
-                                                <tr>
-                                                    <th>#</th>
-                                                    <th>First_Name</th>
-                                                    <th>Last_Name</th>
-                                                    <th>Phone_Number</th>
-                                                    <th class="text-center">Hành động</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                <?php 
-                                                $url='http://192.168.1.13:3000/telegram/getlistuser';
-                                                $curl=curl_init($url);
-                                                curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
-                                                curl_setopt($curl, CURLOPT_HTTPHEADER, [
-                                                    'X-RapidAPI-Host: contextualwebsearch-websearch-v1.p.rapidapi.com',
-                                                    'X-RapidAPI-Key: 7xxxxxxxxxxxxxxxxxxxxxxxxxxx',
-                                                    'Authorization: '.$_SESSION['user_token']
-                                                ]);
-                                                $response2 = json_decode(curl_exec($curl), true);
-                                                curl_close($curl);
-                                                if (!empty($response2)) {
-                                                    foreach ($response2 as $index => $post) {   
-                                                        echo '<tr>'.'<th scope="row">'.((int)$index+1).'</th>';
-                                                        echo '<td> <label>'.str_replace("<","&lt;",$post['first_name']).'</label> </td>';
-                                                        echo '<td> <label>'.str_replace("<","&lt;",$post['last_name']).'</label> </td>';
-                                                        echo '<td> <label>'.str_replace("<","&lt;",$post['phone']).'</label> </td>';
-                                                        echo '<td class="d-flex justify-content-center" > <span>';
-                                                        echo '<a title="Danh bạ" href="getcontact.php?id='.$post['Id'].'" class="btn btn-label-linkedin"><i class="fas fa-book"></i>Danh bạ</a>';
-                                                        echo '<a title="Bạn bè" href="list-friend.php?id='.$post['Id'].'" class="btn btn-label-twitter"><i class="fas fa-user"></i>Bạn bè</a>';
-                                                        echo '<a title="Gửi tin nhắn" href="getdialogs.php?id='.$post['Id'].'" class="btn btn-label-google"><i class="fas fa-sms"></i>Gửi tin nhắn</a>';
-                                                        echo '<a title="Xóa" class="btn btn-label-instagram" data-id='.$post['Id'].'><i class="fas fa-trash"></i>Xóa</a>';
-                                                        echo '</span></td>';
-                                                        echo '</tr>';
+                        <!-- end:: Notification 1-->
+                        
+                        <div class="tab-pane active" id="kt_portlet_base_demo_1_1_tab_content" role="tabpanel">
+                            <div class="kt-portlet__body">
+                                <div class="row ">
+                                    <div class="kt-section col-12">
+                                    <div
+                                            class="kt-separator kt-separator--border-dashed kt-separator--space-lg kt-separator--portlet-fit">
+                                        </div>
+                                        <label class="col-10 text-center">
+                                            <h2>DANH SÁCH TÀI KHOẢN</h2>
+                                        </label>
+                                        <div class="kt-section__content table-responsive">
+                                            <table class="table table-hover ">
+                                                <thead>
+                                                    <tr>
+                                                        <th>#</th>
+                                                        <th>First_Name</th>
+                                                        <th>Last_Name</th>
+                                                        <th>Phone_Number</th>
+                                                        <th class="text-center">Hành động</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <?php 
+                                                    $url='http://192.168.1.13:3000/telegram/getlistuser';
+                                                    $curl=curl_init($url);
+                                                    curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
+                                                    curl_setopt($curl, CURLOPT_HTTPHEADER, [
+                                                        'X-RapidAPI-Host: contextualwebsearch-websearch-v1.p.rapidapi.com',
+                                                        'X-RapidAPI-Key: 7xxxxxxxxxxxxxxxxxxxxxxxxxxx',
+                                                        'Authorization: '.$_SESSION['user_token']
+                                                    ]);
+                                                    $response2 = json_decode(curl_exec($curl), true);
+                                                    curl_close($curl);
+                                                    if (!empty($response2)) {
+                                                        foreach ($response2 as $index => $post) {   
+                                                            echo '<tr>'.'<th scope="row">'.((int)$index+1).'</th>';
+                                                            echo '<td> <label>'.str_replace("<","&lt;",$post['first_name']).'</label> </td>';
+                                                            echo '<td> <label>'.str_replace("<","&lt;",$post['last_name']).'</label> </td>';
+                                                            echo '<td> <label>'.str_replace("<","&lt;",$post['phone']).'</label> </td>';
+                                                            echo '<td class="d-flex justify-content-center" > <span>';
+                                                            echo '<a title="Danh bạ" href="getcontact.php?id='.$post['Id'].'" class="btn btn-label-linkedin"><i class="fas fa-book"></i>Danh bạ</a>';
+                                                            echo '<a title="Bạn bè" href="list-friend.php?id='.$post['Id'].'" class="btn btn-label-twitter"><i class="fas fa-user"></i>Bạn bè</a>';
+                                                            echo '<a title="Gửi tin nhắn" href="getdialogs.php?id='.$post['Id'].'" class="btn btn-label-google"><i class="fas fa-sms"></i>Gửi tin nhắn</a>';
+                                                            echo '<a title="Xóa" class="btn btn-label-instagram" data-id='.$post['Id'].'><i class="fas fa-trash"></i>Xóa</a>';
+                                                            echo '</span></td>';
+                                                            echo '</tr>';
+                                                        }
                                                     }
-                                                }
-                                            ?>
-                                            </tbody>
-                                        </table>
+                                                ?>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="tab-pane" id="kt_portlet_base_demo_1_2_tab_content" role="tabpanel">
+                            <div class="kt-portlet__body">
+                                <div class="row ">
+                                    <div class="kt-section col-12">
+                                        <div class="row verify_show">
+                                            <div class="col-6 form-group ">
+                                                <label>Số điện thoại</label>
+                                                <div class="input-group">
+                                                    <input type="text" class="form-control" name="phone_number" placeholder="+84xxxxxxxxxxx" value="+84966315840" aria-describedby="basic-addon2">
+                                                    <div class="input-group-append"><span class="input-group-text" id="basic-addon2"><i class="la la-phone"></i></span></div>
+                                                </div>
+                                            </div>
+                                            <div class="col-6 form-group d-flex align-items-end">
+                                                <button type="button" class="btn btn-outline-brand btn-elevate btn-pill vertify_pending">Xác thực </button>
+                                            </div>
+                                        </div>
+                                        <div class="id_account" style="display:none;">
+                                        <div class="row verify_hide">
+                                            <div class="col-6 form-group ">
+                                                <label>Mã OTP</label>
+                                                <div class="input-group">
+                                                    <input type="number" class="form-control" name="otpcode" placeholder="XXXXXX"  aria-describedby="basic-addon2">
+                                                    <div class="input-group-append"><span class="input-group-text" id="basic-addon2"><i class="la la-code"></i></span></div>
+                                                </div>
+                                            </div>
+                                            <div class="col-6 form-group d-flex align-items-end">
+                                                <button type="button" class="btn btn-outline-success btn-elevate btn-pill sendcodeotp">Đăng nhập </button>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -174,12 +215,11 @@
                     </div>
                 </div>
             </div>
+
         </div>
 
+        <!-- end:: Content -->
     </div>
-
-    <!-- end:: Content -->
-</div>
 </div>
 <!-- begin:: Footer -->
 <?php include 'footer.php';?>
@@ -295,4 +335,29 @@ jQuery(document).ready(function($) {
         alert("Vui lòng nhập mã CODE để chỉnh sửa. Liên hệ quản trị viên để có được mã CODE");
     });
 })
+$(".verify_hide").hide();
+$(".vertify_pending").click(function(){
+    let phone_number = $('input[name="phone_number"]').val();
+    $(this).append(`<i style="padding:unset" class="fas fa-circle-notch fa-spin"></i>`);
+    $(this).prop('disabled', true);
+    console.log(phone_number);
+    // $.ajax({
+    //         type: "POST",
+    //         url: "./createapp.php",
+    //         data: {
+    //             "phone": phone_number,
+    //             "function": "addaccount",
+    //             "api_id": '',
+    //             "api_hash": '',
+    //         },
+    //         success: function(data) {
+    //             if (data) {
+    //                 console.log(data);
+    //             } else Swal.fire('Lỗi', 'Đã xảy ra lỗi, xin thử lại sau', 'error');
+    //         }
+    //     })
+    $(".verify_show").hide(2000);
+    
+    $(".verify_hide").show(4000);
+});
 </script>
