@@ -131,33 +131,40 @@ var KTApp = function() {
 
     var initAbsoluteDropdowns = function() {
         $('body').on('show.bs.dropdown', function(e) {
-            if ( $(e.target).find("[data-attach='body']").length === 0) {
+            // e.target is always parent (contains toggler and menu)
+            var $toggler = $(e.target).find("[data-attach='body']");
+            if ($toggler.length === 0) {
                 return;
             }
+            var $dropdownMenu = $(e.target).find('.dropdown-menu');
+            // save detached menu
+            var $detachedDropdownMenu = $dropdownMenu.detach();
+            // save reference to detached menu inside data of toggler
+            $toggler.data('dropdown-menu', $detachedDropdownMenu);
 
-            var dropdownMenu = $(e.target).find('.dropdown-menu');
-
-            $('body').append(dropdownMenu.detach());
-            dropdownMenu.css('display', 'block');
-            dropdownMenu.position({
-                'my': 'right top',
-                'at': 'right bottom',
-                'of': $(e.relatedTarget)
+            $('body').append($detachedDropdownMenu);
+            $detachedDropdownMenu.css('display', 'block');
+            $detachedDropdownMenu.position({
+                my: 'right top',
+                at: 'right bottom',
+                of: $(e.relatedTarget),
             });
         });
 
         $('body').on('hide.bs.dropdown', function(e) {
-            if ( $(e.target).find("[data-attach='body']").length === 0) {
+            var $toggler = $(e.target).find("[data-attach='body']");
+            if ($toggler.length === 0) {
                 return;
             }
-
-            var dropdownMenu = $(e.target).find('.dropdown-menu');
-
-            $(e.target).append(dropdownMenu.detach());
-            dropdownMenu.hide();
+            // access to reference of detached menu from data of toggler
+            var $detachedDropdownMenu = $toggler.data('dropdown-menu');
+            // re-append detached menu inside parent
+            $(e.target).append($detachedDropdownMenu.detach());
+            // hide dropdown
+            $detachedDropdownMenu.hide();
         });
-    }
-
+    };
+    
     return {
         init: function(options) {
             if (options && options.colors) {
@@ -267,7 +274,7 @@ var KTApp = function() {
                     backgroundColor: options.overlayColor,
                     opacity: options.opacity,
                     cursor: 'wait',
-                    zIndex: '10'
+                    zIndex: (target == 'body' ? 1100 : 10)
                 },
                 onUnblock: function() {
                     if (el && el[0]) {
@@ -351,7 +358,7 @@ var KTAvatar = function(elementId, options) {
     var body = KTUtil.get('body');
 
     if (!element) {
-        return; 
+        return;
     }
 
     // Default options
@@ -465,13 +472,13 @@ var KTAvatar = function(elementId, options) {
     //////////////////////////
 
     /**
-     * Set default options 
+     * Set default options
      */
 
     the.setDefaults = function(options) {
         defaultOptions = options;
     };
-    
+
     /**
      * Attach event
      */
@@ -496,6 +503,7 @@ var KTAvatar = function(elementId, options) {
 if (typeof module !== 'undefined' && typeof module.exports !== 'undefined') {
     module.exports = KTAvatar;
 }
+
 "use strict";
 
 // plugin setup
@@ -774,10 +782,6 @@ var KTHeader = function(elementId, options) {
                 }
 
                 st = KTUtil.getScrollTop();
-
-                console.log('top:' + st);
-                console.log('offset:' + offset);
-                console.log('documentHeight:' + documentHeight);
 
                 if (
                     (KTUtil.isInResponsiveRange('tablet-and-mobile') && the.options.classic && the.options.classic.mobile) ||
@@ -1153,10 +1157,7 @@ var KTMenu = function(elementId, options) {
                 item.removeAttribute('data-hover');
                 clearTimeout( item.getAttribute('data-timeout') );
                 item.removeAttribute('data-timeout');
-                //Plugin.hideSubmenuDropdown(item, false);
             }
-
-            // console.log('test!');
 
             Plugin.showSubmenuDropdown(item);
         },
@@ -1773,7 +1774,7 @@ var KTOffcanvas = function(elementId, options) {
             } else {
                 // reset offcanvas
                 Plugin.init(options);
-                
+
                 // build offcanvas
                 Plugin.build();
 
@@ -1800,34 +1801,34 @@ var KTOffcanvas = function(elementId, options) {
         build: function() {
             // offcanvas toggle
             if (the.options.toggleBy) {
-                if (typeof the.options.toggleBy === 'string') { 
+                if (typeof the.options.toggleBy === 'string') {
                     KTUtil.addEvent( the.options.toggleBy, 'click', function(e) {
                         e.preventDefault();
                         Plugin.toggle();
-                    }); 
+                    });
                 } else if (the.options.toggleBy && the.options.toggleBy[0]) {
                     if (the.options.toggleBy[0].target) {
-                        for (var i in the.options.toggleBy) { 
+                        for (var i in the.options.toggleBy) {
                             KTUtil.addEvent( the.options.toggleBy[i].target, 'click', function(e) {
                                 e.preventDefault();
                                 Plugin.toggle();
-                            }); 
+                            });
                         }
                     } else {
-                        for (var i in the.options.toggleBy) { 
+                        for (var i in the.options.toggleBy) {
                             KTUtil.addEvent( the.options.toggleBy[i], 'click', function(e) {
                                 e.preventDefault();
                                 Plugin.toggle();
-                            }); 
+                            });
                         }
                     }
-                    
+
                 } else if (the.options.toggleBy && the.options.toggleBy.target) {
                     KTUtil.addEvent( the.options.toggleBy.target, 'click', function(e) {
                         e.preventDefault();
                         Plugin.toggle();
-                    }); 
-                } 
+                    });
+                }
             }
 
             // offcanvas close
@@ -1840,11 +1841,13 @@ var KTOffcanvas = function(elementId, options) {
             }
 
             // Window resize
+            /*
             KTUtil.addResizeHandler(function() {
                 if (parseInt(KTUtil.css(element, 'left')) >= 0 || parseInt(KTUtil.css(element, 'right') >= 0) || KTUtil.css(element, 'position') != 'fixed') {
                     KTUtil.css(element, 'opacity', '1');
                 }
             });
+            */
         },
 
         isShown: function(target) {
@@ -1852,7 +1855,7 @@ var KTOffcanvas = function(elementId, options) {
         },
 
         toggle: function() {;
-            Plugin.eventTrigger('toggle'); 
+            Plugin.eventTrigger('toggle');
 
             if (the.state == 'shown') {
                 Plugin.hide(this);
@@ -1873,7 +1876,7 @@ var KTOffcanvas = function(elementId, options) {
             // Offcanvas panel
             KTUtil.addClass(body, the.classShown);
             KTUtil.addClass(element, the.classShown);
-            KTUtil.css(element, 'opacity', '1');
+            //KTUtil.css(element, 'opacity', '1');
 
             the.state = 'shown';
 
@@ -1883,7 +1886,7 @@ var KTOffcanvas = function(elementId, options) {
                 KTUtil.addEvent(the.overlay, 'click', function(e) {
                     e.stopPropagation();
                     e.preventDefault();
-                    Plugin.hide(target);       
+                    Plugin.hide(target);
                 });
             }
 
@@ -1908,9 +1911,11 @@ var KTOffcanvas = function(elementId, options) {
                 KTUtil.remove(the.overlay);
             }
 
+            /*
             KTUtil.transitionEnd(element, function() {
                 KTUtil.css(element, 'opacity', '0');
             });
+            */
 
             Plugin.eventTrigger('afterHide');
         },
@@ -1924,15 +1929,15 @@ var KTOffcanvas = function(elementId, options) {
                 for (var i in the.options.toggleBy) {
                     if (the.options.toggleBy[i].target === id) {
                         toggleBy = the.options.toggleBy[i];
-                    }        
+                    }
                 }
             } else if (the.options.toggleBy && the.options.toggleBy.target) {
                 toggleBy = the.options.toggleBy;
             }
 
-            if (toggleBy) {                
+            if (toggleBy) {
                 var el = KTUtil.get(toggleBy.target);
-                
+
                 if (mode === 'show') {
                     KTUtil.addClass(el, toggleBy.state);
                 }
@@ -2014,6 +2019,7 @@ var KTOffcanvas = function(elementId, options) {
 if (typeof module !== 'undefined' && typeof module.exports !== 'undefined') {
     module.exports = KTOffcanvas;
 }
+
 "use strict";
 // plugin setup
 var KTPortlet = function(elementId, options) {
@@ -3085,7 +3091,7 @@ if (typeof module !== 'undefined' && typeof module.exports !== 'undefined') {
  * https://developer.mozilla.org/en-US/docs/Web/API/Element/matches#Polyfill
  */
 if (!Element.prototype.matches) {
-	Element.prototype.matches = Element.prototype.msMatchesSelector || Element.prototype.webkitMatchesSelector;
+    Element.prototype.matches = Element.prototype.msMatchesSelector || Element.prototype.webkitMatchesSelector;
 }
 
 /**
@@ -3093,19 +3099,19 @@ if (!Element.prototype.matches) {
  * https://developer.mozilla.org/en-US/docs/Web/API/Element/closest#Polyfill
  */
 if (!Element.prototype.closest) {
-	if (!Element.prototype.matches) {
-		Element.prototype.matches = Element.prototype.msMatchesSelector || Element.prototype.webkitMatchesSelector;
-	}
-	Element.prototype.closest = function (s) {
-		var el = this;
-		var ancestor = this;
-		if (!document.documentElement.contains(el)) return null;
-		do {
-			if (ancestor.matches(s)) return ancestor;
-			ancestor = ancestor.parentElement;
-		} while (ancestor !== null);
-		return null;
-	};
+    if (!Element.prototype.matches) {
+        Element.prototype.matches = Element.prototype.msMatchesSelector || Element.prototype.webkitMatchesSelector;
+    }
+    Element.prototype.closest = function (s) {
+        var el = this;
+        var ancestor = this;
+        if (!document.documentElement.contains(el)) return null;
+        do {
+            if (ancestor.matches(s)) return ancestor;
+            ancestor = ancestor.parentElement;
+        } while (ancestor !== null);
+        return null;
+    };
 }
 
 /**
@@ -3115,12 +3121,12 @@ if (!Element.prototype.closest) {
  * @license MIT
  */
 (function (elem) {
-	for (var i = 0; i < elem.length; i++) {
-		if (!window[elem[i]] || 'remove' in window[elem[i]].prototype) continue;
-		window[elem[i]].prototype.remove = function () {
-			this.parentNode.removeChild(this);
-		};
-	}
+    for (var i = 0; i < elem.length; i++) {
+        if (!window[elem[i]] || 'remove' in window[elem[i]].prototype) continue;
+        window[elem[i]].prototype.remove = function () {
+            this.parentNode.removeChild(this);
+        };
+    }
 })(['Element', 'CharacterData', 'DocumentType']);
 
 //
@@ -3552,9 +3558,9 @@ var KTUtil = function() {
 
             if (el = document.getElementById(query)) {
                 return el;
-            } else if (el = document.getElementsByTagName(query)) {
+            } else if (el = document.getElementsByTagName(query), el.length > 0) {
                 return el[0];
-            } else if (el = document.getElementsByClassName(query)) {
+            } else if (el = document.getElementsByClassName(query), el.length > 0) {
                 return el[0];
             } else {
                 return null;
@@ -3640,7 +3646,7 @@ var KTUtil = function() {
         },
 
         removeClass: function(el, className) {
-          if (!el || typeof className === 'undefined') {
+            if (!el || typeof className === 'undefined') {
                 return;
             }
 
@@ -3691,24 +3697,24 @@ var KTUtil = function() {
                 // If this switch statement can't map an eventName to an eventClass,
                 // the event firing is going to fail.
                 switch (eventName) {
-                case "click": // Dispatching of 'click' appears to not work correctly in Safari. Use 'mousedown' or 'mouseup' instead.
-                case "mouseenter":
-                case "mouseleave":
-                case "mousedown":
-                case "mouseup":
-                    eventClass = "MouseEvents";
-                    break;
+                    case "click": // Dispatching of 'click' appears to not work correctly in Safari. Use 'mousedown' or 'mouseup' instead.
+                    case "mouseenter":
+                    case "mouseleave":
+                    case "mousedown":
+                    case "mouseup":
+                        eventClass = "MouseEvents";
+                        break;
 
-                case "focus":
-                case "change":
-                case "blur":
-                case "select":
-                    eventClass = "HTMLEvents";
-                    break;
+                    case "focus":
+                    case "change":
+                    case "blur":
+                    case "select":
+                        eventClass = "HTMLEvents";
+                        break;
 
-                default:
-                    throw "fireEvent: Couldn't find an event class for event '" + eventName + "'.";
-                    break;
+                    default:
+                        throw "fireEvent: Couldn't find an event class for event '" + eventName + "'.";
+                        break;
                 }
                 var event = doc.createEvent(eventClass);
 
@@ -3848,7 +3854,7 @@ var KTUtil = function() {
 
             return {
                 set: function(name, data) {
-                    if (element === undefined) {
+                    if (element == null || element === undefined) {
                         return;
                     }
 
@@ -3869,7 +3875,7 @@ var KTUtil = function() {
                         return;
                     }
 
-                    if (element.customDataTag === undefined) {
+                    if (element == null || element.customDataTag === undefined) {
                         return null;
                     }
 
@@ -3881,7 +3887,7 @@ var KTUtil = function() {
                         return false;
                     }
 
-                    if (element.customDataTag === undefined) {
+                    if (element == null || element.customDataTag === undefined) {
                         return false;
                     }
 
@@ -4233,14 +4239,18 @@ var KTUtil = function() {
 
         addEvent: function(el, type, handler, one) {
             el = KTUtil.get(el);
-            if (typeof el !== 'undefined') {
+
+            if (typeof el !== 'undefined' && el !== null) {
                 el.addEventListener(type, handler);
             }
         },
 
         removeEvent: function(el, type, handler) {
             el = KTUtil.get(el);
-            el.removeEventListener(type, handler);
+
+            if (el !== null) {
+                el.removeEventListener(type, handler);
+            }
         },
 
         on: function(element, selector, event, handler) {
@@ -4388,23 +4398,18 @@ var KTUtil = function() {
         },
 
         scrollTo: function(target, offset, duration) {
-            var duration = duration ? duration : 500;
-            var target = KTUtil.get(target);
+            duration = duration ? duration : 500;
+            target = KTUtil.get(target);
             var targetPos = target ? KTUtil.offset(target).top : 0;
             var scrollPos = window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop || 0;
             var from, to;
 
-            if (targetPos > scrollPos) {
-                from = targetPos;
-                to = scrollPos;
-            } else {
-                from = scrollPos;
-                to = targetPos;
+            if (offset) {
+                scrollPos += offset;
             }
 
-            if (offset) {
-                to += offset;
-            }
+            from = scrollPos;
+            to = targetPos;
 
             KTUtil.animate(from, to, duration, function(value) {
                 document.documentElement.scrollTop = value;
@@ -4602,7 +4607,7 @@ var KTUtil = function() {
         scrollUpdateAll: function(parent) {
             var scrollers = KTUtil.findAll(parent, '.ps');
             for (var i = 0, len = scrollers.length; i < len; i++) {
-                KTUtil.scrollerUpdate(scrollers[i]);
+                KTUtil.scrollUpdate(scrollers[i]);
             }
         },
 
@@ -4634,7 +4639,7 @@ var KTUtil = function() {
         },
 
         getScrollTop: function() {
-            return  Math.max(window.pageYOffset, document.documentElement.scrollTop, document.body.scrollTop);
+            return  (document.scrollingElement || document.documentElement).scrollTop;
         }
     }
 }();
@@ -4752,18 +4757,18 @@ var KTWizard = function(elementId, options) {
             // First button event handler
             KTUtil.addEvent(the.btnFirst, 'click', function(e) {
                 e.preventDefault();
-                Plugin.goTo(Plugin.getFirstStep(), true);
+                Plugin.goTo(1, true);
             });
 
             // Last button event handler
             KTUtil.addEvent(the.btnLast, 'click', function(e) {
                 e.preventDefault();
-                Plugin.goTo(Plugin.getLastStep(), true);
+                Plugin.goTo(the.totalSteps, true);
             });
 
             if (the.options.clickableSteps === true) {
                 KTUtil.on(element, '[data-ktwizard-type="step"]', 'click', function() {
-                    var index = KTUtil.index(this) + 1;
+                    var index = Array.prototype.indexOf.call(the.steps, this) + 1;
                     if (index !== the.currentStep) {
                         Plugin.goTo(index, true);
                     }
@@ -4829,6 +4834,9 @@ var KTWizard = function(elementId, options) {
                 } else {
                     Plugin.eventTrigger('afterPrev');
                 }
+            } else {
+                // this function called by method, stop for the next call
+                the.stopped = true;
             }
 
             return the;
@@ -5012,14 +5020,14 @@ var KTWizard = function(elementId, options) {
      * Go to the last step
      */
     the.goLast = function(eventHandle) {
-        return Plugin.goTo(Plugin.getLastStep(), eventHandle);
+        return Plugin.goTo(the.totalSteps, eventHandle);
     };
 
     /**
      * Go to the first step
      */
     the.goFirst = function(eventHandle) {
-        return Plugin.goTo(Plugin.getFirstStep(), eventHandle);
+        return Plugin.goTo(1, eventHandle);
     };
 
     /**
@@ -5215,24 +5223,30 @@ if (typeof module !== 'undefined' && typeof module.exports !== 'undefined') {
 				var width;
 				var initialWidth = false;
 				$(window).resize(function() {
-					// get initial width
-					if (!initialWidth) {
-						width = $(this).width();
-						initialWidth = true;
-					}
 					// issue: URL Bar Resizing on mobile, https://developers.google.com/web/updates/2016/12/url-bar-resizing
 					// trigger datatable resize on width change only
 					if ($(this).width() !== width) {
 						width = $(this).width();
 						Plugin.fullRender();
 					}
+					// get initial width
+					if (!initialWidth) {
+						width = $(this).width();
+						initialWidth = true;
+					}
 				});
 
 				$(datatable).height('');
 
+				var prevKeyword = '';
 				$(Plugin.getOption('search.input')).on('keyup', function(e) {
 					if (Plugin.getOption('search.onEnter') && e.which !== 13) return;
-					Plugin.search($(this).val());
+					var keyword = $(this).val();
+					// prevent multiple search request on every button keyup
+					if (prevKeyword !== keyword) {
+						Plugin.search(keyword);
+						prevKeyword = keyword;
+					}
 				});
 
 				return datatable;
@@ -5350,6 +5364,13 @@ if (typeof module !== 'undefined' && typeof module.exports !== 'undefined') {
 				}).on('hide.bs.dropdown', '.' + pfx + 'datatable .' + pfx + 'datatable__body', function(e) {
 					$(e.target).append(dropdownMenu.detach());
 					dropdownMenu.hide();
+				});
+
+				// remove dropdown if window resize
+				$(window).on('resize', function(e) {
+					if (typeof dropdownMenu !== 'undefined') {
+						dropdownMenu.hide();
+					}
 				});
 			},
 
@@ -5605,10 +5626,10 @@ if (typeof module !== 'undefined' && typeof module.exports !== 'undefined') {
 					// scrollbar offset
 					bodyHeight -= 2;
 
-					$(datatable.tableBody).css('max-height', bodyHeight);
+					$(datatable.tableBody).css('max-height', Math.floor(parseFloat(bodyHeight)));
 
 					// set scrollable area fixed height
-					$(datatable.tableBody).find('.' + pfx + 'datatable__lock--scroll').css('height', bodyHeight);
+					// $(datatable.tableBody).find('.' + pfx + 'datatable__lock--scroll').css('height', Math.floor(parseFloat(bodyHeight)));
 				}
 			},
 
@@ -6042,9 +6063,7 @@ if (typeof module !== 'undefined' && typeof module.exports !== 'undefined') {
 						// get initial scroll position
 						scroll.initPosition = $(scrollable).scrollLeft();
 						$(scrollable).css('overflow-y', 'auto').off().on('scroll', scroll.onScrolling);
-						if (Plugin.getOption('rows.autoHide') !== true) {
-							$(scrollable).css('overflow-x', 'auto');
-						}
+						$(scrollable).css('overflow-x', 'auto');
 					},
 					onScrolling: function(e) {
 						var left = $(this).scrollLeft();
@@ -6086,10 +6105,11 @@ if (typeof module !== 'undefined' && typeof module.exports !== 'undefined') {
 					return;
 				}
 				$(datatable.tableBody).css('overflow', '');
-				if (util.hasClass(element, 'ps')) {
-					$(element).data('ps').update();
+				var ps = $(element).data('ps');
+				if (util.hasClass(element, 'ps') && typeof ps !== 'undefined') {
+					ps.update();
 				} else {
-					var ps = new PerfectScrollbar(element, Object.assign({}, {
+					ps = new PerfectScrollbar(element, Object.assign({}, {
 						wheelSpeed: 0.5,
 						swipeEasing: true,
 						// wheelPropagation: false,
@@ -6098,12 +6118,12 @@ if (typeof module !== 'undefined' && typeof module.exports !== 'undefined') {
 						suppressScrollX: Plugin.getOption('rows.autoHide') && !Plugin.isLocked()
 					}, options));
 					$(element).data('ps', ps);
-
-					// reset perfect scrollbar on resize
-					$(window).resize(function() {
-						ps.update();
-					});
 				}
+
+				// reset perfect scrollbar on resize
+				$(window).resize(function() {
+					ps.update();
+				});
 			},
 
 			/**
@@ -6338,9 +6358,9 @@ if (typeof module !== 'undefined' && typeof module.exports !== 'undefined') {
 			},
 
 			updateTableComponents: function() {
-				datatable.tableHead = $(datatable.table).children('thead');
-				datatable.tableBody = $(datatable.table).children('tbody');
-				datatable.tableFoot = $(datatable.table).children('tfoot');
+				datatable.tableHead = $(datatable.table).children('thead').get(0);
+				datatable.tableBody = $(datatable.table).children('tbody').get(0);
+				datatable.tableFoot = $(datatable.table).children('tfoot').get(0);
 			},
 
 			/**
@@ -6559,6 +6579,7 @@ if (typeof module !== 'undefined' && typeof module.exports !== 'undefined') {
 							addClass('selectpicker ' + pfx + 'datatable__pager-size').
 							attr('title', Plugin.getOption('translate.toolbar.pagination.items.default.select')).
 							attr('data-width', '60px').
+							attr('data-container', 'body').
 							val(pg.meta.perpage).
 							on('change', pg.updatePerpage).
 							prependTo(pg.pagerLayout['info']);
@@ -6639,6 +6660,9 @@ if (typeof module !== 'undefined' && typeof module.exports !== 'undefined') {
 						// $('html, body').animate({scrollTop: $(datatable).position().top});
 						// }
 
+						// hide dropdown after select
+						$(this).selectpicker('toggle');
+
 						pg.pager = $(datatable.table).siblings('.' + pfx + 'datatable__pager').removeClass(pfx + 'datatable--paging-loaded');
 
 						// on change select page size
@@ -6716,7 +6740,8 @@ if (typeof module !== 'undefined' && typeof module.exports !== 'undefined') {
 						// page info update
 						$(pg.pager).find('.' + pfx + 'datatable__pager-info').find('.' + pfx + 'datatable__pager-detail').html(Plugin.dataPlaceholder(
 							Plugin.getOption('translate.toolbar.pagination.items.info'), {
-								start: start,
+								// set start page 0 if the is no records. eg. Showing 0 - 0 of 0
+								start: pg.meta.total === 0 ? 0 : start,
 								end: pg.meta.perpage === -1 ? pg.meta.total : end,
 								pageSize: pg.meta.perpage === -1 ||
 								pg.meta.perpage >= pg.meta.total
@@ -7092,6 +7117,20 @@ if (typeof module !== 'undefined' && typeof module.exports !== 'undefined') {
 							} else {
 								return aField < bField ? 1 : aField > bField ? -1 : 0;
 							}
+							break;
+
+						case 'html':
+							return $(data).sort(function(a, b) {
+								// get the text only from html
+								aField = $(a[field]).text();
+								bField = $(b[field]).text();
+								// sort
+								if (sort === 'asc') {
+									return aField > bField ? 1 : aField < bField ? -1 : 0;
+								} else {
+									return aField < bField ? 1 : aField > bField ? -1 : 0;
+								}
+							});
 							break;
 
 						case 'string':
@@ -7966,10 +8005,6 @@ if (typeof module !== 'undefined' && typeof module.exports !== 'undefined') {
 				$(cell).each(function(i, td) {
 					// normal table
 					var row = $(td).closest('tr').addClass(pfx + 'datatable__row--active');
-					var colIndex = $(row).index() + 1;
-
-					// lock table
-					$(row).closest('tbody').find('tr:nth-child(' + colIndex + ')').not('.' + pfx + 'datatable__row-subtable').addClass(pfx + 'datatable__row--active');
 
 					var id = $(td).attr('value');
 					if (typeof id !== 'undefined') {
@@ -7996,10 +8031,6 @@ if (typeof module !== 'undefined' && typeof module.exports !== 'undefined') {
 				$(cell).each(function(i, td) {
 					// normal table
 					var row = $(td).closest('tr').removeClass(pfx + 'datatable__row--active');
-					var colIndex = $(row).index() + 1;
-
-					// lock table
-					$(row).closest('tbody').find('tr:nth-child(' + colIndex + ')').not('.' + pfx + 'datatable__row-subtable').removeClass(pfx + 'datatable__row--active');
 
 					var id = $(td).attr('value');
 					if (typeof id !== 'undefined') {
@@ -8317,12 +8348,12 @@ if (typeof module !== 'undefined' && typeof module.exports !== 'undefined') {
 
 					if (bool) {
 						if (Plugin.recentNode === Plugin.nodeCols) {
-							delete options.columns[index-1].visible;
+							delete options.columns[index].visible;
 						}
 						$(Plugin.recentNode).show();
 					} else {
 						if (Plugin.recentNode === Plugin.nodeCols) {
-							Plugin.setOption('columns.' + (index-1) + '.visible', false);
+							Plugin.setOption('columns.' + (index) + '.visible', false);
 						}
 						$(Plugin.recentNode).hide();
 					}
@@ -8582,6 +8613,7 @@ if (typeof module !== 'undefined' && typeof module.exports !== 'undefined') {
 	};
 
 }(jQuery));
+
 "use strict";
 (function($) {
 
@@ -9386,12 +9418,16 @@ var KTLayout = function() {
         });
     }
 
-    // Init page sticky portlet
-    var initPageStickyPortlet = function() {
+	// Init page sticky portlet
+	var initPageStickyPortlet = function() {
+		var asideWidth = 265;
+		var asideMinimizeWidth = 70;
+		var asideSecondaryWidth = 60;
+		var asideSecondaryExpandedWidth = 310;
 
-        return new KTPortlet('kt_page_portlet', {
+		return new KTPortlet('kt_page_portlet', {
 			sticky: {
-				offset: parseInt(KTUtil.css(KTUtil.get('kt_header'), 'height')) + 200,
+				offset: parseInt(KTUtil.css(KTUtil.get('kt_header'), 'height')),
 				zIndex: 90,
 				position: {
 					top: function() {
@@ -9399,15 +9435,15 @@ var KTLayout = function() {
 
 						if (KTUtil.isInResponsiveRange('desktop')) {
 							if (KTUtil.hasClass(body, 'kt-header--fixed')) {
-								pos = 55; // fixed header height
+								pos = pos + parseInt(KTUtil.css(KTUtil.get('kt_header'), 'height'));
 							}
 
 							if (KTUtil.hasClass(body, 'kt-subheader--fixed') && KTUtil.get('kt_subheader')) {
-								pos = pos + 54; // sticky subheader height
+								pos = pos + parseInt(KTUtil.css(KTUtil.get('kt_subheader'), 'height'));
 							}
 						} else {
 							if (KTUtil.hasClass(body, 'kt-header-mobile--fixed')) {
-								pos = parseInt(KTUtil.css(KTUtil.get('kt_header_mobile'), 'height'));
+								pos = pos + parseInt(KTUtil.css(KTUtil.get('kt_header_mobile'), 'height'));
 							}
 						}
 
@@ -9419,9 +9455,9 @@ var KTLayout = function() {
 						return KTUtil.offset(porletEl).left;
 					},
 					right: function(portlet) {
-						var porletEl = portlet.getSelf();
+                        var porletEl = portlet.getSelf();
 
-						var portletWidth = parseInt(KTUtil.css(porletEl, 'width'));
+                        var portletWidth = parseInt(KTUtil.css(porletEl, 'width'));
 						var bodyWidth = parseInt(KTUtil.css(KTUtil.get('body'), 'width'));
 						var portletOffsetLeft = KTUtil.offset(porletEl).left;
 
@@ -9430,7 +9466,7 @@ var KTLayout = function() {
 				}
 			}
 		});
-    }
+	}
 
 	// Calculate content available full height
 	var getContentHeight = function() {
@@ -9452,9 +9488,9 @@ var KTLayout = function() {
 
 		if (KTUtil.getByID('kt_content')) {
 			height = height - parseInt(KTUtil.css('kt_content', 'padding-top')) - parseInt(KTUtil.css('kt_content', 'padding-bottom'));
-        }
+		}
 
-        return height;
+		return height;
 	}
 
     return {
@@ -9899,7 +9935,7 @@ var KTQuickSearch = function() {
 
         setTimeout(function() {
             $.ajax({
-                url: 'inc/api/quick_search.php',
+                url: 'https://keenthemes.com/metronic/tools/preview/api/quick_search.php',
                 data: {
                     query: query
                 },

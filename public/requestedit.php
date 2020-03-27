@@ -106,12 +106,13 @@ $body=[
 'ReplaceText' => json_encode($arrayselecttext),
 'ReplaceSelect' => json_encode($arrayselect),
 ];
-$url='localhost:3000/toolget/updatewebsite';
+$url='http://192.168.1.13:3000/toolget/updatewebsite';
     $curl=curl_init($url);
     curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
     curl_setopt($curl, CURLOPT_HTTPHEADER, [
         'X-RapidAPI-Host: contextualwebsearch-websearch-v1.p.rapidapi.com',
-        'X-RapidAPI-Key: 7xxxxxxxxxxxxxxxxxxxxxxxxxxx'
+        'X-RapidAPI-Key: 7xxxxxxxxxxxxxxxxxxxxxxxxxxx',
+            'Authorization: '.$_SESSION['user_token']
     ]);
     curl_setopt($curl, CURLOPT_POST,1);
     curl_setopt($curl, CURLOPT_POSTFIELDS, http_build_query($body));

@@ -159,7 +159,7 @@ $(document).ready(function () {
     $("select.bot-send").change(function () {
         let select = $(this).children("option:selected").val();
         $.ajax({
-            'url': 'http://localhost:3000/toolget/getconfigtelbyid',
+            'url': 'http://http://192.168.1.13:3000/toolget/getconfigtelbyid',
             'method': 'GET',
             "headers": {
                 "Content-Type": "application/x-www-form-urlencoded"

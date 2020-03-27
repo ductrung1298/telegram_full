@@ -3,12 +3,13 @@
     $code=isset($_GET['code'])?($_GET['code']):'';
     if ($id!=0 && $code!='')
         {
-        $url='localhost:3000/telbot/getbot?id='.$id.'&code='.$code;
+        $url='http://192.168.1.13:3000/telbot/getbot?id='.$id.'&code='.$code;
         $curl=curl_init($url);
         curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
         curl_setopt($curl, CURLOPT_HTTPHEADER, [
             'X-RapidAPI-Host: contextualwebsearch-websearch-v1.p.rapidapi.com',
-            'X-RapidAPI-Key: 7xxxxxxxxxxxxxxxxxxxxxxxxxxx'
+            'X-RapidAPI-Key: 7xxxxxxxxxxxxxxxxxxxxxxxxxxx',
+            'Authorization: '.$_SESSION['user_token']
         ]);
         $response = json_decode(curl_exec($curl), true);
         $httpcode=curl_getinfo($curl,CURLINFO_HTTP_CODE);

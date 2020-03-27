@@ -2,12 +2,13 @@
 $id=isset($_GET['id'])?intval($_GET['id']):0;
 if ($id!=0)
 {
-$url='localhost:3000/telegram/getcontact?id='.$id;
+$url='http://192.168.1.13:3000/telegram/getcontact?id='.$id;
     $curl=curl_init($url);
     curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
     curl_setopt($curl, CURLOPT_HTTPHEADER, [
         'X-RapidAPI-Host: contextualwebsearch-websearch-v1.p.rapidapi.com',
-        'X-RapidAPI-Key: 7xxxxxxxxxxxxxxxxxxxxxxxxxxx'
+        'X-RapidAPI-Key: 7xxxxxxxxxxxxxxxxxxxxxxxxxxx',
+            'Authorization: '.$_SESSION['user_token']
     ]);
     $response=json_decode(curl_exec($curl), true);
     $httpcode=curl_getinfo($curl,CURLINFO_HTTP_CODE);
@@ -18,13 +19,14 @@ $url='localhost:3000/telegram/getcontact?id='.$id;
         header('Location: badrequest.php');
     else {
         if (isset($_GET['idgroup']))
-            $url2='localhost:3000/telegram/getusergroup?id='.$id.'&chat_id='.$_GET['idgroup'];
-        else $url2='localhost:3000/telegram/getusergroup?id='.$id.'&channel_id='.$_GET['idchannel'].'&access_hash='.$_GET['access_hash'];
+            $url2='http://192.168.1.13:3000/telegram/getusergroup?id='.$id.'&chat_id='.$_GET['idgroup'];
+        else $url2='http://192.168.1.13:3000/telegram/getusergroup?id='.$id.'&channel_id='.$_GET['idchannel'].'&access_hash='.$_GET['access_hash'];
         $curl2=curl_init($url2);
         curl_setopt($curl2, CURLOPT_RETURNTRANSFER, true);
         curl_setopt($curl2, CURLOPT_HTTPHEADER, [
             'X-RapidAPI-Host: contextualwebsearch-websearch-v1.p.rapidapi.com',
-            'X-RapidAPI-Key: 7xxxxxxxxxxxxxxxxxxxxxxxxxxx'
+            'X-RapidAPI-Key: 7xxxxxxxxxxxxxxxxxxxxxxxxxxx',
+            'Authorization: '.$_SESSION['user_token']
         ]);
         $response2=json_decode(curl_exec($curl2), true);
         curl_close($curl2);
@@ -113,13 +115,14 @@ else header('Location: badrequest.php');
                                                             <select class="kt-input groupcontact">
                                                                 <option value=-1>-Không sử dụng-</option>
                                                                 <?php
-                                                            $url3='localhost:3000/telegram/getlistgroupcontact?id='.$id;
+                                                            $url3='http://192.168.1.13:3000/telegram/getlistgroupcontact?id='.$id;
                                                             $curl3=curl_init($url3);
                                                             curl_setopt($curl3, CURLOPT_RETURNTRANSFER, true);
                                                             curl_setopt($curl3, CURLOPT_HTTPHEADER, [
                                                             'X-RapidAPI-Host:
                                                             contextualwebsearch-websearch-v1.p.rapidapi.com',
-                                                            'X-RapidAPI-Key: 7xxxxxxxxxxxxxxxxxxxxxxxxxxx'
+                                                            'X-RapidAPI-Key: 7xxxxxxxxxxxxxxxxxxxxxxxxxxx',
+            'Authorization: '.$_SESSION['user_token']
                                                             ]);
                                                             $response3=json_decode(curl_exec($curl3), true);
                                                             $httpcode3=curl_getinfo($curl3,CURLINFO_HTTP_CODE);

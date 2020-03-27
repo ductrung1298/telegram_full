@@ -7,12 +7,13 @@ $user_id=(isset($_GET['user_id'])?(!empty($_GET['user_id'])?intval($_GET['user_i
 $channel_id=(isset($_GET['channel_id'])?(!empty($_GET['channel_id'])?intval($_GET['channel_id']):0):0);
 $access_hash=(isset($_GET['access_hash'])?(!empty($_GET['access_hash'])?intval($_GET['access_hash']):0):0);
 if ($id!=0) {
-$url='localhost:3000/telegram/getHistory?id='.$id.'&type='.$type.'&chat_id='.$chat_id.'&user_id='.$user_id.'&access_hash='.$access_hash.'&channel_id='.$channel_id;
+$url='http://192.168.1.13:3000/telegram/getHistory?id='.$id.'&type='.$type.'&chat_id='.$chat_id.'&user_id='.$user_id.'&access_hash='.$access_hash.'&channel_id='.$channel_id;
 $curl=curl_init($url);
     curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
     curl_setopt($curl, CURLOPT_HTTPHEADER, [
         'X-RapidAPI-Host: contextualwebsearch-websearch-v1.p.rapidapi.com',
-        'X-RapidAPI-Key: 7xxxxxxxxxxxxxxxxxxxxxxxxxxx'
+        'X-RapidAPI-Key: 7xxxxxxxxxxxxxxxxxxxxxxxxxxx',
+            'Authorization: '.$_SESSION['user_token']
     ]);
     $response=json_decode(curl_exec($curl), true);
     $httpcode=curl_getinfo($curl,CURLINFO_HTTP_CODE);
@@ -75,11 +76,12 @@ else header('Location: badrequest.php');
                                 <?php
                                     if ($user_id !=0 && $access_hash!=0 )
                                     {
-                                        $user=curl_init('localhost:3000/telegram/getinfobyuserid?id='.$id.'&user_id='.$user_id.'&access_hash='.$access_hash);
+                                        $user=curl_init('http://192.168.1.13:3000/telegram/getinfobyuserid?id='.$id.'&user_id='.$user_id.'&access_hash='.$access_hash);
                                         curl_setopt($user, CURLOPT_RETURNTRANSFER, true);
                                         curl_setopt($user, CURLOPT_HTTPHEADER, [
                                             'X-RapidAPI-Host: contextualwebsearch-websearch-v1.p.rapidapi.com',
-                                            'X-RapidAPI-Key: 7xxxxxxxxxxxxxxxxxxxxxxxxxxx'
+                                            'X-RapidAPI-Key: 7xxxxxxxxxxxxxxxxxxxxxxxxxxx',
+            'Authorization: '.$_SESSION['user_token']
                                         ]);
                                         $info=json_decode(curl_exec($user), true);
                                         curl_close($user);
@@ -87,12 +89,13 @@ else header('Location: badrequest.php');
                                             echo '<label><font color="#33ccff"><b><big>'.$info['first_name'].'</big></b></font></label>';
                                         }
                                     else if ($chat_id!=0 ) {
-                                        $urlgroup='localhost:3000/telegram/getusergroup?id='.$id.'&chat_id='.$chat_id;
+                                        $urlgroup='http://192.168.1.13:3000/telegram/getusergroup?id='.$id.'&chat_id='.$chat_id;
                                         $curlgroup=curl_init($urlgroup);
                                         curl_setopt($curlgroup, CURLOPT_RETURNTRANSFER, true);
                                         curl_setopt($curlgroup, CURLOPT_HTTPHEADER, [
                                             'X-RapidAPI-Host: contextualwebsearch-websearch-v1.p.rapidapi.com',
-                                            'X-RapidAPI-Key: 7xxxxxxxxxxxxxxxxxxxxxxxxxxx'
+                                            'X-RapidAPI-Key: 7xxxxxxxxxxxxxxxxxxxxxxxxxxx',
+            'Authorization: '.$_SESSION['user_token']
                                         ]);
                                         $group=json_decode(curl_exec($curlgroup), true);
                                         curl_close($curlgroup);
@@ -173,11 +176,12 @@ else header('Location: badrequest.php');
                                                         </td>
                                         </tr>
                                         <?php
-                                        $curl2=curl_init('localhost:3000/telegram/getuserid?id='.$id);
+                                        $curl2=curl_init('http://192.168.1.13:3000/telegram/getuserid?id='.$id);
                                         curl_setopt($curl2, CURLOPT_RETURNTRANSFER, true);
                                         curl_setopt($curl2, CURLOPT_HTTPHEADER, [
                                             'X-RapidAPI-Host: contextualwebsearch-websearch-v1.p.rapidapi.com',
-                                            'X-RapidAPI-Key: 7xxxxxxxxxxxxxxxxxxxxxxxxxxx'
+                                            'X-RapidAPI-Key: 7xxxxxxxxxxxxxxxxxxxxxxxxxxx',
+            'Authorization: '.$_SESSION['user_token']
                                         ]);
                                         $response2=json_decode(curl_exec($curl2), true);
                                         curl_close($curl2);

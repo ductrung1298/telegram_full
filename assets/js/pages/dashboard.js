@@ -1706,7 +1706,7 @@ var KTDashboard = function() {
                     var output = '\
                         <div class="kt-user-card-v2">\
                             <div class="kt-user-card-v2__pic">\
-                                <img src="https://keenthemes.com/metronic/preview/assets/media/client-logos/logo' + img + '" alt="photo">\
+                                <img src="assets/media/client-logos/logo' + img + '" alt="photo">\
                             </div>\
                             <div class="kt-user-card-v2__details">\
                                 <a href="#" class="kt-user-card-v2__name">' + data.CompanyName + '</a>\
@@ -1721,6 +1721,8 @@ var KTDashboard = function() {
                 field: "ShipDate",
                 title: "Date",
                 width: 100,
+                type: "date",
+                format: 'MM/DD/YYYY',
                 template: function(data) {
                     return '<span class="kt-font-bold">' + data.ShipDate + '</span>';
                 }
@@ -1788,7 +1790,7 @@ var KTDashboard = function() {
 					if (number > 5) {
 						output = '<div class="kt-user-card-v2">\
 							<div class="kt-user-card-v2__pic">\
-								<img src="https://keenthemes.com/metronic/preview/assets/media/users/' + user_img + '" alt="photo">\
+								<img src="assets/media/users/' + user_img + '" alt="photo">\
 							</div>\
 							<div class="kt-user-card-v2__details">\
 								<a href="#" class="kt-user-card-v2__name">' + data.CompanyAgent + '</a>\

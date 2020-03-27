@@ -5,24 +5,26 @@
     // }
 ?>
 <?php 
-    $url='localhost:3000/toolget/getlistwebsite';
+    $url='http://192.168.1.13:3000/toolget/getlistwebsite';
     $curl=curl_init($url);
     curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
     curl_setopt($curl, CURLOPT_HTTPHEADER, [
         'X-RapidAPI-Host: contextualwebsearch-websearch-v1.p.rapidapi.com',
-        'X-RapidAPI-Key: 7xxxxxxxxxxxxxxxxxxxxxxxxxxx'
+        'X-RapidAPI-Key: 7xxxxxxxxxxxxxxxxxxxxxxxxxxx',
+            'Authorization: '.$_SESSION['user_token']
     ]);
     $response = json_decode(curl_exec($curl), true);
     curl_close($curl);
     $news = ($response);
 ?>
 <?php 
-    $url='localhost:3000/toolget/listwordpress';
+    $url='http://192.168.1.13:3000/toolget/listwordpress';
     $curl=curl_init($url);
     curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
     curl_setopt($curl, CURLOPT_HTTPHEADER, [
         'X-RapidAPI-Host: contextualwebsearch-websearch-v1.p.rapidapi.com',
-        'X-RapidAPI-Key: 7xxxxxxxxxxxxxxxxxxxxxxxxxxx'
+        'X-RapidAPI-Key: 7xxxxxxxxxxxxxxxxxxxxxxxxxxx',
+            'Authorization: '.$_SESSION['user_token']
     ]);
     $response2 = json_decode(curl_exec($curl), true);
     curl_close($curl);
@@ -721,12 +723,13 @@
                                         </thead>
                                         <tbody>
                                             <?php 
-                                                                    $url='localhost:3000/toolget/listwordpress';
+                                                                    $url='http://192.168.1.13:3000/toolget/listwordpress';
                                                                     $curl=curl_init($url);
                                                                     curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
                                                                     curl_setopt($curl, CURLOPT_HTTPHEADER, [
                                                                         'X-RapidAPI-Host: contextualwebsearch-websearch-v1.p.rapidapi.com',
-                                                                        'X-RapidAPI-Key: 7xxxxxxxxxxxxxxxxxxxxxxxxxxx'
+                                                                        'X-RapidAPI-Key: 7xxxxxxxxxxxxxxxxxxxxxxxxxxx',
+            'Authorization: '.$_SESSION['user_token']
                                                                     ]);
                                                                     $response2 = json_decode(curl_exec($curl), true);
                                                                     curl_close($curl);

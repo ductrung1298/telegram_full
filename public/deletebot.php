@@ -3,12 +3,13 @@ $id=isset($_GET['id'])?intval($_GET['id']):0;
 $code=isset($_GET['code'])?($_GET['code']):'';
 if ($id!=0 && $code!='')
 {
-    $url='localhost:3000/telbot/deletebot';
+    $url='http://192.168.1.13:3000/telbot/deletebot';
         $curl=curl_init($url);
         curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
         curl_setopt($curl, CURLOPT_HTTPHEADER, [
             'X-RapidAPI-Host: contextualwebsearch-websearch-v1.p.rapidapi.com',
-            'X-RapidAPI-Key: 7xxxxxxxxxxxxxxxxxxxxxxxxxxx'
+            'X-RapidAPI-Key: 7xxxxxxxxxxxxxxxxxxxxxxxxxxx',
+            'Authorization: '.$_SESSION['user_token']
         ]);
         curl_setopt($curl, CURLOPT_CUSTOMREQUEST, "DELETE");
         curl_setopt($curl, CURLOPT_POSTFIELDS, http_build_query(["id" => $id, "code" => $code]));

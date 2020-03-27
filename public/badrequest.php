@@ -11,13 +11,10 @@
                     <h3 class="kt-subheader__title">
                         Dashboard </h3>
                     <div class="kt-subheader__breadcrumbs">
-                        <a href="#" class="kt-subheader__breadcrumbs-home"><i class="flaticon2-shelter"></i></a>
+                        <a href="dashboard.php" class="kt-subheader__breadcrumbs-home"><i class="flaticon2-shelter"></i></a>
                         <span class="kt-subheader__breadcrumbs-separator"></span>
-                        <a href="index.php" class="kt-subheader__breadcrumbs-link">
-                            Crawler </a>
-                        <span class="kt-subheader__breadcrumbs-separator"></span>
-                        <a href="telegram.php" class="kt-subheader__breadcrumbs-link">
-                            Telegram </a>
+                        <a href="#" class="kt-subheader__breadcrumbs-link">
+                            Lỗi </a>
                     </div>
                 </div>
             </div>
@@ -29,12 +26,12 @@
                 <div class="kt-portlet__head">
                     <div class="kt-portlet__head-toolbar">
                         <ul class="nav nav-tabs nav-tabs-line nav-tabs-line-success nav-tabs-line-2x" role="tablist">
-                            <li class="nav-item">
+                            <!-- <li class="nav-item">
                                 <a class="nav-link"
                                     href="index.php" role="tab" aria-selected="false">
                                     <i class="flaticon-bell"></i>Trang chủ
                                 </a>
-                            </li>
+                            </li> -->
                         </ul>
                     </div>
                 </div>
@@ -44,7 +41,7 @@
                         <h1 align="center">Đã xảy ra một số lỗi</h1>
                         <h1 align="center">Vui lòng thử lại sau</h1>
                         <div class="col-lg-12 mt-5 text-center bt-end">
-                            <a href="index.php" class="btn btn-success">Quay về trang chủ</a>
+                            <a href="dashboard.php" class="btn btn-success"><i class="flaticon-home-1"></i> Quay về trang chủ</a>
                         </div>
                         <hr>
                         </div>
