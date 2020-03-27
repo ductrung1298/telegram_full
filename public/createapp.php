@@ -6,7 +6,7 @@
             'api_hash' => $_POST['api_hash'],
             'api_id' => $_POST['api_id']
         ];
-        $url='http://192.168.1.13:3000/telegram/addusertelegram';
+        $url='http://192.168.1.13:3000/telegram/add_user_telegram';
         $curl=curl_init($url);
 
         curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
@@ -29,7 +29,7 @@
             'id'=> $_POST['id'],
             'code' => $_POST['code'],
         ];
-        $url='http://192.168.1.13:3000/telegram/authsendcode';
+        $url='http://192.168.1.13:3000/telegram/send_code';
         $curl=curl_init($url);
         curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
         curl_setopt($curl, CURLOPT_HTTPHEADER, [
@@ -108,7 +108,7 @@
             "at"=> $_POST['at'],
             "hours"=> $_POST['hours'],
         ];
-        $url="http://192.168.1.13:3000/telegram/sendMessage";
+        $url="http://192.168.1.13:3000/telegram/send_message";
         $curl=curl_init($url);
         curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
         curl_setopt($curl, CURLOPT_HTTPHEADER, [
@@ -129,7 +129,7 @@
         $curl = curl_init();
 
         curl_setopt_array($curl, array(
-        CURLOPT_URL => "http://192.168.1.13:3000/telegram/getlistgroupcontact?idgroupcontact=" . $_POST['idgroup'],
+        CURLOPT_URL => "http://192.168.1.13:3000/telegram/get_contact?idgroupcontact=" . $_POST['idgroup'],
         CURLOPT_RETURNTRANSFER => true,
         CURLOPT_ENCODING => "",
         CURLOPT_MAXREDIRS => 10,
@@ -154,7 +154,7 @@
             "user_id" => $_POST["user_id"],
             "access_hash" => $_POST["access_hash"]
         ];
-        $url="http://192.168.1.13:3000/telegram/joingroup";
+        $url="http://192.168.1.13:3000/telegram/add_friend_to_group_chat";
         $curl=curl_init($url);
         curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
         curl_setopt($curl, CURLOPT_HTTPHEADER, [
@@ -180,7 +180,7 @@
             "access_hash" => $_POST['access_hash'],
             "phone"=> $_POST['phone']
         ];
-        $url="http://192.168.1.13:3000/telegram/pushgroupcontact";
+        $url="http://192.168.1.13:3000/telegram/add_friend_to_contact";
         $curl=curl_init($url);
         curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
         curl_setopt($curl, CURLOPT_HTTPHEADER, [
@@ -201,7 +201,7 @@
             "id" => $_POST['id'],
             "name" => $_POST["name"],
         ];
-        $url="http://192.168.1.13:3000/telegram/addgroupcontact";
+        $url="http://192.168.1.13:3000/telegram/add_contact";
         $curl=curl_init($url);
         curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
         curl_setopt($curl, CURLOPT_HTTPHEADER, [

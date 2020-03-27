@@ -1,4 +1,5 @@
 <?php 
+    include 'header.php';
     $id=isset($_GET['id'])?intval($_GET['id']):0;
     $code=isset($_GET['code'])?($_GET['code']):'';
     if ($id!=0 && $code!='')
@@ -21,8 +22,6 @@
     }
     else header('Location: badrequest.php');
 ?>
-<?php
-    include 'header.php';?>
 <!-- end:: Header -->
 <div class="kt-body kt-grid__item kt-grid__item--fluid kt-grid kt-grid--hor kt-grid--stretch" id="kt_body">
     <div class="kt-content kt-content--fit-top  kt-grid__item kt-grid__item--fluid kt-grid kt-grid--hor"
