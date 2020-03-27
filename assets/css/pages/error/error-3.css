@@ -15,7 +15,7 @@
     -webkit-text-stroke-color: white;
     -moz-text-stroke-color: white;
     text-stroke-color: white; }
-    @media screen\0 {
+    @media screen and (-ms-high-contrast: active), (-ms-high-contrast: none) {
       .kt-error-v3 .kt-error_container .kt-error_number > h1 {
         color: white; } }
   .kt-error-v3 .kt-error_container .kt-error_title {

@@ -1,12 +1,13 @@
 <?php 
     $id=isset($_GET['id'])?intval($_GET['id']):0;
     if ($id!=0){
-    $url='localhost:3000/toolget/getinfowebsite?id='.$id;
+    $url='http://192.168.1.13:3000/toolget/getinfowebsite?id='.$id;
     $curl=curl_init($url);
     curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
     curl_setopt($curl, CURLOPT_HTTPHEADER, [
         'X-RapidAPI-Host: contextualwebsearch-websearch-v1.p.rapidapi.com',
-        'X-RapidAPI-Key: 7xxxxxxxxxxxxxxxxxxxxxxxxxxx'
+        'X-RapidAPI-Key: 7xxxxxxxxxxxxxxxxxxxxxxxxxxx',
+            'Authorization: '.$_SESSION['user_token']
     ]);
     $response = json_decode(curl_exec($curl), true);
     $httpcode=curl_getinfo($curl,CURLINFO_HTTP_CODE);
@@ -18,12 +19,13 @@
 } else header('Location: badrequest.php');
 ?>
 <?php 
-    $url='localhost:3000/toolget/listwordpress';
+    $url='http://192.168.1.13:3000/toolget/listwordpress';
     $curl=curl_init($url);
     curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
     curl_setopt($curl, CURLOPT_HTTPHEADER, [
         'X-RapidAPI-Host: contextualwebsearch-websearch-v1.p.rapidapi.com',
-        'X-RapidAPI-Key: 7xxxxxxxxxxxxxxxxxxxxxxxxxxx'
+        'X-RapidAPI-Key: 7xxxxxxxxxxxxxxxxxxxxxxxxxxx',
+            'Authorization: '.$_SESSION['user_token']
     ]);
     $response2 = json_decode(curl_exec($curl), true);
     curl_close($curl);

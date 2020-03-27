@@ -1,16 +1,19 @@
 <?php
+    session_start();
     if ($_POST['function']=="addaccount") {
         $body=[
             'phone'=> $_POST['phone'],
             'api_hash' => $_POST['api_hash'],
             'api_id' => $_POST['api_id']
         ];
-        $url='localhost:3000/telegram/addusertelegram';
+        $url='http://192.168.1.13:3000/telegram/addusertelegram';
         $curl=curl_init($url);
+
         curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
         curl_setopt($curl, CURLOPT_HTTPHEADER, [
             'X-RapidAPI-Host: contextualwebsearch-websearch-v1.p.rapidapi.com',
-            'X-RapidAPI-Key: 7xxxxxxxxxxxxxxxxxxxxxxxxxxx'
+            'X-RapidAPI-Key: 7xxxxxxxxxxxxxxxxxxxxxxxxxxx',
+            'Authorization: '.$_SESSION['user_token']
         ]);
         curl_setopt($curl, CURLOPT_POST,1);
         curl_setopt($curl, CURLOPT_POSTFIELDS, http_build_query($body));
@@ -26,12 +29,13 @@
             'id'=> $_POST['id'],
             'code' => $_POST['code'],
         ];
-        $url='localhost:3000/telegram/authsendcode';
+        $url='http://192.168.1.13:3000/telegram/authsendcode';
         $curl=curl_init($url);
         curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
         curl_setopt($curl, CURLOPT_HTTPHEADER, [
             'X-RapidAPI-Host: contextualwebsearch-websearch-v1.p.rapidapi.com',
-            'X-RapidAPI-Key: 7xxxxxxxxxxxxxxxxxxxxxxxxxxx'
+            'X-RapidAPI-Key: 7xxxxxxxxxxxxxxxxxxxxxxxxxxx',
+            'Authorization: '.$_SESSION['user_token']
         ]);
         curl_setopt($curl, CURLOPT_POST,1);
         curl_setopt($curl, CURLOPT_POSTFIELDS, http_build_query($body));
@@ -45,12 +49,13 @@
         $body=[
             "token" => $_POST['token'],
         ];
-        $url="localhost:3000/telbot/addbot";
+        $url="http://192.168.1.13:3000/telbot/addbot";
         $curl=curl_init($url);
         curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
         curl_setopt($curl, CURLOPT_HTTPHEADER, [
             'X-RapidAPI-Host: contextualwebsearch-websearch-v1.p.rapidapi.com',
-            'X-RapidAPI-Key: 7xxxxxxxxxxxxxxxxxxxxxxxxxxx'
+            'X-RapidAPI-Key: 7xxxxxxxxxxxxxxxxxxxxxxxxxxx',
+            'Authorization: '.$_SESSION['user_token']
         ]);
         curl_setopt($curl, CURLOPT_POST,1);
         curl_setopt($curl, CURLOPT_POSTFIELDS, http_build_query($body));
@@ -71,12 +76,13 @@
             "connect" => $_POST['connect'],
             "autosendmsg" => $_POST['autosendmsg'],
         ];
-        $url="localhost:3000/telbot/updatebot";
+        $url="http://192.168.1.13:3000/telbot/updatebot";
         $curl=curl_init($url);
         curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
         curl_setopt($curl, CURLOPT_HTTPHEADER, [
             'X-RapidAPI-Host: contextualwebsearch-websearch-v1.p.rapidapi.com',
-            'X-RapidAPI-Key: 7xxxxxxxxxxxxxxxxxxxxxxxxxxx'
+            'X-RapidAPI-Key: 7xxxxxxxxxxxxxxxxxxxxxxxxxxx',
+            'Authorization: '.$_SESSION['user_token']
         ]);
         curl_setopt($curl, CURLOPT_POST,1);
         curl_setopt($curl, CURLOPT_POSTFIELDS, http_build_query($body));
@@ -102,12 +108,13 @@
             "at"=> $_POST['at'],
             "hours"=> $_POST['hours'],
         ];
-        $url="localhost:3000/telegram/sendMessage";
+        $url="http://192.168.1.13:3000/telegram/sendMessage";
         $curl=curl_init($url);
         curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
         curl_setopt($curl, CURLOPT_HTTPHEADER, [
             'X-RapidAPI-Host: contextualwebsearch-websearch-v1.p.rapidapi.com',
-            'X-RapidAPI-Key: 7xxxxxxxxxxxxxxxxxxxxxxxxxxx'
+            'X-RapidAPI-Key: 7xxxxxxxxxxxxxxxxxxxxxxxxxxx',
+            'Authorization: '.$_SESSION['user_token']
         ]);
         curl_setopt($curl, CURLOPT_POST,1);
         curl_setopt($curl, CURLOPT_POSTFIELDS, http_build_query($body));
@@ -118,16 +125,25 @@
         else echo null;
     }
     if ($_POST['function']=="getlistgroup") {
+        
         $curl = curl_init();
+
         curl_setopt_array($curl, array(
-          CURLOPT_URL => "localhost:3000/telegram/getlistgroupcontact?idgroup=".$_POST['idgroup'],
-          CURLOPT_RETURNTRANSFER => true,
-          CURLOPT_MAXREDIRS => 10,
-          CURLOPT_FOLLOWLOCATION => true,
-          CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
-          CURLOPT_CUSTOMREQUEST => "GET",
+        CURLOPT_URL => "http://192.168.1.13:3000/telegram/getlistgroupcontact?idgroupcontact=" . $_POST['idgroup'],
+        CURLOPT_RETURNTRANSFER => true,
+        CURLOPT_ENCODING => "",
+        CURLOPT_MAXREDIRS => 10,
+        CURLOPT_TIMEOUT => 0,
+        CURLOPT_FOLLOWLOCATION => true,
+        CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+        CURLOPT_CUSTOMREQUEST => "GET",
+        CURLOPT_HTTPHEADER => array(
+            'Authorization: '.$_SESSION['user_token']
+        ),
         ));
+
         $response = curl_exec($curl);
+
         curl_close($curl);
         echo $response;
     }
@@ -138,12 +154,13 @@
             "user_id" => $_POST["user_id"],
             "access_hash" => $_POST["access_hash"]
         ];
-        $url="localhost:3000/telegram/joingroup";
+        $url="http://192.168.1.13:3000/telegram/joingroup";
         $curl=curl_init($url);
         curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
         curl_setopt($curl, CURLOPT_HTTPHEADER, [
             'X-RapidAPI-Host: contextualwebsearch-websearch-v1.p.rapidapi.com',
-            'X-RapidAPI-Key: 7xxxxxxxxxxxxxxxxxxxxxxxxxxx'
+            'X-RapidAPI-Key: 7xxxxxxxxxxxxxxxxxxxxxxxxxxx',
+            'Authorization: '.$_SESSION['user_token']
         ]);
         curl_setopt($curl, CURLOPT_POST,1);
         curl_setopt($curl, CURLOPT_POSTFIELDS, http_build_query($body));
@@ -163,12 +180,13 @@
             "access_hash" => $_POST['access_hash'],
             "phone"=> $_POST['phone']
         ];
-        $url="localhost:3000/telegram/pushgroupcontact";
+        $url="http://192.168.1.13:3000/telegram/pushgroupcontact";
         $curl=curl_init($url);
         curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
         curl_setopt($curl, CURLOPT_HTTPHEADER, [
             'X-RapidAPI-Host: contextualwebsearch-websearch-v1.p.rapidapi.com',
-            'X-RapidAPI-Key: 7xxxxxxxxxxxxxxxxxxxxxxxxxxx'
+            'X-RapidAPI-Key: 7xxxxxxxxxxxxxxxxxxxxxxxxxxx',
+            'Authorization: '.$_SESSION['user_token']
         ]);
         curl_setopt($curl, CURLOPT_POST,1);
         curl_setopt($curl, CURLOPT_POSTFIELDS, http_build_query($body));
@@ -183,12 +201,13 @@
             "id" => $_POST['id'],
             "name" => $_POST["name"],
         ];
-        $url="localhost:3000/telegram/addgroupcontact";
+        $url="http://192.168.1.13:3000/telegram/addgroupcontact";
         $curl=curl_init($url);
         curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
         curl_setopt($curl, CURLOPT_HTTPHEADER, [
             'X-RapidAPI-Host: contextualwebsearch-websearch-v1.p.rapidapi.com',
-            'X-RapidAPI-Key: 7xxxxxxxxxxxxxxxxxxxxxxxxxxx'
+            'X-RapidAPI-Key: 7xxxxxxxxxxxxxxxxxxxxxxxxxxx',
+            'Authorization: '.$_SESSION['user_token']
         ]);
         curl_setopt($curl, CURLOPT_POST,1);
         curl_setopt($curl, CURLOPT_POSTFIELDS, http_build_query($body));

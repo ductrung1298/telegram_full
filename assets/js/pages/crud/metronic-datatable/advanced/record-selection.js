@@ -10,7 +10,7 @@ var KTDatatableRecordSelectionDemo = function() {
             type: 'remote',
             source: {
                 read: {
-                    url: 'https://keenthemes.com/metronic/themes/themes/metronic/dist/preview/inc/api/datatables/demos/default.php',
+                    url: 'https://keenthemes.com/metronic/tools/preview/api/datatables/demos/default.php',
                 },
             },
             pageSize: 10,
@@ -39,9 +39,6 @@ var KTDatatableRecordSelectionDemo = function() {
             title: '#',
             sortable: false,
             width: 20,
-            selector: {
-                class: 'kt-checkbox--solid'
-            },
             textAlign: 'center',
         }, {
             field: 'OrderID',

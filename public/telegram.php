@@ -69,13 +69,13 @@
                                                         <input type="text" class="form-control phone" name="phone"
                                                             placeholder="+84xxxxxxxxx"
                                                             oninvalid="this.setCustomValidity('Trường số điện thoại không thể để rỗng')"
-                                                            oninput="setCustomValidity('')" required="">
+                                                            oninput="setCustomValidity('')" required="" value="+84966315840">
                                                     </div>
                                                     <div class="col-lg-5"> </div>
                                                     <div class="col-lg-5 mt-2">
                                                         <label>API_ID:</label>
                                                         <input type="text" class="form-control api_id" name="api_id"
-                                                            placeholder="xxxxxxx">
+                                                            placeholder="xxxxxxx" value="1203697">
                                                     </div>
                                                     <div class="col-lg-5 mt-2">
                                                         <label>API_HASH:</label>
@@ -133,12 +133,14 @@
                                             </thead>
                                             <tbody>
                                                 <?php 
-                                                                    $url='localhost:3000/telegram/getlistuser';
+                                                                    $url='http://192.168.1.13:3000/telegram/getlistuser';
                                                                     $curl=curl_init($url);
                                                                     curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
                                                                     curl_setopt($curl, CURLOPT_HTTPHEADER, [
                                                                         'X-RapidAPI-Host: contextualwebsearch-websearch-v1.p.rapidapi.com',
-                                                                        'X-RapidAPI-Key: 7xxxxxxxxxxxxxxxxxxxxxxxxxxx'
+                                                                        'X-RapidAPI-Key: 7xxxxxxxxxxxxxxxxxxxxxxxxxxx',
+            'Authorization: '.$_SESSION['user_token'],
+                                                                        'Authorization: '.$_SESSION['user_token']
                                                                     ]);
                                                                     $response2 = json_decode(curl_exec($curl), true);
                                                                     curl_close($curl);
@@ -353,12 +355,13 @@
                                         </thead>
                                         <tbody>
                                             <?php 
-                                                $bot='localhost:3000/telbot/get';
+                                                $bot='http://192.168.1.13:3000/telbot/get';
                                                 $cbot=curl_init($bot);
                                                 curl_setopt($cbot, CURLOPT_RETURNTRANSFER, true);
                                                 curl_setopt($cbot, CURLOPT_HTTPHEADER, [
                                                     'X-RapidAPI-Host: contextualwebsearch-websearch-v1.p.rapidapi.com',
-                                                    'X-RapidAPI-Key: 7xxxxxxxxxxxxxxxxxxxxxxxxxxx'
+                                                    'X-RapidAPI-Key: 7xxxxxxxxxxxxxxxxxxxxxxxxxxx',
+            'Authorization: '.$_SESSION['user_token']
                                                 ]);
                                                 $resbot = json_decode(curl_exec($cbot), true);
                                                 curl_close($cbot);

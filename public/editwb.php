@@ -2,12 +2,13 @@
     $id=isset($_GET['id'])?intval($_GET['id']):0;
     if ($id!=0)
     {
-    $url='localhost:3000/toolget/getinfowebsite?id='.$id;
+    $url='http://192.168.1.13:3000/toolget/getinfowebsite?id='.$id;
     $curl=curl_init($url);
     curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
     curl_setopt($curl, CURLOPT_HTTPHEADER, [
         'X-RapidAPI-Host: contextualwebsearch-websearch-v1.p.rapidapi.com',
-        'X-RapidAPI-Key: 7xxxxxxxxxxxxxxxxxxxxxxxxxxx'
+        'X-RapidAPI-Key: 7xxxxxxxxxxxxxxxxxxxxxxxxxxx',
+            'Authorization: '.$_SESSION['user_token']
     ]);
     $response = json_decode(curl_exec($curl), true);
     $httpcode=curl_getinfo($curl,CURLINFO_HTTP_CODE);
@@ -20,12 +21,13 @@
 else header('Location: badrequest.php');
 ?>
 <?php 
-    $url='localhost:3000/toolget/listwordpress';
+    $url='http://192.168.1.13:3000/toolget/listwordpress';
     $curl=curl_init($url);
     curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
     curl_setopt($curl, CURLOPT_HTTPHEADER, [
         'X-RapidAPI-Host: contextualwebsearch-websearch-v1.p.rapidapi.com',
-        'X-RapidAPI-Key: 7xxxxxxxxxxxxxxxxxxxxxxxxxxx'
+        'X-RapidAPI-Key: 7xxxxxxxxxxxxxxxxxxxxxxxxxxx',
+            'Authorization: '.$_SESSION['user_token']
     ]);
     $listwp = json_decode(curl_exec($curl), true);
     curl_close($curl);
@@ -45,11 +47,11 @@ else header('Location: badrequest.php');
                     <div class="kt-subheader__breadcrumbs">
                         <a href="#" class="kt-subheader__breadcrumbs-home"><i class="flaticon2-shelter"></i></a>
                         <span class="kt-subheader__breadcrumbs-separator"></span>
-                        <a href="index.php" class="kt-subheader__breadcrumbs-link">
-                            Crawler </a>
+                        <a href="crawb-status.php" class="kt-subheader__breadcrumbs-link">
+                            Trạng thái </a>
                         <span class="kt-subheader__breadcrumbs-separator"></span>
-                        <a href="telegram.php" class="kt-subheader__breadcrumbs-link">
-                            Telegram </a>
+                        <a href="#" class="kt-subheader__breadcrumbs-link">
+                            Cập nhật </a>
 
                     </div>
                 </div>
@@ -68,19 +70,11 @@ else header('Location: badrequest.php');
                     <div class="kt-portlet__head-toolbar">
                         <ul class="nav nav-tabs nav-tabs-line nav-tabs-line-success nav-tabs-line-2x" role="tablist">
                             <li class="nav-item">
-                                <a class="nav-link"
-                                    href="index.php" role="tab" aria-selected="false">
-                                    <i class="flaticon-bell"></i>Trang chủ
-                                </a>
-                            </li>
-                            <li class="nav-item">
                                 <a class="nav-link active" data-toggle="tab"
                                     href="#kt_portlet_base_demo_1_1_tab_content" role="tab" aria-selected="true">
                                     <i class="flaticon-bell"></i>Thay đổi thông tin cấu hình website
                                 </a>
                             </li>
-
-
                         </ul>
                     </div>
                 </div>
@@ -520,7 +514,7 @@ else header('Location: badrequest.php');
                                                     <div class="row">
                                                         <div class="col-lg-12 text-center">
                                                             <button type="submit" class="btn btn-success">Lưu</button>
-                                                            <button type="reset" class="btn btn-secondary">Huỷ</button>
+                                                            <a href="crawb-status.php" class="btn btn-secondary">Huỷ</a>
                                                         </div>
                                                     </div>
                                                 </div>

@@ -6,3 +6,11 @@ body {
 .display-block {
     display: block!important;
 }
+
+.logo_web {
+    max-width: 2em;
+}
+
+/* div#kt_header {
+    background-color: #086591;
+} */

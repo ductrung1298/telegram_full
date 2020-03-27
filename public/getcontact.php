@@ -1,32 +1,57 @@
 <?php
-date_default_timezone_set('Asia/Ho_Chi_Minh');
-$id=isset($_GET['id'])?intval($_GET['id']):0;
-if ($id!=0)
-{
-$url='localhost:3000/telegram/getcontact?id='.$id;
-    $curl=curl_init($url);
-    curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
-    curl_setopt($curl, CURLOPT_HTTPHEADER, [
-        'X-RapidAPI-Host: contextualwebsearch-websearch-v1.p.rapidapi.com',
-        'X-RapidAPI-Key: 7xxxxxxxxxxxxxxxxxxxxxxxxxxx'
-    ]);
-    $response=json_decode(curl_exec($curl), true);
-    $httpcode=curl_getinfo($curl,CURLINFO_HTTP_CODE);
-    curl_close($curl);
-    if ($httpcode==500)
-            header('Location: loginerror.php');
-    else if ($httpcode!=200)
-        header('Location: badrequest.php');
-    else 
-        include 'header.php';
-}
-else header('Location: badrequest.php');
+    include 'header.php';
+    date_default_timezone_set('Asia/Ho_Chi_Minh');
+    $id = isset($_GET['id']) ? intval($_GET['id']) : 0;
+    if ($id != 0)
+    {
+    $url='http://192.168.1.13:3000/telegram/getcontact?id='.$id;
+        $curl = curl_init($url);
+        curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($curl, CURLOPT_HTTPHEADER, [
+            'X-RapidAPI-Host: contextualwebsearch-websearch-v1.p.rapidapi.com',
+            'X-RapidAPI-Key: 7xxxxxxxxxxxxxxxxxxxxxxxxxxx',
+            'Authorization: ' . $_SESSION['user_token']
+        ]);
+        $response = json_decode(curl_exec($curl), true);
+        $httpcode = curl_getinfo($curl,CURLINFO_HTTP_CODE);
+
+        if ($response == null ) {
+            $host  = $_SERVER['HTTP_HOST'];
+            $uri   = rtrim(dirname($_SERVER['PHP_SELF']), '/\\');
+            $extra = 'loginerror.php';
+            echo("<script>window.location.href='http://". $host.$uri.'/'.$extra."'</script>;");
+            exit;
+        }
+        curl_close($curl);
+        if ($httpcode==500) {
+            $host  = $_SERVER['HTTP_HOST'];
+            $uri   = rtrim(dirname($_SERVER['PHP_SELF']), '/\\');
+            $extra = 'loginerror.php';
+            echo("<script>window.location.href='http://". $host.$uri.'/'.$extra."'</script>;");
+            exit;
+        }   
+        else if ($httpcode!=200) {
+            $host  = $_SERVER['HTTP_HOST'];
+            $uri   = rtrim(dirname($_SERVER['PHP_SELF']), '/\\');
+            $extra = 'badrequest.php';
+            echo("<script>window.location.href='http://". $host.$uri.'/'.$extra."'</script>;");
+            exit;
+        }
+            
+    }
+    else {
+        $host  = $_SERVER['HTTP_HOST'];
+            $uri   = rtrim(dirname($_SERVER['PHP_SELF']), '/\\');
+            $extra = 'badrequest.php';
+            echo("<script>window.location.href='http://". $host.$uri.'/'.$extra."'</script>;");
+            exit;
+    }
 ?>
 <div class="kt-body kt-grid__item kt-grid__item--fluid kt-grid kt-grid--hor kt-grid--stretch" id="kt_body">
     <div class="kt-content kt-content--fit-top  kt-grid__item kt-grid__item--fluid kt-grid kt-grid--hor"
         id="kt_content">
         <!-- begin:: Subheader -->
-        <div class="kt-subheader   kt-grid__item" id="kt_subheader">
+        <div class="kt-subheader  mb-5 kt-grid__item" id="kt_subheader">
             <div class="kt-container ">
                 <div class="kt-subheader__main">
                     <h3 class="kt-subheader__title">
@@ -34,11 +59,11 @@ else header('Location: badrequest.php');
                     <div class="kt-subheader__breadcrumbs">
                         <a href="#" class="kt-subheader__breadcrumbs-home"><i class="flaticon2-shelter"></i></a>
                         <span class="kt-subheader__breadcrumbs-separator"></span>
-                        <a href="index.php" class="kt-subheader__breadcrumbs-link">
-                            Crawler </a>
+                        <a href="add-account-tool-telegram.php" class="kt-subheader__breadcrumbs-link">
+                            Tài khoản </a>
                         <span class="kt-subheader__breadcrumbs-separator"></span>
-                        <a href="telegram.php" class="kt-subheader__breadcrumbs-link">
-                            Telegram </a>
+                        <a href="#" class="kt-subheader__breadcrumbs-link">
+                            Danh bạ </a>
                     </div>
                 </div>
             </div>
@@ -51,26 +76,15 @@ else header('Location: badrequest.php');
                     <div class="kt-portlet__head-toolbar">
                         <ul class="nav nav-tabs nav-tabs-line nav-tabs-line-success nav-tabs-line-2x" role="tablist">
                             <li class="nav-item">
-                                <a class="nav-link" href="telegram.php" role="tab" aria-selected="false">
-                                    <i class="flaticon-bell"></i>Tài khoản
-                                </a>
-                            </li>
-                            <li class="nav-item">
                                 <a class="nav-link active" data-toggle="tab"
                                     href="#kt_portlet_base_demo_1_1_tab_content" role="tab" aria-selected="true">
-                                    <i class="flaticon-bell"></i>Danh bạ
+                                    <i class="flaticon2-group"></i>Danh bạ
                                 </a>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link" data-toggle="tab" href="#kt_portlet_base_demo_1_2_tab_content"
                                     role="tab" aria-selected="false">
-                                    <i class="flaticon-bell"></i> Thêm danh bạ
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" data-toggle="tab" href="#kt_portlet_base_demo_1_3_tab_content"
-                                    role="tab" aria-selected="false">
-                                    <i class="flaticon-bell"></i> Thêm nhóm người dùng
+                                    <i class="flaticon-users"></i> Thêm người dùng vào danh bạ
                                 </a>
                             </li>
                         </ul>
@@ -81,85 +95,70 @@ else header('Location: badrequest.php');
                         <div class="tab-pane active " id="kt_portlet_base_demo_1_1_tab_content" role="tabpanel">
                             <div class="kt-portlet__body">
                                 <div class="row ">
+                                    <div class="col-12">
+                                        <div class="d-flex justify-content-end">
+                                            <button type="button" class="btn btn-label-instagram" data-toggle="modal" data-target="#exampleModalCenter">
+                                            <i class="fa fa-book"></i> Thêm danh bạ
+                                            </button>
+                                        </div>
+                                    </div>
                                     <div class="kt-section col-12">
                                         <span class="kt-section__info">
-                                            Nhóm người dùng
+                                            DANH BẠ
                                         </span>
-                                        <div class="kt-section__content">
-                                            <table class="table">
-                                                <thead>
-                                                    <tr>
-                                                        <th>#</th>
-                                                        <th>Tên nhóm người dùng</th>
-                                                        <th>Số lượng thành viên</th>
-                                                        <th>Ngày tạo</th>
-                                                    </tr>
-                                                </thead>
-                                                <tbody>
-                                                    <?php
-                                                    $url2='localhost:3000/telegram/getlistgroupcontact?id='.$id;
-                                                    $curl2=curl_init($url2);
-                                                    curl_setopt($curl2, CURLOPT_RETURNTRANSFER, true);
-                                                    curl_setopt($curl2, CURLOPT_HTTPHEADER, [
-                                                    'X-RapidAPI-Host: contextualwebsearch-websearch-v1.p.rapidapi.com',
-                                                    'X-RapidAPI-Key: 7xxxxxxxxxxxxxxxxxxxxxxxxxxx'
-                                                    ]);
-                                                    $response2=json_decode(curl_exec($curl2), true);
-                                                    $httpcode2=curl_getinfo($curl2,CURLINFO_HTTP_CODE);
-                                                    curl_close($curl2);
-                                                    if (isset($response2))
-                                                    foreach($response2 as $index => $list) {
-                                                        echo '<tr>
-                                                            <th scope="row">'.((int)$index+1).'</th>
-                                                            <td>
-                                                                <a href="groupcontact.php?id='.$list["Id"].'&user='.$id.'" >'.str_replace("<","&lt;",$list['Name']).'</a>
-                                                                </td>
-                                                            <td><label>'.$list["length"].'</label></td>
-                                                            <td><label>'.date("d/M/Y h:i:s",strtotime($list["createAt"])).'</label></td>
-                                                        </tr>    
-                                                                ';
-                                                        }
-                                                    ?>
-                                                </tbody>
-                                            </table>
-                                        </div>
-                                        <div class="kt-separator kt-separator--border-dashed kt-separator--space-lg kt-separator--portlet-fit">
+                                        <div class="tab-pane active" id="kt_widget4_top10_rating">
+                                        <div class="kt-scroll" data-scroll="true" data-height="400" style="height: 400px;">
+                                            <div class="kt-list-timeline">
+                                                <div class="table-responsive">
+                                                    <div class="kt-section__content">
+                                                        <table class="table">
+                                                            <thead>
+                                                                <tr>
+                                                                    <th>#</th>
+                                                                    <th>Tên danh bạ</th>
+                                                                    <th>Số lượng thành viên</th>
+                                                                    <th>Ngày tạo</th>
+                                                                    <th class="d-flex justify-content-center">Chức năng</th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                                <?php
+                                                                $url2='http://192.168.1.13:3000/telegram/getlistgroupcontact?id='.$id;
+                                                                $curl2=curl_init($url2);
+                                                                curl_setopt($curl2, CURLOPT_RETURNTRANSFER, true);
+                                                                curl_setopt($curl2, CURLOPT_HTTPHEADER, [
+                                                                'X-RapidAPI-Host: contextualwebsearch-websearch-v1.p.rapidapi.com',
+                                                                'X-RapidAPI-Key: 7xxxxxxxxxxxxxxxxxxxxxxxxxxx',
+                                                                'Authorization: '.$_SESSION['user_token']
+                                                                ]);
+                                                                $response2=json_decode(curl_exec($curl2), true);
+                                                                $httpcode2=curl_getinfo($curl2,CURLINFO_HTTP_CODE);
+                                                                curl_close($curl2);
+                                                                if (isset($response2))
+                                                                foreach($response2 as $index => $list) {
+                                                                    echo '<tr>
+                                                                        <th scope="row">'.((int)$index+1).'</th>
+                                                                        <td>
+                                                                            <a href="groupcontact.php?id='.$list["Id"].'&user='.$id.'" >'.str_replace("<","&lt;",$list['Name']).'</a>
+                                                                            </td>
+                                                                        <td><label>'.$list["length"].'</label></td>
+                                                                        <td><label>'.date("d/M/Y h:i:s",strtotime($list["createAt"])).'</label></td>
+                                                                        <td class="d-flex justify-content-center">
+                                                                            <div class="btn-group" role="group">
+                                                                                <a href="groupcontact.php?id='.$list["Id"].'&user='.$id.'" class="btn btn-sm btn-outline-primary"><i class="fa fa-search"></i>Chi tiết</a>
+                                                                                <button type="button" class="btn btn-sm btn-outline-dark delete-me" idgroup="'. $list["Id"] .'"><i class="flaticon2-trash"></i>Xóa</button>
+                                                                            </div>
+                                                                        </td>
+                                                                    </tr>    
+                                                                            ';
+                                                                    }
+                                                                ?>
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
                                                 </div>
-                                        <span class="kt-section__info">
-                                            Danh bạ &nbsp;&nbsp;&nbsp;
-                                            <button type="button" id="exportfile" class="exportfile">Export CSV  
-                                            </button>
-                                        </span>
-                                        <div class="kt-section__content">
-                                            <table class="table">
-                                                <thead>
-                                                    <tr>
-                                                        <th>#</th>
-                                                        <th>First_name</th>
-                                                        <th>Last_name</th>
-                                                        <th>Phone_Number</th>
-                                                        <th>User_Name</th>
-                                                    </tr>
-                                                </thead>
-                                                <tbody>
-                                                    <?php
-                                                    foreach($response as $index => $contact)
-                                                    {
-                                                    echo ' <tr>
-                                                        <th scope="row">'.((int)$index+1).'</th>
-                                                            <td>'.(isset($contact['first_name'])?str_replace("<","&lt;",$contact['first_name']):'').'
-                                                            </td>
-                                                            <td>'.(isset($contact['last_name'])?str_replace("<","&lt;",$contact['last_name']):'').'
-                                                            </td>
-                                                            <td>'.(isset($contact['phone'])?$contact['phone']:'').'
-                                                            </td>
-                                                            <td>'.(isset($contact['username'])?str_replace("<","&lt;",$contact['username']):'').'
-                                                            </td>
-                                                        </tr>';
-                                                    }
-                                                    ?>
-                                                </tbody>
-                                            </table>
+                                            </div>
+                                        </div>
                                         </div>
                                     </div>
                                 </div>
@@ -173,7 +172,7 @@ else header('Location: badrequest.php');
                                         action="addcontact.php" method="post"
                                             enctype="multipart/form-data">
                                             <span class="kt-section__info">
-                                                Thêm danh bạ
+                                               
                                             </span>
                                             <div class="kt-section__content">
                                                 <div class="form-group col-lg-15 row list-contact">
@@ -235,71 +234,40 @@ else header('Location: badrequest.php');
                                                         value="3">
                                                     </div>
                                                 </div>
-                                                <label for="groupcontact">Thêm vào nhóm liên hệ:</label>
-                                                    <select class="kt-input col-lg-2 mb-3 groupcontact"
-                                                        name="groupcontact">
-                                                        <option value=-1>-Không sử dụng-</option>
-                                                        <option value=0>-Tạo mới-</option>
-                                                        <?php
-                                                            $url2='localhost:3000/telegram/getlistgroupcontact?id='.$id;
-                                                            $curl2=curl_init($url2);
-                                                            curl_setopt($curl2, CURLOPT_RETURNTRANSFER, true);
-                                                            curl_setopt($curl2, CURLOPT_HTTPHEADER, [
-                                                            'X-RapidAPI-Host:
-                                                            contextualwebsearch-websearch-v1.p.rapidapi.com',
-                                                            'X-RapidAPI-Key: 7xxxxxxxxxxxxxxxxxxxxxxxxxxx'
-                                                            ]);
-                                                            $response2=json_decode(curl_exec($curl2), true);
-                                                            $httpcode2=curl_getinfo($curl2,CURLINFO_HTTP_CODE);
-                                                            curl_close($curl2);
-                                                            if (isset($response2))
-                                                            foreach($response2 as $index) {
-                                                            echo '<option value='.$index['Id'].'>'.str_replace("<","&lt;",$index['Name']).'
-                                                            </option>';
-                                                            }
-                                                        ?>
-                                                    </select>
-                                                    <div class="col-lg-3 namegroup" style="display:none;">
-                                                        <label>Tên nhóm liên hệ</label>
-                                                        <input type="text" class="form-control" name="name_group">
+                                                <div class="form-group row">
+                                                    <div class="col-sm-2">
+                                                        <label for="inputPassword" class="col-form-label">Thêm vào nhóm danh bạ:</label>
                                                     </div>
-                                            </div>
-                                            <div class="kt-portlet__foot">
-                                                <div class="kt-form__actions">
-                                                    <div class="row">
-                                                        <div class="col-lg-12 text-center">
-                                                            <button type="submit" class="btn btn-success">Thêm
-                                                            </button>
-                                                            <button type="reset" class="btn btn-secondary">Huỷ</button>
-                                                        </div>
+                                                    <div class="col-sm-4">
+                                                        <select class=" form-control col-lg-12 groupcontact"
+                                                            name="groupcontact">
+                                                            <option value=-1>-Không sử dụng-</option>
+                                                            <?php
+                                                                $url2='http://192.168.1.13:3000/telegram/getlistgroupcontact?id='.$id;
+                                                                $curl2=curl_init($url2);
+                                                                curl_setopt($curl2, CURLOPT_RETURNTRANSFER, true);
+                                                                curl_setopt($curl2, CURLOPT_HTTPHEADER, [
+                                                                'X-RapidAPI-Host:
+                                                                contextualwebsearch-websearch-v1.p.rapidapi.com',
+                                                                'X-RapidAPI-Key: 7xxxxxxxxxxxxxxxxxxxxxxxxxxx',
+                                                                'Authorization: '.$_SESSION['user_token']
+                                                                ]);
+                                                                $response2=json_decode(curl_exec($curl2), true);
+                                                                $httpcode2=curl_getinfo($curl2,CURLINFO_HTTP_CODE);
+                                                                curl_close($curl2);
+                                                                if (isset($response2))
+                                                                foreach($response2 as $index) {
+                                                                echo '<option value='.$index['Id'].'>'.str_replace("<","&lt;",$index['Name']).'
+                                                                </option>';
+                                                                }
+                                                            ?>
+                                                        </select>
                                                     </div>
-                                                </div>
-                                            </div>
-                                        </form>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="tab-pane" id="kt_portlet_base_demo_1_3_tab_content" role="tabpanel">
-                            <div class="kt-portlet__body">
-                                <div class="row ">
-                                    <div class="kt-section col-12">
-                                        <form class="kt-form kt-form--label-right"> 
-                                            <span class="kt-section__info">
-                                                Thêm nhóm liên hệ
-                                            </span>
-                                            <div class="kt-section__content">
-                                                <div class="form-group col-lg-15 row list-contact">
-                                                    <div class=" kt-margin-t-5 col-lg-12 row">
-                                                        <div class="col-lg-4 col-md-5">
-                                                            <label>Tên nhóm liên hệ
-                                                                </label>
-                                                        </div>
-                                                    <div class="col-lg-12 kt-margin-t-20 row">
-                                                        <div class="col-lg-4 input-group">
-                                                            <input type="text" class="form-control" name="name"
-                                                            >
-                                                        </div>
+                                                    <div class="col-sm-6 d-flex align-items-end">
+                                                    <label class="kt-checkbox kt-checkbox--success">
+															<input type="checkbox" name="addFriend"> Thêm làm bạn bè
+															<span></span>
+														</label>
                                                     </div>
                                                 </div>
                                             </div>
@@ -307,23 +275,55 @@ else header('Location: badrequest.php');
                                                 <div class="kt-form__actions">
                                                     <div class="row">
                                                         <div class="col-lg-12 text-center">
-                                                            <button type="button" class="btn btn-success addgroupcontact">Thêm
+                                                            <button type="submit" class="btn btn-outline-brand"><i class="la flaticon2-avatar"></i> Thêm mới
                                                             </button>
-                                                            <button type="reset" class="btn btn-secondary">Huỷ</button>
+                                                            <button type="reset" class="btn btn-outline-secondary"><i class="la flaticon2-delete"></i> Huỷ</button>
                                                         </div>
                                                     </div>
                                                 </div>
                                             </div>
                                         </form>
+                                        <div class="kt-separator kt-separator--border-dashed kt-separator--space-lg kt-separator--portlet-fit">
+                                                </div>
+                                       
                                     </div>
                                 </div>
                             </div>
                         </div>
+                        
                     </div>
                 </div>
             </div>
         </div>
     </div>
+    <!--begin::Modal-->
+        <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLongTitle">Thêm danh bạ</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group form-group-marginless">
+                <label>Tên nhóm danh bạ</label>
+                <div class="input-group">
+                    <input type="text" class="form-control" name="name" aria-describedby="basic-addon2">
+                    <div class="input-group-append"><span class="input-group-text" id="basic-addon2"><i class="la la-group"></i></span></div>
+                </div>
+            </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Hủy</button>
+                <button type="button" class="btn btn-primary addgroupcontact">Thêm mới</button>
+            </div>
+            </div>
+        </div>
+        </div>
+
+    <!--end::Modal-->
 </div>
 <?php include 'footer.php'; ?>
 <script type="text/javascript">
@@ -339,8 +339,7 @@ else header('Location: badrequest.php');
         }
         else return confirm('Thực hiện thêm danh bạ?'); 
     }
-</script>
-<script type="text/javascript">
+
 jQuery(document).ready(function($) {
     $("select.groupcontact").change(function() {
         let selected = $(this).children("option:selected").val();
@@ -372,8 +371,7 @@ jQuery(document).ready(function($) {
     }
     })
 })
-</script>
-<script type="text/javascript">
+
 jQuery(document).ready(function($) {
     $("#exportfile").on("click", function() {
         var ok=confirm('Tải xuống danh bạ?');
@@ -390,5 +388,41 @@ jQuery(document).ready(function($) {
         ?>
         }
     })
+    $(".delete-me").click(function() {
+        const swalWithBootstrapButtons = Swal.mixin({
+            customClass: {
+                confirmButton: 'btn btn-success',
+                cancelButton: 'btn btn-danger'
+            },
+            buttonsStyling: false
+            })
+
+            swalWithBootstrapButtons.fire({
+            title: 'Bạn có muốn xóa?',
+            text: "Bạn sẽ không thể khôi phục!",
+            type: 'question',
+            showCancelButton: true,
+            confirmButtonText: 'Xóa!',
+            cancelButtonText: 'Hủy bỏ!',
+            reverseButtons: true
+            }).then((result) => {
+            if (result.value) {
+                swalWithBootstrapButtons.fire(
+                'Đã xóa!',
+                'đã xóa nhóm id: ' + $(this).attr("idgroup"),
+                'success'
+                )
+            } else if (
+                /* Read more about handling dismissals below */
+                result.dismiss === Swal.DismissReason.cancel
+            ) {
+                swalWithBootstrapButtons.fire(
+                'Đã hủy',
+                ' :)',
+                'error'
+                )
+            }
+            })
+    });
 })
 </script>
