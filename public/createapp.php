@@ -44,10 +44,6 @@
     if ($_POST['function']=="addbot") {
         $body=[
             "token" => $_POST['token'],
-            "idbaocao" => $_POST['idbaocao'],
-            "greeting" => $_POST['greeting'],
-            "invitation" => $_POST['invitation'],
-            "connect" => $_POST['connect']
         ];
         $url="localhost:3000/telbot/addbot";
         $curl=curl_init($url);
@@ -70,8 +66,10 @@
             "id" => $_POST['id'],
             "idbaocao" => $_POST['idbaocao'],
             "greeting" => $_POST['greeting'],
+            "greeting2" => $_POST['greeting2'],
             "invitation" => $_POST['invitation'],
-            "connect" => $_POST['connect']
+            "connect" => $_POST['connect'],
+            "autosendmsg" => $_POST['autosendmsg'],
         ];
         $url="localhost:3000/telbot/updatebot";
         $curl=curl_init($url);
