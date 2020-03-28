@@ -22,6 +22,34 @@
         curl_close($curl);
         if ($httpcode==200) 
             echo $response['id'];
+        else if($httpcode==405) {
+            echo 0;
+        }
+        else echo null;
+    }
+    if ($_POST['function']=="requestSendCode") {
+        $body=[
+            'phone'=> $_POST['phone']
+        ];
+        $url='http://192.168.1.13:3000/telegram/request_send_code';
+        $curl=curl_init($url);
+
+        curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($curl, CURLOPT_HTTPHEADER, [
+            'X-RapidAPI-Host: contextualwebsearch-websearch-v1.p.rapidapi.com',
+            'X-RapidAPI-Key: 7xxxxxxxxxxxxxxxxxxxxxxxxxxx',
+            'Authorization: '.$_SESSION['user_token']
+        ]);
+        curl_setopt($curl, CURLOPT_POST,1);
+        curl_setopt($curl, CURLOPT_POSTFIELDS, http_build_query($body));
+        $response = json_decode(curl_exec($curl), true);
+        $httpcode=curl_getinfo($curl,CURLINFO_HTTP_CODE);
+        curl_close($curl);
+        if ($httpcode==200) 
+            echo $response['id'];
+        else if($httpcode==403) {
+            echo 0;
+        }
         else echo null;
     }
     if ($_POST['function']=="authcode") {
