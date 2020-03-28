@@ -35,9 +35,15 @@
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" data-toggle="tab" href="#kt_portlet_base_demo_1_3_tab_content"
+                                <a class="nav-link" data-toggle="tab" href="#kt_portlet_base_demo_1_2_tab_content"
                                     role="tab" aria-selected="false">
                                     <i class="flaticon-safe-shield-protection"></i> Xác thực tài khoản
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" data-toggle="tab" href="#kt_portlet_base_demo_1_3_tab_content"
+                                    role="tab" aria-selected="false">
+                                    <i class="la la-user-plus"></i> Đăng ký tài khoản
                                 </a>
                             </li>
                         </ul>
@@ -53,40 +59,38 @@
                                         <form class="kt-form kt-form--label-right">
                                             <div class="kt-portlet__body">
                                                 <div class="form-group row form-group-marginless kt-margin-t-20">
-                                                    <label class="col-10 text-center">
-                                                    <h2>XÁC THỰC TÀI KHOẢN HOẶC TẠO MỚI</h2>
-                                                    </label><br>
-                                                    <div class="col-lg-6">
-                                                        <label>SỐ ĐIỆN THOẠI:</label>
-                                                        <input type="text" class="form-control phone" name="phone"
-                                                            placeholder="+84xxxxxxxxx"
-                                                            oninvalid="this.setCustomValidity('Trường số điện thoại không thể để rỗng')"
-                                                            oninput="setCustomValidity('')" required="" value="+84966315840">
-                                                    </div>
-                                                    <div class="col-lg-6"> </div>
-                                                    <div class="col-lg-6 mt-2">
-                                                        <label>API_ID:</label>
-                                                        <input type="text" class="form-control api_id" name="api_id"
-                                                            placeholder="xxxxxxx" value="1203697">
-                                                    </div>
-                                                    <div class="col-lg-6 mt-2">
-                                                        <label>API_HASH:</label>
-                                                        <input type="text" class="form-control api_hash" name="api_hash"
-                                                            placeholder="xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx">
-                                                    </div>
-                                                    <div class="col-lg-6 mt-2 otpcodeclass" style="display:none;">
-                                                        <label>OTP CODE:</label>
-                                                        <input type="text" class="form-control otpcode">
-                                                    </div>
-                                                    <div class="col-lg-12 mt-5 text-center btnsendcode"
-                                                        style="display:none;">
-                                                        <div class="row justify-content-center">
-                                                            <button type="button"
-                                                                class="btn btn-success sendcodeotp">Gửi</button>
+                                                   
+                                                    <div class="col-sm-12 col-md-6">
+                                                        <div class="form-group">
+                                                            <label>SỐ ĐIỆN THOẠI:</label>
+                                                            <input type="text" class="form-control phone_add" name="phone_add"
+                                                                placeholder="+84xxxxxxxxx" required="">
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <label>API_ID:</label>
+                                                            <input type="text" class="form-control api_id_add" name="api_id_add"
+                                                                placeholder="xxxxxxx" required="">
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <label>API_HASH:</label>
+                                                            <input type="text" class="form-control api_hash_add" name="api_hash_add"
+                                                                placeholder="xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx" required="">
+                                                        </div>
+                                                        
+                                                        <div class="id_account_add" style="display:none;">
                                                         </div>
                                                     </div>
-                                                    <div class="id_account" style="display:none;">
+                                                    <div class="col-sm-12 col-md-6">
+                                                    <div class="form-group mt-3 mb-5">
+                                                        <span class="kt-font-bold"><span class="kt-font-danger">*</span> Nếu bạn chưa biết cách lấy mã API_ID và API_HASH vui lòng xem hướng dẫn sử dụng<a target="_blank" href="tele-document.php"> tại đây</a></span>
                                                     </div>
+                                                    <div class="form-group otp_form_hide">
+                                                            <label><span class="kt-font-success">OTP CODE:</span> </label>
+                                                            <input type="text" class="form-control" name="otp_code_add"
+                                                                placeholder="OTP code" required>
+                                                        </div>
+                                                    </div>
+
                                                 </div>
                                                 <br>
                                                 <div class="kt-portlet__foot">
@@ -94,10 +98,10 @@
                                                         <div class="row">
                                                             <div class="col-lg-12 text-center bt-end">
                                                                 <button type="button"
-                                                                    class="btn btn-success btn-addaccount">Thêm
-                                                                    mới</button>
+                                                                    class="btn btn-outline-brand btn-square btn-elevate btn-pill btn-addaccount">Thêm
+                                                                    mới </button>
                                                                 <button type="reset"
-                                                                    class="btn btn-secondary">Huỷ</button>
+                                                                    class="btn btn-secondary btn-elevate btn-pill">Huỷ</button>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -107,66 +111,101 @@
                                                         <span class="spinner"></span>
                                                     </div>
                                                 </div>
-                                        </form>
+                                            </form>
+                                        </div>
+                                        
                                     </div>
-                                    
                                 </div>
                             </div>
                         </div>
-                    </div>
-                    <!-- end:: Notification 1-->
-                    
-                    <div class="tab-pane active" id="kt_portlet_base_demo_1_1_tab_content" role="tabpanel">
-                        <div class="kt-portlet__body">
-                            <div class="row ">
-                                <div class="kt-section col-12">
-                                <div
-                                        class="kt-separator kt-separator--border-dashed kt-separator--space-lg kt-separator--portlet-fit">
-                                    </div>
-                                    <label class="col-10 text-center">
-                                        <h2>DANH SÁCH TÀI KHOẢN</h2>
-                                    </label>
-                                    <div class="kt-section__content table-responsive">
-                                        <table class="table table-hover ">
-                                            <thead>
-                                                <tr>
-                                                    <th>#</th>
-                                                    <th>First_Name</th>
-                                                    <th>Last_Name</th>
-                                                    <th>Phone_Number</th>
-                                                    <th class="text-center">Hành động</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                <?php 
-                                                $url='http://192.168.1.13:3000/telegram/get_list_user_telegram';
-                                                $curl=curl_init($url);
-                                                curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
-                                                curl_setopt($curl, CURLOPT_HTTPHEADER, [
-                                                    'X-RapidAPI-Host: contextualwebsearch-websearch-v1.p.rapidapi.com',
-                                                    'X-RapidAPI-Key: 7xxxxxxxxxxxxxxxxxxxxxxxxxxx',
-                                                    'Authorization: '.$_SESSION['user_token']
-                                                ]);
-                                                $response2 = json_decode(curl_exec($curl), true);
-                                                curl_close($curl);
-                                                if (!empty($response2)) {
-                                                    foreach ($response2 as $index => $post) {   
-                                                        echo '<tr>'.'<th scope="row">'.((int)$index+1).'</th>';
-                                                        echo '<td> <label>'.str_replace("<","&lt;",$post['first_name']).'</label> </td>';
-                                                        echo '<td> <label>'.str_replace("<","&lt;",$post['last_name']).'</label> </td>';
-                                                        echo '<td> <label>'.str_replace("<","&lt;",$post['phone']).'</label> </td>';
-                                                        echo '<td class="d-flex justify-content-center" > <span>';
-                                                        echo '<a title="Danh bạ" href="getcontact.php?id='.$post['Id'].'" class="btn btn-label-linkedin"><i class="fas fa-book"></i>Danh bạ</a>';
-                                                        echo '<a title="Bạn bè" href="list-friend.php?id='.$post['Id'].'" class="btn btn-label-twitter"><i class="fas fa-user"></i>Bạn bè</a>';
-                                                        echo '<a title="Gửi tin nhắn" href="getdialogs.php?id='.$post['Id'].'" class="btn btn-label-google"><i class="fas fa-sms"></i>Gửi tin nhắn</a>';
-                                                        echo '<a title="Xóa" class="btn btn-label-instagram" data-id='.$post['Id'].'><i class="fas fa-trash"></i>Xóa</a>';
-                                                        echo '</span></td>';
-                                                        echo '</tr>';
+                        <!-- end:: Notification 1-->
+                        
+                        <div class="tab-pane active" id="kt_portlet_base_demo_1_1_tab_content" role="tabpanel">
+                            <div class="kt-portlet__body">
+                                <div class="row ">
+                                    <div class="kt-section col-12">
+                                    <div
+                                            class="kt-separator kt-separator--border-dashed kt-separator--space-lg kt-separator--portlet-fit">
+                                        </div>
+                                        <label class="col-10 text-center">
+                                            <h2>DANH SÁCH TÀI KHOẢN</h2>
+                                        </label>
+                                        <div class="kt-section__content table-responsive">
+                                            <table class="table table-hover ">
+                                                <thead>
+                                                    <tr>
+                                                        <th>#</th>
+                                                        <th>First_Name</th>
+                                                        <th>Last_Name</th>
+                                                        <th>Phone_Number</th>
+                                                        <th class="text-center">Hành động</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <?php 
+                                                    $url='http://192.168.1.13:3000/telegram/get_list_user_telegram';
+                                                    $curl=curl_init($url);
+                                                    curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
+                                                    curl_setopt($curl, CURLOPT_HTTPHEADER, [
+                                                        'X-RapidAPI-Host: contextualwebsearch-websearch-v1.p.rapidapi.com',
+                                                        'X-RapidAPI-Key: 7xxxxxxxxxxxxxxxxxxxxxxxxxxx',
+                                                        'Authorization: '.$_SESSION['user_token']
+                                                    ]);
+                                                    $response2 = json_decode(curl_exec($curl), true);
+                                                    curl_close($curl);
+                                                    if (!empty($response2)) {
+                                                        foreach ($response2 as $index => $post) {   
+                                                            echo '<tr>'.'<th scope="row">'.((int)$index+1).'</th>';
+                                                            echo '<td> <label>'.str_replace("<","&lt;",$post['first_name']).'</label> </td>';
+                                                            echo '<td> <label>'.str_replace("<","&lt;",$post['last_name']).'</label> </td>';
+                                                            echo '<td> <label>'.str_replace("<","&lt;",$post['phone']).'</label> </td>';
+                                                            echo '<td class="d-flex justify-content-center" > <span>';
+                                                            echo '<a title="Danh bạ" href="getcontact.php?id='.$post['Id'].'" class="btn btn-label-linkedin"><i class="fas fa-book"></i>Danh bạ</a>';
+                                                            echo '<a title="Bạn bè" href="list-friend.php?id='.$post['Id'].'" class="btn btn-label-twitter"><i class="fas fa-user"></i>Bạn bè</a>';
+                                                            echo '<a title="Gửi tin nhắn" href="getdialogs.php?id='.$post['Id'].'" class="btn btn-label-google"><i class="fas fa-sms"></i>Gửi tin nhắn</a>';
+                                                            echo '<a title="Xóa" class="btn btn-label-instagram btn-del-acc" data-id='.$post['Id'].'><i class="fas fa-trash"></i>Xóa</a>';
+                                                            echo '</span></td>';
+                                                            echo '</tr>';
+                                                        }
                                                     }
-                                                }
-                                            ?>
-                                            </tbody>
-                                        </table>
+                                                ?>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="tab-pane" id="kt_portlet_base_demo_1_2_tab_content" role="tabpanel">
+                            <div class="kt-portlet__body">
+                                <div class="row ">
+                                    <div class="kt-section col-12">
+                                        <div class="row verify_show">
+                                            <div class="col-6 form-group ">
+                                                <label>Số điện thoại</label>
+                                                <div class="input-group">
+                                                    <input type="text" class="form-control" name="phone_number" placeholder="+84xxxxxxxxxxx" value="+84966315840" aria-describedby="basic-addon2">
+                                                    <div class="input-group-append"><span class="input-group-text" id="basic-addon2"><i class="la la-phone"></i></span></div>
+                                                </div>
+                                            </div>
+                                            <div class="col-6 form-group d-flex align-items-end">
+                                                <button type="button" class="btn btn-outline-brand btn-elevate btn-pill vertify_pending">Xác thực </button>
+                                            </div>
+                                        </div>
+                                        <div class="id_account" style="display:none;"></div>
+                                        <div class="row verify_hide">
+                                            <div class="col-6 form-group ">
+                                                <label>Mã OTP</label>
+                                                <div class="input-group">
+                                                    <input type="number" class="form-control" name="otpcode" placeholder="XXXXXX"  aria-describedby="basic-addon2">
+                                                    <div class="input-group-append"><span class="input-group-text" id="basic-addon2"><i class="la la-code"></i></span></div>
+                                                </div>
+                                            </div>
+                                            <div class="col-6 form-group d-flex align-items-end">
+                                                <button type="button" class="btn btn-outline-success btn-elevate btn-pill sendcodeotp">Đăng nhập </button>
+                                            </div>
+                                        
                                     </div>
                                 </div>
                             </div>
@@ -174,101 +213,65 @@
                     </div>
                 </div>
             </div>
+
         </div>
 
+        <!-- end:: Content -->
     </div>
-
-    <!-- end:: Content -->
-</div>
 </div>
 <!-- begin:: Footer -->
 <?php include 'footer.php';?>
 <script type="text/javascript">
 jQuery(document).ready(function($) {
 
-    $('.addbot').on('click', function() {
-        if ($('.token').val() != '') {
-            var connect=[];
-            $('input[name="text"]').map(function() {
-                if ($(this).val()!='')
-                connect.push({"text": $(this).val()})
-            })
-            let index=0;
-            $('input[name="url"]').map(function() {
-                if (connect[index])
-                connect[index].url=$(this).val();
-                index++;
-            })
-            let greeting=[];
-            $('input[name="loichao"').map(function() {
-                if ($(this).val()!='')
-                greeting.push({"text": $(this).val()})
-            })
-            index=0;
-            $('input[name="checkid"]').map(function() {
-                if (greeting[index])
-                greeting[index].userid=($(this).prop('checked')==true)?1:0;
-                index++;
-            })
-            $.ajax({
-                type: "POST",
-                url: "./createapp.php",
-                data: {
-                    "function": "addbot",
-                    "token": $('.token').val(),
-                    "idbaocao": $('.idbaocao').val(),
-                    "greeting": JSON.stringify(greeting),
-                    "invitation": ($('.invitation').prop('checked') ==true)?1:0,
-                    "connect": JSON.stringify(connect)
-                },
-                success: function(data) {
-                    if (data == "success") {
-                        Swal.fire('Thành công', 'Đăng ký thành công', 'success');
-                        location.reload();
-                    } else
-                    if (data=="exist") Swal.fire('Lỗi', 'Tài khoản Bot đã tồn tại', 'error');
-                    else 
-                    Swal.fire('Lỗi', 'Đăng ký thất bại', 'error');
-                }
-            })
-        } else alert("Trường mã token không được để rỗng");
-    });
+    // delete account
     $('.btn-del-acc').on('click', function() {
-        var ok = prompt('Vui lòng nhập mã CODE quản trị viên để xóa tài khoản', '');
-        if (ok != '' && ok != null)
-            window.location.href = 'deleteaccount.php?id=' + $(this).data('id') + '&code=' + ok;
-        else if (ok == '')
-            alert("Vui lòng nhập mã CODE để xóa. Liên hệ quản trị viên để có được mã CODE");
+        window.location.href = 'deleteaccount.php?id=' + $(this).data('id');
     });
-    $('.btn-addaccount').on('click', function() {
-        $('.bt-end').hide();
+   
+    function sendPhoneToGetID(a_func = 'addaccount', phone, api_id, api_hash, add = 1){
         $.ajax({
             type: "POST",
             url: "./createapp.php",
             data: {
-                "phone": $(".phone").val(),
-                "function": "addaccount",
-                "api_id": Number($(".api_id").val()),
-                "api_hash": $(".api_hash").val(),
+                "phone": phone,
+                "function": a_func,
+                "api_id": Number(api_id),
+                "api_hash": api_hash,
             },
             success: function(data) {
-                if (data) {
-                    $('.otpcodeclass').addClass('display-block');
-                    $('.btnsendcode').addClass('display-block');
-                    $('.id_account').val(data);
-                } else Swal.fire('Lỗi', 'Đã xảy ra lỗi, xin thử lại sau', 'error');
+                if (data && data != 0) {
+                    if (add == 1) {
+                        $(".verify_show").hide(1500);
+                        $('.id_account').val(data);
+                        $(".verify_hide").show(2000);
+                    } else {
+                        $(".btn-addaccount").addClass("sendOtpToRegister");
+                        $(".btn-addaccount").text("Xác nhận");
+                        $(this).prop('disabled', false);
+                        $(".btn-addaccount").removeClass("btn-addaccount");
+                        $(".otp_form_hide").show(2000);
+                        $('.id_account_add').val(data);
+                    }
+                } 
+                else if (data ==0 ){
+                    Swal.fire('Thông báo', 'Tài khoản đã đăng nhập trước đó', 'success');
+                } else {
+                    Swal.fire('Lỗi', 'Đã xảy ra lỗi, xin thử lại sau', 'error');
+                    $(this).prop('disabled', false);
+                }
             }
         })
-    })
-    
-    $('.sendcodeotp').on('click', function() {
+    }
+
+    function sendOTPCodeToVerify(id, opt_code){
         $.ajax({
             type: "POST",
             url: "./createapp.php",
             data: {
-                "id": $('.id_account').val(),
+                "id": id,
                 "function": "authcode",
-                "code": $(".otpcode").val()
+                "code": opt_code
             },
             success: function(data) {
                 if (data == "success") {
@@ -279,20 +282,101 @@ jQuery(document).ready(function($) {
                 } else Swal.fire('Lỗi', 'Đã xảy ra lỗi, xin thử lại sau', 'error');
             }
         })
+    }
+
+    //send info to server => get OTP register
+    $(".otp_form_hide").hide();
+    $(".btn-addaccount").click(function(){
+        let phone = $(".phone_add").val();
+        let api_id = $(".api_id_add").val();
+        let api_hash = $(".api_hash_add").val();
+
+        if (phone == '' || api_id == '' || api_hash == '') {
+            Swal.fire('Lỗi', 'Vui lòng nhập đầy đủ các trường để đăng ký', 'warning');
+            return;
+        } else {
+            $(this).append(`<i style="padding:unset" class="fas fa-circle-notch fa-spin"></i>`);
+            $(this).prop('disabled', true);
+
+            $.ajax({
+                type: "POST",
+                url: "./createapp.php",
+                data: {
+                    "phone": phone,
+                    "function": 'addaccount',
+                    "api_id": Number(api_id),
+                    "api_hash": api_hash,
+                },
+                success: function(data) {
+                    if (data && data != 0) {
+                        $(".btn-addaccount").addClass("sendOtpToRegister");
+                        $(".btn-addaccount").text("Xác nhận");
+                        $(".btn-addaccount").removeAttr("disabled");
+                        $(".btn-addaccount").removeClass("btn-addaccount");
+                        $(".otp_form_hide").show(2000);
+                        $('.id_account_add').val(data);
+                    } 
+                    else if (data ==0 ){
+                        Swal.fire('Thông báo', 'Số điện thoại đã được đăng ký', 'warning');
+                        $(".btn-addaccount").removeAttr("disabled");
+                        $("i.fas.fa-circle-notch.fa-spin").removeClass("fa-circle-notch");
+                    } else {
+                        Swal.fire('Lỗi', 'Đã xảy ra lỗi, xin thử lại sau', 'error');
+                        $(".btn-addaccount").removeAttr("disabled");
+                        $("i.fas.fa-circle-notch.fa-spin").removeClass("fa-circle-notch");
+                    }
+                }
+            })
+
+            $(".sendOtpToRegister").click(function(){
+                let id = $('.id_account_add').val();
+                let otp_code = $('input[name="otp_code_add"]').val();
+                sendOTPCodeToVerify(id, otp_code);
+            });
+        }
+    });
+
+
+    // send phone to server => get OTP code to verify
+    $(".verify_hide").hide();
+    $(".vertify_pending").click(function(){
+        let phone_number = $('input[name="phone_number"]').val();
+        $(this).append(`<i style="padding:unset" class="fas fa-circle-notch fa-spin"></i>`);
+        $(this).prop('disabled', true);
+
+        $.ajax({
+            type: "POST",
+            url: "./createapp.php",
+            data: {
+                "phone": phone_number,
+                "function": "requestSendCode",
+            },
+            success: function(data) {
+                console.log(data);
+                if (data && data != 0) {
+                    $(".verify_show").hide(1500);
+                    $('.id_account').val(data);
+                    $(".verify_hide").show(2000);
+                
+                } 
+                else if (data == 0 ){
+                    Swal.fire('Thông báo', 'Tài khoản đã đăng nhập trước đó', 'success');
+                    $(".btn-vertify_pending").removeAttr("disabled");
+                } else {
+                    Swal.fire('Lỗi', 'Đã xảy ra lỗi, xin thử lại sau', 'error');
+                    $(this).prop('disabled', false);
+                    $(".btn-vertify_pending").removeAttr("disabled");
+                }
+            }
+        })
+    });
+
+    // send OTP to server => verify 
+    $('.sendcodeotp').on('click', function() {
+        sendOTPCodeToVerify($('.id_account').val(), $('input[name="otpcode"]').val());
     })
-    $('.del-bot').on('click', function() {
-        var ok = prompt('Vui lòng nhập mã CODE quản trị viên để xóa cấu hình', '');
-        if (ok!='' && ok!=null) 
-            window.location.href = "deletebot.php?id="+$(this).data('id')+"&code="+ok;
-        else if (ok=='') 
-        alert("Vui lòng nhập mã CODE để xóa. Liên hệ quản trị viên để có được mã CODE");
-    });
-    $('.editbot').on('click', function() {
-        var ok = prompt('Vui lòng nhập mã CODE quản trị viên để chỉnh sửa cấu hình', '');
-        if (ok!='' && ok!=null) 
-            window.location.href = "editbot.php?id="+$(this).data('id')+"&code="+ok;
-        else if (ok=='') 
-        alert("Vui lòng nhập mã CODE để chỉnh sửa. Liên hệ quản trị viên để có được mã CODE");
-    });
+
 })
+
+
 </script>

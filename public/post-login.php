@@ -10,8 +10,7 @@
         curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
         curl_setopt($curl, CURLOPT_HTTPHEADER, [
             'X-RapidAPI-Host: contextualwebsearch-websearch-v1.p.rapidapi.com',
-            'X-RapidAPI-Key: 7xxxxxxxxxxxxxxxxxxxxxxxxxxx',
-            'Authorization: '.$_SESSION['user_token']
+            'X-RapidAPI-Key: 7xxxxxxxxxxxxxxxxxxxxxxxxxxx'
         ]);
         curl_setopt($curl, CURLOPT_POST,1);
         curl_setopt($curl, CURLOPT_POSTFIELDS, http_build_query($body));
