@@ -325,6 +325,7 @@
                                             </div>
                                         </div>';
                                     }
+                                }
                                     echo '
                                     <div class="col-lg-12 kt-margin-t-20 row">    
                                             <div class="col-lg-5 col-md-2">
@@ -346,7 +347,6 @@
                                                     style=" font-size: 3rem; color: #fd1361; cursor: pointer;"></i>
                                             </div>
                                         </div>';
-                                }
                                 echo '
                                 </div>
                             </div>';

@@ -10,7 +10,7 @@
         curl_setopt($curl, CURLOPT_HTTPHEADER, [
             'X-RapidAPI-Host: contextualwebsearch-websearch-v1.p.rapidapi.com',
             'X-RapidAPI-Key: 7xxxxxxxxxxxxxxxxxxxxxxxxxxx',
-            'Authorization: ' . $_SESSION['user_token']
+            'Authorization: ' . $_SESSION['user_token'],
         ]);
         $response = json_decode(curl_exec($curl), true);
         $httpcode = curl_getinfo($curl,CURLINFO_HTTP_CODE);
