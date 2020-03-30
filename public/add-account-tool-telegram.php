@@ -203,7 +203,7 @@
                                                 </div>
                                             </div>
                                             <div class="col-6 form-group d-flex align-items-end">
-                                                <button type="button" class="btn btn-outline-success btn-elevate btn-pill sendcodeotp">Đăng nhập </button>
+                                                <button type="button" class="btn btn-outline-success btn-elevate btn-pill C">Đăng nhập </button>
                                             </div>
                                         
                                     </div>
@@ -352,8 +352,7 @@ jQuery(document).ready(function($) {
                 "function": "requestSendCode",
             },
             success: function(data) {
-                console.log(data);
-                if (data && data != 0) {
+                if (data && data > 0) {
                     $(".verify_show").hide(1500);
                     $('.id_account').val(data);
                     $(".verify_hide").show(2000);
@@ -361,11 +360,19 @@ jQuery(document).ready(function($) {
                 } 
                 else if (data == 0 ){
                     Swal.fire('Thông báo', 'Tài khoản đã đăng nhập trước đó', 'success');
-                    $(".btn-vertify_pending").removeAttr("disabled");
-                } else {
+                    $(".vertify_pending").removeAttr("disabled");
+                    $("i.fas.fa-circle-notch.fa-spin").removeClass("fa-circle-notch");
+                } 
+                else if (data == -1 ){
+                    Swal.fire('Thông báo', 'Số điện thoại chưa được đăng ký', 'error');
+                    $(".vertify_pending").removeAttr("disabled");
+                    $("i.fas.fa-circle-notch.fa-spin").removeClass("fa-circle-notch");
+                } 
+                else {
                     Swal.fire('Lỗi', 'Đã xảy ra lỗi, xin thử lại sau', 'error');
                     $(this).prop('disabled', false);
-                    $(".btn-vertify_pending").removeAttr("disabled");
+                    $(".vertify_pending").removeAttr("disabled");
+                    $("i.fas.fa-circle-notch.fa-spin").removeClass("fa-circle-notch");
                 }
             }
         })

@@ -49,6 +49,8 @@
             echo $response['id'];
         else if($httpcode==403) {
             echo 0;
+        } else if($httpcode==406) {
+            echo -1;
         }
         else echo null;
     }

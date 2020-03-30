@@ -28,6 +28,8 @@ foreach($lastname as $i => $last) {
         $arraycontact[$i]=$data;
     }
 };
+
+$addFriend = isset($_POST['addFriend']) ? 1 : 0;
 //add contact from file
 if (isset($_FILES["myfile"])) {
     $filename= $_FILES['myfile']['tmp_name'];
@@ -41,20 +43,15 @@ if (isset($_FILES["myfile"])) {
         }
     }
 }
-if ($_POST['groupcontact']==0)
+
     $body=[
-    'id' => isset($_POST['id']) ? intval($_POST['id']): '',
-    'contacts' => json_encode($arraycontact),
-    'idgroupcontact' => $_POST['groupcontact'],
-    'namegroupcontact' => isset($_POST['name_group'])?$_POST['name_group']:'',
+        'id'                => isset($_POST['id']) ? intval($_POST['id']): '',
+        'contacts'          => json_encode($arraycontact),
+        'idgroupcontact'    => $_POST['groupcontact'],
+        'addfriend'         => $addFriend
     ];
-else 
-    $body=[
-        'id' => isset($_POST['id']) ? intval($_POST['id']): '',
-        'contacts' => json_encode($arraycontact),
-        'idgroupcontact' => $_POST['groupcontact'],
-        ];
-$url='http://192.168.1.13:3000/telegram/import_contact';
+
+    $url = 'http://192.168.1.13:3000/telegram/import_contact';
     $curl=curl_init($url);
     curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
     curl_setopt($curl, CURLOPT_HTTPHEADER, [

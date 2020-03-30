@@ -265,7 +265,7 @@
                                                     </div>
                                                     <div class="col-sm-6 d-flex align-items-end">
                                                     <label class="kt-checkbox kt-checkbox--success">
-															<input type="checkbox" name="addFriend"> Thêm làm bạn bè
+															<input type="checkbox" name="addFriend" value="thembanbe"> Thêm làm bạn bè
 															<span></span>
 														</label>
                                                     </div>
@@ -424,5 +424,6 @@ jQuery(document).ready(function($) {
             }
             })
     });
+
 })
 </script>

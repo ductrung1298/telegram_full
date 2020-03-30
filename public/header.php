@@ -102,7 +102,7 @@ License: You must have a valid license purchased only from themeforest(the above
 		<!-- begin:: Header Mobile -->
 		<div id="kt_header_mobile" class="kt-header-mobile  kt-header-mobile--fixed ">
 			<div class="kt-header-mobile__logo">
-				<a href="index.html">
+				<a href="dashboard.php">
 					<img alt="Logo" class="logo_web" src="../assets/media/logos/epluslogo.png" />
 				</a>
 			</div>
@@ -139,7 +139,7 @@ License: You must have a valid license purchased only from themeforest(the above
 					<div class="kt-aside-menu-wrapper kt-grid__item kt-grid__item--fluid" id="kt_aside_menu_wrapper">
 						<div id="kt_aside_menu" class="kt-aside-menu " data-ktmenu-vertical="1" data-ktmenu-scroll="1" data-ktmenu-dropdown-timeout="500">
 							<ul class="kt-menu__nav ">
-								<li class="kt-menu__item <?php echo $uriName == 'dashboard.php' ? 'kt-menu__item--active' : '' ?>" aria-haspopup="true"><a href="index.php" class="kt-menu__link "><i class="kt-menu__link-icon flaticon2-architecture-and-city"></i><span class="kt-menu__link-text">Dashboard</span></a></li>
+								<li class="kt-menu__item <?php echo $uriName == 'dashboard.php' ? 'kt-menu__item--active' : '' ?>" aria-haspopup="true"><a href="dashboard.php" class="kt-menu__link "><i class="kt-menu__link-icon flaticon2-architecture-and-city"></i><span class="kt-menu__link-text">Dashboard</span></a></li>
 								
 								<li class="kt-menu__item kt-menu__item--submenu <?php echo in_array($uriName, $crawlWebName) ? 'kt-menu__item--active' : '' ?>" aria-haspopup="true" data-ktmenu-submenu-toggle="hover"><a href="javascript:;" class="kt-menu__link kt-menu__toggle"><i class="kt-menu__link-icon flaticon2-telegram-logo"></i><span class="kt-menu__link-text">Crawler Website</span><i class="kt-menu__ver-arrow la la-angle-right"></i></a>
 									<div class="kt-menu__submenu "><span class="kt-menu__arrow"></span>

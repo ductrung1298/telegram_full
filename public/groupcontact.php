@@ -3,28 +3,10 @@ $id=isset($_GET['id'])?intval($_GET['id']):0;
 $user=isset($_GET['user'])?intval($_GET['user']):0;
 include 'header.php';
 if ($id!=0 && $user!=0) {
-    $url='http://192.168.1.13:3000/telegram/get_contact?idgroupcontact='.$id;
-    $curl=curl_init($url);
-    curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
-    curl_setopt($curl, CURLOPT_HTTPHEADER, [
-        'X-RapidAPI-Host: contextualwebsearch-websearch-v1.p.rapidapi.com',
-        'X-RapidAPI-Key: 7xxxxxxxxxxxxxxxxxxxxxxxxxxx',
-        'Authorization: '.$_SESSION['user_token']
-    ]);
-    $response=json_decode(curl_exec($curl), true);
-    $httpcode=curl_getinfo($curl,CURLINFO_HTTP_CODE);
-    curl_close($curl);
-
     include 'connection.php';
     $group = new Connection();
     $value = $group->connect('telegram/get_contact?idcontact='.$id);
-
-    if ($httpcode==500)
-            header('Location: loginerror.php');
-    else if ($httpcode!=200)
-        header('Location: badrequest.php');
-    }
-    else header('Location: badrequest.php');
+}
 ?>
 <div class="kt-body kt-grid__item kt-grid__item--fluid kt-grid kt-grid--hor kt-grid--stretch" id="kt_body">
     <div class="kt-content kt-content--fit-top  kt-grid__item kt-grid__item--fluid kt-grid kt-grid--hor"
@@ -95,12 +77,13 @@ if ($id!=0 && $user!=0) {
                                                         <th>First_name</th>
                                                         <th>Last_name</th>
                                                         <th>Phone_Number</th>
+                                                        <th>Thuộc danh bạ</th>
                                                         <th>Bạn bè</th>
                                                     </tr>
                                                 </thead>
                                                 <tbody>
                                                     <?php
-                                                    $url2='http://192.168.1.13:3000/telegram/get_list_user_telegramgroup?id='.$user.'&group='.$id;
+                                                    $url2='http://192.168.1.13:3000/telegram/get_contact?idgroupcontact='.$id.'&idaccount='.$user;
                                                     $curl2=curl_init($url2);
                                                     curl_setopt($curl2, CURLOPT_RETURNTRANSFER, true);
                                                     curl_setopt($curl2, CURLOPT_HTTPHEADER, [
@@ -127,6 +110,15 @@ if ($id!=0 && $user!=0) {
                                                             <label>'.(isset($contact['phone'])?$contact['phone']:'').'
                                                             </label>
                                                         </td>';
+                                                        $data = isset($contact['othergroup']) ? $contact['othergroup'] : [];
+
+                                                        echo '<td>';
+                                                        foreach($data as $key => $item) {
+                                                            echo '<span class="kt-badge kt-badge--primary  kt-badge--inline kt-badge--pill m-1">'.$item.'</span>';
+                                                        }
+                                                        
+                                                        echo '</td>';
+                                                        
                                                         echo '<td>
                                                             '. ((isset($contact['user_id'])) ? '<button class="btn btn-sm btn-outline-success"><i class="la la-check"></i></button>' : '<button class="btn btn-sm btn-outline-primary"><i class="la la-user-plus"></i> kết bạn</button>') .'
                                                         </td>';
@@ -165,6 +157,7 @@ if ($id!=0 && $user!=0) {
                                                                         <th >First_name</th>
                                                                         <th >Last_name</th>
                                                                         <th >Phone_Number</th>
+                                                                        <th>Thuộc danh bạ</th>
                                                                         <th class="text-center">Chọn</th>
                                                                     </tr>
                                                                 </thead>
@@ -196,6 +189,14 @@ if ($id!=0 && $user!=0) {
                                                                         echo '<td>'.(isset($contact['first_name'])?$contact['first_name']:'').'</td>';
                                                                         echo '<td>'.(isset($contact['last_name'])?$contact['last_name']:'').'</td>';
                                                                         echo '<td>'.(isset($contact['phone'])?$contact['phone']:'').'</td>';
+                                                                        $data = isset($contact['othergroup']) ? $contact['othergroup'] : [];
+
+                                                                        echo '<td>';
+                                                                        foreach($data as $key => $item) {
+                                                                            echo '<span class="kt-badge kt-badge--primary  kt-badge--inline kt-badge--pill m-1">'.$item.'</span>';
+                                                                        }
+                                                                        
+                                                                        echo '</td>';
                                                                         echo '<td><input type="checkbox" class="form-control" data-phone='.$contact['phone'].' data-user_id='.$contact['id'].
                                                                         ' data-first_name="'.$contact['first_name'].'" data-last_name="'.(isset($contact['last_name'])?$contact['last_name']:'').'" data-access_hash='.$contact['access_hash'].'></td>';
                                                                     echo '</tr>';
@@ -204,9 +205,7 @@ if ($id!=0 && $user!=0) {
                                                                 ?>
                                                                 <tr>
                                                                     <td>#</td>
-                                                                    <td><span class="kt-link kt-font-boldest">Chọn tất cả</span></td>
-                                                                    <td></td>
-                                                                    <td></td>
+                                                                    <td colspan="4"><span class="kt-link kt-font-boldest">Chọn tất cả</span></td>
                                                                     <td><input type="checkbox" id="addallgroup"
                                                                             class="form-control">
                                                                     </td>
