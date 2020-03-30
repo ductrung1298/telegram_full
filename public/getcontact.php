@@ -1,51 +1,6 @@
 <?php
     include 'header.php';
     date_default_timezone_set('Asia/Ho_Chi_Minh');
-    $id = isset($_GET['id']) ? intval($_GET['id']) : 0;
-    if ($id != 0)
-    {
-    $url='http://192.168.1.13:3000/telegram/get_friend?id='.$id;
-        $curl = curl_init($url);
-        curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
-        curl_setopt($curl, CURLOPT_HTTPHEADER, [
-            'X-RapidAPI-Host: contextualwebsearch-websearch-v1.p.rapidapi.com',
-            'X-RapidAPI-Key: 7xxxxxxxxxxxxxxxxxxxxxxxxxxx',
-            'Authorization: ' . $_SESSION['user_token'],
-        ]);
-        $response = json_decode(curl_exec($curl), true);
-        $httpcode = curl_getinfo($curl,CURLINFO_HTTP_CODE);
-
-        if ($response == null ) {
-            $host  = $_SERVER['HTTP_HOST'];
-            $uri   = rtrim(dirname($_SERVER['PHP_SELF']), '/\\');
-            $extra = 'loginerror.php';
-            echo("<script>window.location.href='http://". $host.$uri.'/'.$extra."'</script>;");
-            exit;
-        }
-        curl_close($curl);
-        if ($httpcode==500) {
-            $host  = $_SERVER['HTTP_HOST'];
-            $uri   = rtrim(dirname($_SERVER['PHP_SELF']), '/\\');
-            $extra = 'loginerror.php';
-            echo("<script>window.location.href='http://". $host.$uri.'/'.$extra."'</script>;");
-            exit;
-        }   
-        else if ($httpcode!=200) {
-            $host  = $_SERVER['HTTP_HOST'];
-            $uri   = rtrim(dirname($_SERVER['PHP_SELF']), '/\\');
-            $extra = 'badrequest.php';
-            echo("<script>window.location.href='http://". $host.$uri.'/'.$extra."'</script>;");
-            exit;
-        }
-            
-    }
-    else {
-        $host  = $_SERVER['HTTP_HOST'];
-            $uri   = rtrim(dirname($_SERVER['PHP_SELF']), '/\\');
-            $extra = 'badrequest.php';
-            echo("<script>window.location.href='http://". $host.$uri.'/'.$extra."'</script>;");
-            exit;
-    }
 ?>
 <div class="kt-body kt-grid__item kt-grid__item--fluid kt-grid kt-grid--hor kt-grid--stretch" id="kt_body">
     <div class="kt-content kt-content--fit-top  kt-grid__item kt-grid__item--fluid kt-grid kt-grid--hor"
@@ -243,18 +198,6 @@
                                                             name="groupcontact">
                                                             <option value=-1>-Không sử dụng-</option>
                                                             <?php
-                                                                $url2='http://192.168.1.13:3000/telegram/get_contact?id='.$id;
-                                                                $curl2=curl_init($url2);
-                                                                curl_setopt($curl2, CURLOPT_RETURNTRANSFER, true);
-                                                                curl_setopt($curl2, CURLOPT_HTTPHEADER, [
-                                                                'X-RapidAPI-Host:
-                                                                contextualwebsearch-websearch-v1.p.rapidapi.com',
-                                                                'X-RapidAPI-Key: 7xxxxxxxxxxxxxxxxxxxxxxxxxxx',
-                                                                'Authorization: '.$_SESSION['user_token']
-                                                                ]);
-                                                                $response2=json_decode(curl_exec($curl2), true);
-                                                                $httpcode2=curl_getinfo($curl2,CURLINFO_HTTP_CODE);
-                                                                curl_close($curl2);
                                                                 if (isset($response2))
                                                                 foreach($response2 as $index) {
                                                                 echo '<option value='.$index['Id'].'>'.str_replace("<","&lt;",$index['Name']).'

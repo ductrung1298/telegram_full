@@ -100,7 +100,7 @@ if ($id!=0 && $user!=0) {
                                                 </thead>
                                                 <tbody>
                                                     <?php
-                                                    $url2='http://192.168.1.13:3000/telegram/get_list_user_telegramgroup?id='.$user.'&group='.$id;
+                                                    $url2='http://192.168.1.13:3000/telegram/get_list_user_in_contact?id='.$user.'&group='.$id;
                                                     $curl2=curl_init($url2);
                                                     curl_setopt($curl2, CURLOPT_RETURNTRANSFER, true);
                                                     curl_setopt($curl2, CURLOPT_HTTPHEADER, [

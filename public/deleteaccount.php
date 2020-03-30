@@ -17,7 +17,7 @@ if ($id!=0)
         $httpcode=curl_getinfo($curl,CURLINFO_HTTP_CODE);
         curl_close($curl);
         if ($httpcode==200)
-            header('Refresh:0');
+            header('Location: add-account-tool-telegram.php');
         else 
             header('Location: badrequest.php');
 }
