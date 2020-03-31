@@ -1,5 +1,6 @@
 <?php
-
+include 'header.php';
+include 'footer.php';
 $arraycontact = array();
 $phone=isset($_POST['phone']) ? $_POST['phone'] : '';
 if (isset($phone) && is_array($phone))
@@ -28,6 +29,8 @@ foreach($lastname as $i => $last) {
         $arraycontact[$i]=$data;
     }
 };
+
+$addFriend = (isset($_POST['addFriend']) ? 1 : 0);
 //add contact from file
 if (isset($_FILES["myfile"])) {
     $filename= $_FILES['myfile']['tmp_name'];
@@ -41,36 +44,49 @@ if (isset($_FILES["myfile"])) {
         }
     }
 }
-if ($_POST['groupcontact']==0)
     $body=[
-    'id' => isset($_POST['id']) ? intval($_POST['id']): '',
-    'contacts' => json_encode($arraycontact),
-    'idgroupcontact' => $_POST['groupcontact'],
-    'namegroupcontact' => isset($_POST['name_group'])?$_POST['name_group']:'',
-    ];
-else 
-    $body=[
-        'id' => isset($_POST['id']) ? intval($_POST['id']): '',
+        'id' => (isset($_POST['id']) ? intval($_POST['id']): '0'),
         'contacts' => json_encode($arraycontact),
-        'idgroupcontact' => $_POST['groupcontact'],
-        ];
-$url='http://192.168.1.13:3000/telegram/import_contact';
+        'idgroupcontact'=> $_POST['groupcontact'],
+        'addfriend' => $addFriend,
+    ];
+    $url = 'http://192.168.1.13:3000/telegram/import_contact';
     $curl=curl_init($url);
     curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
     curl_setopt($curl, CURLOPT_HTTPHEADER, [
         'X-RapidAPI-Host: contextualwebsearch-websearch-v1.p.rapidapi.com',
         'X-RapidAPI-Key: 7xxxxxxxxxxxxxxxxxxxxxxxxxxx',
-            'Authorization: '.$_SESSION['user_token']
+        'Authorization: '.$_SESSION['user_token']
     ]);
     curl_setopt($curl, CURLOPT_POST,1);
     curl_setopt($curl, CURLOPT_POSTFIELDS, http_build_query($body));
-    $response = curl_exec($curl);
+    $response = json_decode(curl_exec($curl), true);
     $httpcode=curl_getinfo($curl,CURLINFO_HTTP_CODE);
     curl_close($curl);
     if ($httpcode==200)
-        header('Location: getcontact.php?id='.intval($_POST['id']));
+        {
+            echo '
+            <script>
+            Swal.fire({
+                icon: "success",
+                title: "Thêm người dùng thành công",
+                text: "Thêm vào danh bạ thành công: '.$response['contact_success'].'/'.$response['all'].',Thêm vào bạn bè: '.$response['friend_success'].'",
+              })
+              .then((kq) => {
+                if (kq && kq.value) {
+                    window.location.href="add-account-tool-telegram.php";
+                } ';
+              echo '})
+              </script>';
+        }
     else if ($httpcode==500) 
-        header('Location: loginerror.php');
+    echo '
+        <script>
+            window.location.href="loginerror.php";
+        </script>';
     else 
-        header('Location: badrequest.php');
+        echo '
+        <script>
+            window.location.href="badrequest.php";
+        </script>';
 ?>

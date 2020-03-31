@@ -59,7 +59,6 @@
                                         <form class="kt-form kt-form--label-right">
                                             <div class="kt-portlet__body">
                                                 <div class="form-group row form-group-marginless kt-margin-t-20">
-                                                   
                                                     <div class="col-sm-12 col-md-6">
                                                         <div class="form-group">
                                                             <label>SỐ ĐIỆN THOẠI:</label>
@@ -79,19 +78,13 @@
                                                         
                                                         <div class="id_account_add" style="display:none;">
                                                         </div>
-                                                    </div>
-                                                    <div class="col-sm-12 col-md-6">
-                                                    <div class="form-group mt-3 mb-5">
-                                                        <span class="kt-font-bold"><span class="kt-font-danger">*</span> Nếu bạn chưa biết cách lấy mã API_ID và API_HASH vui lòng xem hướng dẫn sử dụng<a target="_blank" href="tele-document.php"> tại đây</a></span>
-                                                    </div>
-                                                    <div class="form-group otp_form_hide">
+                                                        <div class="form-group otp_form_hide">
                                                             <label><span class="kt-font-success">OTP CODE:</span> </label>
                                                             <input type="text" class="form-control" name="otp_code_add"
                                                                 placeholder="OTP code" required>
                                                         </div>
                                                     </div>
-
-                                                </div>
+                                                    </div>
                                                 <br>
                                                 <div class="kt-portlet__foot">
                                                     <div class="kt-form__actions">
@@ -103,6 +96,9 @@
                                                                 <button type="reset"
                                                                     class="btn btn-secondary btn-elevate btn-pill">Huỷ</button>
                                                             </div>
+                                                            <div class="col-lg-12 d-flex justify-content-center">
+                                                                <button type="button" class="btn btn-outline-brand btn-square btn-elevate btn-pill sendOtpToRegister" style="display:none;">Xác nhận</button>
+                                                            </div>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -111,9 +107,17 @@
                                                         <span class="spinner"></span>
                                                     </div>
                                                 </div>
+                                                <div class="kt-portlet__body">
+                                                    <div class="form-group row form-group-marginless kt-margin-t-20">
+                                                        <div class="col-sm-12 col-md-6">
+                                                            <div class="form-group">
+                                                                <label>Truy cập vào <a style="color:blue; font-size:16px !important;" href="tele-document.php">👉đây</a> để biết cách lấy API_ID và API_HASH</label>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
                                             </form>
                                         </div>
-                                        
                                     </div>
                                 </div>
                             </div>
@@ -185,7 +189,7 @@
                                             <div class="col-6 form-group ">
                                                 <label>Số điện thoại</label>
                                                 <div class="input-group">
-                                                    <input type="text" class="form-control" name="phone_number" placeholder="+84xxxxxxxxxxx" value="+84966315840" aria-describedby="basic-addon2">
+                                                    <input type="text" class="form-control" name="phone_number" placeholder="+84xxxxxxxxxxx" aria-describedby="basic-addon2">
                                                     <div class="input-group-append"><span class="input-group-text" id="basic-addon2"><i class="la la-phone"></i></span></div>
                                                 </div>
                                             </div>
@@ -226,44 +230,36 @@ jQuery(document).ready(function($) {
 
     // delete account
     $('.btn-del-acc').on('click', function() {
-        window.location.href = 'deleteaccount.php?id=' + $(this).data('id');
+        const swalWithBootstrapButtons = Swal.mixin({
+            customClass: {
+                confirmButton: 'btn btn-success',
+                cancelButton: 'btn btn-danger'
+            },
+            buttonsStyling: false
+            })
+
+            swalWithBootstrapButtons.fire({
+            title: 'Xác nhận xóa tài khoản?',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonText: 'Yes!',
+            cancelButtonText: 'No!',
+            reverseButtons: true
+            }).then((result) => {
+            if (result.value) {
+                window.location.href = 'deleteaccount.php?id=' + $(this).data('id');
+            } else if (
+                result.dismiss === Swal.DismissReason.cancel
+            ) {
+                swalWithBootstrapButtons.fire(
+                'Cancelled',
+                '',
+                'error'
+                )
+            }
+            })
     });
    
-    function sendPhoneToGetID(a_func = 'addaccount', phone, api_id, api_hash, add = 1){
-        $.ajax({
-            type: "POST",
-            url: "./createapp.php",
-            data: {
-                "phone": phone,
-                "function": a_func,
-                "api_id": Number(api_id),
-                "api_hash": api_hash,
-            },
-            success: function(data) {
-                if (data && data != 0) {
-                    if (add == 1) {
-                        $(".verify_show").hide(1500);
-                        $('.id_account').val(data);
-                        $(".verify_hide").show(2000);
-                    } else {
-                        $(".btn-addaccount").addClass("sendOtpToRegister");
-                        $(".btn-addaccount").text("Xác nhận");
-                        $(this).prop('disabled', false);
-                        $(".btn-addaccount").removeClass("btn-addaccount");
-                        $(".otp_form_hide").show(2000);
-                        $('.id_account_add').val(data);
-                    }
-                } 
-                else if (data ==0 ){
-                    Swal.fire('Thông báo', 'Tài khoản đã đăng nhập trước đó', 'success');
-                } else {
-                    Swal.fire('Lỗi', 'Đã xảy ra lỗi, xin thử lại sau', 'error');
-                    $(this).prop('disabled', false);
-                }
-            }
-        })
-    }
-
     function sendOTPCodeToVerify(id, opt_code){
         $.ajax({
             type: "POST",
@@ -309,12 +305,11 @@ jQuery(document).ready(function($) {
                 },
                 success: function(data) {
                     if (data && data != 0) {
-                        $(".btn-addaccount").addClass("sendOtpToRegister");
-                        $(".btn-addaccount").text("Xác nhận");
-                        $(".btn-addaccount").removeAttr("disabled");
-                        $(".btn-addaccount").removeClass("btn-addaccount");
+                        $(".btn-addaccount").hide();
+                        $('.btn-pill').hide();
                         $(".otp_form_hide").show(2000);
                         $('.id_account_add').val(data);
+                        $(".sendOtpToRegister").addClass("display-block");
                     } 
                     else if (data ==0 ){
                         Swal.fire('Thông báo', 'Số điện thoại đã được đăng ký', 'warning');
@@ -352,20 +347,26 @@ jQuery(document).ready(function($) {
                 "function": "requestSendCode",
             },
             success: function(data) {
-                console.log(data);
-                if (data && data != 0) {
+                if (data && data > 0) {
                     $(".verify_show").hide(1500);
                     $('.id_account').val(data);
                     $(".verify_hide").show(2000);
-                
                 } 
                 else if (data == 0 ){
                     Swal.fire('Thông báo', 'Tài khoản đã đăng nhập trước đó', 'success');
-                    $(".btn-vertify_pending").removeAttr("disabled");
-                } else {
+                    $(".vertify_pending").removeAttr("disabled");
+                    $("i.fas.fa-circle-notch.fa-spin").removeClass("fa-circle-notch");
+                } 
+                else if (data == -1 ){
+                    Swal.fire('Thông báo', 'Số điện thoại chưa được đăng ký', 'error');
+                    $(".vertify_pending").removeAttr("disabled");
+                    $("i.fas.fa-circle-notch.fa-spin").removeClass("fa-circle-notch");
+                } 
+                else {
                     Swal.fire('Lỗi', 'Đã xảy ra lỗi, xin thử lại sau', 'error');
                     $(this).prop('disabled', false);
-                    $(".btn-vertify_pending").removeAttr("disabled");
+                    $(".vertify_pending").removeAttr("disabled");
+                    $("i.fas.fa-circle-notch.fa-spin").removeClass("fa-circle-notch");
                 }
             }
         })
@@ -377,6 +378,4 @@ jQuery(document).ready(function($) {
     })
 
 })
-
-
 </script>

@@ -1,6 +1,7 @@
 <?php
     include 'header.php';
     date_default_timezone_set('Asia/Ho_Chi_Minh');
+    $id=(isset($_GET['id'])?intval($_GET['id']):0);
 ?>
 <div class="kt-body kt-grid__item kt-grid__item--fluid kt-grid kt-grid--hor kt-grid--stretch" id="kt_body">
     <div class="kt-content kt-content--fit-top  kt-grid__item kt-grid__item--fluid kt-grid kt-grid--hor"
@@ -9,8 +10,8 @@
         <div class="kt-subheader  mb-5 kt-grid__item" id="kt_subheader">
             <div class="kt-container ">
                 <div class="kt-subheader__main">
-                    <h3 class="kt-subheader__title">
-                        Tool Telegram </h3>
+                    <h4 class="kt-subheader__title">
+                        Tool Telegram </h4>
                     <div class="kt-subheader__breadcrumbs">
                         <a href="#" class="kt-subheader__breadcrumbs-home"><i class="flaticon2-shelter"></i></a>
                         <span class="kt-subheader__breadcrumbs-separator"></span>
@@ -62,23 +63,25 @@
                                             DANH BẠ
                                         </span>
                                         <div class="tab-pane active" id="kt_widget4_top10_rating">
-                                        <div class="kt-scroll" data-scroll="true" data-height="400" style="height: 400px;">
+                                        <!-- <div class="kt-scroll" data-scroll="true" data-height="400" style="height: 400px;">
                                             <div class="kt-list-timeline">
                                                 <div class="table-responsive">
-                                                    <div class="kt-section__content">
+                                                    <div class="kt-section__content"> -->
                                                         <table class="table">
                                                             <thead>
                                                                 <tr>
                                                                     <th>#</th>
                                                                     <th>Tên danh bạ</th>
                                                                     <th>Số lượng thành viên</th>
+                                                                    <th>Bạn bè Telegram</th>
+                                                                    <th>Mô tả</th>
                                                                     <th>Ngày tạo</th>
                                                                     <th class="d-flex justify-content-center">Chức năng</th>
                                                                 </tr>
                                                             </thead>
                                                             <tbody>
                                                                 <?php
-                                                                $url2='http://192.168.1.13:3000/telegram/get_contact?id='.$id;
+                                                                $url2='http://192.168.1.13:3000/telegram/get_contact?id='.$id;                                                                ;
                                                                 $curl2=curl_init($url2);
                                                                 curl_setopt($curl2, CURLOPT_RETURNTRANSFER, true);
                                                                 curl_setopt($curl2, CURLOPT_HTTPHEADER, [
@@ -97,23 +100,32 @@
                                                                             <a href="groupcontact.php?id='.$list["Id"].'&user='.$id.'" >'.str_replace("<","&lt;",$list['Name']).'</a>
                                                                             </td>
                                                                         <td><label>'.$list["length"].'</label></td>
+                                                                        <td><label>'.$list["lengthfriend"].'/'.$list["length"].'</label></td>
+                                                                        <td><label>'.(isset($list["describe"])?str_replace("<", "&lt;",$list['describe']):"").'</label></td>
                                                                         <td><label>'.date("d/M/Y h:i:s",strtotime($list["createAt"])).'</label></td>
                                                                         <td class="d-flex justify-content-center">
-                                                                            <div class="btn-group" role="group">
-                                                                                <a href="groupcontact.php?id='.$list["Id"].'&user='.$id.'" class="btn btn-sm btn-outline-primary"><i class="fa fa-search"></i>Chi tiết</a>
-                                                                                <button type="button" class="btn btn-sm btn-outline-dark delete-me" idgroup="'. $list["Id"] .'"><i class="flaticon2-trash"></i>Xóa</button>
+                                                                            
+                                                                            <div class="dropdown">
+                                                                                <button class="btn btn-info dropdown-toggle" type="button" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                                                    Action
+                                                                                </button>
+                                                                                <div class="dropdown-menu" aria-labelledby="dropdownMenu2">
+                                                                                    <a class="dropdown-item" href="groupcontact.php?id='.$list["Id"].'&user='.$id.'">Chi tiết</a>
+                                                                                    <button class="dropdown-item" type="button">Thêm vào group chat</button>
+                                                                                    <button class="dropdown-item" type="button">Thêm vào bạn bè Telegram</button>
+                                                                                    <button class="dropdown-item" type="button">Export CSV</button>
+                                                                                </div>
                                                                             </div>
                                                                         </td>
-                                                                    </tr>    
-                                                                            ';
+                                                                    </tr>';
                                                                     }
                                                                 ?>
                                                             </tbody>
                                                         </table>
-                                                    </div>
+                                                    <!-- </div>
                                                 </div>
                                             </div>
-                                        </div>
+                                        </div> -->
                                         </div>
                                     </div>
                                 </div>
@@ -130,6 +142,7 @@
                                                
                                             </span>
                                             <div class="kt-section__content">
+                                                <h4>Thêm bằng tay</h4>
                                                 <div class="form-group col-lg-15 row list-contact">
                                                     <div class=" kt-margin-t-5 col-lg-12 row">
                                                         <div class="col-lg-3 col-md-5">
@@ -169,6 +182,7 @@
                                                         </div>
                                                     </div>
                                                 </div>
+                                                <h4>Thêm từ File CSV</h4>
                                                 <label for="myfile">Thêm từ file:</label>
                                                 <input type="file" id="myfile" name="myfile"
                                                     accept=".csv">
@@ -189,9 +203,10 @@
                                                         value="3">
                                                     </div>
                                                 </div>
+                                                <h4>Thêm vào danh bạ</h4>
                                                 <div class="form-group row">
                                                     <div class="col-sm-2">
-                                                        <label for="inputPassword" class="col-form-label">Thêm vào nhóm danh bạ:</label>
+                                                        <label for="inputPassword" class="col-form-label">Tên danh bạ:</label>
                                                     </div>
                                                     <div class="col-sm-4">
                                                         <select class=" form-control col-lg-12 groupcontact"
@@ -208,7 +223,7 @@
                                                     </div>
                                                     <div class="col-sm-6 d-flex align-items-end">
                                                     <label class="kt-checkbox kt-checkbox--success">
-															<input type="checkbox" name="addFriend"> Thêm làm bạn bè
+															<input type="checkbox" name="addFriend" value="thembanbe"> Thêm làm bạn bè
 															<span></span>
 														</label>
                                                     </div>
@@ -256,6 +271,11 @@
                     <input type="text" class="form-control" name="name" aria-describedby="basic-addon2">
                     <div class="input-group-append"><span class="input-group-text" id="basic-addon2"><i class="la la-group"></i></span></div>
                 </div>
+                <label>Mô tả</label>
+                <div class="input-group">
+                    <input type="text" class="form-control" name="describe" aria-describedby="basic-addon3">
+                    <div class="input-group-append"><span class="input-group-text" id="basic-addon3"><i class="fas fa-sticky-note"></i></span></div>
+                </div>
             </div>
             </div>
             <div class="modal-footer">
@@ -273,14 +293,27 @@
     function beforeSubmit(){
             if ($('#myfile').val())
             {
-            var ext = $('#myfile').val().split('.').pop().toLowerCase();
-            if(ext!=='csv') {
-                alert('Vui lòng nhập đúng định dạng file csv');
-                return false;
+                var ext = $('#myfile').val().split('.').pop().toLowerCase();
+                if(ext!=='csv') {
+                    Swal.fire(
+                        'Oops...',
+                        'Vui lòng nhập đúng định dạng đuôi CSV, phân tách bởi dấu phẩy.',
+                        'error'
+                        )
+                    return false;
+                }
+                else return confirm('Thực hiện thêm danh bạ?');
             }
-            else return confirm('Thực hiện thêm danh bạ?');
-        }
-        else return confirm('Thực hiện thêm danh bạ?'); 
+            else if ($('input[name="phone[]"]').val()) 
+                return confirm('Thực hiện thêm danh bạ?');
+            else {
+            Swal.fire(
+                'Lỗi...',
+                'Danh sách nhập vào trống!',
+                'error',
+            );
+            return false; 
+        } 
     }
 
 jQuery(document).ready(function($) {
@@ -293,7 +326,7 @@ jQuery(document).ready(function($) {
         }
     });
     $('.addgroupcontact').on('click', function(){
-        if ($('input[name=name]').val()=='') alert("Trường tên nhóm liên hệ không được rỗng");
+        if ($('input[name="name"]').val()=='') alert("Trường tên nhóm liên hệ không được rỗng");
         else {
         $('.addgroupcontact').hide();
         $.ajax({
@@ -301,14 +334,24 @@ jQuery(document).ready(function($) {
             type: "POST",
             data: {
                 "function": "addgroupcontact",
-                "name": $('input[name=name]').val(),
+                "name": $('input[name="name"]').val(),
+                "describe": $('input[name="describe"]').val(),
                 "id": <?php echo $id; ?>
             },
             success: function(dt) {
                 if (dt==1) {
-                    alert("Thêm nhóm liên hệ " + $('input[name=name]').val() + " thành công");
+                    Swal.fire(
+                        'Thêm danh bạ',
+                        'Thêm mới danh bạ thành công',
+                        'success',
+                    );
                     location.reload();
                 }
+                else Swal.fire(
+                'Lỗi...',
+                'Lỗi khi thêm mới danh bạ',
+                'error',
+            );;
             }
         })
     }
@@ -316,56 +359,20 @@ jQuery(document).ready(function($) {
 })
 
 jQuery(document).ready(function($) {
-    $("#exportfile").on("click", function() {
-        var ok=confirm('Tải xuống danh bạ?');
-        if (ok==true) {
-        <?php
-            $filename="./export/contact_id=".$id."_".date("Y-m-d").".csv";
-            $output=fopen($filename, "w");
-            fputs($output, $bom =( chr(0xEF) . chr(0xBB) . chr(0xBF) ));
-            foreach($response as $contact) {
-                fputcsv($output, array(isset($contact['phone'])?$contact['phone']:'', isset($contact['first_name'])?$contact['first_name']:'', isset($contact['last_name'])?$contact['last_name']:'', isset($contact['username'])?$contact['username']:''));
-            }
-            fclose($output);
-            echo 'window.location="'.$filename.'"';
-        ?>
-        }
-    })
-    $(".delete-me").click(function() {
-        const swalWithBootstrapButtons = Swal.mixin({
-            customClass: {
-                confirmButton: 'btn btn-success',
-                cancelButton: 'btn btn-danger'
-            },
-            buttonsStyling: false
-            })
-
-            swalWithBootstrapButtons.fire({
-            title: 'Bạn có muốn xóa?',
-            text: "Bạn sẽ không thể khôi phục!",
-            type: 'question',
-            showCancelButton: true,
-            confirmButtonText: 'Xóa!',
-            cancelButtonText: 'Hủy bỏ!',
-            reverseButtons: true
-            }).then((result) => {
-            if (result.value) {
-                swalWithBootstrapButtons.fire(
-                'Đã xóa!',
-                'đã xóa nhóm id: ' + $(this).attr("idgroup"),
-                'success'
-                )
-            } else if (
-                /* Read more about handling dismissals below */
-                result.dismiss === Swal.DismissReason.cancel
-            ) {
-                swalWithBootstrapButtons.fire(
-                'Đã hủy',
-                ' :)',
-                'error'
-                )
-            }
-            })
-    });
+    // $("#exportfile").on("click", function() {
+    //     var ok=confirm('Tải xuống danh bạ?');
+    //     if (ok==true) {
+    //     <?php
+    //         $filename="./export/contact_id=".$id."_".date("Y-m-d").".csv";
+    //         $output=fopen($filename, "w");
+    //         fputs($output, $bom =( chr(0xEF) . chr(0xBB) . chr(0xBF) ));
+    //         foreach($response as $contact) {
+    //             fputcsv($output, array(isset($contact['phone'])?$contact['phone']:'', isset($contact['first_name'])?$contact['first_name']:'', isset($contact['last_name'])?$contact['last_name']:'', isset($contact['username'])?$contact['username']:''));
+    //         }
+    //         fclose($output);
+    //         echo 'window.location="'.$filename.'"';
+    //     ?>
+    //     }
+    // })
 })
 </script>

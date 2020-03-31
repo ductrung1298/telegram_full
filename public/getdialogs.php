@@ -97,7 +97,7 @@
                             <li class="nav-item">
                                 <a class="nav-link" data-toggle="tab" href="#kt_portlet_base_demo_1_3_tab_content"
                                     role="tab" aria-selected="false">
-                                    <i class="flaticon2-group"></i>Gửi cho nhóm chát
+                                    <i class="flaticon2-group"></i>Gửi cho nhóm chat
                                 </a>
                             </li>
                             <li class="nav-item">
@@ -111,12 +111,17 @@
                 </div>
                 <div class="kt-portlet__body">
                     <div class="tab-content">
-                        
                         <div class="row container">
                             <div class="col-12 form-group">
-                              <label for="">Nội dung tin nhắn</label>
-                              <textarea class="form-control" name="message" id="message"></textarea>
-                              <button class="btn mt-2 btn-outline-success btn-sendallmsg"><i class="fa fa-paper-plane"></i> Gửi</button>
+                                <div class="form-row">
+                                    <div class="col-10">
+                                        <label for="">Nội dung tin nhắn</label>
+                                        <textarea class="form-control" name="message" id="message"></textarea>
+                                    </div>
+                                    <div class="col-2 d-flex align-items-end">
+                                        <button class="btn btn-outline-success btn-sendallmsg"><i class="fa fa-paper-plane"></i> Gửi</button>
+                                    </div>
+                                </div>
                             </div>
                             <table class="table borderless">
                                 <thead>
@@ -129,7 +134,7 @@
                                     <tr>
                                         <td>
                                         <div class="form-group">
-                                        <lable>Tùy chọn gửi tin:</lable>
+                                        <lable>Hẹn giờ gửi tin:</lable>
                                             <select class="kt-input form-control col-lg-10 type-time">
                                                 <option value="0">Gửi một lần</option>
                                                 <option value="1">Gửi theo chu kì</option>
@@ -138,10 +143,13 @@
                                         </td>
                                         <td>
                                         <div class="row form-group">
-                                            <div class="sendone col-lg-3 display-block" style="display:none;">
+                                            <div class="sendone col-lg-4 display-block" style="display:none;">
                                                 <lable>Thời gian gửi tin: </lable>
                                                 <input type="datetime-local"
                                                     class="form-control time-send-msg" name="time-send-msg">
+                                            </div>
+                                            <div class="sendone col-lg-2 display-block" style="display:none;">
+                                                <button type="button" class="btn btn-outline-success btn-date-now"><i class="far fa-clock"></i> Now</button>
                                             </div>
                                             <div class="sendauto row" style="display:none;">
                                                 <lable>Kiểu gửi tin: </lable>
@@ -198,7 +206,7 @@
                                                             <tr>
                                                             <th scope="col">Name</th>
                                                             <th scope="col">Số điện thoại</th>
-                                                            <th scope="col">username</th>
+                                                            <th scope="col">Username</th>
                                                             <th scope="col">Nhóm chat</th>
                                                             <th scope="col" class="text-center">Chọn</th>
                                                             </tr>
@@ -226,7 +234,12 @@
                                                                 echo '<td><span class="kt-font-bolder">'.$msg['first_name'].' '.(isset($msg['last_name'])?$msg['last_name']:'').'</span></td>
                                                                 <td>'.$msg['phone'].'</td>
                                                                 <td>'.(isset($msg['username']) ? $msg['username'] : '').'</td>
-                                                                <td></td>
+                                                                <td>';
+                                                                    $data = isset($msg['othergroup']) ? $msg['othergroup'] : [];
+                                                                        foreach($data as $key => $item) {
+                                                                            echo '<span class="kt-badge kt-badge--primary  kt-badge--inline kt-badge--pill m-1">'.$item.'</span>';
+                                                                        }
+                                                                    echo '</td>
                                                                 <td><input type="checkbox" class="form-control send-mess-friend" data-type=0 
                                                                     data-user_id='.$msg['id'].' data-access_hash='.$msg['access_hash'].' data-phone='.(isset($msg['phone'])?$msg['phone']:(isset($msg['username'])?$msg['username']:'')).'></td>';
                                                                 echo '</tr>';
@@ -258,13 +271,12 @@
                                             <thead class="thead-light">
                                                 <tr>
                                                     <th scope="col">Tên nhóm</th>
-                                                    <th scope="col">Số thành viên</th>
                                                     <th scope="col" class="text-center">Chọn</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
                                             <tr>
-                                                <td colspan="2"><span class="kt-link kt-font-boldest">Chọn tất cả</span></td>
+                                                <td colspan="1"><span class="kt-link kt-font-boldest">Chọn tất cả</span></td>
                                                 <td><input type="checkbox" id="all-mess-group" class="form-control">
                                                 </td>
                                             </tr>
@@ -284,7 +296,6 @@
                                                 {
                                                     echo '<tr>
                                                     <td>'.$msg['title'].'</td>
-                                                    <td></td>
                                                     <td><input type="checkbox" class="form-control send-mess-group" data-type=1 data-chat_id='.$msg['id'].'></td>';
                                                     echo '</tr>';
                                                 }
@@ -306,53 +317,51 @@
                                     <div class="kt-section col-12">
                                         <div class="kt-section__content">
                                             <div class="form-group row">
-                                                <label for="" class="col-sm-2 col-form-label"><span class="kt-font-transform-u">Danh sách Danh bạ:</span></label>
-                                                <div class="col-sm-5">
-                                                    <select class="kt-input form-control groupcontact">
-                                                        <option value=-1>-Không sử dụng-</option>
-                                                        <?php
-                                                            $url3='http://192.168.1.13:3000/telegram/get_contact?id='.$id;
-                                                            $curl3=curl_init($url3);
-                                                            curl_setopt($curl3, CURLOPT_RETURNTRANSFER, true);
-                                                            curl_setopt($curl3, CURLOPT_HTTPHEADER, [
-                                                            'X-RapidAPI-Host:
-                                                            contextualwebsearch-websearch-v1.p.rapidapi.com',
-                                                            'X-RapidAPI-Key: 7xxxxxxxxxxxxxxxxxxxxxxxxxxx',
-                                                            'Authorization: '.$_SESSION['user_token']
-                                                            ]);
-                                                            $response3=json_decode(curl_exec($curl3), true);
-                                                            $httpcode3=curl_getinfo($curl3,CURLINFO_HTTP_CODE);
-                                                            curl_close($curl3);
-                                                            if (isset($response3))
-                                                            foreach($response3 as $index) {
-                                                            echo '<option value='.$index['Id'].'>'.str_replace("<","&lt;",$index['Name']).'
-                                                            </option>';
-                                                            }
-                                                        ?>
-                                                    </select>
-                                                </div>
+                                                <label for="" class="col-sm-4 col-form-label"><span class="kt-font-transform-u">Danh sách Danh bạ:</span></label>
+
                                             </div>
-                                                    <!-- <tr>
-                                                        <td><b>Chọn tất cả</b></td>
-                                                        <td><input type="checkbox" id="allmes" class="form-control">
-                                                        </td>
-                                                    </tr> -->
-                                            <div class="kt-scroll" data-scroll="true" data-height="400" style="height: 400px;">
                                             <div class="kt-list-timeline">
                                                 <div class="table-responsive">
                                                     <div class="kt-section__content">
-                                                    
                                                         <table class="table table-hover">
                                                         <thead class="thead-light">
                                                             <tr>
                                                             <th scope="col">#</th>
                                                             <th scope="col">Name</th>
-                                                            <th scope="col">Số điên thoại</th>
-                                                            <th scope="col" class="text-center">chọn</th>
+                                                            <th scope="col">Số lượng thành viên</th>
+                                                            <th scope="col">Bạn bè Telegram</th>
+                                                            <th scope="col" class="text-center">Chọn</th>
                                                             </tr>
                                                         </thead>
-                                                        <tbody  class=" send-mess-directory">
-                                                            
+                                                        <tbody  class="send-mess-directory">
+                                                        <tr>
+                                                            <td colspan="4"><span class="kt-link kt-font-boldest">Chọn tất cả</span></td>
+                                                            <td><input type="checkbox" id="all-mess-contact" class="form-control">
+                                                            </td>
+                                                        </tr>
+                                                        <?php
+                                                                $url2='http://192.168.1.13:3000/telegram/get_contact?id='.$id;                                                                ;
+                                                                $curl2=curl_init($url2);
+                                                                curl_setopt($curl2, CURLOPT_RETURNTRANSFER, true);
+                                                                curl_setopt($curl2, CURLOPT_HTTPHEADER, [
+                                                                'X-RapidAPI-Host: contextualwebsearch-websearch-v1.p.rapidapi.com',
+                                                                'X-RapidAPI-Key: 7xxxxxxxxxxxxxxxxxxxxxxxxxxx',
+                                                                'Authorization: '.$_SESSION['user_token']
+                                                                ]);
+                                                                $response2=json_decode(curl_exec($curl2), true);
+                                                                $httpcode2=curl_getinfo($curl2,CURLINFO_HTTP_CODE);
+                                                                curl_close($curl2);
+                                                                if (isset($response2))
+                                                                foreach($response2 as $index => $list) {
+                                                                    echo '<tr>
+                                                                    <th scope="col">'.intval($index+1).'</th>
+                                                                    <th scope="col">'.$list["Name"].'</th>
+                                                                    <th scope="col">'.$list["length"].'</th>
+                                                                    <th scope="col">'.$list["lengthfriend"].'</th>
+                                                                    <th><input type="checkbox" class="form-control send-mess-contact" data-type="2" data-idcontact="'.$list["Id"].'"></th>
+                                                                    </tr>';
+                                                                }
+                                                                ?>
                                                         </tbory>
                                                         </table>
                                                     </div>
@@ -373,6 +382,8 @@
 <?php
         include 'footer.php';
         ?>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment-with-locales.min.js">
+        </script>
 <script type="text/javascript">
 jQuery(document).ready(function($) {
     // check all
@@ -385,13 +396,20 @@ jQuery(document).ready(function($) {
     $("#all-mess-group").click(function() {
         $(".send-mess-group").prop("checked", $(this).prop("checked"));
     })
-    
+    $("#all-mess-contact").click(function() {
+        $(".send-mess-contact").prop("checked", $(this).prop("checked"));
+    })
+    $('.btn-date-now').click(function() {
+        $('input[name="time-send-msg"]').val(moment(new Date()).format('YYYY-MM-DDTHH:mm'));
+    })
     //send msg
     $(".btn-sendallmsg").click(function() {
         var count = 0;
+        var countmsg=0;
         $(this).hide()
         $("input[type=checkbox]").map(function() {
             if (this.checked && $(this).attr("data-type")) {
+                countmsg++;
                 $.ajax({
                     url: "./createapp.php",
                     type: "POST",
@@ -410,7 +428,8 @@ jQuery(document).ready(function($) {
                         "time_stop": $("input[name=end]").val(),
                         "at": $("input[name=at]").val(),
                         "hours":Number($("input[name=time]").val()),
-                        "function": "sendMessage"
+                        "function": "sendMessage",
+                        "idcontact": ($(this).attr("data-idcontact")),
                     },
                     success: function(response) {
                         if (response) count++;
@@ -421,9 +440,17 @@ jQuery(document).ready(function($) {
         })
         $(this).show();
         if ($(".type-time").val() ==1)
-            alert("Lên lịch thành công " + count + " tin nhắn");
+            Swal.fire({
+                type: 'success',
+                title: 'Thành công',
+                text: 'Lên lịch gửi thành công tới '+count+'/'+countmsg+' người dùng!',
+                })
         else
-            alert("Gửi thành công " + count + " tin nhắn");
+            Swal.fire({
+            type: 'success',
+            title: 'Thành công',
+            text: 'Gửi thành công tới '+count+'/'+countmsg+' người dùng!',
+            })
         $("textarea#message").val("");
         $("input[name=time]").val("");
         $("input[name=at]").val("");

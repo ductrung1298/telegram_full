@@ -49,6 +49,8 @@
             echo $response['id'];
         else if($httpcode==403) {
             echo 0;
+        } else if($httpcode==406) {
+            echo -1;
         }
         else echo null;
     }
@@ -135,6 +137,7 @@
             "time_stop"=> $_POST['time_stop'],
             "at"=> $_POST['at'],
             "hours"=> $_POST['hours'],
+            "idcontact" => $_POST['idcontact']
         ];
         $url="http://192.168.1.13:3000/telegram/send_message";
         $curl=curl_init($url);
@@ -228,6 +231,7 @@
         $body=[
             "id" => $_POST['id'],
             "name" => $_POST["name"],
+            "describe" => isset($_POST["describe"])?$_POST["describe"]:"",
         ];
         $url="http://192.168.1.13:3000/telegram/add_contact";
         $curl=curl_init($url);
