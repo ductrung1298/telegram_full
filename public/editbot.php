@@ -1,10 +1,9 @@
 <?php 
     include 'header.php';
     $id=isset($_GET['id'])?intval($_GET['id']):0;
-    $code=isset($_GET['code'])?($_GET['code']):'';
-    if ($id!=0 && $code!='')
+    if ($id!=0)
         {
-        $url='http://192.168.1.13:3000/telbot/getbot?id='.$id.'&code='.$code;
+        $url='http://localhost:3000/telbot/getbot?id='.$id;
         $curl=curl_init($url);
         curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
         curl_setopt($curl, CURLOPT_HTTPHEADER, [
@@ -31,15 +30,15 @@
             <div class="kt-container ">
                 <div class="kt-subheader__main">
                     <h3 class="kt-subheader__title">
-                        Tool Telegram </h3>
+                        BOT TELEGRAM </h3>
                     <div class="kt-subheader__breadcrumbs">
                         <a href="#" class="kt-subheader__breadcrumbs-home"><i class="flaticon2-shelter"></i></a>
                         <span class="kt-subheader__breadcrumbs-separator"></span>
-                        <a href="index.php" class="kt-subheader__breadcrumbs-link">
-                            Crawler </a>
+                        <a href="list-bot-telegram.php" class="kt-subheader__breadcrumbs-link">
+                            Danh sách BOT </a>
                         <span class="kt-subheader__breadcrumbs-separator"></span>
-                        <a href="telegram.php" class="kt-subheader__breadcrumbs-link">
-                            Telegram </a>
+                        <a href="#" class="kt-subheader__breadcrumbs-link">
+                            Cấu hình BOT </a>
                     </div>
                 </div>
 
@@ -53,15 +52,9 @@
                     <div class="kt-portlet__head-toolbar">
                         <ul class="nav nav-tabs nav-tabs-line nav-tabs-line-success nav-tabs-line-2x" role="tablist">
                             <li class="nav-item">
-                                <a class="nav-link" data-toggle="tab" href="telegram.php" role="tab"
-                                    aria-selected="false">
-                                    <i class="flaticon-bell"></i> Tài khoản
-                                </a>
-                            </li>
-                            <li class="nav-item">
                                 <a class="nav-link active" data-toggle="tab"
                                     href="#kt_portlet_base_demo_1_1_tab_content" role="tab" aria-selected="true">
-                                    <i class="flaticon-bell"></i> BOT Telegram
+                                    <i class="flaticon-bell"></i> Cấu hình BOT
                                 </a>
                             </li>
                         </ul>
@@ -271,7 +264,7 @@
                             {
                             echo '
                             <div class="col-lg-12 kt-margin-t-20 row">
-                                <div class="col-lg-6 col-md-7 kt-margin-b-5">
+                                <div class="col-lg-5 col-md-7 kt-margin-b-5">
                                     <div class="input-group">
                                         <textarea rows="1" cols="10" class="form-control"
                                             name="message">'.$mes['msg'].'</textarea>
@@ -280,14 +273,14 @@
                                 <div class="col-lg-1">
                                     <input type="checkbox" name= "attach" class="form-control" '.(($mes['attach']==1)?"checked":"").'>
                                 </div>
-                                <div class="col-lg-4 col-md-1">
+                                <div class="col-lg-5 col-md-1">
                                     <div class="input-group">
                                         <div class="input-group-prepend">
                                             <span class="input-group-text">Sau</span>
                                         </div>
                                         <input type="number" name="day" class="form-control col-lg-2" value="'.$mes["day"].'">
                                         <div class="input-group-prepend">
-                                            <span class="input-group-text">ngày subscribe. Lúc</span>
+                                            <span class="input-group-text">ngày đăng kí. Lúc</span>
                                         </div>
                                         <input type="time" name="hours" class="form-control col-lg-4" value="'.$mes["hours"].':'.$mes["mins"].'">
                                     </div>
@@ -300,7 +293,7 @@
                                     <i class="far fa-minus-square"
                                         style=" font-size: 3rem; color: #fd1361; cursor: pointer;"></i>
                                 </div>
-                                <div class="col-lg-7 mt-2 row col-md-2 link_url '.(($mes['attach']==1)?"display-block":"").'" style="display:none;">';
+                                <div class="col-lg-12 mt-2 row col-md-2 link_url '.(($mes['attach']==1)?"display-block":"").'" style="display:none;">';
                                 if ($mes['attach']==1) {
                                     foreach ($mes['linkattach'] as $attach) {
                                         echo '
@@ -317,11 +310,11 @@
                                             </div>
                                             <div class="col-lg-1 col-md-1 add-link_url kt-margin-b-5" style="display:none;">
                                             <i class="far fa-plus-square"
-                                                style=" font-size: 3rem; color: #1dc9b7; cursor: pointer;"></i>
+                                                style=" font-size: 2rem; color: #1dc9b7; cursor: pointer;"></i>
                                             </div>
                                             <div class="col-lg-1 col-md-1 delete-link_url kt-margin-b-5">
                                                 <i class="far fa-minus-square"
-                                                    style=" font-size: 3rem; color: #fd1361; cursor: pointer;"></i>
+                                                    style=" font-size: 2rem; color: #fd1361; cursor: pointer;"></i>
                                             </div>
                                         </div>';
                                     }
@@ -340,11 +333,11 @@
                                             </div>
                                             <div class="col-lg-1 col-md-1 add-link_url kt-margin-b-5" >
                                             <i class="far fa-plus-square"
-                                                style=" font-size: 3rem; color: #1dc9b7; cursor: pointer;"></i>
+                                                style=" font-size: 2rem; color: #1dc9b7; cursor: pointer;"></i>
                                             </div>
                                             <div class="col-lg-1 col-md-1 delete-link_url kt-margin-b-5" style="display:none;">
                                                 <i class="far fa-minus-square"
-                                                    style=" font-size: 3rem; color: #fd1361; cursor: pointer;"></i>
+                                                    style=" font-size: 2rem; color: #fd1361; cursor: pointer;"></i>
                                             </div>
                                         </div>';
                                 echo '
@@ -353,7 +346,7 @@
                             };
                             ?>
                             <div class="col-lg-12 kt-margin-t-20 row">
-                                <div class="col-lg-6 col-md-7 kt-margin-b-5">
+                                <div class="col-lg-5 col-md-7 kt-margin-b-5">
                                     <div class="input-group">
                                         <textarea rows="1" cols="10" class="form-control"
                                             name="message" placeholder="Tin nhắn"></textarea>
@@ -362,14 +355,14 @@
                                 <div class="col-lg-1">
                                     <input type="checkbox" class="form-control" name="attach">
                                 </div>
-                                <div class="col-lg-4 col-md-1">
+                                <div class="col-lg-5 col-md-1">
                                     <div class="input-group">
                                     <div class="input-group-prepend">
                                         <span class="input-group-text">Sau</span>
                                     </div>
                                     <input type="number" name="day" class="form-control col-lg-2">
                                     <div class="input-group-prepend">
-                                        <span class="input-group-text">ngày subscribe. Lúc</span>
+                                        <span class="input-group-text">ngày đăng kí. Lúc</span>
                                     </div>
                                     <input type="time" name="hours" class="form-control col-lg-4">
                                     </div>
@@ -382,7 +375,7 @@
                                     <i class="far fa-minus-square"
                                         style=" font-size: 3rem; color: #fd1361; cursor: pointer;"></i>
                                 </div>
-                                <div class="col-lg-7 mt-2 row col-md-2 link_url" style="display:none;">
+                                <div class="col-lg-12 mt-2 row col-md-2 link_url" style="display:none;">
                                     <div class="col-lg-12 kt-margin-t-20 row">
                                         <div class="col-lg-5 col-md-2">
                                             <div class="input-group">
@@ -396,20 +389,19 @@
                                         </div>
                                         <div class="col-lg-1 col-md-1 add-link_url kt-margin-b-5">
                                             <i class="far fa-plus-square"
-                                                style=" font-size: 3rem; color: #1dc9b7; cursor: pointer;"></i>
+                                                style=" font-size: 2rem; color: #1dc9b7; cursor: pointer;"></i>
                                         </div>
                                         <div class="col-lg-1 col-md-1 delete-link_url kt-margin-b-5" style="display:none;">
                                             <i class="far fa-minus-square"
-                                                style=" font-size: 3rem; color: #fd1361; cursor: pointer;"></i>
+                                                style=" font-size: 2rem; color: #fd1361; cursor: pointer;"></i>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
                         <div class="col-lg-5">
-                            <label>Chỉ định người dùng được nhấn báo cáo (Nhập ID trả về khi
-                                đăng kí thành công): </label>
-                            <input type="text" class="form-control idbaocao"
+                            <label><strong>Chỉ định người dùng được nhấn báo cáo: </strong></label>
+                            <input type="text" class="form-control idbaocao mt-3"
                                 value="<?php echo $response['idbaocao'];?>">
                         </div>
                     </div>
@@ -548,8 +540,15 @@ jQuery(document).ready(function($) {
             },
             success: function(data) {
                 if (data == "success") {
-                    alert("Cập nhật thành công");
-                    window.location.href="telegram.php";
+                    Swal.fire({
+                        position: 'inherit',
+                        type: 'success',
+                        title: 'Cập nhật thành công',
+                        showConfirmButton: false,
+                        timer: 1500
+                        }).then( (reslt) => {
+                            window.location.href="list-bot-telegram.php";
+                        })
                 } else
                 alert("Cập nhật thất bại");
             }

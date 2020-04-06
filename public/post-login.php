@@ -5,7 +5,7 @@
             'username' => $_GET['username'],
             'password' => $_GET['password']
         ];
-        $url = 'http://192.168.1.13:3000/auth/signin';
+        $url = 'http://localhost:3000/auth/signin';
         $curl = curl_init($url);
         curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
         curl_setopt($curl, CURLOPT_HTTPHEADER, [
@@ -21,6 +21,7 @@
         if ($httpcode==200) {
             session_start();
             $_SESSION["user_token"] = $response['token'];
+            $_SESSION["username"] = $_GET['username'];
             $result = [
                 "status" => "success",
                 "message" => 'Đăng nhập thành công'

@@ -61,8 +61,8 @@
                                                     echo '<tr>'.'<th scope="row">'.((int)$index+1).'</th>';
                                                     echo '<td> <label>'.str_replace("<","&lt;",$post['first_name']).'</label> </td>';
                                                     echo '<td> <label>'.str_replace("<","&lt;",$post['username']).'</label> </td>';
-                                                    echo '<td> <span> <a title="Edit" data-id='.$post['id'].' class="btn btn-sm btn-clean btn-icon btn-icon-sm editbot"><i class="fas fa-tools"></i></a>';
-                                                                echo '<a title="Delete" class="btn btn-sm btn-clean btn-icon btn-icon-sm del-bot" data-id='.$post['id'].'><i class="fas fa-trash"></i></a>'; 
+                                                    echo '<td> <span> <a title="Cấu hình" data-id='.$post['id'].' class="btn btn-sm btn-clean btn-icon btn-icon-sm editbot"><i class="fas fa-tools"></i></a>';
+                                                                echo '<a title="Xóa" class="btn btn-sm btn-clean btn-icon btn-icon-sm del-bot" data-id='.$post['id'].'><i class="fas fa-trash"></i></a>'; 
                                                     echo '</tr>';
                                                 }
                                             }
@@ -155,18 +155,22 @@
 <script>
 jQuery(document).ready(function($) {
     $('.del-bot').on('click', function() {
-        var ok = prompt('Vui lòng nhập mã CODE quản trị viên để xóa cấu hình', '');
-        if (ok!='' && ok!=null) 
-            window.location.href = "deletebot.php?id="+$(this).data('id')+"&code="+ok;
-        else if (ok=='') 
-        alert("Vui lòng nhập mã CODE để xóa. Liên hệ quản trị viên để có được mã CODE");
+        Swal.fire({
+            title: 'Xóa tài khoản BOT Telegram',
+            text: "Mọi dữ liệu và hoạt động BOT đều không thể khôi phục. Xác nhận xóa?",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes, delete it!'
+            }).then((result) => {
+            if (result.value) {
+                window.location.href = "deletebot.php?id="+$(this).data('id')
+            }
+            })
     });
     $('.editbot').on('click', function() {
-        var ok = prompt('Vui lòng nhập mã CODE quản trị viên để chỉnh sửa cấu hình', '');
-        if (ok!='' && ok!=null) 
-            window.location.href = "editbot.php?id="+$(this).data('id')+"&code="+ok;
-        else if (ok=='') 
-        alert("Vui lòng nhập mã CODE để chỉnh sửa. Liên hệ quản trị viên để có được mã CODE");
+        window.location.href = "editbot.php?id="+$(this).data('id');
     });
 })
 </script>

@@ -1,7 +1,8 @@
+<?php include 'header.php';?>
 <?php 
     $id=isset($_GET['id'])?intval($_GET['id']):0;
     if ($id!=0){
-    $url='http://192.168.1.13:3000/toolget/getinfowebsite?id='.$id;
+    $url='http://localhost:3000/toolget/getinfowebsite?id='.$id;
     $curl=curl_init($url);
     curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
     curl_setopt($curl, CURLOPT_HTTPHEADER, [
@@ -19,7 +20,7 @@
 } else header('Location: badrequest.php');
 ?>
 <?php 
-    $url='http://192.168.1.13:3000/toolget/listwordpress';
+    $url='http://localhost:3000/toolget/listwordpress';
     $curl=curl_init($url);
     curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
     curl_setopt($curl, CURLOPT_HTTPHEADER, [
@@ -31,7 +32,6 @@
     curl_close($curl);
     $listwp = ($response2);
 ?>
-<?php include 'header.php';?>
 <!-- end:: Header -->
 <div class="kt-body kt-grid__item kt-grid__item--fluid kt-grid kt-grid--hor kt-grid--stretch" id="kt_body">
     <div class="kt-content kt-content--fit-top  kt-grid__item kt-grid__item--fluid kt-grid kt-grid--hor"
@@ -46,11 +46,11 @@
                     <div class="kt-subheader__breadcrumbs">
                         <a href="#" class="kt-subheader__breadcrumbs-home"><i class="flaticon2-shelter"></i></a>
                         <span class="kt-subheader__breadcrumbs-separator"></span>
-                        <a href="index.php" class="kt-subheader__breadcrumbs-link">
-                            Crawler </a>
+                        <a href="crawb-status.php" class="kt-subheader__breadcrumbs-link">
+                            Trạng thái </a>
                         <span class="kt-subheader__breadcrumbs-separator"></span>
-                        <a href="telegram.php" class="kt-subheader__breadcrumbs-link">
-                            Telegram </a>
+                        <a href="#" class="kt-subheader__breadcrumbs-link">
+                            Chi tiết </a>
                     </div>
                 </div>
 
@@ -68,13 +68,13 @@
                     <div class="kt-portlet__head-toolbar">
                         <ul class="nav nav-tabs nav-tabs-line nav-tabs-line-success nav-tabs-line-2x" role="tablist">
                             <li class="nav-item">
-                                <a class="nav-link" href="index.php" role="tab" aria-selected="false">
-                                    <i class="flaticon-bell"></i>Trang chủ
+                                <a class="nav-link" href="crawb-status.php" role="tab" aria-selected="false">
+                                    <i class="flaticon-bell"></i>Danh sách Website
                                 </a>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link active" data-toggle="tab" role="tab" aria-selected="true">
-                                    <i class="flaticon-bell"></i>Xem thông tin website
+                                    <i class="flaticon-bell"></i>Chi tiết website
                                 </a>
                             </li>
                         </ul>
@@ -130,7 +130,7 @@
                                                         name="author" value="<?php echo $response['Author'];?>">
                                                 </div>
                                                 <div class="col-lg-1">
-                                                    <label>Xóa liên kết: </label>
+                                                    <label>Xóa link: </label>
                                                     <input disabled type="checkbox" class="form-control"
                                                         name="deletelink" <?php if ($response['dellink']==1) echo 'checked';
                                                             ?>>

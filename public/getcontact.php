@@ -67,6 +67,7 @@
                                             <div class="kt-list-timeline">
                                                 <div class="table-responsive">
                                                     <div class="kt-section__content"> -->
+                                                    <div class="table-responsive">
                                                         <table class="table">
                                                             <thead>
                                                                 <tr>
@@ -76,12 +77,12 @@
                                                                     <th>Bạn bè Telegram</th>
                                                                     <th>Mô tả</th>
                                                                     <th>Ngày tạo</th>
-                                                                    <th class="d-flex justify-content-center">Chức năng</th>
+                                                                    <th>Chức năng</th>
                                                                 </tr>
                                                             </thead>
                                                             <tbody>
                                                                 <?php
-                                                                $url2='http://192.168.1.13:3000/telegram/get_contact?id='.$id;                                                                ;
+                                                                $url2='http://localhost:3000/telegram/get_contact?id='.$id;                                                                ;
                                                                 $curl2=curl_init($url2);
                                                                 curl_setopt($curl2, CURLOPT_RETURNTRANSFER, true);
                                                                 curl_setopt($curl2, CURLOPT_HTTPHEADER, [
@@ -92,6 +93,14 @@
                                                                 $response2=json_decode(curl_exec($curl2), true);
                                                                 $httpcode2=curl_getinfo($curl2,CURLINFO_HTTP_CODE);
                                                                 curl_close($curl2);
+                                                                if ($httpcode2!=200) {
+                                                                    $host  = $_SERVER['HTTP_HOST'];
+                                                                    $uri   = rtrim(dirname($_SERVER['PHP_SELF']), '/\\');
+                                                                    $extra = 'loginerror.php';
+                                                                    echo("<script>window.location.href='http://". $host.$uri.'/'.$extra."'</script>;");
+                                                                    exit;
+                                                                }
+                                                                else {
                                                                 if (isset($response2))
                                                                 foreach($response2 as $index => $list) {
                                                                     echo '<tr>
@@ -110,18 +119,73 @@
                                                                                     Action
                                                                                 </button>
                                                                                 <div class="dropdown-menu" aria-labelledby="dropdownMenu2">
-                                                                                    <a class="dropdown-item" href="groupcontact.php?id='.$list["Id"].'&user='.$id.'">Chi tiết</a>
-                                                                                    <button class="dropdown-item" type="button">Thêm vào group chat</button>
-                                                                                    <button class="dropdown-item" type="button">Thêm vào bạn bè Telegram</button>
-                                                                                    <button class="dropdown-item" type="button">Export CSV</button>
+                                                                                    <a class="dropdown-item  btn btn-label-linkedin" href="groupcontact.php?id='.$list["Id"].'&user='.$id.'"><i class="fas fa-list"></i>Chi tiết</a>
+                                                                                    <a class="dropdown-item  btn btn-label-twitter add-group-chat" data-toggle="modal" data-target="#data_modal_list_group_chat" data-idcontact="'.$list["Id"].'"><i class="fas fa-comments"></i>Thêm vào group chat</a>
+                                                                                    <a class="dropdown-item  btn btn-label-linkedin add-friend-telegram" data-idcontact="'.$list["Id"].'"><i class="fab fa-telegram-plane"></i>Thêm vào bạn bè Telegram</a>
+                                                                                    <a class="dropdown-item  btn btn-label-twitter export-contact" data-idcontact="'.$list["Id"].'"><i class="fas fa-download"></i>Export CSV</a>
                                                                                 </div>
                                                                             </div>
                                                                         </td>
                                                                     </tr>';
                                                                     }
+                                                                }
                                                                 ?>
                                                             </tbody>
                                                         </table>
+                                                         <!--begin::Modal-->
+                                                        <div class="modal fade" id="data_modal_list_group_chat" tabindex="-1" role="dialog"
+                                                            aria-labelledby="exampleModalLabel" style="display: none;"
+                                                            aria-hidden="true">
+                                                            <div class="modal-dialog modal-lg modal-dialog-center" role="document">
+                                                                <div class="modal-content">
+                                                                    <input type="hidden" name="id_contact">
+                                                                    <div class="modal-header">
+                                                                        <h4>Thêm vào group chat Telegram</h4>
+                                                                    </div>
+                                                                    <div class="modal-body">
+                                                                        <table class="table table-hover">
+                                                                            <thead>
+                                                                                <tr>
+                                                                                    <th>#</th>
+                                                                                    <th>Name</th>
+                                                                                    <th>Thêm</th>
+                                                                                </tr>
+                                                                            </thead>
+                                                                            <tbody>
+                                                                                <?php
+                                                                                    $url3='http://localhost:3000/telegram/get_list_group_chat_telegram?id='.$id;                                                                ;
+                                                                                    $curl3=curl_init($url3);
+                                                                                    curl_setopt($curl3, CURLOPT_RETURNTRANSFER, true);
+                                                                                    curl_setopt($curl3, CURLOPT_HTTPHEADER, [
+                                                                                    'X-RapidAPI-Host: contextualwebsearch-websearch-v1.p.rapidapi.com',
+                                                                                    'X-RapidAPI-Key: 7xxxxxxxxxxxxxxxxxxxxxxxxxxx',
+                                                                                    'Authorization: '.$_SESSION['user_token']
+                                                                                    ]);
+                                                                                    $list_group_chat=json_decode(curl_exec($curl3), true);
+                                                                                    $httpcode3=curl_getinfo($curl3,CURLINFO_HTTP_CODE);
+                                                                                    curl_close($curl3);
+                                                                                    if (isset($list_group_chat))
+                                                                                    foreach($list_group_chat['chats'] as $index => $list) {
+                                                                                        echo '<tr>
+                                                                                        <th scope="col">'.intval($index+1).'</th>
+                                                                                        <th scope="col">'.$list["title"].'</th>
+                                                                                        <th><input type="checkbox" class="form-control add_group_tel" data-type="1" data-chat_id="'.$list["id"].'"></th>
+                                                                                        </tr>';
+                                                                                    } 
+                                                                                ?>
+                                                                            </tbody>
+                                                                        </table>
+                                                                    </div>
+                                                                    <div class="modal-footer">
+                                                                        <button type="reset" class="btn btn-secondary"
+                                                                            data-dismiss="modal">Hủy</button>
+                                                                        <button type="submit" class="btn btn-primary btn_add_group_chat_telegram">Thêm</button>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <!-- end modal -->
+                                                    </div>
                                                     <!-- </div>
                                                 </div>
                                             </div>
@@ -188,17 +252,17 @@
                                                     accept=".csv">
                                                 <div class="form-group col-lg-15 mt-3 row">
                                                     <div class="col-lg-3">
-                                                        <label>Vị trí trường Phone</label>
+                                                        <label>Vị trí cột Phone trong file danh bạ</label>
                                                         <input type="number" class="form-control" name="index_phone"
                                                         value="1">
                                                     </div>
                                                     <div class="col-lg-3">
-                                                        <label>Vị trí trường First_Name</label>
+                                                        <label>Vị trí cột First_Name</label>
                                                         <input type="number" class="form-control" name="index_firstname"
                                                         value="2">
                                                     </div>
                                                     <div class="col-lg-3">
-                                                        <label>Vị trí trường Last_Name</label>
+                                                        <label>Vị trí cột Last_Name</label>
                                                         <input type="number" class="form-control" name="index_lastname"
                                                         value="3">
                                                     </div>
@@ -223,7 +287,7 @@
                                                     </div>
                                                     <div class="col-sm-6 d-flex align-items-end">
                                                     <label class="kt-checkbox kt-checkbox--success">
-															<input type="checkbox" name="addFriend" value="thembanbe"> Thêm làm bạn bè
+															<input type="checkbox" name="addFriend" value="thembanbe"> Thêm làm bạn bè Telegram
 															<span></span>
 														</label>
                                                     </div>
@@ -317,6 +381,50 @@
     }
 
 jQuery(document).ready(function($) {
+    $('.add-group-chat').click(function(){
+        $('input[name="id_contact"]').val($(this).attr('data-idcontact'));
+    })
+    $('.btn_add_group_chat_telegram').click(function(){
+        let array_chat_id=[];
+        $('.add_group_tel').map(function() {
+            if (this.checked && $(this).attr('data-chat_id')!="") 
+                array_chat_id.push($(this).attr('data-chat_id'));
+        })
+        if (array_chat_id.length==0 || $('input[name="id_contact"]').val()=="") {
+            Swal.fire(
+                'Lỗi...',
+                'Danh sách group chat Telegram rỗng',
+                'error',
+            );
+        }
+        else {
+            $.ajax({
+            url: "./createapp.php",
+            type: "POST",
+            data: {
+                "function": "add_group_chat_telegram",
+                "id_group_chat": array_chat_id.toString(),
+                "id_contact": $('input[name="id_contact"]').val(),
+                "id": <?php echo $id; ?>
+            },
+            success: function(dt) {
+                if (dt) {
+                    Swal.fire(
+                        'Thêm thành công',
+                        'Thêm thành công ' + dt + ' người dùng vào ' + array_chat_id.length + ' nhóm chat',
+                        'success',
+                    );
+                    location.reload();
+                }
+                else Swal.fire(
+                'Lỗi...',
+                'Lỗi khi thêm người dùng vào nhóm chat',
+                'error',
+            );
+            }
+        })
+        }
+    })
     $("select.groupcontact").change(function() {
         let selected = $(this).children("option:selected").val();
         if (selected == 0) {
@@ -351,28 +459,102 @@ jQuery(document).ready(function($) {
                 'Lỗi...',
                 'Lỗi khi thêm mới danh bạ',
                 'error',
-            );;
+            );
             }
         })
     }
     })
-})
 
-jQuery(document).ready(function($) {
-    // $("#exportfile").on("click", function() {
-    //     var ok=confirm('Tải xuống danh bạ?');
-    //     if (ok==true) {
-    //     <?php
-    //         $filename="./export/contact_id=".$id."_".date("Y-m-d").".csv";
-    //         $output=fopen($filename, "w");
-    //         fputs($output, $bom =( chr(0xEF) . chr(0xBB) . chr(0xBF) ));
-    //         foreach($response as $contact) {
-    //             fputcsv($output, array(isset($contact['phone'])?$contact['phone']:'', isset($contact['first_name'])?$contact['first_name']:'', isset($contact['last_name'])?$contact['last_name']:'', isset($contact['username'])?$contact['username']:''));
-    //         }
-    //         fclose($output);
-    //         echo 'window.location="'.$filename.'"';
-    //     ?>
-    //     }
-    // })
+    $(".export-contact").on("click", function() {
+        const swalWithBootstrapButtons = Swal.mixin({
+            customClass: {
+                confirmButton: 'btn btn-success',
+                cancelButton: 'btn btn-danger'
+            },
+            buttonsStyling: false
+        })
+        swalWithBootstrapButtons.fire({
+            title: 'Export Contact',
+            text: "Tải xuống file CSV danh bạ?",
+            type: 'question',
+            showCancelButton: true,
+            confirmButtonText: 'Yes, download now!',
+            cancelButtonText: 'No, cancel!',
+            reverseButtons: true
+        }).then((result) => {
+            if (result.value) {
+                $.ajax({
+                    url: "./createapp.php",
+                    type: "POST",
+                    data: {
+                        "function": "export_user_in_contact",
+                        "id": <?php echo $id; ?>,
+                        "idcontact": $(this).attr('data-idcontact'),
+                    },
+                    success: function(response) {
+                        if (response) 
+                            {
+                                window.location=response;
+                                swalWithBootstrapButtons.fire(
+                                    'Downloaded!',
+                                    'Tải xuống thành công',
+                                    'success'
+                                    )
+                                }
+                        else swalWithBootstrapButtons.fire(
+                            'Download!',
+                            'Tải xuống thất bại',
+                            'error'
+                            )
+                        }
+                    })
+            }
+            else if (result.dismiss === Swal.DismissReason.cancel) {
+                    swalWithBootstrapButtons.fire(
+                    'Cancelled',
+                    '',
+                    'error'
+                    )
+                }
+        })
+    })
+    $('.add-friend-telegram').click(function() {
+        Swal.fire({
+            title: 'Thêm bạn bè Telegram?',
+            text: "Thêm danh sách thành viên trong danh bạ vào bạn bè Telegram?",
+            type: 'question',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes, add friend!'
+        }).then((result) => {
+            if (result.value) {
+                $.ajax({
+                    url: "./createapp.php",
+                    type: "POST",
+                    data: {
+                        "function": "add_friend_tel_from_contact",
+                        "id": <?php echo $id; ?>,
+                        "idcontact": $(this).attr('data-idcontact'),
+                    },
+                    success: function(response) {
+                        if (response) 
+                            {
+                                Swal.fire(
+                                    'Success!',
+                                    'Thêm thành công '+response+' người dùng vào bạn bè Telegram.',
+                                    'success'
+                                    )
+                                }
+                        else Swal.fire(
+                            'Error!',
+                            'Thêm bạn bè thất bại',
+                            'error'
+                            )
+                        }
+                    })
+            }
+            })
+    })
 })
 </script>

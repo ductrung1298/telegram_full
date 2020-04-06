@@ -50,7 +50,7 @@ if (isset($_FILES["myfile"])) {
         'idgroupcontact'=> $_POST['groupcontact'],
         'addfriend' => $addFriend,
     ];
-    $url = 'http://192.168.1.13:3000/telegram/import_contact';
+    $url = 'http://localhost:3000/telegram/import_contact';
     $curl=curl_init($url);
     curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
     curl_setopt($curl, CURLOPT_HTTPHEADER, [
@@ -74,7 +74,7 @@ if (isset($_FILES["myfile"])) {
               })
               .then((kq) => {
                 if (kq && kq.value) {
-                    window.location.href="add-account-tool-telegram.php";
+                    window.location.href="getcontact?id='.$id.'.php";
                 } ';
               echo '})
               </script>';

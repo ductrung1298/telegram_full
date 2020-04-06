@@ -18,7 +18,7 @@
                     <h3 class="kt-subheader__title">
                         Crawler Website </h3>
                     <div class="kt-subheader__breadcrumbs">
-                        <a href="#" class="kt-subheader__breadcrumbs-home"><i class="flaticon2-shelter"></i></a>
+                        <a href="crawb-status.php" class="kt-subheader__breadcrumbs-home"><i class="flaticon2-shelter"></i></a>
                         <span class="kt-subheader__breadcrumbs-separator"></span>
                         <a href="crawb-datasource.php" class="kt-subheader__breadcrumbs-link">
                             Nguồn dữ liệu </a>
@@ -36,8 +36,8 @@
                     <div class="kt-portlet__head-toolbar">
                         <ul class="nav nav-tabs nav-tabs-line nav-tabs-line-success nav-tabs-line-2x" role="tablist">
                             <li class="nav-item active">
-                                <a class="nav-link" data-toggle="tab" href="#kt_portlet_base_demo_1_3_tab_content"
-                                    role="tab" aria-selected="false">
+                                <a class="nav-link active" data-toggle="tab" href="#kt_portlet_base_demo_1_3_tab_content"
+                                    role="tab" aria-selected="true">
                                     <i class="flaticon-bell "></i> Nguồn dữ liệu
                                 </a>
                             </li>
@@ -75,7 +75,7 @@
                                                         <!-- <span class="form-text text-muted">Please enter </span> -->
                                                     </div>
                                                     <div class="col-lg-5"> </div>
-                                                    <div class="col-lg-4">
+                                                    <div class="col-lg-4 mt-3">
                                                         <label class="">Cấu hình lưu tin:</label>
                                                         <select class="form-control kt-input type-dom" name="WP">
                                                             <?php
@@ -88,7 +88,7 @@
                                                         </select>
                                                         <!-- <span class="form-text text-muted">Please enter </span> -->
                                                     </div>
-                                                    <div class="col-lg-3">
+                                                    <div class="col-lg-3 mt-3">
                                                         <label class="">ID Chuyên mục:</label>
                                                         <input type="text" class="form-control" name="categories"
                                                             placeholder="Categories ID"
@@ -96,7 +96,7 @@
                                                             oninput="setCustomValidity('')" required="">
                                                         <!-- <span class="form-text text-muted">Please enter </span> -->
                                                     </div>
-                                                    <div class="col-lg-3">
+                                                    <div class="col-lg-3 mt-3">
                                                         <label class="">ID Tác giả đăng bài:</label>
                                                         <input type="text" class="form-control" name="author"
                                                             placeholder="Author ID"
@@ -104,11 +104,11 @@
                                                             oninput="setCustomValidity('')" required="">
                                                         <!-- <span class="form-text text-muted">Please enter </span> -->
                                                     </div>
-                                                    <div class="col-lg-1">
-                                                        <label>Xóa liên kết: </label>
+                                                    <div class="col-lg-1 mt-3">
+                                                        <label>Xóa link: </label>
                                                         <input type="checkbox" class="form-control" name="deletelink">
                                                     </div>
-                                                    <div class="col-lg-1">
+                                                    <div class="col-lg-1 mt-3">
                                                         <label>Lưu ảnh: </label>
                                                         <input type="checkbox" class="form-control" name="deleteimage">
                                                     </div>

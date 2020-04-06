@@ -127,15 +127,11 @@
                         <div class="tab-pane active" id="kt_portlet_base_demo_1_1_tab_content" role="tabpanel">
                             <div class="kt-portlet__body">
                                 <div class="row ">
-                                    <div class="kt-section col-12">
-                                    <div
-                                            class="kt-separator kt-separator--border-dashed kt-separator--space-lg kt-separator--portlet-fit">
-                                        </div>
+                                    <div class="kt-section col-12 table-responsive">
                                         <label class="col-10 text-center">
                                             <h2>DANH SÁCH TÀI KHOẢN</h2>
                                         </label>
-                                        <div class="kt-section__content table-responsive">
-                                            <table class="table table-hover ">
+                                            <table class="table table-hover">
                                                 <thead>
                                                     <tr>
                                                         <th>#</th>
@@ -147,7 +143,7 @@
                                                 </thead>
                                                 <tbody>
                                                     <?php 
-                                                    $url='http://192.168.1.13:3000/telegram/get_list_user_telegram';
+                                                    $url='http://localhost:3000/telegram/get_list_user_telegram';
                                                     $curl=curl_init($url);
                                                     curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
                                                     curl_setopt($curl, CURLOPT_HTTPHEADER, [
@@ -163,19 +159,25 @@
                                                             echo '<td> <label>'.str_replace("<","&lt;",$post['first_name']).'</label> </td>';
                                                             echo '<td> <label>'.str_replace("<","&lt;",$post['last_name']).'</label> </td>';
                                                             echo '<td> <label>'.str_replace("<","&lt;",$post['phone']).'</label> </td>';
-                                                            echo '<td class="d-flex justify-content-center" > <span>';
-                                                            echo '<a title="Danh bạ" href="getcontact.php?id='.$post['Id'].'" class="btn btn-label-linkedin"><i class="fas fa-book"></i>Danh bạ</a>';
-                                                            echo '<a title="Bạn bè" href="list-friend.php?id='.$post['Id'].'" class="btn btn-label-twitter"><i class="fas fa-user"></i>Bạn bè</a>';
-                                                            echo '<a title="Gửi tin nhắn" href="getdialogs.php?id='.$post['Id'].'" class="btn btn-label-google"><i class="fas fa-sms"></i>Gửi tin nhắn</a>';
-                                                            echo '<a title="Xóa" class="btn btn-label-instagram btn-del-acc" data-id='.$post['Id'].'><i class="fas fa-trash"></i>Xóa</a>';
-                                                            echo '</span></td>';
+                                                            echo '<td class="d-flex justify-content-center" >';
+                                                            echo '<div class="dropdown">
+                                                            <button class="btn btn-info dropdown-toggle" type="button" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                                Action
+                                                            </button>
+                                                            <div class="dropdown-menu" aria-labelledby="dropdownMenu2">
+                                                                <a href="getcontact.php?id='.$post['Id'].'" class="dropdown-item btn btn-label-linkedin"><i class="fas fa-address-book"></i>Danh bạ</a>
+                                                                <a class="dropdown-item btn btn-label-twitter" href="list-friend.php?id='.$post['Id'].'"><i class="fas fa-user-friends"></i>Bạn bè</a>
+                                                                <a href="getdialogs.php?id='.$post['Id'].'" class="dropdown-item btn btn-label-linkedin"><i class="fab fa-telegram"></i>Gửi tin nhắn</a>
+                                                                <a class="dropdown-item btn btn-label-twitter btn-del-acc" data-id='.$post['Id'].'><i class="fas fa-trash"></i>Xóa</a>
+                                                            </div>
+                                                        </div>';
+                                                            echo '</td>';
                                                             echo '</tr>';
                                                         }
                                                     }
                                                 ?>
                                                 </tbody>
                                             </table>
-                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -237,10 +239,9 @@ jQuery(document).ready(function($) {
             },
             buttonsStyling: false
             })
-
             swalWithBootstrapButtons.fire({
             title: 'Xác nhận xóa tài khoản?',
-            icon: 'warning',
+            type: 'warning',
             showCancelButton: true,
             confirmButtonText: 'Yes!',
             cancelButtonText: 'No!',

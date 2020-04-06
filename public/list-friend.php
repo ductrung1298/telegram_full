@@ -4,7 +4,7 @@
     $id = isset($_GET['id']) ? intval($_GET['id']) : 0;
     if ($id != 0)
     {
-    $url='http://192.168.1.13:3000/telegram/get_friend?id='.$id;
+    $url='http://localhost:3000/telegram/get_friend?id='.$id;
         $curl = curl_init($url);
         curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
         curl_setopt($curl, CURLOPT_HTTPHEADER, [
@@ -111,7 +111,7 @@
                                                                         <th>Last_name</th>
                                                                         <th>Phone_Number</th>
                                                                         <th>User_Name</th>
-                                                                        <th>Danh bạ</th>
+                                                                        <th>Thuộc danh bạ</th>
                                                                         <!--  -->
                                                                     </tr>
                                                                 </thead>
@@ -161,46 +161,6 @@
 </div>
 <?php include 'footer.php'; ?>
 <script type="text/javascript">
-    function beforeSubmit(){
-        if ($('#myfile').val())
-            {
-            var ext = $('#myfile').val().split('.').pop().toLowerCase();
-            if(ext!=='csv') {
-                Swal.fire(
-                    'Oops...',
-                    'Vui lòng nhập đúng định dạng đuôi CSV, phân tách bởi dấu phẩy.',
-                    'error'
-                    )
-                return false;
-            }
-            else {
-                return confirm('Thực hiện thêm bạn bè?');
-                // Swal.fire({
-                //     title: 'Thêm bạn bè?',
-                //     text: "Thực hiện thêm bạn bè!",
-                //     type: 'question',
-                //     showCancelButton: true,
-                //     confirmButtonColor: '#3085d6',
-                //     cancelButtonColor: '#d33',
-                //     confirmButtonText: 'Yes!'
-                //     }).then((addfile) => {
-                //         if (addfile.value) return true;
-                //         else return false;
-                //     })
-            }
-        }
-        else if ($('input[name="phone[]"]').val()) 
-                return confirm('Thực hiện thêm danh bạ?');
-        else 
-        {
-            Swal.fire(
-                'Lỗi...',
-                'Danh sách nhập vào trống!',
-                'error',
-            );
-            return false; 
-        } 
-    }
 jQuery(document).ready(function($) {
     $("#exportfile").on("click", function() {
         Swal.fire({
@@ -230,6 +190,11 @@ jQuery(document).ready(function($) {
                         'success'
                         )
                 }
+                else Swal.fire(
+                        'Download!',
+                        'Tải xuống thất bại',
+                        'error'
+                        )
             })
     })
 })

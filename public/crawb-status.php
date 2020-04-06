@@ -16,7 +16,7 @@
                     <h3 class="kt-subheader__title">
                         Crawler Website </h3>
                     <div class="kt-subheader__breadcrumbs">
-                        <a href="#" class="kt-subheader__breadcrumbs-home"><i class="flaticon2-shelter"></i></a>
+                        <a href="crawb-status.php" class="kt-subheader__breadcrumbs-home"><i class="flaticon2-shelter"></i></a>
                         <span class="kt-subheader__breadcrumbs-separator"></span>
                         <a href="crawb-status.php" class="kt-subheader__breadcrumbs-link">
                             Trạng thái </a>
@@ -176,11 +176,35 @@ jQuery(document).ready(function($) {
 <script type="text/javascript">
 jQuery(document).ready(function($) {
     $('.btn-del-wb').on('click', function() {
-        var ok = prompt('Vui lòng nhập mã CODE quản trị viên để xóa cấu hình', '');
-        if (ok!='' && ok!=null) 
-            window.location.href = "deletewb.php?id="+$(this).data('id')+"&code="+ok;
-        else if (ok=='') 
-        alert("Vui lòng nhập mã CODE để xóa. Liên hệ quản trị viên để có được mã CODE");
+        const swalWithBootstrapButtons = Swal.mixin({
+        customClass: {
+            confirmButton: 'btn btn-success',
+            cancelButton: 'btn btn-danger'
+        },
+        buttonsStyling: false
+        })
+        swalWithBootstrapButtons.fire({
+        title: 'Xác nhận xóa website lấy tin?',
+        text: "Bạn không thể khôi phục dữ liệu sau khi xóa",
+        type: 'warning',
+        showCancelButton: true,
+        confirmButtonText: 'Xóa ngay',
+        cancelButtonText: 'Hủy bỏ',
+        reverseButtons: true
+        }).then((result) => {
+        if (result.value) {
+            window.location.href = "deletewb.php?id="+$(this).data('id')
+        } else if (
+            /* Read more about handling dismissals below */
+            result.dismiss === Swal.DismissReason.cancel
+        ) {
+            swalWithBootstrapButtons.fire(
+            'Hủy bỏ',
+            'Hủy bỏ thành công',
+            'error'
+            )
+        }
+        })
     });
 })
 </script>
@@ -191,11 +215,35 @@ jQuery(document).ready(function($) {
     });
 
     $('.btn-del-wp').on('click', function() {
-        var ok = prompt('Vui lòng nhập mã CODE quản trị viên để xóa cấu hình', '');
-        if (ok!='' && ok!=null) 
-            window.location.href = "deleteconfig.php?id="+$(this).data('id')+"&code="+ok;
-        else if (ok=='')
-            alert("Vui lòng nhập mã CODE để xóa. Liên hệ quản trị viên để có được mã CODE");
+        const swalWithBootstrapButtons = Swal.mixin({
+        customClass: {
+            confirmButton: 'btn btn-success',
+            cancelButton: 'btn btn-danger'
+        },
+        buttonsStyling: false
+        })
+        swalWithBootstrapButtons.fire({
+        title: 'Xác nhận xóa website lấy tin?',
+        text: "Bạn không thể khôi phục dữ liệu sau khi xóa",
+        type: 'warning',
+        showCancelButton: true,
+        confirmButtonText: 'Xóa ngay',
+        cancelButtonText: 'Hủy bỏ',
+        reverseButtons: true
+        }).then((result) => {
+        if (result.value) {
+            window.location.href = "deletewb.php?id="+$(this).data('id')
+        } else if (
+            /* Read more about handling dismissals below */
+            result.dismiss === Swal.DismissReason.cancel
+        ) {
+            swalWithBootstrapButtons.fire(
+            'Hủy bỏ',
+            'Hủy bỏ thành công',
+            'error'
+            )
+        }
+        })
     });
 })
 </script>

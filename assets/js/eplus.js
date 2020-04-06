@@ -156,29 +156,7 @@ $(document).ready(function () {
             $('.option-db').addClass('display-block');
         }
     });
-    $("select.bot-send").change(function () {
-        let select = $(this).children("option:selected").val();
-        $.ajax({
-            'url': 'http://http://192.168.1.13:3000/toolget/getconfigtelbyid',
-            'method': 'GET',
-            "headers": {
-                "Content-Type": "application/x-www-form-urlencoded"
-            },
-            'data': {
-                'id': select
-            }
-        }).done(function (response) {
-            if (response) {
-                let option = '';
-                let listgroup = JSON.parse(response.listgroup);
-                for (let index of listgroup) {
-                    option += '<option value=' + index.id + '>' + index.title + '</option>';
-                }
-                $('select.group-send').children().remove();
-                $('select.group-send').append(option);
-            }
-        })
-    });
+    
     $("select.type-send").change(function () {
         let selected = $(this).children("option:selected").val();
         // gui 1 lan
@@ -204,26 +182,7 @@ $(document).ready(function () {
             }
         }
     })
-    // $('#inputtimesend').pickatime({
-    //     // 12 or 24 hour
-    //     twelvehour: true,
-    //     });
     $('#kt_datepicker_7').datetimepicker({
-        // todayHighlight: true,
-        // autoclose: true,
-        // format: 'yyyy.mm.dd hh:ii',
-        // pickerPosition: 'bottom-left',
-        // templates: {
-        //     leftArrow: '<i class="la la-angle-left"></i>',
-        //     rightArrow: '<i class="la la-angle-right"></i>',
-        // },
-        // use24hours: true,
-        // icons: {
-        //     time: "fa fa-clock-o",
-        //     date: "fa fa-calendar",
-        //     up: "fa fa-arrow-up",
-        //     down: "fa fa-arrow-down"
-        // }
     });
     $('.list-contact').on('click touch', '.add-phone', function (event) {
         let rdom = `<div class="col-lg-12 kt-margin-t-20 row">
@@ -350,7 +309,7 @@ $(document).ready(function () {
     });
     $('.autosendmes').on('click touch', '.add-automsg', function (event) {
         let rdom = `<div class="col-lg-12 kt-margin-t-20 row">
-        <div class="col-lg-6 col-md-7 kt-margin-b-5">
+        <div class="col-lg-5 col-md-7 kt-margin-b-5">
             <div class="input-group">
                 <textarea rows="1" cols="10" class="form-control"
                     name="message" placeholder="Tin nhắn"></textarea>
@@ -359,7 +318,7 @@ $(document).ready(function () {
         <div class="col-lg-1">
             <input type="checkbox" class="form-control" name="attach">
         </div>
-        <div class="col-lg-4 col-md-1">
+        <div class="col-lg-5 col-md-1">
             <div class="input-group">
             <div class="input-group-prepend">
                 <span class="input-group-text">Sau</span>
@@ -379,7 +338,7 @@ $(document).ready(function () {
             <i class="far fa-minus-square"
                 style=" font-size: 3rem; color: #fd1361; cursor: pointer;"></i>
         </div>
-        <div class="col-lg-7 mt-2 row col-md-2 link_url" style="display:none;">
+        <div class="col-lg-12 mt-2 row col-md-2 link_url" style="display:none;">
             <div class="col-lg-12 kt-margin-t-20 row">
                 <div class="col-lg-5 col-md-2">
                     <div class="input-group">
@@ -393,11 +352,11 @@ $(document).ready(function () {
                 </div>
                 <div class="col-lg-1 col-md-1 add-link_url kt-margin-b-5">
                     <i class="far fa-plus-square"
-                        style=" font-size: 3rem; color: #1dc9b7; cursor: pointer;"></i>
+                        style=" font-size: 2rem; color: #1dc9b7; cursor: pointer;"></i>
                 </div>
                 <div class="col-lg-1 col-md-1 delete-link_url kt-margin-b-5" style="display:none;">
                     <i class="far fa-minus-square"
-                        style=" font-size: 3rem; color: #fd1361; cursor: pointer;"></i>
+                        style=" font-size: 2rem; color: #fd1361; cursor: pointer;"></i>
                 </div>
             </div>
         </div>
@@ -424,11 +383,11 @@ $(document).ready(function () {
             </div>
             <div class="col-lg-1 col-md-1 add-link_url kt-margin-b-5">
                 <i class="far fa-plus-square"
-                    style=" font-size: 3rem; color: #1dc9b7; cursor: pointer;"></i>
+                    style=" font-size: 2rem; color: #1dc9b7; cursor: pointer;"></i>
             </div>
             <div class="col-lg-1 col-md-1 delete-link_url kt-margin-b-5" style="display:none;">
                 <i class="far fa-minus-square"
-                    style=" font-size: 3rem; color: #fd1361; cursor: pointer;"></i>
+                    style=" font-size: 2rem; color: #fd1361; cursor: pointer;"></i>
             </div>
         </div>
     </div>`;
@@ -457,11 +416,11 @@ $(document).ready(function () {
         </div>
         <div class="col-lg-1 col-md-1 add-link_url kt-margin-b-5">
             <i class="far fa-plus-square"
-                style=" font-size: 3rem; color: #1dc9b7; cursor: pointer;"></i>
+                style=" font-size: 2rem; color: #1dc9b7; cursor: pointer;"></i>
         </div>
         <div class="col-lg-1 col-md-1 delete-link_url kt-margin-b-5" style="display:none;">
             <i class="far fa-minus-square"
-                style=" font-size: 3rem; color: #fd1361; cursor: pointer;"></i>
+                style=" font-size: 2rem; color: #fd1361; cursor: pointer;"></i>
         </div>
     </div>
 </div>`;

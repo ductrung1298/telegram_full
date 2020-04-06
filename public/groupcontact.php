@@ -3,7 +3,7 @@ $id=isset($_GET['id'])?intval($_GET['id']):0;
 $user=isset($_GET['user'])?intval($_GET['user']):0;
 include 'header.php';
 if ($id!=0 && $user!=0) {
-    $url='http://192.168.1.13:3000/telegram/get_contact?idgroupcontact='.$id.'&idaccount='.$user;
+    $url='http://localhost:3000/telegram/get_contact?idgroupcontact='.$id.'&idaccount='.$user;
     $curl=curl_init($url);
     curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
     curl_setopt($curl, CURLOPT_HTTPHEADER, [
@@ -117,7 +117,7 @@ if ($id!=0 && $user!=0) {
                                                         echo '</td>';
                                                         
                                                         echo '<td>
-                                                            '. ((isset($contact['user_id'])) ? '<button class="btn btn-sm btn-outline-success"><i class="la la-check"></i></button>' : '<button class="btn btn-sm btn-outline-primary"><i class="fas fa-times"></i>&nbsp;&nbsp;</button>') .'
+                                                            '. ((isset($contact['user_id'])) ? '<button class="btn btn-sm btn-outline-success"><i class="la la-check"></i></button>' : '') .'
                                                         </td>';
                                                         echo '</tr>';
                                                     }

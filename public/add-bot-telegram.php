@@ -11,10 +11,10 @@
                     <h3 class="kt-subheader__title">
                         Bot telegram </h3>
                     <div class="kt-subheader__breadcrumbs">
-                        <a href="#" class="kt-subheader__breadcrumbs-home"><i class="flaticon2-shelter"></i></a>
+                        <a href="list-bot-telegram.php" class="kt-subheader__breadcrumbs-home"><i class="flaticon2-shelter"></i></a>
                         <span class="kt-subheader__breadcrumbs-separator"></span>
                         <a href="add-bot-telegram.php" class="kt-subheader__breadcrumbs-link">
-                            Tạo tài khoản </a>
+                            Tạo tài khoản BOT</a>
                     </div>
                 </div>
 
@@ -31,7 +31,7 @@
                            <li class="nav-item">
                                 <a class="nav-link active" data-toggle="tab" href="#kt_portlet_base_demo_1_2_tab_content"
                                     role="tab" aria-selected="false">
-                                    <i class="flaticon-users"></i> Tạo tài khoản
+                                    <i class="flaticon-users"></i> Tạo BOT Telegram
                                 </a>
                             </li>
                         </ul>
@@ -48,90 +48,56 @@
                             <div class="row ">
                                 <div class="kt-section col-12">
                                     <form class="kt-form kt-form--label-right">
-                                        <div class="kt-portlet__body">
-                                            <div class="form-group row form-group-marginless kt-margin-t-20">
-                                                <label class="col-10 text-left"><strong>THÊM BOT TELEGRAM
-                                                    </strong></label><br>
-                                                <div class="col-lg-5 mt-2">
-                                                    <label>Mã Token BOT: </label>
-                                                    <input type="text" class="form-control token" name="token">
-                                                </div>
-                                                <div class="col-lg-5 mt-2"> </div>
-                                                <div class="form-group col-lg-12 row mt-4 loichao">
-                                                    <label class="col-12 text-left">Lời chào khi đăng kí kênh:</label>
-                                                    <div class="col-lg-12 kt-margin-t-20 row">
-                                                        <div class="col-lg-9 col-md-7 kt-margin-b-5">
-                                                            <div class="input-group">
-                                                                <input type="text" class="form-control"
-                                                                    name="loichao" placeholder="Chào mừng bạn đã đến với ...">
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-lg-2 col-md-1">
-                                                            <div class="input-group">
-                                                                <label for="checkid" class="form-control"><input type="checkbox" id="checkid" name="checkid"> Đính kèm mã ID</label> 
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-lg-1 col-md-1 add-loichao kt-margin-b-5">
-                                                            <i class="far fa-plus-square"
-                                                                style=" font-size: 3rem; color: #1dc9b7; cursor: pointer;"></i>
-                                                        </div>
-                                                        <div class="col-lg-1 col-md-1 delete-loichao kt-margin-b-5"
-                                                            style="display:none;">
-                                                            <i class="far fa-minus-square"
-                                                                style=" font-size: 3rem; color: #fd1361; cursor: pointer;"></i>
-                                                        </div>
+                                        <div class="col-lg-12 text-center">
+                                            <button type="button" class="btn btn-primary add_bot">Nhập mã Token</button>
+                                            <button type="button" class="btn btn-primary create_bot">Tạo mới BOT</button>
+                                        </div>
+                                        <div class="add_bot_telegram" style="display:none;">
+                                            <div class="kt-portlet__body">
+                                                <div class="form-group row form-group-marginless kt-margin-t-20">
+                                                    <label class="col-10 text-left"><strong>THÊM BOT TELEGRAM
+                                                        </strong></label><br>
+                                                    <div class="col-lg-5 mt-2">
+                                                        <label>Mã Token BOT: </label>
+                                                        <input type="text" class="form-control token" name="token">
                                                     </div>
                                                 </div>
-                                                <div class="col-lg-3">
-                                                    <label>Đính kèm danh sách kết nối cộng đồng: </label>
-                                                    <input type="checkbox" class="col-lg-3 form-control invitation">
-                                                </div>
-                                                <div class="form-group col-lg-12 row mt-4 ketnoi">
-                                                    <div class="kt-margin-t-5 col-lg-12 row">
-                                                        <div class="col-lg-6 col-md-6">
-                                                            <label>Text hiển thị:</label>
-                                                        </div>
-                                                        <div class="col-lg-3 col-md-3">
-                                                            <label>Đường dẫn:</label>
+                                            </div>
+                                            <div class="kt-portlet__foot">
+                                                <div class="kt-form__actions">
+                                                    <div class="row">
+                                                        <div class="col-lg-12 text-center">
+                                                            <button type="button" class="btn btn-success addbot">Thêm
+                                                                mới</button>
+                                                            <button type="reset" class="btn btn-secondary cancel">Huỷ</button>
                                                         </div>
                                                     </div>
-                                                    <div class="col-lg-12 kt-margin-t-20 row">
-                                                        <div class="col-lg-6 col-md-7 kt-margin-b-5">
-                                                            <div class="input-group">
-                                                                <input type="text" class="form-control"
-                                                                    name="text" placeholder="Tên website">
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-lg-5 col-md-2 kt-margin-b-5">
-                                                            <div class="input-group">
-                                                                <input type="text" class="form-control"
-                                                                    name="url" placeholder="https://eplus.vn/">
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-lg-1 col-md-1 add-url kt-margin-b-5">
-                                                            <i class="far fa-plus-square"
-                                                                style=" font-size: 3rem; color: #1dc9b7; cursor: pointer;"></i>
-                                                        </div>
-                                                        <div class="col-lg-1 col-md-1 delete-url kt-margin-b-5"
-                                                            style="display:none;">
-                                                            <i class="far fa-minus-square"
-                                                                style=" font-size: 3rem; color: #fd1361; cursor: pointer;"></i>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="col-lg-5">
-                                                    <label>Báo cáo: Chỉ định ID người dùng được nhấn báo cáo (0 để cho phép tất cả): </label>
-                                                    <input type="number" class="form-control idbaocao" value="0">
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="kt-portlet__foot">
-                                            <div class="kt-form__actions">
-                                                <div class="row">
-                                                    <div class="col-lg-12 text-center">
-                                                        <button type="button" class="btn btn-success addbot">Thêm
-                                                            mới</button>
-                                                        <button type="reset" class="btn btn-secondary">Huỷ</button>
+                                        <div class="create_bot_telegram" style="display:none;">
+                                            <div class="kt-portlet__body">
+                                                <div class="form-group row form-group-marginless kt-margin-t-20">
+                                                    <label class="col-10 text-left"><strong>TẠO MỚI BOT TELEGRAM
+                                                        </strong></label><br>
+                                                    <div class="col-lg-5 mt-2">
+                                                        <label>Tên hiển thị BOT: </label>
+                                                        <input type="text" class="form-control" name="name_bot">
+                                                    </div>
+                                                    <div class="col-lg-5 mt-2">
+                                                        <label>Username BOT (Yêu cầu kết thúc bằng `bot`): </label>
+                                                        <input type="text" class="form-control" name="username_bot">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="kt-portlet__foot">
+                                                <div class="kt-form__actions">
+                                                    <div class="row">
+                                                        <div class="col-lg-12 text-center">
+                                                            <button type="button" class="btn btn-success createbot">Thêm
+                                                                mới</button>
+                                                            <button type="reset" class="btn btn-secondary cancel_create">Huỷ</button>
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
@@ -143,6 +109,9 @@
                                                 <label><b>#mes:</b> Gửi tin nhắn cho tất cả người dùng đã đăng kí kênh. Cú pháp gửi tin: #mes (nội dung tin nhắn).</label>
                                                 <label><b>Báo cáo:</b> Báo cáo số lượng bạn bè đã giới thiệu và toàn bộ người dùng đăng kí kênh. Nhập giá trị trường Chỉ định người dùng được nhấn báo cáo bằng 0 để cho phép tất cả mọi người đều có thể sử dụng tính năng.</label>
                                                 <label><b>Kết nối cộng đồng:</b> Hiển thị danh sách các kênh kết nối.</label>
+                                                <label><b>#getid:</b> Hiển thị id người dùng.</label>
+                                                <label><b>{id}:</b> Thay thế {id} bằng id của người nhận tin nhắn.</label>
+                                                <label><b>{displayname}:</b> Thay thế {displayname} bằng tên của người nhận tin nhắn.</label>
                                         </div>
                                     </form>
                                     <div class="kt-separator kt-separator--border-dashed kt-separator--space-lg kt-separator--portlet-fit">
@@ -165,53 +134,135 @@
 <?php include 'footer.php';?>
 <script type="text/javascript">
 jQuery(document).ready(function($) {
-
+    $('.add_bot').click(function() {
+        $('.create_bot_telegram').removeClass('display-block');
+        $('.add_bot_telegram').removeClass('display-block');
+        $('.add_bot_telegram').addClass('display-block');
+    })
+    $('.create_bot').click(function() {
+        $('.add_bot_telegram').removeClass('display-block');
+        $('.create_bot_telegram').removeClass('display-block');
+        $('.create_bot_telegram').addClass('display-block');
+    })
+    $('.cancel_create').click(function() {
+        $('.create_bot_telegram').removeClass('display-block');
+    })
+    $('.cancel').click(function() {
+        $('.add_bot_telegram').removeClass('display-block');
+    })
+    $('.createbot').click(function() {
+        if ($('input[name="name_bot"]').val() && $('input[name="username_bot"]').val()) 
+        {
+            $.ajax({
+                type: "POST",
+                url: "./createapp.php",
+                data: {
+                    "function": "createbot",
+                    "usernamebot": $('input[name="username_bot"]').val(),
+                    "namebot": $('input[name="name_bot"]').val(),
+                },
+                success: function(data) {
+                    data=JSON.parse(data);
+                    if (data.res=="success") {
+                        Swal.fire({
+                            position: 'inherit',
+                            type: 'success',
+                            title: 'Đăng kí thành công',
+                            text: 'Đăng kí thành công bot '+$('input[name="name_bot"]').val()+", API Token: "+data.api,
+                            showConfirmButton: true,
+                            confirmButtonColor: '#3085d6',
+                            confirmButtonText: 'OK!'
+                        })
+                        .then((result) => {
+                            if (result && result.value) {
+                                $.ajax({
+                                    type: "POST",
+                                    url: "./createapp.php",
+                                    data: {
+                                        "function": "addbot",
+                                        "token": data.api,
+                                    },
+                                    success: function(data) {
+                                        if (data == "success") {
+                                            Swal.fire({
+                                                position: 'inherit',
+                                                type: 'success',
+                                                title: 'Thêm mới BOT thành công',
+                                                showConfirmButton: false,
+                                                timer: 1500
+                                                });
+                                            window.location.href="list-bot-telegram.php";
+                                        } 
+                                        else
+                                        if (data=="exist") Swal.fire({
+                                            type: 'error',
+                                            title: 'Lỗi',
+                                            text: 'Tài khoản BOT đã tồn tại!',
+                                            })
+                                        else 
+                                        Swal.fire({
+                                        type: 'error',
+                                        title: 'Lỗi',
+                                        text: 'Không thể kết nối đến server, đăng kí thất bại',
+                                        })
+                                    }
+                                })
+                            }
+                        })
+                    }
+                    else  
+                    Swal.fire({
+                        type: 'error',
+                        title: 'Lỗi',
+                        text: data.api,
+                    })
+                }
+            })
+        }
+        else Swal.fire({
+            type: 'error',
+            title: 'Lỗi',
+            text: 'Vui lòng nhập đầy đủ các trường',
+        })
+    })
     $('.addbot').on('click', function() {
         if ($('.token').val() != '') {
-            var connect=[];
-            $('input[name="text"]').map(function() {
-                if ($(this).val()!='')
-                connect.push({"text": $(this).val()})
-            })
-            let index=0;
-            $('input[name="url"]').map(function() {
-                if (connect[index])
-                connect[index].url=$(this).val();
-                index++;
-            })
-            let greeting=[];
-            $('input[name="loichao"').map(function() {
-                if ($(this).val()!='')
-                greeting.push({"text": $(this).val()})
-            })
-            index=0;
-            $('input[name="checkid"]').map(function() {
-                if (greeting[index])
-                greeting[index].userid=($(this).prop('checked')==true)?1:0;
-                index++;
-            })
             $.ajax({
                 type: "POST",
                 url: "./createapp.php",
                 data: {
                     "function": "addbot",
                     "token": $('.token').val(),
-                    "idbaocao": $('.idbaocao').val(),
-                    "greeting": JSON.stringify(greeting),
-                    "invitation": ($('.invitation').prop('checked') ==true)?1:0,
-                    "connect": JSON.stringify(connect)
                 },
                 success: function(data) {
                     if (data == "success") {
-                        alert("Đăng kí thành công");
-                        location.reload();
+                        Swal.fire({
+                            position: 'inherit',
+                            type: 'success',
+                            title: 'Thêm mới BOT thành công',
+                            showConfirmButton: false,
+                            timer: 1500
+                            });
+                        window.location.href="list-bot-telegram.php";
                     } else
-                    if (data=="exist") alert("Tài khoản Bot đã tồn tại");
+                    if (data=="exist") Swal.fire({
+                        type: 'error',
+                        title: 'Lỗi',
+                        text: 'Tài khoản BOT đã tồn tại!',
+                        })
                     else 
-                    alert("Đăng kí thất bại");
+                    Swal.fire({
+                    type: 'error',
+                    title: 'Lỗi',
+                    text: 'Không thể kết nối đến server, đăng kí thất bại',
+                    })
                 }
             })
-        } else alert("Trường mã token không được để rỗng");
+        } else Swal.fire({
+                type: 'error',
+                title: 'Lỗi',
+                text: 'Trường token không được rỗng',
+                })
     });
     $('.btn-del-acc').on('click', function() {
         var ok = prompt('Vui lòng nhập mã CODE quản trị viên để xóa tài khoản', '');

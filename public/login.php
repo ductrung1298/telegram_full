@@ -1,7 +1,7 @@
 <?php 
     session_start();
     if (isset($_SESSION['user_token'])) {
-        header("Location: dashboard.php");
+        header("Location: index.php");
     }
 ?>
 <!DOCTYPE html>
@@ -11,7 +11,7 @@
 	<head>
     <base href="">
 		<meta charset="utf-8" />
-		<title>Metronic | Dashboard</title>
+		<title>Login | Sales68</title>
 		<meta name="description" content="Latest updates and statistic charts">
 		<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
@@ -57,7 +57,13 @@
 		<!--begin::Layout Skins(used by all pages) -->
 
 		<!--end::Layout Skins -->
-		<link rel="shortcut icon" href="../assets/media/logos/favicon.ico" />
+		<link rel="shortcut icon" href="../assets/media/logos/eplusicon.ico" />
+		<style>
+			img {
+				width: 100px;
+				height: 100px;
+			}
+		</style>
 	</head>
 
 	<!-- end::Head -->
@@ -73,12 +79,12 @@
 						<div class="kt-login__container">
 							<div class="kt-login__logo">
 								<a href="#">
-									<img src="../assets/media/logos/logo-mini-2-md.png">
+									<img src="../assets/media/logos/epluslogo.png" >
 								</a>
 							</div>
 							<div class="kt-login__signin">
 								<div class="kt-login__head">
-									<h3 class="kt-login__title">Sign In To Admin</h3>
+									<h3 class="kt-login__title">Sign In To Sales68</h3>
 								</div>
 								<form class="kt-form" action="">
 									<div class="input-group">
@@ -88,47 +94,29 @@
 										<input class="form-control" type="password" placeholder="Password" name="password">
 									</div>
 									<div class="row kt-login__extra">
-										<!-- <div class="col">
-											<label class="kt-checkbox">
-												<input type="checkbox" name="remember"> Remember me
-												<span></span>
-											</label>
-										</div> -->
-										<!-- <div class="col kt-align-right">
-											<a href="javascript:;" id="kt_login_forgot" class="kt-link kt-login__link">Forget Password ?</a>
-										</div> -->
 									</div>
 									<div class="kt-login__actions">
 										<button id="kt_login_signin_submit" class="btn btn-pill kt-login__btn-primary">Sign In</button>
 									</div>
 								</form>
 							</div>
-							<!-- <div class="kt-login__signup">
+							<div class="kt-login__signup">
 								<div class="kt-login__head">
-									<h3 class="kt-login__title">Sign Up</h3>
-									<div class="kt-login__desc">Enter your details to create your account:</div>
+									<h3 class="kt-login__title">Đăng kí tài khoản</h3>
+									<div class="kt-login__desc">Vui lòng nhập thông tin của bạn để đăng kí tài khoản:	</div>
 								</div>
 								<form class="kt-login__form kt-form" action="">
 									<div class="input-group">
-										<input class="form-control" type="text" placeholder="Fullname" name="fullname">
+										<input class="form-control" type="text" minlength="6" placeholder="Fullname" name="fullname">
 									</div>
 									<div class="input-group">
-										<input class="form-control" type="text" placeholder="Email" name="email" autocomplete="off">
+										<input class="form-control" type="text" maxlength="50" minlength="6" pattern="[a-zA-Z0-9\s]{0,16}" placeholder="Username" name="username" autocomplete="off">
 									</div>
 									<div class="input-group">
-										<input class="form-control" type="password" placeholder="Password" name="password">
+										<input class="form-control" type="password" minlength="6" placeholder="Password" name="password" autocomplete="new-password">
 									</div>
 									<div class="input-group">
-										<input class="form-control" type="password" placeholder="Confirm Password" name="rpassword">
-									</div>
-									<div class="row kt-login__extra">
-										<div class="col kt-align-left">
-											<label class="kt-checkbox">
-												<input type="checkbox" name="agree">I Agree the <a href="#" class="kt-link kt-login__link kt-font-bold">terms and conditions</a>.
-												<span></span>
-											</label>
-											<span class="form-text text-muted"></span>
-										</div>
+										<input class="form-control" type="password" minlength="6" placeholder="Confirm Password" name="repassword" autocomplete="new-password">
 									</div>
 									<div class="kt-login__actions">
 										<button id="kt_login_signup_submit" class="btn btn-pill kt-login__btn-primary">Sign Up</button>&nbsp;&nbsp;
@@ -136,27 +124,12 @@
 									</div>
 								</form>
 							</div>
-							<div class="kt-login__forgot">
-								<div class="kt-login__head">
-									<h3 class="kt-login__title">Forgotten Password ?</h3>
-									<div class="kt-login__desc">Enter your email to reset your password:</div>
-								</div>
-								<form class="kt-form" action="">
-									<div class="input-group">
-										<input class="form-control" type="text" placeholder="Email" name="email" id="kt_email" autocomplete="off">
-									</div>
-									<div class="kt-login__actions">
-										<button id="kt_login_forgot_submit" class="btn btn-pill kt-login__btn-primary">Request</button>&nbsp;&nbsp;
-										<button id="kt_login_forgot_cancel" class="btn btn-pill kt-login__btn-secondary">Cancel</button>
-									</div>
-								</form>
-							</div>
 							<div class="kt-login__account">
 								<span class="kt-login__account-msg">
-									Don't have an account yet ?
+									Bạn không có tài khoản ?
 								</span>&nbsp;&nbsp;
-								<a href="javascript:;" id="kt_login_signup" class="kt-link kt-link--light kt-login__account-link">Sign Up</a>
-							</div> -->
+								<a href="javascript:;" id="kt_login_signup" class="kt-link kt-link--light kt-login__account-link">Đăng kí ngay</a>
+							</div> 
 						</div>
 					</div>
 				</div>
@@ -255,15 +228,6 @@ var KTLoginGeneral = function() {
     }
 
     var handleFormSwitch = function() {
-        $('#kt_login_forgot').click(function(e) {
-            e.preventDefault();
-            displayForgotForm();
-        });
-
-        $('#kt_login_forgot_cancel').click(function(e) {
-            e.preventDefault();
-            displaySignInForm();
-        });
 
         $('#kt_login_signup').click(function(e) {
             e.preventDefault();
@@ -309,7 +273,7 @@ var KTLoginGeneral = function() {
                             showErrorMsg(form, obj.status, obj.message);
                         }, 2000);
                     } else {
-                        window.location.href = "dashboard.php";
+                        window.location.href = "index.php";
                     }
                 	// similate 2s delay
                 	
@@ -330,19 +294,15 @@ var KTLoginGeneral = function() {
                     fullname: {
                         required: true
                     },
-                    email: {
+                    username: {
                         required: true,
-                        email: true
                     },
                     password: {
                         required: true
                     },
-                    rpassword: {
+                    repassword: {
                         required: true
                     },
-                    agree: {
-                        required: true
-                    }
                 }
             });
 
@@ -353,66 +313,31 @@ var KTLoginGeneral = function() {
             btn.addClass('kt-spinner kt-spinner--right kt-spinner--sm kt-spinner--light').attr('disabled', true);
 
             form.ajaxSubmit({
-                url: '',
+                url: 'post-signup.php',
                 success: function(response, status, xhr, $form) {
-                	// similate 2s delay
-                	setTimeout(function() {
-	                    btn.removeClass('kt-spinner kt-spinner--right kt-spinner--sm kt-spinner--light').attr('disabled', false);
-	                    form.clearForm();
-	                    form.validate().resetForm();
+					// similate 2s delay
+					let obj = JSON.parse(response);
+                    if (obj.status == 'success') {
+						setTimeout(function() {
+							btn.removeClass('kt-spinner kt-spinner--right kt-spinner--sm kt-spinner--light').attr('disabled', false);
+							form.clearForm();
+							form.validate().resetForm();
 
-	                    // display signup form
-	                    displaySignInForm();
-	                    var signInForm = login.find('.kt-login__signin form');
-	                    signInForm.clearForm();
-	                    signInForm.validate().resetForm();
+							// display signup form
+							displaySignInForm();
+							var signInForm = login.find('.kt-login__signin form');
+							signInForm.clearForm();
+							signInForm.validate().resetForm();
 
-	                    showErrorMsg(signInForm, 'success', 'Thank you. To complete your registration please check your email.');
-	                }, 2000);
-                }
-            });
-        });
-    }
-
-    var handleForgotFormSubmit = function() {
-        $('#kt_login_forgot_submit').click(function(e) {
-            e.preventDefault();
-
-            var btn = $(this);
-            var form = $(this).closest('form');
-
-            form.validate({
-                rules: {
-                    email: {
-                        required: true,
-                        email: true
-                    }
-                }
-            });
-
-            if (!form.valid()) {
-                return;
-            }
-
-            btn.addClass('kt-spinner kt-spinner--right kt-spinner--sm kt-spinner--light').attr('disabled', true);
-
-            form.ajaxSubmit({
-                url: '',
-                success: function(response, status, xhr, $form) {
-                	// similate 2s delay
-                	setTimeout(function() {
-                		btn.removeClass('kt-spinner kt-spinner--right kt-spinner--sm kt-spinner--light').attr('disabled', false); // remove
-	                    form.clearForm(); // clear form
-	                    form.validate().resetForm(); // reset validation states
-
-	                    // display signup form
-	                    displaySignInForm();
-	                    var signInForm = login.find('.kt-login__signin form');
-	                    signInForm.clearForm();
-	                    signInForm.validate().resetForm();
-
-	                    showErrorMsg(signInForm, 'success', 'Cool! Password recovery instruction has been sent to your email.');
-                	}, 2000);
+							showErrorMsg(signInForm, 'success', 'Đăng kí thành công');
+						}, 2000);
+					}
+					else {
+						setTimeout(function() {
+                            btn.removeClass('kt-spinner kt-spinner--right kt-spinner--sm kt-spinner--light').attr('disabled', false);
+                            showErrorMsg(form, obj.status, obj.message);
+                        }, 2000);
+					}
                 }
             });
         });
@@ -425,7 +350,6 @@ var KTLoginGeneral = function() {
             handleFormSwitch();
             handleSignInFormSubmit();
             handleSignUpFormSubmit();
-            handleForgotFormSubmit();
         }
     };
 }();

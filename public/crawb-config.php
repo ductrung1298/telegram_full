@@ -21,7 +21,7 @@
                     <h3 class="kt-subheader__title">
                         Crawler Website </h3>
                     <div class="kt-subheader__breadcrumbs">
-                        <a href="#" class="kt-subheader__breadcrumbs-home"><i class="flaticon2-shelter"></i></a>
+                        <a href="crawb-status.php" class="kt-subheader__breadcrumbs-home"><i class="flaticon2-shelter"></i></a>
                         <span class="kt-subheader__breadcrumbs-separator"></span>
                         <a href="crawb-config.php" class="kt-subheader__breadcrumbs-link">
                             Cấu hình </a>
@@ -47,7 +47,7 @@
                             <li class="nav-item">
                                 <a class="nav-link" data-toggle="tab" href="#kt_portlet_base_demo_1_2_tab_content"
                                     role="tab" aria-selected="false">
-                                    <i class="flaticon-bell"></i> Cấu hình
+                                    <i class="flaticon-bell"></i> Thêm mới cấu hình
                                 </a>
                             </li>
                         </ul>
@@ -62,7 +62,7 @@
                                     <div class="kt-section col-12">
                                     <label class="col-10 text-left"><strong>DANH SÁCH CẤU HÌNH</strong></label>
                                     <div class="kt-section__content">
-                                        <table class="table">
+                                        <table class="table table-responsive">
                                             <thead>
                                                 <tr>
                                                     <th>#</th>
@@ -224,31 +224,41 @@ jQuery(document).ready(function($) {
         if (Id)
             $("#data-id").val(Id).trigger("change");
     });
-});
-</script>
-<script type="text/javascript">
-jQuery(document).ready(function($) {
-    $('.btn-del-wb').on('click', function() {
-        var ok = prompt('Vui lòng nhập mã CODE quản trị viên để xóa cấu hình', '');
-        if (ok!='' && ok!=null) 
-            window.location.href = "deletewb.php?id="+$(this).data('id')+"&code="+ok;
-        else if (ok=='') 
-        alert("Vui lòng nhập mã CODE để xóa. Liên hệ quản trị viên để có được mã CODE");
-    });
-})
-</script>
-<script type="text/javascript">
-jQuery(document).ready(function($) {
+
     $('.btn-stop-wb').on('click', function() {
         return confirm('Dừng quét website?');
     });
 
     $('.btn-del-wp').on('click', function() {
-        var ok = prompt('Vui lòng nhập mã CODE quản trị viên để xóa cấu hình', '');
-        if (ok!='' && ok!=null) 
-            window.location.href = "deleteconfig.php?id="+$(this).data('id')+"&code="+ok;
-        else if (ok=='')
-            alert("Vui lòng nhập mã CODE để xóa. Liên hệ quản trị viên để có được mã CODE");
+        const swalWithBootstrapButtons = Swal.mixin({
+        customClass: {
+            confirmButton: 'btn btn-success',
+            cancelButton: 'btn btn-danger'
+        },
+        buttonsStyling: false
+        })
+        swalWithBootstrapButtons.fire({
+        title: 'Xác nhận xóa cấu hình lưu tin?',
+        text: "Bạn không thể khôi phục dữ liệu sau khi xóa",
+        type: 'warning',
+        showCancelButton: true,
+        confirmButtonText: 'Xóa ngay',
+        cancelButtonText: 'Hủy bỏ',
+        reverseButtons: true
+        }).then((result) => {
+        if (result.value) {
+            window.location.href = "deleteconfig.php?id="+$(this).data('id')
+        } else if (
+            /* Read more about handling dismissals below */
+            result.dismiss === Swal.DismissReason.cancel
+        ) {
+            swalWithBootstrapButtons.fire(
+            'Hủy bỏ',
+            'Hủy bỏ thành công',
+            'error'
+            )
+        }
+        })
     });
 })
 </script>

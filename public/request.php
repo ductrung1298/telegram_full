@@ -1,4 +1,5 @@
 <?php
+session_start();
 if ($_POST['TypePage']=='scroll') 
     $NumberPage = $_POST['countPage'];
 else
@@ -105,7 +106,7 @@ $body=[
 'ReplaceText' => json_encode($arrayselecttext),
 'ReplaceSelect' => json_encode($arrayselect),
 ];
-$url='http://192.168.1.13:3000/toolget/addwebsite';
+$url='http://localhost:3000/toolget/addwebsite';
     $curl=curl_init($url);
     curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
     curl_setopt($curl, CURLOPT_HTTPHEADER, [

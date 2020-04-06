@@ -4,7 +4,7 @@
     date_default_timezone_set('Asia/Ho_Chi_Minh');
     $id=isset($_GET['id'])?intval($_GET['id']):0;
     if ($id != 0) {
-        $url = 'http://192.168.1.13:3000/telegram/get_list_group_chat_telegram?id='.$id;
+        $url = 'http://localhost:3000/telegram/get_list_group_chat_telegram?id='.$id;
         $curl = curl_init($url);
         curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
         curl_setopt($curl, CURLOPT_HTTPHEADER, [
@@ -31,7 +31,7 @@
             exit;
         }
         else {
-            $url2='http://192.168.1.13:3000/telegram/get_friend?id='.$id;
+            $url2='http://localhost:3000/telegram/get_friend?id='.$id;
             $curl2=curl_init($url2);
             curl_setopt($curl2, CURLOPT_RETURNTRANSFER, true);
             curl_setopt($curl2, CURLOPT_HTTPHEADER, [
@@ -41,15 +41,6 @@
             ]);
             $response2=json_decode(curl_exec($curl2), true);
             curl_close($curl2);
-            $curl3=curl_init('http://192.168.1.13:3000/telegram/get_profile_user_telegram?id='.$id);
-            curl_setopt($curl3, CURLOPT_RETURNTRANSFER, true);
-            curl_setopt($curl3, CURLOPT_HTTPHEADER, [
-                'X-RapidAPI-Host: contextualwebsearch-websearch-v1.p.rapidapi.com',
-                'X-RapidAPI-Key: 7xxxxxxxxxxxxxxxxxxxxxxxxxxx',
-                'Authorization: '.$_SESSION['user_token']
-            ]);
-            $response3=json_decode(curl_exec($curl3), true);
-            curl_close($curl3);
         }
     } else {
         // header('Location: badrequest.php');
@@ -97,7 +88,7 @@
                             <li class="nav-item">
                                 <a class="nav-link" data-toggle="tab" href="#kt_portlet_base_demo_1_3_tab_content"
                                     role="tab" aria-selected="false">
-                                    <i class="flaticon2-group"></i>Gửi cho nhóm chat
+                                    <i class="flaticon2-group"></i>Gửi cho group chat
                                 </a>
                             </li>
                             <li class="nav-item">
@@ -143,13 +134,13 @@
                                         </td>
                                         <td>
                                         <div class="row form-group">
-                                            <div class="sendone col-lg-4 display-block" style="display:none;">
+                                            <div class="sendone col-lg-5 display-block" style="display:none;">
                                                 <lable>Thời gian gửi tin: </lable>
                                                 <input type="datetime-local"
                                                     class="form-control time-send-msg" name="time-send-msg">
                                             </div>
                                             <div class="sendone col-lg-2 display-block" style="display:none;">
-                                                <button type="button" class="btn btn-outline-success btn-date-now"><i class="far fa-clock"></i> Now</button>
+                                                <button type="button" class="btn btn-outline-success btn-date-now mt-4"><i class="far fa-clock"></i> Now</button>
                                             </div>
                                             <div class="sendauto row" style="display:none;">
                                                 <lable>Kiểu gửi tin: </lable>
@@ -218,17 +209,7 @@
                                                         </tr>
                                                         <tbody>
                                                         <?php 
-                                                            $curl=curl_init('http://192.168.1.13:3000/telegram/get_friend?id='.$id);
-                                                            curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
-                                                            curl_setopt($curl, CURLOPT_HTTPHEADER, [
-                                                                'X-RapidAPI-Host: contextualwebsearch-websearch-v1.p.rapidapi.com',
-                                                                'X-RapidAPI-Key: 7xxxxxxxxxxxxxxxxxxxxxxxxxxx',
-                                                                'Authorization: '.$_SESSION['user_token']
-                                                            ]);
-                                                            $response=json_decode(curl_exec($curl), true);
-                                                            curl_close($curl);
-                                                            
-                                                            foreach ($response as $index => $msg) {
+                                                            foreach ($response2 as $index => $msg) {
                                                                 {
                                                                 echo '<tr>';
                                                                 echo '<td><span class="kt-font-bolder">'.$msg['first_name'].' '.(isset($msg['last_name'])?$msg['last_name']:'').'</span></td>
@@ -264,7 +245,7 @@
                                 <div class="row ">
                                     <div class="kt-section col-12">
                                         <span class="kt-section__info">
-                                                <h2 class="text-center">Nhóm chat</h2>
+                                                <h2 class="text-center">Group chat</h2>
                                         </span>
                                         <div class="kt-section__content">
                                             <table class="table table-hover">
@@ -281,21 +262,12 @@
                                                 </td>
                                             </tr>
                                             <?php
-                                            $curl2=curl_init('http://192.168.1.13:3000/telegram/get_list_group_chat_telegram?id='.$id);
-                                            curl_setopt($curl2, CURLOPT_RETURNTRANSFER, true);
-                                            curl_setopt($curl2, CURLOPT_HTTPHEADER, [
-                                                'X-RapidAPI-Host: contextualwebsearch-websearch-v1.p.rapidapi.com',
-                                                'X-RapidAPI-Key: 7xxxxxxxxxxxxxxxxxxxxxxxxxxx',
-                                                'Authorization: '.$_SESSION['user_token']
-                                            ]);
-                                            $response2=json_decode(curl_exec($curl2), true);
-                                            curl_close($curl2);
-
-                                            foreach ($response2['chats'] as $index => $msg) {
+                                            
+                                            foreach ($response['chats'] as $index => $msg) {
                                                 if ($msg['_']=='channel' || $msg['_']=='chat')
                                                 {
                                                     echo '<tr>
-                                                    <td>'.$msg['title'].'</td>
+                                                    <td><a title="Danh sách thành viên" class="btn list_user_group" data-toggle="modal" data-target="#data_modal_list_user_group_chat" data-idgroup="'.$msg["id"].'">'.$msg['title'].'</a></td>
                                                     <td><input type="checkbox" class="form-control send-mess-group" data-type=1 data-chat_id='.$msg['id'].'></td>';
                                                     echo '</tr>';
                                                 }
@@ -309,7 +281,35 @@
                                 </div>
                             </div>
                         </div>
-
+                         <!--begin::Modal-->
+                        <div class="modal fade" id="data_modal_list_user_group_chat" tabindex="-1" role="dialog"
+                            aria-labelledby="exampleModalLabel" style="display: none;"
+                            aria-hidden="true">
+                            <div class="modal-dialog modal-lg modal-dialog-center" role="document">
+                                <div class="modal-content">
+                                    <input type="hidden" name="id_group">
+                                    <div class="modal-header">
+                                        <h4>Danh sách thành viên Group</h4>
+                                        <a class="btn btn-label-twitter export_group"><i class="fas fa-download"></i>Export CSV</a>
+                                    </div>
+                                    <div class="modal-body">
+                                        <table class="table table-hover">
+                                            <thead>
+                                                <tr>
+                                                    <th>#</th>
+                                                    <th>First_Name</th>
+                                                    <th>Last_Name</th>
+                                                    <th>User_Name</th>
+                                                    <th>Phone</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody class="show_list_user">
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                         <!-- begin:: Notification 2  -->
                         <div class="tab-pane " id="kt_portlet_base_demo_1_2_tab_content" role="tabpanel">
                             <div class="kt-portlet__body">
@@ -340,19 +340,19 @@
                                                             </td>
                                                         </tr>
                                                         <?php
-                                                                $url2='http://192.168.1.13:3000/telegram/get_contact?id='.$id;                                                                ;
-                                                                $curl2=curl_init($url2);
-                                                                curl_setopt($curl2, CURLOPT_RETURNTRANSFER, true);
-                                                                curl_setopt($curl2, CURLOPT_HTTPHEADER, [
+                                                                $url3='http://localhost:3000/telegram/get_contact?id='.$id;                                                                ;
+                                                                $curl3=curl_init($url3);
+                                                                curl_setopt($curl3, CURLOPT_RETURNTRANSFER, true);
+                                                                curl_setopt($curl3, CURLOPT_HTTPHEADER, [
                                                                 'X-RapidAPI-Host: contextualwebsearch-websearch-v1.p.rapidapi.com',
                                                                 'X-RapidAPI-Key: 7xxxxxxxxxxxxxxxxxxxxxxxxxxx',
                                                                 'Authorization: '.$_SESSION['user_token']
                                                                 ]);
-                                                                $response2=json_decode(curl_exec($curl2), true);
-                                                                $httpcode2=curl_getinfo($curl2,CURLINFO_HTTP_CODE);
-                                                                curl_close($curl2);
-                                                                if (isset($response2))
-                                                                foreach($response2 as $index => $list) {
+                                                                $response3=json_decode(curl_exec($curl3), true);
+                                                                $httpcode3=curl_getinfo($curl3,CURLINFO_HTTP_CODE);
+                                                                curl_close($curl3);
+                                                                if (isset($response3))
+                                                                foreach($response3 as $index => $list) {
                                                                     echo '<tr>
                                                                     <th scope="col">'.intval($index+1).'</th>
                                                                     <th scope="col">'.$list["Name"].'</th>
@@ -362,12 +362,11 @@
                                                                     </tr>';
                                                                 }
                                                                 ?>
-                                                        </tbory>
+                                                        </tbody>
                                                         </table>
                                                     </div>
                                                 </div>
                                             </div>
-                                        </div>
                                         </div>
                                     </div>
                                 </div>
@@ -386,6 +385,93 @@
         </script>
 <script type="text/javascript">
 jQuery(document).ready(function($) {
+    // get list user in group chat
+    $('.list_user_group').click(function(){
+        let idgroup=$(this).attr('data-idgroup');
+        $('input[name="id_group"]').val(idgroup);
+        $.ajax({
+            url: "./createapp.php",
+            type: "POST",
+            data: {
+                "function": "get_list_user_group",
+                "id": <?php echo $id; ?>,
+                "chat_id": idgroup,
+            },
+            success: function(response) {
+                response=JSON.parse(response);
+                let html="";
+                let count=0;
+                for (let user of response.users) {
+                    count++;
+                    html+=`
+                    <tr>
+                        <th>`+count+`</th>
+                        <th>`+((user.first_name)?user.first_name:"")+`</th>
+                        <th>`+((user.last_name)?user.last_name:"")+`</th>
+                        <th>`+((user.user_name)?user.user_name:"")+`</th>
+                        <th>`+((user.phone)?user.phone:"")+`</th>
+                    </tr>`;
+                }
+                $('.show_list_user').html(html);
+            }
+        })
+    })
+    //export user in group chat
+    $('.export_group').click(function() {
+            const swalWithBootstrapButtons = Swal.mixin({
+                customClass: {
+                    confirmButton: 'btn btn-success',
+                    cancelButton: 'btn btn-danger'
+                },
+                buttonsStyling: false
+            })
+            swalWithBootstrapButtons.fire({
+            title: 'Export User Group',
+            text: "Tải xuống file CSV danh sách thành viên group chat?",
+            type: 'question',
+            showCancelButton: true,
+            confirmButtonText: 'Yes, download now!',
+            cancelButtonText: 'No, cancel!',
+            reverseButtons: true
+            }).then((result) => {
+            if (result.value) {
+                $.ajax({
+                    url: "./createapp.php",
+                    type: "POST",
+                    data: {
+                        "function": "export_user_in_group",
+                        "id": <?php echo $id; ?>,
+                        "chat_id": $('input[name="id_group"]').val(),
+                    },
+                    success: function(response) {
+                        if (response) 
+                            {
+                                window.location=response;
+                                swalWithBootstrapButtons.fire(
+                                    'Downloaded!',
+                                    'Tải xuống thành công',
+                                    'success'
+                                    )
+                                }
+                        else swalWithBootstrapButtons.fire(
+                            'Download!',
+                            'Tải xuống thất bại',
+                            'error'
+                            )
+                        }
+                    })
+            } else if (
+                /* Read more about handling dismissals below */
+                result.dismiss === Swal.DismissReason.cancel
+            ) {
+                swalWithBootstrapButtons.fire(
+                'Cancelled',
+                '',
+                'error'
+                )
+            }
+            })
+    })
     // check all
     $("#allmes").click(function() {
         $("input[type=checkbox]").prop("checked", $(this).prop("checked"));

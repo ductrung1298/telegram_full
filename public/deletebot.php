@@ -1,9 +1,9 @@
 <?php
+session_start();
 $id=isset($_GET['id'])?intval($_GET['id']):0;
-$code=isset($_GET['code'])?($_GET['code']):'';
-if ($id!=0 && $code!='')
+if ($id!=0)
 {
-    $url='http://192.168.1.13:3000/telbot/deletebot';
+    $url='http://localhost:3000/telbot/deletebot';
         $curl=curl_init($url);
         curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
         curl_setopt($curl, CURLOPT_HTTPHEADER, [
@@ -12,11 +12,11 @@ if ($id!=0 && $code!='')
             'Authorization: '.$_SESSION['user_token']
         ]);
         curl_setopt($curl, CURLOPT_CUSTOMREQUEST, "DELETE");
-        curl_setopt($curl, CURLOPT_POSTFIELDS, http_build_query(["id" => $id, "code" => $code]));
+        curl_setopt($curl, CURLOPT_POSTFIELDS, http_build_query(["id" => $id]));
         $response = curl_exec($curl);
         $httpcode=curl_getinfo($curl,CURLINFO_HTTP_CODE);
         if ($httpcode==200)
-            header('Location: telegram.php');
+            header('Location: list-bot-telegram.php');
         else 
             header('Location: badrequest.php');
         curl_close($curl);

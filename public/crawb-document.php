@@ -10,7 +10,7 @@
                     <h3 class="kt-subheader__title">
                     Tài liệu hướng dẫn </h3>
                     <div class="kt-subheader__breadcrumbs">
-                        <a href="#" class="kt-subheader__breadcrumbs-home"><i class="flaticon2-shelter"></i></a>
+                        <a href="crawb-status.php" class="kt-subheader__breadcrumbs-home"><i class="flaticon2-shelter"></i></a>
                         <span class="kt-subheader__breadcrumbs-separator"></span>
                         <a href="crawb-document.php" class="kt-subheader__breadcrumbs-link">
                             Crawl website </a>
