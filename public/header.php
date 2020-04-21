@@ -64,7 +64,7 @@ License: You must have a valid license purchased only from themeforest(the above
 	<head>
 		<base href="">
 		<meta charset="utf-8" />
-		<title>Sales68</title>
+		<title>Mydas.Life</title>
 		<meta name="description" content="Latest updates and statistic charts">
 		<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
@@ -87,7 +87,7 @@ License: You must have a valid license purchased only from themeforest(the above
 		<!--begin::Layout Skins(used by all pages) -->
 
 		<!--end::Layout Skins -->
-		<link rel="shortcut icon" href="../assets/media/logos/eplusicon.ico" />
+		<link rel="shortcut icon" href="../assets/media/logos/logo_mydas_finall_01_uMl_icon.ico" />
 
 		<link href="../assets/css/eplus.css" rel="stylesheet" type="text/css" />
 	</head>
@@ -103,7 +103,7 @@ License: You must have a valid license purchased only from themeforest(the above
 		<div id="kt_header_mobile" class="kt-header-mobile  kt-header-mobile--fixed ">
 			<div class="kt-header-mobile__logo">
 				<a href="index.php">
-					<img alt="Logo" class="logo_web" src="../assets/media/logos/epluslogo.png" />
+					<img alt="Logo" class="logo_web" src="../assets/media/logos/LOGO MYDAS FINAL-01.png" />
 				</a>
 			</div>
 			<div class="kt-header-mobile__toolbar">
@@ -125,7 +125,7 @@ License: You must have a valid license purchased only from themeforest(the above
 					<div class="kt-aside__brand kt-grid__item " id="kt_aside_brand">
 						<div class="kt-aside__brand-logo">
 							<a href="index.php">
-								<img alt="Logo" class="logo_web" style="max-width: 4em;" src="../assets/media/logos/epluslogo.png">
+								<img alt="Logo" class="logo_web" style="max-width: 4em;" src="../assets/media/logos/LOGO MYDAS FINAL-01.png">
 							</a>
 						</div>
 						<div class="kt-aside__brand-tools">

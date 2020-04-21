@@ -47,7 +47,7 @@
                                             <div class="fieldset-wrapper">
                                                 <p class="rtejustify">- Truy cập vào đường dẫn trang quản lí dashboard.
                                                     Ví dụ:
-                                                    http://sales68.com/ </p>
+                                                    http://mydas.life.com/ </p>
                                                 <p class="rtejustify">- Giao diện website</p>
                                                 <p>
                                                     <img src="../assets/media/howtouse/giao-dien-trang-quan-ly.png"

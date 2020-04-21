@@ -82,7 +82,7 @@
                                                             </thead>
                                                             <tbody>
                                                                 <?php
-                                                                $url2='http://localhost:3000/telegram/get_contact?id='.$id;                                                                ;
+                                                                $url2='http://localhost:2020/telegram/get_contact?id='.$id;                                                                ;
                                                                 $curl2=curl_init($url2);
                                                                 curl_setopt($curl2, CURLOPT_RETURNTRANSFER, true);
                                                                 curl_setopt($curl2, CURLOPT_HTTPHEADER, [
@@ -153,7 +153,7 @@
                                                                             </thead>
                                                                             <tbody>
                                                                                 <?php
-                                                                                    $url3='http://localhost:3000/telegram/get_list_group_chat_telegram?id='.$id;                                                                ;
+                                                                                    $url3='http://localhost:2020/telegram/get_list_group_chat_telegram?id='.$id;                                                                ;
                                                                                     $curl3=curl_init($url3);
                                                                                     curl_setopt($curl3, CURLOPT_RETURNTRANSFER, true);
                                                                                     curl_setopt($curl3, CURLOPT_HTTPHEADER, [

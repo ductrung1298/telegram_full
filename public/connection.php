@@ -1,6 +1,6 @@
 <?php
     class Connection {
-        const linkURL = "http://localhost:3000/";
+        const linkURL = "http://localhost:2020/";
         public function connect($action) {
             $url = self::linkURL . $action;
             $curl = curl_init($url);

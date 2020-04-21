@@ -5,7 +5,7 @@
             'username' => $_GET['username'],
             'password' => $_GET['password']
         ];
-        $url = 'http://localhost:3000/auth/signin';
+        $url = 'http://localhost:2020/auth/signin';
         $curl = curl_init($url);
         curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
         curl_setopt($curl, CURLOPT_HTTPHEADER, [

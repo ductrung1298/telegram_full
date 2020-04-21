@@ -3,7 +3,7 @@ $id=isset($_GET['id'])?intval($_GET['id']):0;
 $user=isset($_GET['user'])?intval($_GET['user']):0;
 include 'header.php';
 if ($id!=0 && $user!=0) {
-    $url='http://localhost:3000/telegram/get_contact?idgroupcontact='.$id.'&idaccount='.$user;
+    $url='http://localhost:2020/telegram/get_contact?idgroupcontact='.$id.'&idaccount='.$user;
     $curl=curl_init($url);
     curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
     curl_setopt($curl, CURLOPT_HTTPHEADER, [

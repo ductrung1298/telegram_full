@@ -3,7 +3,7 @@
     $id=isset($_GET['id'])?intval($_GET['id']):0;
     if ($id!=0)
         {
-        $url='http://localhost:3000/telbot/getbot?id='.$id;
+        $url='http://localhost:2020/telbot/getbot?id='.$id;
         $curl=curl_init($url);
         curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
         curl_setopt($curl, CURLOPT_HTTPHEADER, [
@@ -18,6 +18,7 @@
             header('Location: badrequest.php');
         }
         curl_close($curl);
+        
     }
     else header('Location: badrequest.php');
 ?>
@@ -57,9 +58,25 @@
                                     <i class="flaticon-bell"></i> Cấu hình BOT
                                 </a>
                             </li>
+                            <li class="nav-item">
+                                <a class="nav-link" data-toggle="tab"
+                                    href="#kt_portlet_base_demo_1_2_tab_content" role="tab" aria-selected="true">
+                                    <i class="flaticon-bell"></i> Forward Tin nhắn
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" data-toggle="tab"
+                                    href="#kt_portlet_base_demo_1_3_tab_content" role="tab" aria-selected="true">
+                                    <i class="flaticon-bell"></i> Danh sách lệnh
+                                </a>
+                            </li>
                         </ul>
                     </div>
                 </div>
+    <div class="kt-portlet__body">
+        <div class="tab-content">
+            <!-- begin:: Notification 3 -->
+            <div class="tab-pane active" id="kt_portlet_base_demo_1_1_tab_content" role="tabpanel">
                 <div class="kt-portlet__body">
                     <div class="form-group row form-group-marginless kt-margin-t-20">
                         <label class="col-10 text-left"><strong>CHỈNH SỬA CẤU HÌNH BOT
@@ -417,14 +434,246 @@
                         </div>
                     </div>
                 </div>
-                </form>
             </div>
+            
+            <!-- block 2 -->
+            <div class="tab-pane" id="kt_portlet_base_demo_1_2_tab_content" role="tabpanel">
+                <div class="list_from form-group col-lg-12">
+                    <div class="col-lg-12 row"> 
+                        <div class="col-lg-2">
+                            <strong>Kiểu</strong>
+                        </div>
+                        <div class="col-lg-3">
+                            <strong>From</strong>
+                        </div>
+                        <div class="col-lg-3">
+                            <strong>To</strong>
+                        </div>
+                        <div class="col-lg-2">
+                            <strong>Số kí tự xuống dòng:</strong>
+                        </div>
+                        <div class="col-lg-2">
+                            <strong>Type</strong>
+                        </div>
+                    </div>
+                    <?php
+                    if (isset($response['forwardmsg'])) 
+                        $forward=json_decode($response['forwardmsg']);?>
+                    <div class="col-lg-12 kt-margin-t-20 row">
+                        <select class="col-lg-2 form-control typeto">
+                            <option value="1">Channel-Group</option>
+                            <option value="0">Channel-Channel</option>
+                        </select>
+                        <div class="col-lg-3 from row">
+                            <?php
+                            $froms= explode(",", $forward->{'from'});
+                            foreach($froms as $from)
+                            echo '
+                            <div class="row col-lg-12">
+                                <div class="col-lg-10">
+                                    <input type="text" class="form-control" name="from"
+                                    placeholder="Username Channel" value="'.$from.'">
+                                </div>
+                                <div class="col-lg-1 col-md-1 delete_from kt-margin-b-5"
+                                   >
+                                    <i class="far fa-minus-square"
+                                        style=" font-size: 3rem; color: #fd1361; cursor: pointer;"></i>
+                                </div>
+                                <div
+                                    class="col-lg-1 col-md-1 add_from kt-margin-b-5"  style="display: none;">
+                                    <i class="far fa-plus-square"
+                                        style=" font-size: 3rem; color: #1dc9b7; cursor: pointer;"></i>
+                                </div>
+                            </div>';
+                            ?>
+                            <div class="row col-lg-12">
+                                <div class="col-lg-10">
+                                    <input type="text" class="form-control" name="from"
+                                    placeholder="Username Channel" value="">
+                                </div>
+                                <div class="col-lg-1 col-md-1 delete_from kt-margin-b-5"
+                                style="display: none;">
+                                    <i class="far fa-minus-square"
+                                        style=" font-size: 3rem; color: #fd1361; cursor: pointer;"></i>
+                                </div>
+                                <div
+                                    class="col-lg-1 col-md-1 add_from kt-margin-b-5" >
+                                    <i class="far fa-plus-square"
+                                        style=" font-size: 3rem; color: #1dc9b7; cursor: pointer;"></i>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-3 to row">
+                            <?php 
+                             $tos= explode(",", $forward->{'to'});
+                             foreach($tos as $to)
+                             echo '
+                            <div class="row col-lg-12">
+                                <div class="col-lg-10">
+                                    <input type="text" class="form-control" name="to"
+                                    placeholder="ID hoặc Username" value="'.$to.'">
+                                </div>
+                                <div class="col-lg-1 col-md-1 delete_to kt-margin-b-5"
+                                    >
+                                    <i class="far fa-minus-square"
+                                        style=" font-size: 3rem; color: #fd1361; cursor: pointer;"></i>
+                                </div>
+                                <div class="col-lg-1 col-md-1 add_to kt-margin-b-5" style="display: none;">
+                                    <i class="far fa-plus-square"
+                                        style=" font-size: 3rem; color: #1dc9b7; cursor: pointer;"></i>
+                                </div>
+                            </div>';
+                            ?>
+                            <div class="row col-lg-12">
+                                <div class="col-lg-10">
+                                    <input type="text" class="form-control" name="to"
+                                    placeholder="ID hoặc Username" value="">
+                                </div>
+                                <div class="col-lg-1 col-md-1 delete_to kt-margin-b-5"
+                                style="display: none;">
+                                    <i class="far fa-minus-square"
+                                        style=" font-size: 3rem; color: #fd1361; cursor: pointer;"></i>
+                                </div>
+                                <div class="col-lg-1 col-md-1 add_to kt-margin-b-5" >
+                                    <i class="far fa-plus-square"
+                                        style=" font-size: 3rem; color: #1dc9b7; cursor: pointer;"></i>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-2 ">
+                            <input type="number" class="form-control countdown" value="<?php echo isset($forward)?$forward->{'countdown'}:"";?>">
+                        </div>
+                        <div class="col-lg-2">
+                            <select class="form-control typesend" name="typesend">
+                                <option value=1>Forward</option>
+                                <option value=0>Gửi tin nhắn</option>
+                            </select>
+                        </div>
+                </div>
+                <div class="kt-portlet__foot">
+                    <div class="kt-form__actions">
+                        <div class="row">
+                            <div class="col-lg-12 text-center">
+                                <button type="button" class="btn btn-success forward">Forward</button>
+                                <button type="reset"
+                                    class="btn btn-secondary">Huỷ</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <lable>* : Để lấy ID Group chat ta thêm Bot Telegram vào group chat cần lấy sau đó nhắn vào group: "/idgroup", bot sẽ tự động trả về ID group </lable>
+                <br>
+                <lable>- Username Channel: Ví dụ link channel: Lấy tên sau dấu / của đường dẫn channel. Ví dụ Link channel là t.me/mydasgroup -> username là mydasgroup</lable>
+                <lable>- Để forward thành công ta cần thêm bot vào Channel và Group cần forward</lable>
+            </div>
+        </div>
+         <!-- block 3 -->
+        <div class="tab-pane" id="kt_portlet_base_demo_1_3_tab_content" role="tabpanel">
+            <div class="row col-lg-12">
+                <div class="col-lg-2">
+                    <strong>Câu lệnh</strong>
+                </div>
+                <div class="col-lg-5">
+                    <strong>Trả lời</strong>
+                </div>
+                <div class="col-lg-4">
+                    <strong>Button Link đính kèm</strong>
+                </div>
+                <div class="col-lg-12 kt-margin-t-20 row">
+                    <div class="col-lg-2">
+                        <input type="text" name="command" class="form-control">
+                    </div>
+                    <div class="col-lg-5">
+                        <textarea rows="2" cols="50" id="reply">
+                        </textarea>
+                    </div>
+                    <div class="col-lg-4 row">
+                        <div class="col-lg-11"> 
+                            <input type="text" name="text_link" class="form-control">
+                        </div>
+                        <div class="col-lg-1 col-md-1 delete_to kt-margin-b-5" style="display: none;">
+                            <i class="far fa-minus-square"
+                                style=" font-size: 2rem; color: #fd1361; cursor: pointer;"></i>
+                        </div>
+                        <div class="col-lg-1 col-md-1 add_to kt-margin-b-5" >
+                            <i class="far fa-plus-square"
+                                style=" font-size: 2rem; color: #1dc9b7; cursor: pointer;"></i>
+                        </div>
+                    </div>
+                    <div class="col-lg-1 col-md-1 delete_to kt-margin-b-5"
+                        style="display: none;">
+                            <i class="far fa-minus-square"
+                                style=" font-size: 3rem; color: #fd1361; cursor: pointer;"></i>
+                        </div>
+                        <div class="col-lg-1 col-md-1 add_to kt-margin-b-5" >
+                            <i class="far fa-plus-square"
+                                style=" font-size: 3rem; color: #1dc9b7; cursor: pointer;"></i>
+                        </div>
+                </div>
+            </div>
+            <div class="kt-portlet__foot">
+                <div class="kt-form__actions">
+                    <div class="row">
+                        <div class="col-lg-12 text-center">
+                            <button type="button" class="btn btn-success">Cấu hình</button>
+                            <button type="reset"
+                                class="btn btn-secondary">Huỷ</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- end block 3 -->
+    </div>
         </div>
     </div>
 </div>
 <?php include 'footer.php'; ?>
 <script type="text/javascript">
 jQuery(document).ready(function($) {
+
+    $('.forward').click(function() {
+        let from=[];
+        $('input[name="from"]').map(function() {
+            if ($(this).val()!='')
+            from.push($(this).val().replace(/\s/g, ''));
+        })
+        let to=[];
+        $('input[name="to"]').map(function() {
+            if ($(this).val()!='')
+            to.push($(this).val().replace(/\s/g, ''));
+        })
+        $.ajax({
+            type: "POST",
+            url: "./createapp.php",
+            data: {
+                "function": "forwardbot",
+                "id": <?php echo $id; ?>,
+                "from": from.toString(),
+                "to": to.toString(),
+                "typeto": $('select.typeto option:selected').val(),
+                "typesend":  $('select.typesend option:selected').val(),
+                "countdown": $('.countdown').val(),
+            },
+            success: function(data) {
+                if (data == "success") {
+                    Swal.fire({
+                        position: 'inherit',
+                        type: 'success',
+                        title: 'Cấu hình thành công',
+                        showConfirmButton: false,
+                        timer: 1500
+                        }).then( (reslt) => {
+                            window.location.href="list-bot-telegram.php";
+                        })
+                } else
+                alert("Cấu hình thất bại");
+            }
+        })
+    })
+   
+    // cap nhat bot
+
     $('input[name="attach"]').click(function() {
         if ($(this).is(":checked"))
             $(this).parent().parent().children().last().addClass('display-block');
@@ -539,6 +788,7 @@ jQuery(document).ready(function($) {
                 "autosendmsg": JSON.stringify(msgauto),
             },
             success: function(data) {
+                console.log(data);
                 if (data == "success") {
                     Swal.fire({
                         position: 'inherit',

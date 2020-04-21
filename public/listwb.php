@@ -2,7 +2,7 @@
 <?php 
     $id=isset($_GET['id'])?intval($_GET['id']):0;
     if ($id!=0){
-    $url='http://localhost:3000/toolget/getinfowebsite?id='.$id;
+    $url='http://localhost:2020/toolget/getinfowebsite?id='.$id;
     $curl=curl_init($url);
     curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
     curl_setopt($curl, CURLOPT_HTTPHEADER, [
@@ -20,7 +20,7 @@
 } else header('Location: badrequest.php');
 ?>
 <?php 
-    $url='http://localhost:3000/toolget/listwordpress';
+    $url='http://localhost:2020/toolget/listwordpress';
     $curl=curl_init($url);
     curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
     curl_setopt($curl, CURLOPT_HTTPHEADER, [

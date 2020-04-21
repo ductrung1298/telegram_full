@@ -93,6 +93,59 @@ $(document).ready(function () {
         $('.list-dom-replace-select').append(rdom);
     });
 
+    $('.from').on('click touch', '.add_from', function (event) {
+        let rdom = `
+        <div class="row col-lg-12">
+            <div class="col-lg-10">
+                <input type="text" class="form-control" name="from"
+                placeholder="Username Channel">
+            </div>
+            <div class="col-lg-1 col-md-1 delete_from kt-margin-b-5"
+                style="display: none;">
+                <i class="far fa-minus-square"
+                    style=" font-size: 3rem; color: #fd1361; cursor: pointer;"></i>
+            </div>
+            <div
+                class="col-lg-1 col-md-1 add_from kt-margin-b-5">
+                <i class="far fa-plus-square"
+                    style=" font-size: 3rem; color: #1dc9b7; cursor: pointer;"></i>
+            </div>
+        </div>
+        `;
+        $('.from .add_from').remove();
+        $('.from .delete_from').last().addClass('display-block');
+        $('.from').append(rdom);
+    });
+    $('.from').on('click touch', '.delete_from', function (event) {
+        $(this).parent().remove();
+    });
+    $('.to').on('click touch', '.add_to', function (event) {
+        let rdom = `
+        <div class="row col-lg-12">
+            <div class="col-lg-10">
+                <input type="text" class="form-control" name="to"
+                placeholder="ID hoặc Username">
+                </div>
+            <div class="col-lg-1 col-md-1 delete_to kt-margin-b-5"
+                style="display: none;">
+                <i class="far fa-minus-square"
+                    style=" font-size: 3rem; color: #fd1361; cursor: pointer;"></i>
+            </div>
+            <div
+                class="col-lg-1 col-md-1 add_to kt-margin-b-5">
+                <i class="far fa-plus-square"
+                    style=" font-size: 3rem; color: #1dc9b7; cursor: pointer;"></i>
+            </div>
+        </div>
+        `;
+        $('.to .add_to').remove();
+        $('.to .delete_to').last().addClass('display-block');
+        $('.to').append(rdom);
+    });
+    $('.to').on('click touch', '.delete_to', function (event) {
+        $(this).parent().remove();
+    });
+
     $('.list-dom-get-detail').on('click touch', '.delete-dom-detail', function (event) {
         $(this).parent().remove();
     });

@@ -11,7 +11,7 @@
 	<head>
     <base href="">
 		<meta charset="utf-8" />
-		<title>Login | Sales68</title>
+		<title>Login | Mydas.Life</title>
 		<meta name="description" content="Latest updates and statistic charts">
 		<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
@@ -34,7 +34,7 @@
 		<!--begin::Layout Skins(used by all pages) -->
 
 		<!--end::Layout Skins -->
-		<link rel="shortcut icon" href="../assets/media/logos/eplusicon.ico" />
+		<link rel="shortcut icon" href="../assets/media/logos/logo_mydas_finall_01_uMl_icon.ico" />
 
 		<link href="../assets/css/eplus.css" rel="stylesheet" type="text/css" />
 
@@ -57,7 +57,7 @@
 		<!--begin::Layout Skins(used by all pages) -->
 
 		<!--end::Layout Skins -->
-		<link rel="shortcut icon" href="../assets/media/logos/eplusicon.ico" />
+		<link rel="shortcut icon" href="../assets/media/logos/logo_mydas_finall_01_uMl_icon.ico" />
 		<style>
 			img {
 				width: 100px;
@@ -79,12 +79,12 @@
 						<div class="kt-login__container">
 							<div class="kt-login__logo">
 								<a href="#">
-									<img src="../assets/media/logos/epluslogo.png" >
+									<img src="../assets/media/logos/LOGO MYDAS FINAL-01.png" >
 								</a>
 							</div>
 							<div class="kt-login__signin">
 								<div class="kt-login__head">
-									<h3 class="kt-login__title">Sign In To Sales68</h3>
+									<h3 class="kt-login__title">Sign In To Mydas.Life</h3>
 								</div>
 								<form class="kt-form" action="">
 									<div class="input-group">

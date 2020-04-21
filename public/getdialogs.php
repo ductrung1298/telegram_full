@@ -4,7 +4,7 @@
     date_default_timezone_set('Asia/Ho_Chi_Minh');
     $id=isset($_GET['id'])?intval($_GET['id']):0;
     if ($id != 0) {
-        $url = 'http://localhost:3000/telegram/get_list_group_chat_telegram?id='.$id;
+        $url = 'http://localhost:2020/telegram/get_list_group_chat_telegram?id='.$id;
         $curl = curl_init($url);
         curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
         curl_setopt($curl, CURLOPT_HTTPHEADER, [
@@ -31,7 +31,7 @@
             exit;
         }
         else {
-            $url2='http://localhost:3000/telegram/get_friend?id='.$id;
+            $url2='http://localhost:2020/telegram/get_friend?id='.$id;
             $curl2=curl_init($url2);
             curl_setopt($curl2, CURLOPT_RETURNTRANSFER, true);
             curl_setopt($curl2, CURLOPT_HTTPHEADER, [
@@ -340,7 +340,7 @@
                                                             </td>
                                                         </tr>
                                                         <?php
-                                                                $url3='http://localhost:3000/telegram/get_contact?id='.$id;                                                                ;
+                                                                $url3='http://localhost:2020/telegram/get_contact?id='.$id;                                                                ;
                                                                 $curl3=curl_init($url3);
                                                                 curl_setopt($curl3, CURLOPT_RETURNTRANSFER, true);
                                                                 curl_setopt($curl3, CURLOPT_HTTPHEADER, [

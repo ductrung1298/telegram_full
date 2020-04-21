@@ -10,7 +10,7 @@ $body=[
 'DBHost' => isset($_POST['DBHost']) ? $_POST['DBHost'] : '',
 'socketpath' => isset($_POST['socketpath']) ? $_POST['socketpath'] : '',
 ];
-$url='http://localhost:3000/toolget/addconfigwp';
+$url='http://localhost:2020/toolget/addconfigwp';
     $curl=curl_init($url);
     curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
     curl_setopt($curl, CURLOPT_HTTPHEADER, [

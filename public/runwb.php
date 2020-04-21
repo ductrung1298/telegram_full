@@ -4,7 +4,7 @@ session_start();
     $option=($_POST['select']=='daily')?0:1;
     if (isset($id))
         {
-            $url='http://localhost:3000/toolget/autorun';
+            $url='http://localhost:2020/toolget/autorun';
                 $curl=curl_init($url);
                 curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
                 curl_setopt($curl, CURLOPT_HTTPHEADER, [

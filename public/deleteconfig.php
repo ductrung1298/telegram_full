@@ -3,7 +3,7 @@ session_start();
 $id=isset($_GET['id'])?intval($_GET['id']):0;
 if ($id!=0 )
 {
-    $url='http://localhost:3000/toolget/deleteconfig';
+    $url='http://localhost:2020/toolget/deleteconfig';
         $curl=curl_init($url);
         curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
         curl_setopt($curl, CURLOPT_HTTPHEADER, [

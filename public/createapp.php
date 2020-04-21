@@ -6,7 +6,7 @@
             'api_hash' => $_POST['api_hash'],
             'api_id' => $_POST['api_id']
         ];
-        $url='http://localhost:3000/telegram/add_user_telegram';
+        $url='http://localhost:2020/telegram/add_user_telegram';
         $curl=curl_init($url);
 
         curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
@@ -31,7 +31,7 @@
         $body=[
             'phone'=> $_POST['phone']
         ];
-        $url='http://localhost:3000/telegram/request_send_code';
+        $url='http://localhost:2020/telegram/request_send_code';
         $curl=curl_init($url);
 
         curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
@@ -59,7 +59,7 @@
             'id'=> $_POST['id'],
             'code' => $_POST['code'],
         ];
-        $url='http://localhost:3000/telegram/send_code';
+        $url='http://localhost:2020/telegram/send_code';
         $curl=curl_init($url);
         curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
         curl_setopt($curl, CURLOPT_HTTPHEADER, [
@@ -79,7 +79,7 @@
         $body=[
             "token" => $_POST['token'],
         ];
-        $url="http://localhost:3000/telbot/addbot";
+        $url="http://localhost:2020/telbot/addbot";
         $curl=curl_init($url);
         curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
         curl_setopt($curl, CURLOPT_HTTPHEADER, [
@@ -106,7 +106,7 @@
             "connect" => $_POST['connect'],
             "autosendmsg" => $_POST['autosendmsg'],
         ];
-        $url="http://localhost:3000/telbot/updatebot";
+        $url="http://localhost:2020/telbot/updatebot";
         $curl=curl_init($url);
         curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
         curl_setopt($curl, CURLOPT_HTTPHEADER, [
@@ -139,7 +139,7 @@
             "hours"=> $_POST['hours'],
             "idcontact" => $_POST['idcontact']
         ];
-        $url="http://localhost:3000/telegram/send_message";
+        $url="http://localhost:2020/telegram/send_message";
         $curl=curl_init($url);
         curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
         curl_setopt($curl, CURLOPT_HTTPHEADER, [
@@ -160,7 +160,7 @@
         $curl = curl_init();
 
         curl_setopt_array($curl, array(
-        CURLOPT_URL => "http://localhost:3000/telegram/get_contact?idgroupcontact=" . $_POST['idgroup'],
+        CURLOPT_URL => "http://localhost:2020/telegram/get_contact?idgroupcontact=" . $_POST['idgroup'],
         CURLOPT_RETURNTRANSFER => true,
         CURLOPT_ENCODING => "",
         CURLOPT_MAXREDIRS => 10,
@@ -189,7 +189,7 @@
             "access_hash" => $_POST['access_hash'],
             "phone"=> $_POST['phone']
         ];
-        $url="http://localhost:3000/telegram/add_friend_to_contact";
+        $url="http://localhost:2020/telegram/add_friend_to_contact";
         $curl=curl_init($url);
         curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
         curl_setopt($curl, CURLOPT_HTTPHEADER, [
@@ -211,7 +211,7 @@
             "name" => $_POST["name"],
             "describe" => isset($_POST["describe"])?$_POST["describe"]:"",
         ];
-        $url="http://localhost:3000/telegram/add_contact";
+        $url="http://localhost:2020/telegram/add_contact";
         $curl=curl_init($url);
         curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
         curl_setopt($curl, CURLOPT_HTTPHEADER, [
@@ -230,7 +230,7 @@
     if ($_POST['function']=="get_list_user_group") {
         $curl = curl_init();
         curl_setopt_array($curl, array(
-        CURLOPT_URL => "http://localhost:3000/telegram/get_user_in_group_chat?id=" . $_POST['id'].'&chat_id='.$_POST['chat_id'],
+        CURLOPT_URL => "http://localhost:2020/telegram/get_user_in_group_chat?id=" . $_POST['id'].'&chat_id='.$_POST['chat_id'],
         CURLOPT_RETURNTRANSFER => true,
         CURLOPT_ENCODING => "",
         CURLOPT_MAXREDIRS => 10,
@@ -252,7 +252,7 @@
     if ($_POST['function']=="export_user_in_group") {
         $curl = curl_init();
         curl_setopt_array($curl, array(
-        CURLOPT_URL => "http://localhost:3000/telegram/get_user_in_group_chat?id=" . $_POST['id'].'&chat_id='.$_POST['chat_id'],
+        CURLOPT_URL => "http://localhost:2020/telegram/get_user_in_group_chat?id=" . $_POST['id'].'&chat_id='.$_POST['chat_id'],
         CURLOPT_RETURNTRANSFER => true,
         CURLOPT_ENCODING => "",
         CURLOPT_MAXREDIRS => 10,
@@ -283,7 +283,7 @@
     if ($_POST['function']=="export_user_in_contact") {
         $curl = curl_init();
         curl_setopt_array($curl, array(
-            CURLOPT_URL => "http://localhost:3000/telegram/get_list_user_in_contact?id=" . $_POST['id'].'&group='.$_POST['idcontact'],
+            CURLOPT_URL => "http://localhost:2020/telegram/get_list_user_in_contact?id=" . $_POST['id'].'&group='.$_POST['idcontact'],
             CURLOPT_RETURNTRANSFER => true,
             CURLOPT_ENCODING => "",
             CURLOPT_MAXREDIRS => 10,
@@ -318,7 +318,7 @@
             "id" => $_POST['id'],
             "idgroup" => $_POST["idcontact"],
         ];
-        $url="http://localhost:3000/telegram/add_friend_from_contact";
+        $url="http://localhost:2020/telegram/add_friend_from_contact";
         $curl=curl_init($url);
         curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
         curl_setopt($curl, CURLOPT_HTTPHEADER, [
@@ -340,7 +340,7 @@
             "id_group_chat" => $_POST["id_group_chat"],
             "id_contact" => $_POST["id_contact"],
         ];
-        $url="http://localhost:3000/telegram/add_contact_to_group_chat";
+        $url="http://localhost:2020/telegram/add_contact_to_group_chat";
         $curl=curl_init($url);
         curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
         curl_setopt($curl, CURLOPT_HTTPHEADER, [
@@ -361,7 +361,7 @@
             "namebot" => $_POST["namebot"],
             "usernamebot" => $_POST["usernamebot"],
         ];
-        $url="http://localhost:3000/telegram/create_bot";
+        $url="http://localhost:2020/telegram/create_bot";
         $curl=curl_init($url);
         curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
         curl_setopt($curl, CURLOPT_HTTPHEADER, [
@@ -383,5 +383,30 @@
             "api" => $response
         ];
         echo json_encode($result);
+    }
+    if ($_POST['function']=="forwardbot") {
+        $body=[
+            "id" =>$_POST['id'],
+            "from" =>  $_POST['from'],
+            "to" => $_POST['to'],
+            "typeto" => $_POST['typeto'],
+            "typesend" => $_POST['typesend'],
+            "countdown" => $_POST['countdown'],
+        ];
+        $url="http://localhost:2020/telbot/forwardmsg";
+        $curl=curl_init($url);
+        curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($curl, CURLOPT_HTTPHEADER, [
+            'X-RapidAPI-Host: contextualwebsearch-websearch-v1.p.rapidapi.com',
+            'X-RapidAPI-Key: 7xxxxxxxxxxxxxxxxxxxxxxxxxxx',
+            'Authorization: '.$_SESSION['user_token']
+        ]);
+        curl_setopt($curl, CURLOPT_POST,1);
+        curl_setopt($curl, CURLOPT_POSTFIELDS, http_build_query($body));
+        $response=curl_exec($curl);
+        $httpcode=curl_getinfo($curl,CURLINFO_HTTP_CODE);
+        curl_close($curl);
+        if ($httpcode==200) echo 'success';
+        else echo null;
     }
 ?>

@@ -50,7 +50,7 @@ if (isset($_FILES["myfile"])) {
         'idgroupcontact'=> $_POST['groupcontact'],
         'addfriend' => $addFriend,
     ];
-    $url = 'http://localhost:3000/telegram/import_contact';
+    $url = 'http://localhost:2020/telegram/import_contact';
     $curl=curl_init($url);
     curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
     curl_setopt($curl, CURLOPT_HTTPHEADER, [
