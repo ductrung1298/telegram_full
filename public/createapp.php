@@ -100,11 +100,14 @@
         $body=[
             "id" => $_POST['id'],
             "idbaocao" => $_POST['idbaocao'],
+            "textbaocao" => $_POST['textbaocao'],
             "greeting" => $_POST['greeting'],
             "greeting2" => $_POST['greeting2'],
+            "textketnoi" => $_POST['textketnoi'],
             "invitation" => $_POST['invitation'],
             "connect" => $_POST['connect'],
             "autosendmsg" => $_POST['autosendmsg'],
+            "btn_inline" => $_POST['btn_inline'],
         ];
         $url="http://localhost:2020/telbot/updatebot";
         $curl=curl_init($url);
@@ -387,13 +390,35 @@
     if ($_POST['function']=="forwardbot") {
         $body=[
             "id" =>$_POST['id'],
-            "from" =>  $_POST['from'],
-            "to" => $_POST['to'],
-            "typeto" => $_POST['typeto'],
-            "typesend" => $_POST['typesend'],
-            "countdown" => $_POST['countdown'],
+            // "from" =>  $_POST['from'],
+            // "to" => $_POST['to'],
+            // "typeto" => $_POST['typeto'],
+            // "typesend" => $_POST['typesend'],
+            // "countdown" => $_POST['countdown'],
+            "list_forward" => $_POST['list_forward'],
         ];
         $url="http://localhost:2020/telbot/forwardmsg";
+        $curl=curl_init($url);
+        curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($curl, CURLOPT_HTTPHEADER, [
+            'X-RapidAPI-Host: contextualwebsearch-websearch-v1.p.rapidapi.com',
+            'X-RapidAPI-Key: 7xxxxxxxxxxxxxxxxxxxxxxxxxxx',
+            'Authorization: '.$_SESSION['user_token']
+        ]);
+        curl_setopt($curl, CURLOPT_POST,1);
+        curl_setopt($curl, CURLOPT_POSTFIELDS, http_build_query($body));
+        $response=curl_exec($curl);
+        $httpcode=curl_getinfo($curl,CURLINFO_HTTP_CODE);
+        curl_close($curl);
+        if ($httpcode==200) echo 'success';
+        else echo null;
+    }
+    if ($_POST['function']=="commandbot") {
+        $body=[
+            "id" =>$_POST['id'],
+            "content" => $_POST['content'],
+        ];
+        $url="http://localhost:2020/telbot/config_command_bot";
         $curl=curl_init($url);
         curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
         curl_setopt($curl, CURLOPT_HTTPHEADER, [

@@ -8,9 +8,10 @@
             <div class="kt-container ">
                 <div class="kt-subheader__main">
                     <h3 class="kt-subheader__title">
-                    Tài liệu hướng dẫn </h3>
+                        Tài liệu hướng dẫn </h3>
                     <div class="kt-subheader__breadcrumbs">
-                        <a href="crawb-status.php" class="kt-subheader__breadcrumbs-home"><i class="flaticon2-shelter"></i></a>
+                        <a href="crawb-status.php" class="kt-subheader__breadcrumbs-home"><i
+                                class="flaticon2-shelter"></i></a>
                         <span class="kt-subheader__breadcrumbs-separator"></span>
                         <a href="crawb-document.php" class="kt-subheader__breadcrumbs-link">
                             Crawl website </a>
@@ -26,8 +27,8 @@
                     <div class="kt-portlet__head-toolbar">
                         <ul class="nav nav-tabs nav-tabs-line nav-tabs-line-success nav-tabs-line-2x" role="tablist">
                             <li class="nav-item">
-                                <a class="nav-link active"  href="#kt_portlet_base_demo_1_1_tab_content" 
-                                data-toggle="tab" role="tab" aria-selected="true">
+                                <a class="nav-link active" href="#kt_portlet_base_demo_1_1_tab_content"
+                                    data-toggle="tab" role="tab" aria-selected="true">
                                     <i class="flaticon-interface-11"></i>Tài liệu hướng dẫn Crawl website
                                 </a>
                             </li>
@@ -45,54 +46,50 @@
                                                 CẤU HÌNH
                                                 WEBSITE DASHBOARD</strong>
                                             <div class="fieldset-wrapper">
-                                                <p class="rtejustify">- Truy cập vào đường dẫn trang quản lí dashboard.
-                                                    Ví dụ:
-                                                    http://mydas.life.com/ </p>
+                                                <p class="rtejustify">- Truy cập vào đường dẫn
+                                                    <a href="https://mydas.life/crawb-status.php"
+                                                        target="_blank">https://mydas.life/crawb-status.php</a></p>
                                                 <p class="rtejustify">- Giao diện website</p>
-                                                <p>
-                                                    <img src="../assets/media/howtouse/giao-dien-trang-quan-ly.png"
-                                                        alt="Giao diện website trang quản lí dashboard" width="800"
-                                                        style="display: block; margin-left: auto; margin-right: auto;">
-                                                </p>
-                                                <p class="rtejustify">- Để thêm mới một website để crawl dữ liệu ta
-                                                    click tab “Nguồn
-                                                    dữ liệu”, xuất hiện form tạo mới.
-                                                    <p class="rtejustify">&emsp;+ Tên nguồn website: Tên của website cần
-                                                        lấy dữ
-                                                        liệu. </p>
-                                                    <p class="rtejustify">&emsp;+ Ghi chú</p>
-                                                    <p class="rtejustify">&emsp;+ Cấu hình lưu tin: Chọn cấu hình lưu
-                                                        tin. Click vào
-                                                        dấu mũi tên để xem danh sách cấu hình website đã thêm. Click vào
-                                                        tab "Cấu
-                                                        hình" để thêm mới cấu hình lưu tin</p>
-                                                    <p class="rtejustify">&emsp;+ ID Chuyên mục: Số ID của chuyên mục
-                                                        muốn đăng tin.
+                                                <img src="../assets/media/howtouse/giao-dien-trang-quan-ly.png"
+                                                    alt="Giao diện website trang quản lí dashboard" width="800"
+                                                    style="display: block; margin-left: auto; margin-right: auto;">
+                                                <p class="rtejustify">- Để thêm mới một website để crawl dữ liệu truy
+                                                    cập vào đường dẫn <a href="https://mydas.life/crawb-datasource.php"
+                                                        target="_blank">https://mydas.life/crawb-datasource.php</a>.
+                                                    Xuất hiện form đăng kí thông tin</p>
+                                                <ol>
+                                                    <li>Tên nguồn website: Tên của website cần lấy dữ liệu. </li>
+                                                    <li>Ghi chú</li>
+                                                    <li>Cấu hình lưu tin: Chọn cấu hình lưu tin. Click vào
+                                                        dấu mũi tên để xem danh sách cấu hình website đã thêm. Truy cập
+                                                        đường
+                                                        dần <a href="https://mydas.life/crawb-config.php"
+                                                            target="_blank">https://mydas.life/crawb-config.php</a> để
+                                                        thêm mới cấu hình lưu tin</li>
+                                                    <li>ID Chuyên mục: Số ID của chuyên mục muốn đăng tin.
                                                         Để xem danh sách chuyên mục của website và mã định danh ID, ta
+                                                        vào đường dẫn: URL website lưu tin +
+                                                        "/wp-json/wp/v2/categories", chọn duy
+                                                        nhất một mã id cần thêm. (Nếu xuất hiện thông báo lỗi, đăng nhập
                                                         vào đường
-                                                        dẫn: URL website lưu tin + "/wp-json/wp/v2/categories", chọn duy
-                                                        nhất một mã
-                                                        id cần thêm. (Nếu xuất hiện thông báo lỗi, đăng nhập vào đường
-                                                        dẫn: URL
-                                                        website lưu tin + "/wp-admin" sau đó tải lại trang. Ngoài ra có
+                                                        dẫn: URL website lưu tin + "/wp-admin" sau đó tải lại trang.
+                                                        Ngoài ra có
                                                         thể truy cập vào database website dùng để đăng tin xem tại table
-                                                        'wp_terms'</p>
-                                                    <p class="rtejustify">&emsp;+ ID Tác giả đăng bài: Số ID của user
-                                                        dùng để đăng
+                                                        'wp_terms'</li>
+                                                    <li>ID Tác giả đăng bài: Số ID của user dùng để đăng
                                                         tin. Để xem danh sách user của website và mã định danh ID, ta
-                                                        vào đường dẫn:
-                                                        URL website lưu tin + "/wp-json/wp/v2/users", chọn duy nhất một
-                                                        mã id cần
-                                                        thêm. (Nếu xuất hiện thông báo lỗi, đăng nhập vào đường dẫn: URL
-                                                        website lưu
-                                                        tin + "/wp-admin" sau đó tải lại trang. Ngoài ra có thể truy cập
+                                                        vào đường dẫn: URL website lưu tin + "/wp-json/wp/v2/users",
+                                                        chọn duy nhất một
+                                                        mã id cần thêm. (Nếu xuất hiện thông báo lỗi, đăng nhập vào
+                                                        đường dẫn: URL
+                                                        website lưu tin + "/wp-admin" sau đó tải lại trang. Ngoài ra có
+                                                        thể truy cập
                                                         vào database website dùng để đăng tin xem tại table 'wp_users'
-                                                    </p>
-                                                    <p class="rtejustify">&emsp;+ Xóa liên kết: Xóa tất cả các liên kết
-                                                        có trong bài viết lấy tin.
+                                                    </li>
+                                                    <li>Xóa liên kết: Xóa tất cả các liên kết có trong bài viết lấy tin.
                                                         Click tích để đồng ý xóa liên kết có trong bài viết.
-                                                    </p>
-                                                    <p class="rtejustify">&emsp;+ Lưu ảnh: Lưu và thay đổi đường dẫn tất
+                                                    </li>
+                                                    <li>Lưu ảnh: Lưu và thay đổi đường dẫn tất
                                                         cả các ảnh có trong bài viết.
                                                         Nếu sử dụng cấu hình lưu tin là lưu trực tiếp vào database thì
                                                         hình ảnh trong bài viết sẽ được lưu ở
@@ -100,132 +97,151 @@
                                                         là sử dụng rest api thì hình ảnh sẽ được lưu ở thư mục
                                                         wp-content/uploads của wordpress.
                                                         Click tích để đồng ý lưu ảnh.
-                                                    </p>
-                                                    <p class="rtejustify">&emsp;+ Đường dẫn nguồn tin : URL website cần
+                                                    </li>
+                                                    <li>Đường dẫn nguồn tin : URL website cần
                                                         lấy dữ liệu
-                                                    </p>
-                                                    <p class="rtejustify">&emsp;+ Loại phân trang: Loại phân trang của
-                                                        website cần
-                                                        lấy dữ liệu. Gồm 2 loại
-                                                        <p class="rtejustify">&emsp;&emsp;* Scroll: Cuộn trang. Số trang
-                                                            là một số
-                                                            nguyên đại diện cho số lượng trang cần lấy dữ liệu. Đối với
-                                                            một số
-                                                            website tải trang khi nhấn nút "LoadMore" hoặc "Xem thêm" ta
-                                                            cần lấy vị
-                                                            trí selector của nút LoadMore. Trường "SelectorLoadMore"
-                                                            không bắt buộc
-                                                        </p>
-                                                        <p class="rtejustify">&emsp;&emsp;* Đánh số: Bài viết được phân
-                                                            thành từng
-                                                            trang riêng biệt, ví dụ: page/1, ?page=1,… Danh sách các
-                                                            trang được phân
-                                                            biệt bằng dấu phẩy ‘,’.</p>
-                                                    </p>
-                                                    <p class="rtejustify">&emsp;+ Đường dẫn(Vị trí) lấy danh sách: Đường
-                                                        dẫn dùng để
+                                                    </li>
+                                                    <li>Loại phân trang: Loại phân trang của website cần lấy dữ liệu.
+                                                        Gồm 2 loại
+                                                        <ol type="a">
+                                                            <li> Scroll - Cuộn trang. Số trang là một số nguyên đại diện
+                                                                cho số lượng trang cần lấy dữ liệu. Đối với
+                                                                một số website tải trang khi nhấn nút "LoadMore" hoặc
+                                                                "Xem thêm" ta
+                                                                cần lấy vị trí selector của nút LoadMore. Trường
+                                                                "SelectorLoadMore"
+                                                                không bắt buộc
+                                                            </li>
+                                                            <li> Đánh số: Bài viết được phân thành từng trang riêng
+                                                                biệt, ví dụ: page/1, ?page=1,… Danh sách các trang được
+                                                                phân
+                                                                biệt bằng dấu phẩy ‘,’.</li>
+                                                        </ol>
+                                                    </li>
+                                                    <li>Đường dẫn( Vị trí) lấy danh sách: Đường dẫn dùng để
                                                         lấy danh sách bài viết có trong website. Có 2 loại đường dẫn là
-                                                        Selector và
-                                                        Xpath. Cách để lấy đường dẫn xem tại mục II.</p>
-                                                    <p class="rtejustify">&emsp;+ Đường dẫn(Vị trí) lấy chi tiết: Đường
-                                                        dẫn để lấy
-                                                        các mục nội dung. Mặc định sẽ có 2 mục sẵn là Title là tiêu đề
-                                                        bài viết đó
-                                                        và Summary là nội dung bài viết sẽ lấy và hiển thị. Có 2 kiểu
-                                                        lấy vị trí là
-                                                        Selector và Xpath</p>
-                                                    <p class="rtejustify">&emsp;+ Thay thế bằng Text: Dùng để thay thế
-                                                        nội dung bài
-                                                        viết lấy được. Nội dung bài viết có chuỗi cần thay sẽ được thay
-                                                        bằng chuỗi
-                                                        nhập vào. Click vào dấu + để thêm nhiều mục</p>
-                                                    <p class="rtejustify">&emsp;+ Thay thế bằng đường dẫn: Được sử dụng
-                                                        để thay đổi
-                                                        nội dung của một đoạn nội dung thông qua đường dẫn. Ví dụ thay
-                                                        đổi cụm văn
-                                                        bản đầu tiên của tất cả bài viết bằng nội dung nhập vào. Ngoài
-                                                        ra mục này
-                                                        còn được sử dụng để xóa một số nội dung không mong muốn như
-                                                        quảng cáo, nguồn
-                                                        bài viết, tác giả,… Click vào dấu + để thêm nhiều mục.</p>
-                                                    <p class="rtejustify">&emsp;+ Nhấn Thêm mới để lưu thông tin vừa
-                                                        nhập</p>
-                                                </p>
+                                                        Selector và Xpath. Cách để lấy đường dẫn xem tại mục II.
+                                                        <ol type="a">
+                                                            <li>Đường dẫn(Vị trí) lấy chi tiết: Đường
+                                                                dẫn để lấy các mục nội dung. Mặc định sẽ có 2 mục sẵn là
+                                                                Title là tiêu đề
+                                                                bài viết đó và Summary là nội dung bài viết sẽ lấy và
+                                                                hiển thị. Có 2 kiểu
+                                                                lấy vị trí là Selector và Xpath</li>
+                                                            <li>Thay thế bằng Text: Dùng để thay thế
+                                                                nội dung bài
+                                                                viết lấy được. Nội dung bài viết có chuỗi cần thay sẽ
+                                                                được thay
+                                                                bằng chuỗi
+                                                                nhập vào. Click vào dấu + để thêm nhiều mục</li>
+                                                            <li>Thay thế bằng đường dẫn: Được sử dụng
+                                                                để thay đổi nội dung của một đoạn nội dung thông qua
+                                                                đường dẫn. Ví dụ thay
+                                                                đổi cụm văn bản đầu tiên của tất cả bài viết bằng nội
+                                                                dung nhập vào. Ngoài
+                                                                ra mục này còn được sử dụng để xóa một số nội dung không
+                                                                mong muốn như
+                                                                quảng cáo, nguồn bài viết, tác giả,… Click vào dấu + để
+                                                                thêm nhiều mục.</li>
+                                                            <li>Nhấn Thêm mới để lưu thông tin vừa
+                                                                nhập</li>
+                                                        </ol>
+                                                    </li>
+                                                </ol>
                                                 <p class="rtejustify"> - Để thêm mới cấu hình website để đăng bài viết
-                                                    ta click tab
-                                                    “Cấu hình”, xuất hiện form tạo mới. </p>
-                                                <p>
-                                                    <img src="../assets/media/howtouse/Form-them-moi-cau-hinh-luu-tru.png"
-                                                        alt="Thêm mới cấu hình" width="800"
-                                                        style="display: block; margin-left: auto; margin-right: auto;">
-                                                </p>
-                                                <p class="rtejustify">&emsp;+ Tùy chọn cấu hình lưu tin. Có 2 phương
+                                                    ta truy cập vào đường dẫn <a
+                                                        href="https://mydas.life/crawb-config.php"
+                                                        target="_blank">https://mydas.life/crawb-config.php</a>, xuất
+                                                    hiện form tạo mới. </p>
+                                                <img src="../assets/media/howtouse/Form-them-moi-cau-hinh-luu-tru.png"
+                                                    alt="Thêm mới cấu hình" width="800"
+                                                    style="display: block; margin-left: auto; margin-right: auto;">
+                                                <p> + Tùy chọn cấu hình lưu tin. Có 2 phương
                                                     thức dùng để lưu tin</p>
-                                                <p class="rtejustify">&emsp;&emsp;1. Sử dụng Wordpress REST API</p>
-                                                <p class="rtejustify">&emsp;&emsp;2. Lưu trực tiếp vào DATABASE</p>
-                                                <p class="rtejustify">&emsp;&emsp;Đối với phương thức sử dụng Wordpress
-                                                    REST API ta cần các trường sau:</p>
-                                                <p class="rtejustify">&emsp;&emsp;&emsp;+ Tên cấu hình</p>
-                                                <p class="rtejustify">&emsp;&emsp;&emsp;+ Đường dẫn website dùng để lưu
-                                                    tin</p>
-                                                <p class="rtejustify">&emsp;&emsp;&emsp;+ Tên đăng nhập: Tài khoản dùng
-                                                    để kết nối vào trang
-                                                    quản lí website đăng bài viết</p>
-                                                <p class="rtejustify">&emsp;&emsp;&emsp;+ Mật khẩu</p>
-                                                <p class="rtejustify">&emsp;&emsp;&emsp;+ Nhấn Thêm mới để lưu thông tin
-                                                    vừa nhập</p>
-                                                <p class="rtejustify">&emsp;&emsp;Đối với phương thức sử dụng lưu trực
-                                                    tiếp vào DATABASE ta cần các trường sau:</p>
-                                                <p>
-                                                    <img src="../assets/media/howtouse/insert-db.png"
-                                                        alt="Ví dụ sử dụng Selector" width="800"
-                                                        style="display: block; margin-left: auto; margin-right: auto;">
-                                                </p>
-                                                <p class="rtejustify">&emsp;&emsp;&emsp;+ Tên cấu hình</p>
-                                                <p class="rtejustify">&emsp;&emsp;&emsp;+ Đường dẫn website chạy tool:
-                                                    là địa chỉ chạy trang quản lí, địa chỉ này được sử dụng để lưu ảnh
-                                                </p>
-                                                <p class="rtejustify">&emsp;&emsp;&emsp;+ Địa chỉ database: Địa chỉ kết
-                                                    nối database</p>
-                                                <p class="rtejustify">&emsp;&emsp;&emsp;+ Tên database: Tên database sử
-                                                    dụng để lưu bài biết. Sử dụng database của website wordpress</p>
-                                                <p class="rtejustify">&emsp;&emsp;&emsp;+ Tên đăng nhập: Tài khoản dùng
-                                                    để kết nối database</p>
-                                                <p class="rtejustify">&emsp;&emsp;&emsp;+ Mật khẩu</p>
-                                                <p class="rtejustify">&emsp;&emsp;&emsp;+ Nhấn Thêm mới để lưu thông tin
-                                                    vừa nhập</p>
+                                                <ul>
+                                                    <li> Sử dụng Wordpress REST API</li>
+                                                    <li> Lưu trực tiếp vào DATABASE</li>
+                                                </ul>
+                                                <ol type="a">
+                                                    <li>Đối với phương thức sử dụng Wordpress
+                                                        REST API ta cần các trường sau:</li>
+                                                    <ol type="1">
+                                                        <li>Tên cấu hình</li>
+                                                        <li>Đường dẫn website dùng để lưu
+                                                            tin</li>
+                                                        <li>Tên đăng nhập: Tài khoản dùng
+                                                            để kết nối vào trang
+                                                            quản lí website đăng bài viết</li>
+                                                        <li>Mật khẩu</li>
+                                                        <li>Nhấn Thêm mới để lưu thông tin
+                                                            vừa nhập</li>
+                                                    </ol>
+                                                    <li>Đối với phương thức sử dụng lưu trực
+                                                        tiếp vào DATABASE ta cần các trường sau:</li>
+                                                    <p>
+                                                        <img src="../assets/media/howtouse/insert-db.png"
+                                                            alt="Ví dụ sử dụng Selector" width="800"
+                                                            style="display: block; margin-left: auto; margin-right: auto;">
+                                                    </p>
+                                                    <ol type="1">
+                                                        <li>Tên cấu hình</li>
+                                                        <li>Đường dẫn website chạy tool:
+                                                            là địa chỉ chạy trang quản lí, địa chỉ này được sử dụng để
+                                                            lưu ảnh
+                                                        </li>
+                                                        <li>Địa chỉ database: Địa chỉ kết
+                                                            nối database</li>
+                                                        <li>Tên database: Tên database sử
+                                                            dụng để lưu bài biết. Sử dụng database của website wordpress
+                                                        </li>
+                                                        <li>Tên đăng nhập: Tài khoản dùng
+                                                            để kết nối database</li>
+                                                        <li>Mật khẩu</li>
+                                                        <li>Nhấn Thêm mới để lưu thông tin
+                                                            vừa nhập</li>
+                                                    </ol>
+                                                </ol>
                                                 <p class="rtejustify">&emsp;- Để xem trạng thái các website đang lấy
-                                                    tin, click tab
-                                                    "Trạng thái", một danh sách các website đang lấy tin sẽ xuất hiện
+                                                    tin, truy cập vào đường dẫn <a
+                                                        href="https://mydas.life/crawb-status.php"
+                                                        target="_blank">https://mydas.life/crawb-status.php</a>, một
+                                                    danh sách các website đang lấy tin sẽ xuất hiện
                                                 </p>
-                                                <p class="rtejustify">&emsp;+ Tên Website: Tên website lấy tin, click
-                                                    vào website để
-                                                    xem chi tiết thông tin cấu hình nguồn lấy dữ liệu và danh sách bài
-                                                    viết của
-                                                    website đó</p>
-                                                <p class="rtejustify">&emsp;+ Trạng thái: Stop hoặc Running</p>
-                                                <p class="rtejustify">&emsp;+ Hành động</p>
-                                                <p class="rtejustify">&emsp;&emsp;* Edit: Chỉnh sửa thông tin cấu hình
-                                                    nguồn lấy dữ
-                                                    liệu</p>
-                                                <p class="rtejustify">&emsp;&emsp;* Delete: Xóa cấu hình website nguồn
-                                                    lấy dữ liệu
-                                                </p>
-                                                <p class="rtejustify">&emsp;&emsp;* Stop: Dừng quét dữ liệu</p>
-                                                <p class="rtejustify">&emsp;&emsp;* Running: Tiến hành chạy quét dữ
-                                                    liệu. Chọn kiểu
-                                                    thời gian lấy tin</p>
-                                                <p class="rtejustify">&emsp;&emsp;&emsp;-- Daily: Tự động quét dữ liệu
-                                                    sau mỗi N
-                                                    giờ, với N là số giờ tự đọng chạy do người dùng nhập vào.</p>
-                                                <p class="rtejustify">&emsp;&emsp;&emsp;-- Date to Date: Sẽ tự động quét
-                                                    dữ liệu vào
-                                                    lúc 23h30p hằng ngày từ ngày Bắt đầu đến ngày Kết thúc.</p>
-                                                <p>
-                                                    <img src="../assets/media/howtouse/giao-dien-trang-quan-ly.png"
-                                                        alt="Thêm mới cấu hình" width="800"
-                                                        style="display: block; margin-left: auto; margin-right: auto;">
-                                                </p>
+                                                <ol type="1">
+                                                    <li>Tên Website: Tên website lấy tin, click
+                                                        vào website để
+                                                        xem chi tiết thông tin cấu hình nguồn lấy dữ liệu và danh sách
+                                                        bài
+                                                        viết của
+                                                        website đó</li>
+                                                    <li>Trạng thái: Stop hoặc Running</li>
+                                                    <li>Hành động</li>
+                                                    <ul>
+                                                        <li>Edit: Chỉnh sửa thông tin cấu hình
+                                                            nguồn lấy dữ
+                                                            liệu</li>
+                                                        <li>Delete: Xóa cấu hình website nguồn
+                                                            lấy dữ liệu
+                                                        </li>
+                                                        <li>Stop: Dừng quét dữ liệu</li>
+                                                        <li>Running: Tiến hành chạy quét dữ
+                                                            liệu. Chọn kiểu
+                                                            thời gian lấy tin</li>
+                                                            <ol type="a">
+                                                                <li>Daily: Tự động quét dữ liệu
+                                                                    sau mỗi N
+                                                                    giờ, với N là số giờ tự đọng chạy do người dùng nhập vào.</li>
+                                                                <li>Date to Date: Sẽ tự động quét
+                                                                    dữ liệu vào
+                                                                    lúc 23h30p hằng ngày từ ngày Bắt đầu đến ngày Kết thúc.</li>
+                                                            </ol>
+                                                    </ul>
+                                                    <p>
+                                                        <img src="../assets/media/howtouse/giao-dien-trang-quan-ly.png"
+                                                            alt="Thêm mới cấu hình" width="800"
+                                                            style="display: block; margin-left: auto; margin-right: auto;">
+                                                    </p>
+                                                </ol>
                                             </div>
                                         </fieldset>
                                         <fieldset class="collapsible collapsed collapse-processed"><strong>II. CÁCH XÁC

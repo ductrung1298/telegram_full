@@ -1,4 +1,280 @@
 $(document).ready(function () {
+
+    //bot telegram 
+    $('.from').on('click touch', '.add_from', function (event) {
+        let rdom = `
+        <div class="row col-lg-12">
+            <div class="col-lg-10">
+                <input type="text" class="form-control" name="from"
+                placeholder="Username Channel">
+            </div>
+            <div class="col-lg-1 col-md-1 delete_from kt-margin-b-5"
+                style="display: none;">
+                <i class="far fa-minus-square"
+                    style=" font-size: 3rem; color: #fd1361; cursor: pointer;"></i>
+            </div>
+            <div
+                class="col-lg-1 col-md-1 add_from kt-margin-b-5">
+                <i class="far fa-plus-square"
+                    style=" font-size: 3rem; color: #1dc9b7; cursor: pointer;"></i>
+            </div>
+        </div>
+        `;
+        $(this).parent().find('.delete_from').addClass('display-block');
+        $(this).parent().parent().append(rdom);
+        $(this).remove();
+    });
+    $('.from').on('click touch', '.delete_from', function (event) {
+        $(this).parent().remove();
+    });
+    $('.to').on('click touch', '.add_to', function (event) {
+        let rdom = `
+        <div class="row col-lg-12">
+            <div class="col-lg-10">
+                <input type="text" class="form-control" name="to"
+                placeholder="ID hoặc Username">
+                </div>
+            <div class="col-lg-1 col-md-1 delete_to kt-margin-b-5"
+                style="display: none;">
+                <i class="far fa-minus-square"
+                    style=" font-size: 3rem; color: #fd1361; cursor: pointer;"></i>
+            </div>
+            <div
+                class="col-lg-1 col-md-1 add_to kt-margin-b-5">
+                <i class="far fa-plus-square"
+                    style=" font-size: 3rem; color: #1dc9b7; cursor: pointer;"></i>
+            </div>
+        </div>
+        `;
+        $(this).parent().find('.delete_to').addClass('display-block');
+        $(this).parent().parent().append(rdom);
+        $(this).remove();
+    });
+    $('.to').on('click touch', '.delete_to', function (event) {
+        $(this).parent().remove();
+    });
+
+    $('.list_command').on('click touch', '.add_command', function (event) {
+        let rdom = `
+        <div class="col-lg-12 command kt-margin-t-20 row">
+            <div class="col-lg-2">
+                <input type="text" name="ontext" class="form-control" placeholder="Câu lệnh">
+            </div>
+            <div class="col-lg-5">
+                <textarea rows="2" cols="50" name="reply"></textarea>
+            </div>
+            <div class="col-lg-4 button_url">
+                <div class="row">
+                    <div class="col-lg-5"> 
+                        <input type="text" name="text_link" class="form-control" placeholder="Tên hiển thị">
+                    </div>
+                    <div class="col-lg-5"> 
+                        <input type="text" name="link" class="form-control" placeholder="Đường dẫn">
+                    </div>
+                    <div class="col-lg-1 col-md-1 add_button_url kt-margin-b-5" >
+                        <i class="far fa-plus-square"
+                            style=" font-size: 2rem; color: #1dc9b7; cursor: pointer;"></i>
+                    </div>
+                    <div class="col-lg-1 col-md-1 delete_button_url kt-margin-b-5" style="display: none;">
+                        <i class="far fa-minus-square"
+                            style=" font-size: 2rem; color: #fd1361; cursor: pointer;"></i>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-1 col-md-1 add_command kt-margin-b-5" >
+                <i class="far fa-plus-square"
+                    style=" font-size: 3rem; color: #1dc9b7; cursor: pointer;"></i>
+            </div>
+            <div class="col-lg-1 col-md-1 delete_command kt-margin-b-5" style="display: none;">
+                    <i class="far fa-minus-square"
+                        style=" font-size: 3rem; color: #fd1361; cursor: pointer;"></i>
+                </div>
+        </div>
+        `;
+        $('.list_command .add_command').remove();
+        $('.list_command .delete_command').addClass('display-block');
+        $('.list_command').append(rdom);
+        // ta dao
+        $('.button_url').on('click touch', '.add_button_url', function (event) {
+            let rdom = `
+            <div class="row mt-2">
+                <div class="col-lg-5"> 
+                    <input type="text" name="text_link" class="form-control" placeholder="Tên hiển thị">
+                </div>
+                <div class="col-lg-5"> 
+                    <input type="text" name="link" class="form-control" placeholder="Đường dẫn">
+                </div>
+                <div class="col-lg-1 col-md-1 add_button_url kt-margin-b-5" >
+                    <i class="far fa-plus-square"
+                        style=" font-size: 2rem; color: #1dc9b7; cursor: pointer;"></i>
+                </div>
+                <div class="col-lg-1 col-md-1 delete_button_url kt-margin-b-5" style="display: none;">
+                    <i class="far fa-minus-square"
+                        style=" font-size: 2rem; color: #fd1361; cursor: pointer;"></i>
+                </div>
+            </div>
+            `;
+            $(this).parent().children().last().addClass('display-block');
+            $(this).parent().parent().append(rdom);
+            $(this).remove();
+        });
+        $('.button_url').on('click touch', '.delete_button_url', function (event) {
+            $(this).parent().remove();
+        });
+
+    });
+    $('.list_command').on('click touch', '.delete_command', function (event) {
+        $(this).parent().remove();
+    });
+
+    $('.button_url').on('click touch', '.add_button_url', function (event) {
+        let rdom = `
+        <div class="row mt-2">
+            <div class="col-lg-5"> 
+                <input type="text" name="text_link" class="form-control" placeholder="Tên hiển thị">
+            </div>
+            <div class="col-lg-5"> 
+                <input type="text" name="link" class="form-control" placeholder="Đường dẫn">
+            </div>
+            <div class="col-lg-1 col-md-1 add_button_url kt-margin-b-5" >
+                <i class="far fa-plus-square"
+                    style=" font-size: 2rem; color: #1dc9b7; cursor: pointer;"></i>
+            </div>
+            <div class="col-lg-1 col-md-1 delete_button_url kt-margin-b-5" style="display: none;">
+                <i class="far fa-minus-square"
+                    style=" font-size: 2rem; color: #fd1361; cursor: pointer;"></i>
+            </div>
+        </div>
+        `;
+        $(this).parent().children().last().addClass('display-block');
+        $(this).parent().parent().append(rdom);
+        $(this).remove();
+    });
+    $('.button_url').on('click touch', '.delete_button_url', function (event) {
+        $(this).parent().remove();
+    });
+
+    $('.list_forward').on('click touch', '.add_forward', function(event) {
+        let rdom=`
+        <div class="col-lg-12 kt-margin-t-20 row">
+            <select class="col-lg-2 form-control typeto">
+                <option value="1">Channel-Group</option>
+                <option value="0">Channel-Channel</option>
+            </select>
+            <div class="col-lg-3 from">
+                <div class="row col-lg-12">
+                    <div class="col-lg-10">
+                        <input type="text" class="form-control" name="from"
+                        placeholder="Username Channel" value="">
+                    </div>
+                    <div
+                        class="col-lg-1 col-md-1 add_from kt-margin-b-5" >
+                        <i class="far fa-plus-square"
+                            style=" font-size: 3rem; color: #1dc9b7; cursor: pointer;"></i>
+                    </div>
+                    <div class="col-lg-1 col-md-1 delete_from kt-margin-b-5"
+                    style="display: none;">
+                        <i class="far fa-minus-square"
+                            style=" font-size: 3rem; color: #fd1361; cursor: pointer;"></i>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3 to">
+                <div class="row col-lg-12">
+                    <div class="col-lg-10">
+                        <input type="text" class="form-control" name="to"
+                        placeholder="ID hoặc Username" value="">
+                    </div>
+                    <div class="col-lg-1 col-md-1 add_to kt-margin-b-5" >
+                        <i class="far fa-plus-square"
+                            style=" font-size: 3rem; color: #1dc9b7; cursor: pointer;"></i>
+                    </div>
+                    <div class="col-lg-1 col-md-1 delete_to kt-margin-b-5"
+                    style="display: none;">
+                        <i class="far fa-minus-square"
+                            style=" font-size: 3rem; color: #fd1361; cursor: pointer;"></i>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-1 ">
+                <input type="number" class="form-control countdown">
+            </div>
+            <div class="col-lg-2">
+                <select class="form-control typesend" name="typesend">
+                    <option value=1>Forward</option>
+                    <option value=0>Gửi tin nhắn</option>
+                </select>
+            </div>
+            <div class="col-lg-1 col-md-1 add_forward kt-margin-b-5" >
+                <i class="far fa-plus-square"
+                    style=" font-size: 3rem; color: #1dc9b7; cursor: pointer;"></i>
+            </div>
+            <div class="col-lg-1 col-md-1 delete_forward kt-margin-b-5" style="display: none;">
+                <i class="far fa-minus-square"
+                    style=" font-size: 3rem; color: #fd1361; cursor: pointer;"></i>
+            </div>
+        </div>
+        `;
+        $('.list_forward .add_forward').remove();
+        $('.list_forward .delete_forward').addClass('display-block');
+        $('.list_forward').append(rdom);
+        // đây là đoạn code tà đạo, ai đọc vào không nên làm theo :)
+        $('.from').on('click touch', '.add_from', function (event) {
+            let rdom2 = `
+            <div class="row col-lg-12 mt-2">
+                <div class="col-lg-10">
+                    <input type="text" class="form-control" name="from"
+                    placeholder="Username Channel">
+                </div>
+                <div
+                    class="col-lg-1 col-md-1 add_from kt-margin-b-5">
+                    <i class="far fa-plus-square"
+                        style=" font-size: 3rem; color: #1dc9b7; cursor: pointer;"></i>
+                </div>
+                <div class="col-lg-1 col-md-1 delete_from kt-margin-b-5"
+                    style="display: none;">
+                    <i class="far fa-minus-square"
+                        style=" font-size: 3rem; color: #fd1361; cursor: pointer;"></i>
+                </div>
+            </div>
+            `;
+            $(this).parent().children().last().addClass('display-block');
+            $(this).parent().parent().append(rdom2);
+            $(this).remove();
+        });
+        $('.from').on('click touch', '.delete_from', function (event) {
+            $(this).parent().remove();
+        });
+        $('.to').on('click touch', '.add_to', function (event) {
+            let rdom2 = `
+            <div class="row col-lg-12">
+                <div class="col-lg-10">
+                    <input type="text" class="form-control" name="to"
+                    placeholder="ID hoặc Username">
+                    </div>
+                <div class="col-lg-1 col-md-1 add_to kt-margin-b-5">
+                    <i class="far fa-plus-square" style=" font-size: 3rem; color: #1dc9b7; cursor: pointer;"></i>
+                </div>
+                <div class="col-lg-1 col-md-1 delete_to kt-margin-b-5"
+                    style="display: none;">
+                    <i class="far fa-minus-square"
+                        style=" font-size: 3rem; color: #fd1361; cursor: pointer;"></i>
+                </div>
+            </div>
+            `;
+            $(this).parent().children().last().addClass('display-block');
+            $(this).parent().parent().append(rdom2);
+            $(this).remove();
+        });
+        $('.to').on('click touch', '.delete_to', function (event) {
+            $(this).parent().remove();
+        });
+    })
+    $('.list_forward').on('click touch', '.delete_forward', function(event) {
+        $(this).parent().remove();
+    })
+
+    //
     $('.list-dom-get-detail').on('click touch', '.add-dom-detail', function (event) {
 
         let gdom = `<div class="col-lg-12 kt-margin-t-20 row">
@@ -92,60 +368,6 @@ $(document).ready(function () {
         $('.list-dom-replace-select .delete-dom-replace-select').last().addClass('display-block');
         $('.list-dom-replace-select').append(rdom);
     });
-
-    $('.from').on('click touch', '.add_from', function (event) {
-        let rdom = `
-        <div class="row col-lg-12">
-            <div class="col-lg-10">
-                <input type="text" class="form-control" name="from"
-                placeholder="Username Channel">
-            </div>
-            <div class="col-lg-1 col-md-1 delete_from kt-margin-b-5"
-                style="display: none;">
-                <i class="far fa-minus-square"
-                    style=" font-size: 3rem; color: #fd1361; cursor: pointer;"></i>
-            </div>
-            <div
-                class="col-lg-1 col-md-1 add_from kt-margin-b-5">
-                <i class="far fa-plus-square"
-                    style=" font-size: 3rem; color: #1dc9b7; cursor: pointer;"></i>
-            </div>
-        </div>
-        `;
-        $('.from .add_from').remove();
-        $('.from .delete_from').last().addClass('display-block');
-        $('.from').append(rdom);
-    });
-    $('.from').on('click touch', '.delete_from', function (event) {
-        $(this).parent().remove();
-    });
-    $('.to').on('click touch', '.add_to', function (event) {
-        let rdom = `
-        <div class="row col-lg-12">
-            <div class="col-lg-10">
-                <input type="text" class="form-control" name="to"
-                placeholder="ID hoặc Username">
-                </div>
-            <div class="col-lg-1 col-md-1 delete_to kt-margin-b-5"
-                style="display: none;">
-                <i class="far fa-minus-square"
-                    style=" font-size: 3rem; color: #fd1361; cursor: pointer;"></i>
-            </div>
-            <div
-                class="col-lg-1 col-md-1 add_to kt-margin-b-5">
-                <i class="far fa-plus-square"
-                    style=" font-size: 3rem; color: #1dc9b7; cursor: pointer;"></i>
-            </div>
-        </div>
-        `;
-        $('.to .add_to').remove();
-        $('.to .delete_to').last().addClass('display-block');
-        $('.to').append(rdom);
-    });
-    $('.to').on('click touch', '.delete_to', function (event) {
-        $(this).parent().remove();
-    });
-
     $('.list-dom-get-detail').on('click touch', '.delete-dom-detail', function (event) {
         $(this).parent().remove();
     });
@@ -484,4 +706,27 @@ $(document).ready(function () {
     $('.link_url').on('click touch', '.delete-link_url', function (event) {
         $(this).parent().remove();
     });
+    $('.list_btn_inline').on('click touch', '.add-btn-inline', function(event) {
+        let rdom = `<div class="row col-lg-12 inlines">
+                        <input type="text" class="form-control col-lg-5 btn_inline mt-3"
+                            placeholder="Text hiển thị">
+                        <input type="text" class="form-control col-lg-5 id_used mt-3"
+                            value="0">
+                        <div class="col-lg-1 col-md-1 add-btn-inline kt-margin-b-5 mt-3">
+                            <i class="far fa-plus-square"
+                                style=" font-size: 3rem; color: #1dc9b7; cursor: pointer;"></i>
+                        </div>
+                        <div class="col-lg-1 col-md-1 delete-btn-inline kt-margin-b-5 mt-3"
+                            style="display:none;">
+                            <i class="far fa-minus-square"
+                                style=" font-size: 3rem; color: #fd1361; cursor: pointer;"></i>
+                        </div>
+                    </div>`;
+        $('.list_btn_inline .add-btn-inline').remove();
+        $('.list_btn_inline .delete-btn-inline').last().addClass('display-block');
+        $('.list_btn_inline').append(rdom);
+    })
+    $('.list_btn_inline').on('click touch', '.delete-btn-inline', function(event) {
+        $(this).parent().remove();
+    })
 }); //end ready
