@@ -33,7 +33,6 @@
 	];
 	$toolTelegramName = [
 		"add-account-tool-telegram.php",
-		"getcontact.php",
 		"groupcontact.php",
 		"getdialogs.php"
 	];
@@ -140,6 +139,9 @@
 										</ul>
 									</div>
 								</li>
+
+								<li class="kt-menu__item <?php echo ($uriName == 'getcontact.php' || $uriName=="") ? 'kt-menu__item--active' : '' ?>" aria-haspopup="true"><a href="getcontact.php" class="kt-menu__link "><i class="kt-menu__link-icon flaticon-book"></i><span class="kt-menu__link-text">Danh bạ</span></a></li>
+								
 								<li class="kt-menu__item  kt-menu__item--submenu <?php echo in_array($uriName, $toolTelegramName) ? 'kt-menu__item--active' : '' ?>" aria-haspopup="true" data-ktmenu-submenu-toggle="hover"><a href="javascript:;" class="kt-menu__link kt-menu__toggle"><i class="kt-menu__link-icon flaticon2-laptop"></i><span class="kt-menu__link-text">Tool telegram</span><i class="kt-menu__ver-arrow la la-angle-right"></i></a>
 									<div class="kt-menu__submenu "><span class="kt-menu__arrow"></span>
 										<ul class="kt-menu__subnav">
