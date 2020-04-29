@@ -74,7 +74,7 @@ if (isset($_FILES["myfile"])) {
               })
               .then((kq) => {
                 if (kq && kq.value) {
-                    window.location.href="getcontact?id='.$id.'.php";
+                    window.location.href="getcontact.php?id='.$_POST['id'].'";  
                 } ';
               echo '})
               </script>';

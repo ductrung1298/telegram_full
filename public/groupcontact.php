@@ -2,8 +2,8 @@
 $id=isset($_GET['id'])?intval($_GET['id']):0;
 $user=isset($_GET['user'])?intval($_GET['user']):0;
 include 'header.php';
-if ($id!=0 && $user!=0) {
-    $url='http://localhost:2020/telegram/get_contact?idgroupcontact='.$id.'&idaccount='.$user;
+if ($id!=0) {
+    $url='http://localhost:2020/telegram/get_contact?idgroupcontact='.$id;
     $curl=curl_init($url);
     curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
     curl_setopt($curl, CURLOPT_HTTPHEADER, [
@@ -18,6 +18,7 @@ if ($id!=0 && $user!=0) {
     include 'connection.php';
     $group = new Connection();
     $value = $group->connect('telegram/get_contact?idcontact='.$id);
+   
 }
 ?>
 <div class="kt-body kt-grid__item kt-grid__item--fluid kt-grid kt-grid--hor kt-grid--stretch" id="kt_body">
@@ -84,7 +85,8 @@ if ($id!=0 && $user!=0) {
                                                         <th>Last_name</th>
                                                         <th>Phone_Number</th>
                                                         <th>Danh bạ khác</th>
-                                                        <th>Bạn bè</th>
+                                                        <th>Bạn bè Telegram</th>
+                                                        <th>Bạn bè Zalo</th>
                                                     </tr>
                                                 </thead>
                                                 <tbody>
@@ -107,7 +109,6 @@ if ($id!=0 && $user!=0) {
                                                             </label>
                                                         </td>';
                                                         $data = isset($contact['othergroup']) ? $contact['othergroup'] : [];
-
                                                         echo '<td>';
                                                         foreach($data as $key => $item) {
                                                             if ($item!= $value["Name"])
@@ -117,8 +118,9 @@ if ($id!=0 && $user!=0) {
                                                         echo '</td>';
                                                         
                                                         echo '<td>
-                                                            '. ((isset($contact['user_id'])) ? '<button class="btn btn-sm btn-outline-success"><i class="la la-check"></i></button>' : '') .'
-                                                        </td>';
+                                                            '. ((($contact['friend_tele'])==1) ? '<button class="btn btn-sm btn-outline-success"><i class="la la-check"></i></button>' : '') .'
+                                                        </td>
+                                                        <td></td>';
                                                         echo '</tr>';
                                                     }
                                                     ?>

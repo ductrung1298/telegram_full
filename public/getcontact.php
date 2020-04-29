@@ -106,7 +106,7 @@
                                                                     echo '<tr>
                                                                         <th scope="row">'.((int)$index+1).'</th>
                                                                         <td>
-                                                                            <a href="groupcontact.php?id='.$list["Id"].'&user='.$id.'" >'.str_replace("<","&lt;",$list['Name']).'</a>
+                                                                            <a href="groupcontact.php?id='.$list["Id"].(($id!=0)?('&user='.$id):"").'" >'.str_replace("<","&lt;",$list['Name']).'</a>
                                                                             </td>
                                                                         <td><label>'.$list["length"].'</label></td>
                                                                         <td><label>'.$list["lengthfriend"].'/'.$list["length"].'</label></td>
@@ -120,9 +120,9 @@
                                                                                 </button>
                                                                                 <div class="dropdown-menu" aria-labelledby="dropdownMenu2">
                                                                                     <a class="dropdown-item  btn btn-label-linkedin" href="groupcontact.php?id='.$list["Id"].'&user='.$id.'"><i class="fas fa-list"></i>Chi tiết</a>
-                                                                                    <a class="dropdown-item  btn btn-label-twitter add-group-chat" data-toggle="modal" data-target="#data_modal_list_group_chat" data-idcontact="'.$list["Id"].'"><i class="fas fa-comments"></i>Thêm vào group chat</a>
-                                                                                    <a class="dropdown-item  btn btn-label-linkedin add-friend-telegram" data-idcontact="'.$list["Id"].'"><i class="fab fa-telegram-plane"></i>Thêm vào bạn bè Telegram</a>
-                                                                                    <a class="dropdown-item  btn btn-label-twitter export-contact" data-idcontact="'.$list["Id"].'"><i class="fas fa-download"></i>Export CSV</a>
+                                                                                    '.(!empty($id)?('<a class="dropdown-item  btn btn-label-twitter add-group-chat" data-toggle="modal" data-target="#data_modal_list_group_chat" data-idcontact="'.$list["Id"].'"><i class="fas fa-comments"></i>Thêm vào group chat</a>
+                                                                                    <a class="dropdown-item  btn btn-label-linkedin add-friend-telegram" data-idcontact="'.$list["Id"].'"><i class="fab fa-telegram-plane"></i>Thêm vào bạn bè Telegram</a>'
+                                                                                    ):"").'<a class="dropdown-item  btn btn-label-twitter export-contact" data-idcontact="'.$list["Id"].'"><i class="fas fa-download"></i>Export CSV</a>
                                                                                 </div>
                                                                             </div>
                                                                         </td>
@@ -169,7 +169,7 @@
                                                                                         echo '<tr>
                                                                                         <th scope="col">'.intval($index+1).'</th>
                                                                                         <th scope="col">'.$list["title"].'</th>
-                                                                                        <th><input type="checkbox" class="form-control add_group_tel" data-type="1" data-chat_id="'.$list["id"].'"></th>
+                                                                                        <th><input type="checkbox" class="form-control add_group_tel" data-type="'.$list['_'].'" data-chat_id="'.$list["id"].'"></th>
                                                                                         </tr>';
                                                                                     } 
                                                                                 ?>
@@ -388,7 +388,10 @@ jQuery(document).ready(function($) {
         let array_chat_id=[];
         $('.add_group_tel').map(function() {
             if (this.checked && $(this).attr('data-chat_id')!="") 
-                array_chat_id.push($(this).attr('data-chat_id'));
+                array_chat_id.push({
+                    id: $(this).attr('data-chat_id'), 
+                    type: $(this).attr('data-type')
+                })
         })
         if (array_chat_id.length==0 || $('input[name="id_contact"]').val()=="") {
             Swal.fire(
@@ -403,7 +406,7 @@ jQuery(document).ready(function($) {
             type: "POST",
             data: {
                 "function": "add_group_chat_telegram",
-                "id_group_chat": array_chat_id.toString(),
+                "id_group_chat": JSON.stringify(array_chat_id),
                 "id_contact": $('input[name="id_contact"]').val(),
                 "id": <?php echo $id; ?>
             },
