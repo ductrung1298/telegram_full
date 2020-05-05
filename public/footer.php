@@ -63,6 +63,16 @@
 		<script src="../assets/js/eplus.js"></script>
 
 		<!--end::Page Scripts -->
+
+		<!-- start::Datatables -->
+		<!--begin::Page Vendors(used by this page) -->
+		<script src="../assets/plugins/custom/datatables/datatables.bundle.js" type="text/javascript"></script>
+
+		<!--end::Page Vendors -->
+
+		<!--begin::Page Scripts(used by this page) -->
+		<script src="../assets/js/pages/crud/datatables/search-options/column-search.js" type="text/javascript"></script>
+		<!-- end::Datatables -->
 	</body>
 
 	<!-- end::Body -->

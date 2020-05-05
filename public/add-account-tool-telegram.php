@@ -143,7 +143,7 @@
                                                 </thead>
                                                 <tbody>
                                                     <?php 
-                                                    $url='http://localhost:2020/telegram/get_list_user_telegram';
+                                                        $url='http://localhost:2020/telegram/get_list_user_telegram';
                                                     $curl=curl_init($url);
                                                     curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
                                                     curl_setopt($curl, CURLOPT_HTTPHEADER, [
