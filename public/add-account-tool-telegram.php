@@ -168,7 +168,8 @@
                                                                 <a href="getcontact.php?id='.$post['Id'].'" class="dropdown-item btn btn-label-linkedin"><i class="fas fa-address-book"></i>Danh bạ</a>
                                                                 <a class="dropdown-item btn btn-label-twitter" href="list-friend.php?id='.$post['Id'].'"><i class="fas fa-user-friends"></i>Bạn bè</a>
                                                                 <a href="getdialogs.php?id='.$post['Id'].'" class="dropdown-item btn btn-label-linkedin"><i class="fab fa-telegram"></i>Gửi tin nhắn</a>
-                                                                <a class="dropdown-item btn btn-label-twitter btn-del-acc" data-id='.$post['Id'].'><i class="fas fa-trash"></i>Xóa</a>
+                                                                <a class="dropdown-item btn btn-label-twitter" href="get-user-group.php?id='.$post['Id'].'"><i class="fas fa-copy"></i>Quét member group</a>
+                                                                <a class="dropdown-item btn btn-label-linkedin btn-del-acc" data-id='.$post['Id'].'><i class="fas fa-trash"></i>Xóa</a>
                                                             </div>
                                                         </div>';
                                                             echo '</td>';

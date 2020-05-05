@@ -198,7 +198,7 @@
                                                             <th scope="col">Name</th>
                                                             <th scope="col">Số điện thoại</th>
                                                             <th scope="col">Username</th>
-                                                            <th scope="col">Nhóm chat</th>
+                                                            <th scope="col">Danh bạ</th>
                                                             <th scope="col" class="text-center">Chọn</th>
                                                             </tr>
                                                         </thead>
@@ -213,7 +213,7 @@
                                                                 {
                                                                 echo '<tr>';
                                                                 echo '<td><span class="kt-font-bolder">'.$msg['first_name'].' '.(isset($msg['last_name'])?$msg['last_name']:'').'</span></td>
-                                                                <td>'.$msg['phone'].'</td>
+                                                                <td>'.(isset($msg['phone'])?$msg['phone']:'').'</td>
                                                                 <td>'.(isset($msg['username']) ? $msg['username'] : '').'</td>
                                                                 <td>';
                                                                     $data = isset($msg['othergroup']) ? $msg['othergroup'] : [];
@@ -264,11 +264,18 @@
                                             <?php
                                             
                                             foreach ($response['chats'] as $index => $msg) {
-                                                if ($msg['_']=='channel' || $msg['_']=='chat')
+                                                if ($msg['_']=="chat")
                                                 {
                                                     echo '<tr>
-                                                    <td><a title="Danh sách thành viên" class="btn list_user_group" data-toggle="modal" data-target="#data_modal_list_user_group_chat" data-idgroup="'.$msg["id"].'">'.$msg['title'].'</a></td>
+                                                    <td>'.$msg['title'].'</a></td>
                                                     <td><input type="checkbox" class="form-control send-mess-group" data-type=1 data-chat_id='.$msg['id'].'></td>';
+                                                    echo '</tr>';
+                                                }
+                                                else if ($msg['_']=="channel") 
+                                                {
+                                                    echo '<tr>
+                                                    <td>'.$msg['title'].'</a></td>
+                                                    <td><input type="checkbox" class="form-control send-mess-group" data-type=3 data-chat_id='.$msg['id'].' data-access_hash='.$msg['access_hash'].'></td>';
                                                     echo '</tr>';
                                                 }
                                             }
@@ -281,35 +288,7 @@
                                 </div>
                             </div>
                         </div>
-                         <!--begin::Modal-->
-                        <div class="modal fade" id="data_modal_list_user_group_chat" tabindex="-1" role="dialog"
-                            aria-labelledby="exampleModalLabel" style="display: none;"
-                            aria-hidden="true">
-                            <div class="modal-dialog modal-lg modal-dialog-center" role="document">
-                                <div class="modal-content">
-                                    <input type="hidden" name="id_group">
-                                    <div class="modal-header">
-                                        <h4>Danh sách thành viên Group</h4>
-                                        <a class="btn btn-label-twitter export_group"><i class="fas fa-download"></i>Export CSV</a>
-                                    </div>
-                                    <div class="modal-body">
-                                        <table class="table table-hover">
-                                            <thead>
-                                                <tr>
-                                                    <th>#</th>
-                                                    <th>First_Name</th>
-                                                    <th>Last_Name</th>
-                                                    <th>User_Name</th>
-                                                    <th>Phone</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody class="show_list_user">
-                                            </tbody>
-                                        </table>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+                        
                         <!-- begin:: Notification 2  -->
                         <div class="tab-pane " id="kt_portlet_base_demo_1_2_tab_content" role="tabpanel">
                             <div class="kt-portlet__body">
@@ -386,92 +365,7 @@
 <script type="text/javascript">
 jQuery(document).ready(function($) {
     // get list user in group chat
-    $('.list_user_group').click(function(){
-        let idgroup=$(this).attr('data-idgroup');
-        $('input[name="id_group"]').val(idgroup);
-        $.ajax({
-            url: "./createapp.php",
-            type: "POST",
-            data: {
-                "function": "get_list_user_group",
-                "id": <?php echo $id; ?>,
-                "chat_id": idgroup,
-            },
-            success: function(response) {
-                response=JSON.parse(response);
-                let html="";
-                let count=0;
-                for (let user of response.users) {
-                    count++;
-                    html+=`
-                    <tr>
-                        <th>`+count+`</th>
-                        <th>`+((user.first_name)?user.first_name:"")+`</th>
-                        <th>`+((user.last_name)?user.last_name:"")+`</th>
-                        <th>`+((user.user_name)?user.user_name:"")+`</th>
-                        <th>`+((user.phone)?user.phone:"")+`</th>
-                    </tr>`;
-                }
-                $('.show_list_user').html(html);
-            }
-        })
-    })
-    //export user in group chat
-    $('.export_group').click(function() {
-            const swalWithBootstrapButtons = Swal.mixin({
-                customClass: {
-                    confirmButton: 'btn btn-success',
-                    cancelButton: 'btn btn-danger'
-                },
-                buttonsStyling: false
-            })
-            swalWithBootstrapButtons.fire({
-            title: 'Export User Group',
-            text: "Tải xuống file CSV danh sách thành viên group chat?",
-            type: 'question',
-            showCancelButton: true,
-            confirmButtonText: 'Yes, download now!',
-            cancelButtonText: 'No, cancel!',
-            reverseButtons: true
-            }).then((result) => {
-            if (result.value) {
-                $.ajax({
-                    url: "./createapp.php",
-                    type: "POST",
-                    data: {
-                        "function": "export_user_in_group",
-                        "id": <?php echo $id; ?>,
-                        "chat_id": $('input[name="id_group"]').val(),
-                    },
-                    success: function(response) {
-                        if (response) 
-                            {
-                                window.location=response;
-                                swalWithBootstrapButtons.fire(
-                                    'Downloaded!',
-                                    'Tải xuống thành công',
-                                    'success'
-                                    )
-                                }
-                        else swalWithBootstrapButtons.fire(
-                            'Download!',
-                            'Tải xuống thất bại',
-                            'error'
-                            )
-                        }
-                    })
-            } else if (
-                /* Read more about handling dismissals below */
-                result.dismiss === Swal.DismissReason.cancel
-            ) {
-                swalWithBootstrapButtons.fire(
-                'Cancelled',
-                '',
-                'error'
-                )
-            }
-            })
-    })
+   
     // check all
     $("#allmes").click(function() {
         $("input[type=checkbox]").prop("checked", $(this).prop("checked"));

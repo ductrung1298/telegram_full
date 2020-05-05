@@ -61,6 +61,8 @@
 		<script src="../assets/js/pages/dashboard.js" type="text/javascript"></script>
 
 		<script src="../assets/js/eplus.js"></script>
+		
+<script src="../assets/plugins/custom/datatables/datatables.bundle.js" type="text/javascript"></script>
 
 		<!--end::Page Scripts -->
 	</body>

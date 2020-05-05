@@ -230,59 +230,7 @@
         if ($httpcode==200) echo '1';
         else echo null;
     }
-    if ($_POST['function']=="get_list_user_group") {
-        $curl = curl_init();
-        curl_setopt_array($curl, array(
-        CURLOPT_URL => "http://localhost:2020/telegram/get_user_in_group_chat?id=" . $_POST['id'].'&chat_id='.$_POST['chat_id'],
-        CURLOPT_RETURNTRANSFER => true,
-        CURLOPT_ENCODING => "",
-        CURLOPT_MAXREDIRS => 10,
-        CURLOPT_TIMEOUT => 0,
-        CURLOPT_FOLLOWLOCATION => true,
-        CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
-        CURLOPT_CUSTOMREQUEST => "GET",
-        CURLOPT_HTTPHEADER => array(
-            'Authorization: '.$_SESSION['user_token']
-        ),
-        ));
-        $response = curl_exec($curl);
-        $httpcode=curl_getinfo($curl,CURLINFO_HTTP_CODE);
-        curl_close($curl);
-        if ($httpcode==200)
-            echo $response;
-        else echo null;
-    }
-    if ($_POST['function']=="export_user_in_group") {
-        $curl = curl_init();
-        curl_setopt_array($curl, array(
-        CURLOPT_URL => "http://localhost:2020/telegram/get_user_in_group_chat?id=" . $_POST['id'].'&chat_id='.$_POST['chat_id'],
-        CURLOPT_RETURNTRANSFER => true,
-        CURLOPT_ENCODING => "",
-        CURLOPT_MAXREDIRS => 10,
-        CURLOPT_TIMEOUT => 0,
-        CURLOPT_FOLLOWLOCATION => true,
-        CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
-        CURLOPT_CUSTOMREQUEST => "GET",
-        CURLOPT_HTTPHEADER => array(
-            'Authorization: '.$_SESSION['user_token']
-        ),
-        ));
-        $response = json_decode(curl_exec($curl), true);
-        $httpcode=curl_getinfo($curl,CURLINFO_HTTP_CODE);
-        curl_close($curl);
-        if ($httpcode==200)
-        {
-            $filename="./export/contact_id=".$_POST['id']."_".date("Y-m-d")."_group_chat.csv";
-            $output=fopen($filename, "w");
-            fputs($output, $bom =( chr(0xEF) . chr(0xBB) . chr(0xBF) ));
-            foreach($response['users'] as $contact) {
-                fputcsv($output, array(isset($contact['phone'])?$contact['phone']:'', isset($contact['first_name'])?$contact['first_name']:'', isset($contact['last_name'])?$contact['last_name']:'', isset($contact['username'])?$contact['username']:''));
-            }
-            fclose($output);
-            echo $filename;
-        }
-        else echo null;
-    }
+    
     if ($_POST['function']=="export_user_in_contact") {
         $curl = curl_init();
         curl_setopt_array($curl, array(
@@ -390,11 +338,6 @@
     if ($_POST['function']=="forwardbot") {
         $body=[
             "id" =>$_POST['id'],
-            // "from" =>  $_POST['from'],
-            // "to" => $_POST['to'],
-            // "typeto" => $_POST['typeto'],
-            // "typesend" => $_POST['typesend'],
-            // "countdown" => $_POST['countdown'],
             "list_forward" => $_POST['list_forward'],
         ];
         $url="http://localhost:2020/telbot/forwardmsg";
