@@ -15,6 +15,30 @@ body {
 	display: block !important;
 }
 
+.glyphicon-ok::before {
+    content: "\f021";
+}
+.glyphicon-remove::before {
+    content: "\f00d";
+}
+.glyphicon {
+	margin-right:0 !important;
+    font-family: 'Font Awesome 5 Free';
+    font-weight: 900;
+    font-style: normal;
+}
+
+.user_info_field {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.user_info_field label {
+    width: 120px;
+    flex-basis: 120px;
+}
+
 /* div#kt_header {
     background-color: #086591;
 } */

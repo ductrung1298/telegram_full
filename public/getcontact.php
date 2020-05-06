@@ -57,6 +57,7 @@ $id = (isset($_GET['id']) ? intval($_GET['id']) : 0);
                                             <div class="d-flex">
                                                 <div class="form-group mb-0">
                                                     <select class="form-control" name="action" id="exampleSelect1">
+                                                        <option value="0">Hành động</option>
                                                         <option value="delete">Xoá</option>
                                                     </select>
                                                 </div>
@@ -696,36 +697,56 @@ $id = (isset($_GET['id']) ? intval($_GET['id']) : 0);
         // doAction
 
         $("#doAction").click(function() {
-            console.log($("select[name=action]").val());
-            var searchIDs = $(".cbx:checked").map(function(){
-              return $(this).val();
-            }).get();
-            $.ajax({
-                url: "./createapp.php",
-                type: "POST",
-                data: {
-                    "function": "do_action",
-                    "ids": JSON.stringify(searchIDs),
-                    "table": "contact",
-                    "action": "delete",
-                    "id": <?php echo $id; ?>
-                },
-                success: function (dt) {
-                    console.log(dt);
-                    if (dt) {
+            var name_action = $("select[name=action]").val();
+            if(name_action != 0) {
+                if(name_action) {
+                    var searchIDs = $(".cbx:checked").map(function(){
+                      return $(this).val();
+                    }).get();
+                    if(searchIDs.length > 0) {
+                        $.ajax({
+                            url: "./createapp.php",
+                            type: "POST",
+                            data: {
+                                "function": "do_action",
+                                "ids": JSON.stringify(searchIDs),
+                                "table": "contact",
+                                "action": "delete",
+                                "id": <?php echo $id; ?>
+                            },
+                            success: function (dt) {
+                                console.log(dt);
+                                if (dt) {
+                                    Swal.fire(
+                                        'Thao tác thành công',
+                                        'Thao tác thành công',
+                                        'success',
+                                    );
+                                    location.reload();
+                                } else Swal.fire(
+                                    'Lỗi...',
+                                    'Lỗi khi thực hiện tác vụ',
+                                    'error',
+                                );
+                            }
+                        });
+                    }else{
                         Swal.fire(
-                            'Thao tác thành công',
-                            'Thao tác thành công',
-                            'success',
+                            'Lỗi...',
+                            'Bạn chưa đánh đấu record !',
+                            'error',
                         );
-                        location.reload();
-                    } else Swal.fire(
-                        'Lỗi...',
-                        'Lỗi khi thực hiện tác vụ',
-                        'error',
-                    );
+                    }
+                    
                 }
-            });
+            }else {
+                Swal.fire(
+                    'Lỗi...',
+                    'Hãy chọn hành động bạn muốn thực hiện',
+                    'error',
+                );
+            }
+            
         });
 
 

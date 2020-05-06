@@ -115,7 +115,7 @@ if ($httpcode == 200) {
               })
               .then((kq) => {
                 if (kq && kq.value) {
-                    window.location.href="getcontact.php?id=' . $_POST['id'] . '";  
+                    window.location.href="getcontact.php?id=' . $_POST['id'] . '"; 
                 } ';
     echo '})
               </script>';
