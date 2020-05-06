@@ -11,6 +11,10 @@ body {
     max-width: 2em;
 }
 
+.kt-menu__item--active >  .kt-menu__submenu  {
+	display: block !important;
+}
+
 /* div#kt_header {
     background-color: #086591;
 } */

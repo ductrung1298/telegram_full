@@ -26,6 +26,53 @@ if ($_POST['function'] == "addaccount") {
         echo 0;
     } else echo null;
 }
+if ($_POST['function'] == "update_user") {
+    $body = [
+        'pk' => $_POST['pk'],
+        'value' => $_POST['value'],
+        'name' => $_POST['name']
+    ];
+    $url = 'http://localhost:2020/telegram/update_user';
+    $curl = curl_init($url);
+
+    curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
+    curl_setopt($curl, CURLOPT_HTTPHEADER, [
+        'X-RapidAPI-Host: contextualwebsearch-websearch-v1.p.rapidapi.com',
+        'X-RapidAPI-Key: 7xxxxxxxxxxxxxxxxxxxxxxxxxxx',
+        'Authorization: ' . $_SESSION['user_token']
+    ]);
+    curl_setopt($curl, CURLOPT_POST, 1);
+    curl_setopt($curl, CURLOPT_POSTFIELDS, http_build_query($body));
+    $response = json_decode(curl_exec($curl), true);
+    $httpcode = curl_getinfo($curl, CURLINFO_HTTP_CODE);
+    curl_close($curl);
+    if ($httpcode == 200)
+        echo json_encode($response);
+    else if ($httpcode == 405) {
+        echo 0;
+    } else echo null;
+}
+if ($_POST['function'] == "get_user") {
+    $url = 'http://localhost:2020/telegram/get_user?id='. $_POST['id'];
+    $curl = curl_init($url);
+
+    curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
+    curl_setopt($curl, CURLOPT_HTTPHEADER, [
+        'X-RapidAPI-Host: contextualwebsearch-websearch-v1.p.rapidapi.com',
+        'X-RapidAPI-Key: 7xxxxxxxxxxxxxxxxxxxxxxxxxxx',
+        'Authorization: ' . $_SESSION['user_token']
+    ]);
+    // curl_setopt($curl, CURLOPT_POST, 1);
+    // curl_setopt($curl, CURLOPT_POSTFIELDS, http_build_query($body));
+    $response = json_decode(curl_exec($curl), true);
+    $httpcode = curl_getinfo($curl, CURLINFO_HTTP_CODE);
+    curl_close($curl);
+    if ($httpcode == 200)
+        echo json_encode($response);
+    else if ($httpcode == 405) {
+        echo 0;
+    } else echo null;
+}
 if ($_POST['function'] == "do_action") {
     $body = [
         'ids' => $_POST['ids'],

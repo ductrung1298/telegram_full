@@ -82,7 +82,7 @@ if (isset($_FILES["myfile"])) {
             $phone = $extra_phone[0];
             unset($extra_phone[0]);
             if (!empty($column[$_POST['index_phone'] - 1]))
-                array_push($arraycontact, (['phone' => $phone, 'extra_phone' => json_encode($extra_phone), 'first_name' => (!empty($column[$_POST['index_firstname'] - 1]) ? $column[$_POST['index_firstname'] - 1] : ''), 'last_name' => (!empty($column[$_POST['index_lastname'] - 1]) ? $column[$_POST['index_lastname'] - 1] : ''), 'address' => (!empty($column[$_POST['index_address'] - 1]) ? trim($column[$_POST['index_address'] - 1]) : '')]));
+                array_push($arraycontact, (['phone' => $phone, 'extra_phone' => $extra_phone, 'first_name' => (!empty($column[$_POST['index_firstname'] - 1]) ? $column[$_POST['index_firstname'] - 1] : ''), 'last_name' => (!empty($column[$_POST['index_lastname'] - 1]) ? $column[$_POST['index_lastname'] - 1] : ''), 'address' => (!empty($column[$_POST['index_address'] - 1]) ? trim($column[$_POST['index_address'] - 1]) : '')]));
         }
     }
 }

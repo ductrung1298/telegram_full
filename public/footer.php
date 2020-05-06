@@ -56,7 +56,6 @@
 		<script src="../assets/plugins/custom/gmaps/gmaps.js" type="text/javascript"></script>
 
 		<!--end::Page Vendors -->
-
 		<!--begin::Page Scripts(used by this page) -->
 		<script src="../assets/js/pages/dashboard.js" type="text/javascript"></script>
 
@@ -73,6 +72,16 @@
 		<!--begin::Page Scripts(used by this page) -->
 		<script src="../assets/js/pages/crud/datatables/search-options/column-search.js" type="text/javascript"></script>
 		<!-- end::Datatables -->
+
+
+    
+		<script src="//cdnjs.cloudflare.com/ajax/libs/x-editable/1.5.0/bootstrap3-editable/js/bootstrap-editable.min.js"></script>
+		<script type="text/javascript">
+
+	        // $.fn.editable.defaults.mode = 'line';
+
+	    </script>
+    
 	</body>
 
 	<!-- end::Body -->

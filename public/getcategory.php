@@ -44,7 +44,7 @@ $id = (isset($_GET['id']) ? intval($_GET['id']) : 0);
                 <div class="kt-portlet__body">
                     <div class="tab-content">
                         <div class="tab-pane active " id="kt_portlet_base_demo_1_1_tab_content" role="tabpanel">
-                            <div class="kt-portlet__body">
+                            <div class="kt-portlet__body pt-0">
                                 <div class="row ">
                                     <div class="col-12 mb-3">
                                         <div class="d-flex justify-content-between align-items-center">
@@ -277,49 +277,6 @@ $id = (isset($_GET['id']) ? intval($_GET['id']) : 0);
                                                         return $xhtml;
                                                     }
 
-                                                    function contacttable($data) {
-                                                        if($data) {
-                                                            foreach($data as $index => $list) {
-                                                                echo '<tr>
-                                                                        <th><label class="kt-checkbox kt-checkbox--bold kt-checkbox--success">
-                                                                                <input value="'. $list["Id"].'" class="cbx" type="checkbox">
-                                                                                <span></span>
-                                                                            </label></th>
-                                                                        <th scope="row">' . ++$index . '</th>
-                                                                        <td>
-                                                                            <a href="groupcontact.php?id=' . $list["Id"] . (($id != 0) ? ('&user=' . $id) : "") . '" >' . $text . ' ' . str_replace("<", "&lt;", $list['Name']) . '</a>
-                                                                            </td>
-                                                                            ';
-                                                                echo '<td>';
-                                                                if (count($list['cat']) > 0) {
-                                                                    foreach ($list['cat'] as $index => $_cat) {
-                                                                        echo '<a href="getcategory.php?id='.$_cat['id'].'" class="kt-badge kt-badge--primary  kt-badge--inline kt-badge--pill m-1">' . $_cat['name_vi'] . '</label>';
-                                                                    }
-                                                                }
-                                                                echo '</td>';
-                                                                echo '<td><label>' . $list["length"] . '</label></td>
-                                                                        <td><label>' . $list["lengthfriend"] . '/' . $list["length"] . '</label></td>
-                                                                        <td><label>' . (isset($list["describe"]) ? str_replace("<", "&lt;", $list['describe']) : "") . '</label></td>
-                                                                        <td><label>' . date("d/M/Y h:i:s", strtotime($list["createAt"])) . '</label></td>
-                                                                        <td class="d-flex justify-content-center">
-                                                                            
-                                                                            <div class="dropdown">
-                                                                                <button class="btn btn-info dropdown-toggle" type="button" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                                                                    Action
-                                                                                </button>
-                                                                                <div class="dropdown-menu" aria-labelledby="dropdownMenu2">
-                                                                                    <a class="dropdown-item  btn btn-label-linkedin" href="groupcontact.php?id=' . $list["Id"] . '&user=' . $id . '"><i class="fas fa-list"></i>Chi tiết</a>
-                                                                                    ' . (!empty($id) ? ('<a class="dropdown-item  btn btn-label-twitter add-group-chat" data-toggle="modal" data-target="#data_modal_list_group_chat" data-idcontact="' . $list["Id"] . '"><i class="fas fa-comments"></i>Thêm vào group chat</a>
-                                                                                    <a class="dropdown-item  btn btn-label-linkedin add-friend-telegram" data-idcontact="' . $list["Id"] . '"><i class="fab fa-telegram-plane"></i>Thêm vào bạn bè Telegram</a>'
-                                                                    ) : "") . '<a class="dropdown-item  btn btn-label-twitter export-contact" data-idcontact="' . $list["Id"] . '"><i class="fas fa-download"></i>Export CSV</a>
-                                                                                </div>
-                                                                            </div>
-                                                                        </td>
-                                                                    </tr>';
-                                                            }
-                                                        }
-                                                    }
-
                                                     function dequy($data, $parent = 0, $text = "")
                                                     {
                                                         $xhtml = '';
@@ -357,15 +314,20 @@ $id = (isset($_GET['id']) ? intval($_GET['id']) : 0);
                                                         foreach ($response2 as $index => $list) {
                                                             if ($list['parent_id'] == $parent) {
                                                                 echo '<tr>
+                                                                        <td><label class="kt-checkbox align-top mt-0 kt-checkbox--bold kt-checkbox--success">
+                                                                                <input value="'. $list["Id"].'" class="cbx" type="checkbox">
+                                                                                <span></span>
+                                                                            </label></td>
                                                                         <th scope="row">' . $stt . '</th>
                                                                         <td>
                                                                             <a href="groupcontact.php?id=' . $list["Id"] . (($id != 0) ? ('&user=' . $id) : "") . '" >' . $text . ' ' . str_replace("<", "&lt;", $list['Name']) . '</a>
+                                                                            <div class="d-none">'.khong_dau($list['Name']).'</div>
                                                                             </td>
                                                                             ';
                                                                 echo '<td>';
                                                                 if (count($list['cat']) > 0) {
                                                                     foreach ($list['cat'] as $index => $_cat) {
-                                                                        echo '<label class="kt-badge kt-badge--primary  kt-badge--inline kt-badge--pill m-1">' . $_cat . '</label>';
+                                                                        echo '<a href="getcategory.php?id='.$_cat['id'].'" class="kt-badge kt-badge--primary  kt-badge--inline kt-badge--pill m-1">' . $_cat['name_vi'] . '</label><div class="d-none">'.khong_dau($_cat['name_vi']).'</div>';
                                                                     }
                                                                 }
                                                                 echo '</td>';
@@ -374,7 +336,7 @@ $id = (isset($_GET['id']) ? intval($_GET['id']) : 0);
                                                                         <td><label>' . (isset($list["describe"]) ? str_replace("<", "&lt;", $list['describe']) : "") . '</label></td>
                                                                         <td><label>' . date("d/M/Y h:i:s", strtotime($list["createAt"])) . '</label></td>
                                                                         <td class="d-flex justify-content-center">
-
+                                                                            
                                                                             <div class="dropdown">
                                                                                 <button class="btn btn-info dropdown-toggle" type="button" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                                                                     Action
@@ -393,7 +355,6 @@ $id = (isset($_GET['id']) ? intval($_GET['id']) : 0);
                                                         }
                                                         return $xhtml;
                                                     }
-
                                                     $url2 = 'http://localhost:2020/telegram/get_contact?id=' . $id;;
                                                     $curl2 = curl_init($url2);
                                                     curl_setopt($curl2, CURLOPT_RETURNTRANSFER, true);
@@ -416,7 +377,7 @@ $id = (isset($_GET['id']) ? intval($_GET['id']) : 0);
                                                             if($id == 0) {
                                                                 echo dequycatetable(convertdequycate($response4));
                                                             }else {
-                                                                echo contacttable($response4);
+                                                                echo dequytable($response4);
                                                             }
                                                     }
                                                     ?>
