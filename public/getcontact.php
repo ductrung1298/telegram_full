@@ -16,10 +16,10 @@ $id = (isset($_GET['id']) ? intval($_GET['id']) : 0);
                         <a href="#" class="kt-subheader__breadcrumbs-home"><i class="flaticon2-shelter"></i></a>
                         <span class="kt-subheader__breadcrumbs-separator"></span>
                         <a href="add-account-tool-telegram.php" class="kt-subheader__breadcrumbs-link">
-                            Tài khoản </a>
+                            Danh bạ </a>
                         <span class="kt-subheader__breadcrumbs-separator"></span>
                         <a href="#" class="kt-subheader__breadcrumbs-link">
-                            Danh bạ </a>
+                            Danh sách danh bạ </a>
                     </div>
                 </div>
             </div>
@@ -52,7 +52,7 @@ $id = (isset($_GET['id']) ? intval($_GET['id']) : 0);
                         <div class="tab-pane active" id="kt_portlet_base_demo_1_1_tab_content" role="tabpanel">
                             <div class="kt-portlet__body pt-0">
                                 <div class="row ">
-                                    <div class="col-12 mb-3">
+                                    <div class="col-12 mb-3 px-0">
                                         <div class="d-flex justify-content-between align-items-center">
                                             <div class="d-flex">
                                                 <div class="form-group mb-0">
@@ -75,9 +75,6 @@ $id = (isset($_GET['id']) ? intval($_GET['id']) : 0);
                                         </div>
                                     </div>
                                     <div class="kt-section col-12">
-                                        <span class="kt-section__info" style="padding-left: 10px;">
-                                            DANH BẠ
-                                        </span>
                                         <div class="tab-pane" id="kt_widget4_top10_rating">
                                             <!-- <div class="kt-scroll" data-scroll="true" data-height="400" style="height: 400px;">
                                                 <div class="kt-list-timeline">
@@ -104,7 +101,7 @@ $id = (isset($_GET['id']) ? intval($_GET['id']) : 0);
                                                     // echo "</pre>";
                                                 ?>
                           
-                                                <table class="table" id="datatb">
+                                                <table class="table" style="margin-top:0 !important;" id="datatb">
                                                     <thead>
                                                     <tr>
                                                         <th>
@@ -410,11 +407,11 @@ $id = (isset($_GET['id']) ? intval($_GET['id']) : 0);
                                                                     </div>
                                                                     <div class="modal-body">
                                                                         <div class="form-group form-group-marginless">
-                                                                            <label>Extra Phone ( <span class="text-muted">Mỗi số cách nhau một dấu phẩy</span> ) </label>
+                                                                            <label>Số điện thoại bổ sung ( <span class="text-muted">Mỗi số cách nhau một dấu phẩy</span> ) </label>
                                                                             <div class="input-group mb-3">
                                                                                 <input type="text" class="form-control" name="extra_phone[]" aria-describedby="basic-addon2">
                                                                             </div>
-                                                                            <label>Birthday</label>
+                                                                            <label>Sinh nhật</label>
                                                                             <div class="input-group mb-3">
                                                                                 <input type="text" class="form-control" name="birthday[]" aria-describedby="basic-addon2">
                                                                             </div>
@@ -422,39 +419,39 @@ $id = (isset($_GET['id']) ? intval($_GET['id']) : 0);
                                                                             <div class="input-group mb-3">
                                                                                 <input type="text" class="form-control" name="email[]" aria-describedby="basic-addon3">
                                                                             </div>
-                                                                            <label>Extra Email</label>
+                                                                            <label>Email bổ sung</label>
                                                                             <div class="input-group mb-3">
                                                                                 <input type="text" class="form-control" name="extra_email[]" aria-describedby="basic-addon3">
                                                                             </div>
-                                                                            <label>Address</label>
+                                                                            <label>Địa chỉ</label>
                                                                             <div class="input-group mb-3">
                                                                                 <input type="text" class="form-control" name="address[]" aria-describedby="basic-addon3">
                                                                             </div>
-                                                                            <label>Extra Address</label>
+                                                                            <label>Địa chỉ bổ sung</label>
                                                                             <div class="input-group mb-3">
                                                                                 <input type="text" class="form-control" name="extra_address[]" aria-describedby="basic-addon3">
                                                                             </div>
-                                                                            <label>Identify Card ID</label>
+                                                                            <label>CMND</label>
                                                                             <div class="input-group mb-3">
                                                                                 <input type="text" class="form-control" name="identify_card_id[]" aria-describedby="basic-addon3">
                                                                             </div>
-                                                                            <label>Passport Number</label>
+                                                                            <label>Số hộ chiếu</label>
                                                                             <div class="input-group mb-3">
                                                                                 <input type="text" class="form-control" name="passport_number[]" aria-describedby="basic-addon3">
                                                                             </div>
-                                                                            <label>Country</label>
+                                                                            <label>Đất nước</label>
                                                                             <div class="input-group mb-3">
                                                                                 <input type="text" class="form-control" name="country[]" aria-describedby="basic-addon3">
                                                                             </div>
-                                                                            <label>District</label>
-                                                                            <div class="input-group mb-3">
-                                                                                <input type="text" class="form-control" name="district[]" aria-describedby="basic-addon3">
-                                                                            </div>
-                                                                            <label>City</label>
+                                                                            <label>Thành phố</label>
                                                                             <div class="input-group mb-3">
                                                                                 <input type="text" class="form-control" name="city[]" aria-describedby="basic-addon3">
                                                                             </div>
-                                                                            <label>State</label>
+                                                                            <label>Huyện</label>
+                                                                            <div class="input-group mb-3">
+                                                                                <input type="text" class="form-control" name="district[]" aria-describedby="basic-addon3">
+                                                                            </div>
+                                                                            <label>Tiểu bang</label>
                                                                             <div class="input-group mb-3">
                                                                                 <input type="text" class="form-control" name="state[]" aria-describedby="basic-addon3">
                                                                             </div>
@@ -462,11 +459,10 @@ $id = (isset($_GET['id']) ? intval($_GET['id']) : 0);
                                                                             <div class="input-group mb-3">
                                                                                 <input type="text" class="form-control" name="zipcode[]" aria-describedby="basic-addon3">
                                                                             </div>
-                                                                            <label>Extra ID</label>
+                                                                            <label>Thông tin bổ sung</label>
                                                                             <div class="input-group mb-3">
                                                                                 <input type="text" class="form-control" name="extra_id[]" aria-describedby="basic-addon3">
                                                                             </div>
-                                                                            
                                                                         </div>
                                                                     </div>
                                                                     <div class="modal-footer">
@@ -673,16 +669,14 @@ $id = (isset($_GET['id']) ? intval($_GET['id']) : 0);
                                             class="fas fa-sticky-note"></i></span></div>
                         </div>
                         <label>Chuyên mục</label>
-                        <div class="input-group mb-3">
-                            <select multiple type="text" class="form-control" name="cat_id[]"
+                        <div>
+                            <select multiple="multiple" class="form-control kt-select2" id="kt_select2_3" name="cat_id[]"
                                     aria-describedby="basic-addon4">
                                 <option value="0">-- Root --</option>
                                 <?php if (isset($response4))
                                     echo dequycateoption(dequycate2($response4));
                                 ?>
                             </select>
-                            <div class="input-group-append"><span class="input-group-text" id="basic-addon4"><i
-                                            class="fas fa-sticky-note"></i></span></div>
                         </div>
                     </div>
                 </div>
@@ -786,6 +780,16 @@ $id = (isset($_GET['id']) ? intval($_GET['id']) : 0);
     }
 
     jQuery(document).ready(function ($) {
+
+        function formatSelection(val) {
+            var str = val.text.replace(/-+/g, '');
+            return str;
+        }
+
+        $('#kt_select2_3').select2({
+          templateSelection: formatSelection
+        });
+
         $("#checkAll").click(function(){
             $('.cbx:checkbox').not(this).prop('checked', this.checked);
         });

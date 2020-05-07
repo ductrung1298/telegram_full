@@ -46,10 +46,15 @@ curl_close($curl4);
                         <a href="#" class="kt-subheader__breadcrumbs-home"><i class="flaticon2-shelter"></i></a>
                         <span class="kt-subheader__breadcrumbs-separator"></span>
                         <a href="add-account-tool-telegram.php" class="kt-subheader__breadcrumbs-link">
-                            Tài khoản </a>
+                           Danh bạ </a>
                         <span class="kt-subheader__breadcrumbs-separator"></span>
                         <a href="#" class="kt-subheader__breadcrumbs-link">
-                            Danh bạ </a>
+                            Chuyên mục </a>
+                        <?php if($id != 0): ?>
+                        <span class="kt-subheader__breadcrumbs-separator"></span>
+                        <a href="#" class="kt-subheader__breadcrumbs-link">
+                            <?= $response['name_vi'] ?> </a>
+                        <?php endif; ?>
                     </div>
                 </div>
             </div>
@@ -76,7 +81,7 @@ curl_close($curl4);
                         <div class="tab-pane active " id="kt_portlet_base_demo_1_1_tab_content" role="tabpanel">
                             <div class="kt-portlet__body pt-0">
                                 <div class="row ">
-                                    <div class="col-12 mb-3">
+                                    <div class="col-12 mb-3 px-0">
                                         <div class="d-flex justify-content-between align-items-center">
                                             <div class="d-flex">
                                                 <div class="form-group mb-0">
@@ -97,10 +102,10 @@ curl_close($curl4);
                                                     <i class="fas fa-sitemap"></i> Thêm danh bạ vào chuyên mục này
                                                 </button>
                                                 <?php else: ?>
-                                                <button type="button" class="btn btn-label-instagram mr-3"
+                                                <button type="button" class="btn btn-label-instagram"
                                                     data-toggle="modal"
                                                     data-target="#chuyenmucModal">
-                                                    <i class="fas fa-sitemap"></i> Thêm chuyên mục danh bạ
+                                                    <i class="fas fa-sitemap"></i> Thêm chuyên mục
                                                 </button>
                                                 <?php endif; ?>
                                             <!--     <button type="button" class="btn btn-label-instagram" data-toggle="modal"
@@ -111,20 +116,16 @@ curl_close($curl4);
                                         </div>
                                     </div>
                                     <div class="kt-section col-12">
-                                        <span class="kt-section__info" style="padding-left: 10px;">
-                                            CHUYÊN MỤC
-                                        </span>
                                         <div class="tab-pane active" id="kt_widget4_top10_rating">
                                             <div class="table-responsive">
-                                                
                                                 <?php
                                                     if($id == 0):
                                                 ?>
-                                                <table class="table">
+                                                <table class="table" id="datatb">
                                                     <thead>
                                                     <tr>
                                                         <th>
-                                                            <label class="kt-checkbox kt-checkbox--bold kt-checkbox--success">
+                                                            <label class="align-top kt-checkbox kt-checkbox--bold kt-checkbox--success">
                                                                 <input id="checkAll" type="checkbox">
                                                                 <span></span>
                                                             </label>
@@ -137,6 +138,13 @@ curl_close($curl4);
                                                <!--          <th>Mô tả</th>
                                                         <th>Ngày tạo</th>
                                                         <th>Chức năng</th> -->
+                                                    </tr>
+                                                    <tr id="row-search">
+                                                        <th data-is-search="false"></th>
+                                                        <th data-is-search="false"></th>
+                                                        <th data-is-search="true"></th>
+                                                        <th data-is-search="false"></th>
+                                                        <th data-is-search="false"></th>
                                                     </tr>
                                                     </thead>
                                                     <tbody>
@@ -238,11 +246,11 @@ curl_close($curl4);
                                                         if (!$is) {
                                                             foreach ($data as $index => $value) {
                                                                 if(!in_array($value['Id'],$exists)) {
-                                                                    $xhtml .= '<tr><th><label class="kt-checkbox kt-checkbox--bold kt-checkbox--success">
+                                                                    $xhtml .= '<tr><th><label class="align-top kt-checkbox kt-checkbox--bold kt-checkbox--success">
                                                                                 <input value="'. $value["Id"].'" class="cbx" type="checkbox">
                                                                                 <span></span>
                                                                             </label></th><th>'.++$stt2."</th>";
-                                                                    $xhtml .= '<td><a href="getcategory.php?id='.$value['Id'].'">'.$text.$value['name_vi']."</a></td>";
+                                                                    $xhtml .= '<td><a href="getcategory.php?id='.$value['Id'].'">'.$text.$value['name_vi'].'</a><div class="d-none">'.khong_dau($value['name_vi']).'</div></td>';
                                                                     $xhtml .= "<td>".$value['note']."</td>";
                                                                     // $xhtml .= "<td>".$value['length_cate']."</td>";
                                                                     $xhtml .= "<td>".$value['length_contact']."</td>";
@@ -255,11 +263,11 @@ curl_close($curl4);
                                                             }
                                                         } else {
                                                             foreach ($parent as $index => $value) {
-                                                                $xhtml .= '<tr><th><label class="kt-checkbox kt-checkbox--bold kt-checkbox--success">
+                                                                $xhtml .= '<tr><th><label class="align-top kt-checkbox kt-checkbox--bold kt-checkbox--success">
                                                                                 <input value="'. $data[$value]['Id'].'" class="cbx" type="checkbox">
                                                                                 <span></span>
                                                                             </label></th><th>'.++$stt2."</th>";
-                                                                    $xhtml .= '<td><a href="getcategory.php?id='.$data[$value]['Id'].'">'.$text.$data[$value]['name_vi']."</a></td>";
+                                                                    $xhtml .= '<td><a href="getcategory.php?id='.$data[$value]['Id'].'">'.$text.$data[$value]['name_vi'].'</a><div class="d-none">'.khong_dau($data[$value]['name_vi']).'</div></td>';
                                                                     $xhtml .= "<td>".$data[$value]['note']."</td>";
                                                                     // $xhtml .= "<td>".$data[$value]['length_cate']."</td>";
                                                                     $xhtml .= "<td>".$data[$value]['length_contact']."</td>";
@@ -310,7 +318,7 @@ curl_close($curl4);
                                                         foreach ($response2 as $index => $list) {
                                                             if ($list['parent_id'] == $parent) {
                                                                 echo '<tr>
-                                                                        <td><label class="kt-checkbox align-top mt-0 kt-checkbox--bold kt-checkbox--success">
+                                                                        <td><label class="align-top kt-checkbox align-top mt-0 kt-checkbox--bold kt-checkbox--success">
                                                                                 <input value="'. $list["Id"].'" class="cbx" type="checkbox">
                                                                                 <span></span>
                                                                             </label></td>
@@ -520,29 +528,27 @@ curl_close($curl4);
                             <div class="input-group-append"><span class="input-group-text" id="basic-addon2"><i
                                             class="la la-group"></i></span></div>
                         </div>
-                        <div class="input-group">
+                        <div class="input-group mb-3">
                             <input type="text" placeholder="Tiếng Anh" class="form-control" name="cat_name_en"
                                    aria-describedby="basic-addon2">
                             <div class="input-group-append"><span class="input-group-text" id="basic-addon2"><i
                                             class="la la-group"></i></span></div>
                         </div>
                         <label>Mô tả</label>
-                        <div class="input-group">
+                        <div class="input-group mb-3">
                             <input type="text" class="form-control" name="cat_note" aria-describedby="basic-addon3">
                             <div class="input-group-append"><span class="input-group-text" id="basic-addon3"><i
                                             class="fas fa-sticky-note"></i></span></div>
                         </div>
                         <label>Chuyên mục</label>
                         <div class="input-group">
-                            <select type="text" class="form-control" name="cat_parent_id[]"
-                                    aria-describedby="basic-addon4" multiple>
+                            <select class="form-control kt-select2" id="kt_select2_3" name="cat_parent_id[]"
+                                    aria-describedby="basic-addon4" multiple="multiple">
                                 <option value="0">-- Root --</option>
                                 <?php if (isset($response4))
                                     echo dequycateoption(convertdequycate($response4));
                                 ?>
                             </select>
-                            <div class="input-group-append"><span class="input-group-text" id="basic-addon4"><i
-                                            class="fas fa-sticky-note"></i></span></div>
                         </div>
                     </div>
                 </div>
@@ -586,7 +592,34 @@ curl_close($curl4);
             $('.cbx:checkbox').not(this).prop('checked', this.checked);
         });
 
+        <?php if($id == 0): ?>
+        $('#datatb thead #row-search th').each( function () {
+            if($(this).data('is-search')) {
+            var title = $(this).text();
+                    $(this).html('<input type="text" style="width:100%;" placeholder="" />' );
+            }
+        } );
+ 
         // DataTable
+        var table = $('#datatb').DataTable({
+            "ordering": false,
+            paging:false
+        });
+         
+        // Apply the search
+        table.columns().every( function () {
+            var that = this;
+            $( 'input', this.header() ).on( 'keyup change clear', function () {
+                if ( that.search() !== this.value ) {
+                    that
+                        .search( this.value)
+                        .draw();
+                }
+            } );
+        });
+       
+        <?php else: ?>
+         // DataTable
         $('#datatb thead #row-search th').each( function () {
             if($(this).data('is-search')) {
             var title = $(this).text();
@@ -611,6 +644,7 @@ curl_close($curl4);
                 }
             } );
         });
+        <?php endif; ?>
 
         // doAction
 

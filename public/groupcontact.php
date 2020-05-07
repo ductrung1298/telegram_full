@@ -1,9 +1,10 @@
 <?php
 $id = isset($_GET['id']) ? intval($_GET['id']) : 0;
 $user = isset($_GET['user']) ? intval($_GET['user']) : 0;
+$page = isset($_GET['page']) ? intval($_GET['page']) : 1;
 include 'header.php';
 if ($id != 0) {
-    $url = 'http://localhost:2020/telegram/get_contact?idgroupcontact=' . $id;
+    $url = 'http://localhost:2020/telegram/get_contact?idgroupcontact=' . $id . '&page=' .$page;
     $curl = curl_init($url);
     curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
     curl_setopt($curl, CURLOPT_HTTPHEADER, [
@@ -15,8 +16,20 @@ if ($id != 0) {
     $httpcode = curl_getinfo($curl, CURLINFO_HTTP_CODE);
     curl_close($curl);
     include 'connection.php';
+
     $group = new Connection();
     $value = $group->connect('telegram/get_contact?idcontact=' . $id);
+    $length = $list_user_in_contact['userLength'];
+    $countPage = round($length / $list_user_in_contact['pagination']['perPage']);
+    $list_user_in_contact = $list_user_in_contact['data'];
+
+    function pagination_link($page) {
+        if(strpos($_SERVER['REQUEST_URI'], 'page=') !== false) {
+            return preg_replace("/page=([0-9]+)/",'page='. $page,$_SERVER['REQUEST_URI']);
+        } else {
+            return $_SERVER['REQUEST_URI']. '&page='.$page;
+        }
+    }
 
 }
 ?>
@@ -33,13 +46,10 @@ if ($id != 0) {
                         <a href="#" class="kt-subheader__breadcrumbs-home"><i class="flaticon2-shelter"></i></a>
                         <span class="kt-subheader__breadcrumbs-separator"></span>
                         <a href="add-account-tool-telegram.php" class="kt-subheader__breadcrumbs-link">
-                            Tài khoản </a>
-                        <span class="kt-subheader__breadcrumbs-separator"></span>
-                        <a href="getcontact.php?id=<?php echo $user; ?>" class="kt-subheader__breadcrumbs-link">
                             Danh bạ </a>
                         <span class="kt-subheader__breadcrumbs-separator"></span>
-                        <a href="#" class="kt-subheader__breadcrumbs-link">
-                            Quản lý danh bạ </a>
+                        <a href="getcontact.php?id=<?php echo $user; ?>" class="kt-subheader__breadcrumbs-link">
+                            <?= $value['Name'] ?> </a>
                     </div>
                 </div>
             </div>
@@ -72,6 +82,12 @@ if ($id != 0) {
                             <div class="kt-portlet__body pt-0">
                                 <div class="row ">
                                     <div class="col-12 mb-3" style="padding: 0;">
+                                        <h3>
+                                            Danh bạ: <?php
+                                            echo $value['Name'];
+                                            ?>
+                                            <hr>
+                                        </h3>
                                         <div class="d-flex justify-content-between align-items-center">
                                             <div class="d-flex">
                                                 <div class="form-group mb-0">
@@ -87,15 +103,6 @@ if ($id != 0) {
                                         </div>
                                     </div>
                                     <div class="kt-section col-12">
-                                        <h3>
-                                            Danh bạ: <?php
-                                            echo $value['Name'];
-                                            ?>
-                                            <hr>
-                                        </h3>
-
-                                        <!-- <h4 class="kt-font-danger">Danh sách thành viên</h4> -->
-
                                         <div class="kt-section__content">
                                             <table class="table table-hover" id="datatb">
                                                 <thead>
@@ -223,7 +230,7 @@ if ($id != 0) {
                                                                                      <a class="editable_on" href="#" data-type="text" data-pk="<?= $contact['Id'] ?>" data-url="createapp.php" data-title="Enter username" id="birthday"><?= $contact['birthday'] ?></a>
                                                                                 </div>
                                                                                 <div class="user_info_field">
-                                                                                    <label>Identify Card ID:</label>
+                                                                                    <label>CMND:</label>
                                                                                      <a class="editable_on" href="#" data-type="text" data-pk="<?= $contact['Id'] ?>" data-url="createapp.php" data-title="Enter username" id="identify_cardid"><?= $contact['identify_cardid'] ?></a>
                                                                                 </div>
                                                                                 <div class="user_info_field">
@@ -231,12 +238,16 @@ if ($id != 0) {
                                                                                      <a class="editable_on" href="#" data-type="text" data-pk="<?= $contact['Id'] ?>" data-url="createapp.php" data-title="Enter username" id="passport_number"><?= $contact['passport_number'] ?></a>
                                                                                 </div>
                                                                                 <div class="user_info_field">
-                                                                                    <label>District:</label>
-                                                                                     <a class="editable_on" href="#" data-type="text" data-pk="<?= $contact['Id'] ?>" data-url="createapp.php" data-title="Enter username" id="district"><?= $contact['district'] ?></a>
+                                                                                    <label>Country:</label>
+                                                                                     <a class="editable_on" href="#" data-type="text" data-pk="<?= $contact['Id'] ?>" data-url="createapp.php" data-title="Enter username" id="country"><?= $contact['country'] ?></a>
                                                                                 </div>
                                                                                 <div class="user_info_field">
                                                                                     <label>City:</label>
                                                                                      <a class="editable_on" href="#" data-type="text" data-pk="<?= $contact['Id'] ?>" data-url="createapp.php" data-title="Enter username" id="city"><?= $contact['city'] ?></a>
+                                                                                </div>
+                                                                                <div class="user_info_field">
+                                                                                    <label>District:</label>
+                                                                                     <a class="editable_on" href="#" data-type="text" data-pk="<?= $contact['Id'] ?>" data-url="createapp.php" data-title="Enter username" id="district"><?= $contact['district'] ?></a>
                                                                                 </div>
                                                                                 <div class="user_info_field">
                                                                                     <label>State:</label>
@@ -247,11 +258,7 @@ if ($id != 0) {
                                                                                      <a class="editable_on" href="#" data-type="text" data-pk="<?= $contact['Id'] ?>" data-url="createapp.php" data-title="Enter username" id="zipcode"><?= $contact['zipcode'] ?></a>
                                                                                 </div>
                                                                                 <div class="user_info_field">
-                                                                                    <label>Country:</label>
-                                                                                     <a class="editable_on" href="#" data-type="text" data-pk="<?= $contact['Id'] ?>" data-url="createapp.php" data-title="Enter username" id="country"><?= $contact['country'] ?></a>
-                                                                                </div>
-                                                                                <div class="user_info_field">
-                                                                                    <label>State:</label>
+                                                                                    <label>Thông tin bổ sung:</label>
                                                                                      <a class="editable_on" href="#" data-type="text" data-pk="<?= $contact['Id'] ?>" data-url="createapp.php" data-title="Enter username" id="extra_id"><?= $contact['extra_id'] ?></a>
                                                                                 </div>
                                                                                 <div class="user_info_field">
@@ -278,6 +285,23 @@ if ($id != 0) {
                                                 ?>
                                                 </tbody>
                                             </table>
+                                            <div class="d-flex flex-wrap py-2 justify-content-end">
+                                                <?php if($page != 1): ?>
+                                                <a href="<?= pagination_link(1) ?>" class="btn btn-icon btn-sm btn-light mr-2 my-1"><i class="fas fa-angle-double-left icon-xs"></i></a>
+                                                <a href="<?= pagination_link($page - 1) ?>" class="btn btn-icon btn-sm btn-light mr-2 my-1"><i class="fas fa-angle-left icon-xs"></i></a>
+                                                <?php endif; ?>
+                                                <?php for($i = 1;$i <= $countPage;$i ++):
+                                                if($i == $page): ?>
+                                                    <a href="<?= pagination_link($i) ?>" class="btn btn-icon btn-sm border-0 btn-light btn-hover-primary active mr-2 my-1"><?= $i ?></a>
+                                                <?php else: ?>
+                                                    <a href="<?= pagination_link($i) ?>" class="btn btn-icon btn-sm border-0 btn-light mr-2 my-1"><?= $i ?></a>
+                                                <?php endif; ?>
+                                                <?php endfor; ?>
+                                                <?php if($page != $countPage && $countPage != 0 ): ?>
+                                                <a href="<?= pagination_link($page + 1) ?>" class="btn btn-icon btn-sm btn-light mr-2 my-1"><i class="fas fa-angle-right icon-xs"></i></a>
+                                                <a href="<?= pagination_link($countPage) ?>" class="btn btn-icon btn-sm btn-light mr-2 my-1"><i class="fas fa-angle-double-right icon-xs"></i></a>
+                                                <?php endif; ?>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
@@ -334,11 +358,11 @@ if ($id != 0) {
                                                                     </div>
                                                                     <div class="modal-body">
                                                                         <div class="form-group form-group-marginless">
-                                                                            <label>Extra Phone ( <span class="text-muted">Mỗi số cách nhau một dấu phẩy</span> ) </label>
+                                                                            <label>Số điện thoại bổ sung ( <span class="text-muted">Mỗi số cách nhau một dấu phẩy</span> ) </label>
                                                                             <div class="input-group mb-3">
                                                                                 <input type="text" class="form-control" name="extra_phone[]" aria-describedby="basic-addon2">
                                                                             </div>
-                                                                            <label>Birthday</label>
+                                                                            <label>Sinh nhật</label>
                                                                             <div class="input-group mb-3">
                                                                                 <input type="text" class="form-control" name="birthday[]" aria-describedby="basic-addon2">
                                                                             </div>
@@ -346,39 +370,39 @@ if ($id != 0) {
                                                                             <div class="input-group mb-3">
                                                                                 <input type="text" class="form-control" name="email[]" aria-describedby="basic-addon3">
                                                                             </div>
-                                                                            <label>Extra Email</label>
+                                                                            <label>Email bổ sung</label>
                                                                             <div class="input-group mb-3">
                                                                                 <input type="text" class="form-control" name="extra_email[]" aria-describedby="basic-addon3">
                                                                             </div>
-                                                                            <label>Address</label>
+                                                                            <label>Địa chỉ</label>
                                                                             <div class="input-group mb-3">
                                                                                 <input type="text" class="form-control" name="address[]" aria-describedby="basic-addon3">
                                                                             </div>
-                                                                            <label>Extra Address</label>
+                                                                            <label>Địa chỉ bổ sung</label>
                                                                             <div class="input-group mb-3">
                                                                                 <input type="text" class="form-control" name="extra_address[]" aria-describedby="basic-addon3">
                                                                             </div>
-                                                                            <label>Identify Card ID</label>
+                                                                            <label>CMND</label>
                                                                             <div class="input-group mb-3">
                                                                                 <input type="text" class="form-control" name="identify_card_id[]" aria-describedby="basic-addon3">
                                                                             </div>
-                                                                            <label>Passport Number</label>
+                                                                            <label>Số hộ chiếu</label>
                                                                             <div class="input-group mb-3">
                                                                                 <input type="text" class="form-control" name="passport_number[]" aria-describedby="basic-addon3">
                                                                             </div>
-                                                                            <label>Country</label>
+                                                                            <label>Đất nước</label>
                                                                             <div class="input-group mb-3">
                                                                                 <input type="text" class="form-control" name="country[]" aria-describedby="basic-addon3">
                                                                             </div>
-                                                                            <label>District</label>
-                                                                            <div class="input-group mb-3">
-                                                                                <input type="text" class="form-control" name="district[]" aria-describedby="basic-addon3">
-                                                                            </div>
-                                                                            <label>City</label>
+                                                                            <label>Thành phố</label>
                                                                             <div class="input-group mb-3">
                                                                                 <input type="text" class="form-control" name="city[]" aria-describedby="basic-addon3">
                                                                             </div>
-                                                                            <label>State</label>
+                                                                            <label>Huyện</label>
+                                                                            <div class="input-group mb-3">
+                                                                                <input type="text" class="form-control" name="district[]" aria-describedby="basic-addon3">
+                                                                            </div>
+                                                                            <label>Tiểu bang</label>
                                                                             <div class="input-group mb-3">
                                                                                 <input type="text" class="form-control" name="state[]" aria-describedby="basic-addon3">
                                                                             </div>
@@ -386,11 +410,10 @@ if ($id != 0) {
                                                                             <div class="input-group mb-3">
                                                                                 <input type="text" class="form-control" name="zipcode[]" aria-describedby="basic-addon3">
                                                                             </div>
-                                                                            <label>Extra ID</label>
+                                                                            <label>Thông tin bổ sung</label>
                                                                             <div class="input-group mb-3">
                                                                                 <input type="text" class="form-control" name="extra_id[]" aria-describedby="basic-addon3">
                                                                             </div>
-                                                                            
                                                                         </div>
                                                                     </div>
                                                                     <div class="modal-footer">
@@ -679,7 +702,8 @@ if ($id != 0) {
             // DataTable
             var table = $('#datatb').DataTable({
                 "ordering": false,
-                "lengthMenu": [[10, 25, 50, -1], [10, 25, 50, "All"]]
+                "paging": false,
+                "bInfo" : false
                 // searching:false
             });
 

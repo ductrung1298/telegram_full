@@ -72,6 +72,7 @@
 
 		<!--begin::Page Scripts(used by this page) -->
 		<script src="../assets/js/pages/crud/datatables/search-options/column-search.js" type="text/javascript"></script>
+		<!-- <script src="../assets/js/pages/crud/forms/widgets/select2.min.js" type="text/javascript"></script> -->
 		<!-- end::Datatables -->
 
 

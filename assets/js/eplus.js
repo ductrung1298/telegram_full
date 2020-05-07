@@ -486,11 +486,11 @@ $(document).ready(function () {
                                                                     </div>
                                                                     <div class="modal-body">
                                                                         <div class="form-group form-group-marginless">
-                                                                            <label>Extra Phone ( <span class="text-muted">Mỗi số cách nhau một dấu phẩy</span> ) </label>
+                                                                            <label>Số điện thoại bổ sung ( <span class="text-muted">Mỗi số cách nhau một dấu phẩy</span> ) </label>
                                                                             <div class="input-group mb-3">
                                                                                 <input type="text" class="form-control" name="extra_phone[]" aria-describedby="basic-addon2">
                                                                             </div>
-                                                                            <label>Birthday</label>
+                                                                            <label>Sinh nhật</label>
                                                                             <div class="input-group mb-3">
                                                                                 <input type="text" class="form-control" name="birthday[]" aria-describedby="basic-addon2">
                                                                             </div>
@@ -498,39 +498,39 @@ $(document).ready(function () {
                                                                             <div class="input-group mb-3">
                                                                                 <input type="text" class="form-control" name="email[]" aria-describedby="basic-addon3">
                                                                             </div>
-                                                                            <label>Extra Email</label>
+                                                                            <label>Email bổ sung</label>
                                                                             <div class="input-group mb-3">
                                                                                 <input type="text" class="form-control" name="extra_email[]" aria-describedby="basic-addon3">
                                                                             </div>
-                                                                            <label>Address</label>
+                                                                            <label>Địa chỉ</label>
                                                                             <div class="input-group mb-3">
                                                                                 <input type="text" class="form-control" name="address[]" aria-describedby="basic-addon3">
                                                                             </div>
-                                                                            <label>Extra Address</label>
+                                                                            <label>Địa chỉ bổ sung</label>
                                                                             <div class="input-group mb-3">
                                                                                 <input type="text" class="form-control" name="extra_address[]" aria-describedby="basic-addon3">
                                                                             </div>
-                                                                            <label>Identify Card ID</label>
+                                                                            <label>CMND</label>
                                                                             <div class="input-group mb-3">
                                                                                 <input type="text" class="form-control" name="identify_card_id[]" aria-describedby="basic-addon3">
                                                                             </div>
-                                                                            <label>Passport Number</label>
+                                                                            <label>Số hộ chiếu</label>
                                                                             <div class="input-group mb-3">
                                                                                 <input type="text" class="form-control" name="passport_number[]" aria-describedby="basic-addon3">
                                                                             </div>
-                                                                            <label>Country</label>
+                                                                            <label>Đất nước</label>
                                                                             <div class="input-group mb-3">
                                                                                 <input type="text" class="form-control" name="country[]" aria-describedby="basic-addon3">
                                                                             </div>
-                                                                            <label>District</label>
-                                                                            <div class="input-group mb-3">
-                                                                                <input type="text" class="form-control" name="district[]" aria-describedby="basic-addon3">
-                                                                            </div>
-                                                                            <label>City</label>
+                                                                            <label>Thành phố</label>
                                                                             <div class="input-group mb-3">
                                                                                 <input type="text" class="form-control" name="city[]" aria-describedby="basic-addon3">
                                                                             </div>
-                                                                            <label>State</label>
+                                                                            <label>Huyện</label>
+                                                                            <div class="input-group mb-3">
+                                                                                <input type="text" class="form-control" name="district[]" aria-describedby="basic-addon3">
+                                                                            </div>
+                                                                            <label>Tiểu bang</label>
                                                                             <div class="input-group mb-3">
                                                                                 <input type="text" class="form-control" name="state[]" aria-describedby="basic-addon3">
                                                                             </div>
@@ -538,11 +538,10 @@ $(document).ready(function () {
                                                                             <div class="input-group mb-3">
                                                                                 <input type="text" class="form-control" name="zipcode[]" aria-describedby="basic-addon3">
                                                                             </div>
-                                                                            <label>Extra ID</label>
+                                                                            <label>Thông tin bổ sung</label>
                                                                             <div class="input-group mb-3">
                                                                                 <input type="text" class="form-control" name="extra_id[]" aria-describedby="basic-addon3">
                                                                             </div>
-                                                                            
                                                                         </div>
                                                                     </div>
                                                                     <div class="modal-footer">
