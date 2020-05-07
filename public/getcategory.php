@@ -3,6 +3,36 @@ include 'header.php';
 date_default_timezone_set('Asia/Ho_Chi_Minh');
 $id = (isset($_GET['id']) ? intval($_GET['id']) : 0);
 ?>
+<?php 
+//  GET CATEGORY CONTACT
+if($id == 0) {
+    $url4 =  'http://localhost:2020/telegram/get_cat';
+}else {
+    $url4 =  'http://localhost:2020/telegram/get_contact?idcate='.$id;
+    // nếu đang ở một chuyên mục nào đó thì lấy info chuyên mục đó ra
+    $url = 'http://localhost:2020/telegram/get_cat?id=' . $id;
+    $curl = curl_init($url);
+    curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
+    curl_setopt($curl, CURLOPT_HTTPHEADER, [
+        'X-RapidAPI-Host: contextualwebsearch-websearch-v1.p.rapidapi.com',
+        'X-RapidAPI-Key: 7xxxxxxxxxxxxxxxxxxxxxxxxxxx',
+        'Authorization: ' . $_SESSION['user_token']
+    ]);
+    $response = json_decode(curl_exec($curl), true);
+    $httpcode = curl_getinfo($curl, CURLINFO_HTTP_CODE);
+    curl_close($curl);
+}
+$curl4 = curl_init($url4);
+curl_setopt($curl4, CURLOPT_RETURNTRANSFER, true);
+curl_setopt($curl4, CURLOPT_HTTPHEADER, [
+    'X-RapidAPI-Host: contextualwebsearch-websearch-v1.p.rapidapi.com',
+    'X-RapidAPI-Key: 7xxxxxxxxxxxxxxxxxxxxxxxxxxx',
+    'Authorization: ' . $_SESSION['user_token']
+]);
+$response4 = json_decode(curl_exec($curl4), true);
+$httpcode4 = curl_getinfo($curl4, CURLINFO_HTTP_CODE);
+curl_close($curl4);
+?>
 <div class="kt-body kt-grid__item kt-grid__item--fluid kt-grid kt-grid--hor kt-grid--stretch" id="kt_body">
     <div class="kt-content kt-content--fit-top  kt-grid__item kt-grid__item--fluid kt-grid kt-grid--hor"
          id="kt_content">
@@ -16,10 +46,15 @@ $id = (isset($_GET['id']) ? intval($_GET['id']) : 0);
                         <a href="#" class="kt-subheader__breadcrumbs-home"><i class="flaticon2-shelter"></i></a>
                         <span class="kt-subheader__breadcrumbs-separator"></span>
                         <a href="add-account-tool-telegram.php" class="kt-subheader__breadcrumbs-link">
-                            Tài khoản </a>
+                           Danh bạ </a>
                         <span class="kt-subheader__breadcrumbs-separator"></span>
                         <a href="#" class="kt-subheader__breadcrumbs-link">
-                            Danh bạ </a>
+                            Chuyên mục </a>
+                        <?php if($id != 0): ?>
+                        <span class="kt-subheader__breadcrumbs-separator"></span>
+                        <a href="#" class="kt-subheader__breadcrumbs-link">
+                            <?= $response['name_vi'] ?> </a>
+                        <?php endif; ?>
                     </div>
                 </div>
             </div>
@@ -33,9 +68,9 @@ $id = (isset($_GET['id']) ? intval($_GET['id']) : 0);
                     <div class="kt-portlet__head-toolbar">
                         <ul class="nav nav-tabs nav-tabs-line nav-tabs-line-success nav-tabs-line-2x" role="tablist">
                             <li class="nav-item">
-                                <a class="nav-link active" data-toggle="tab"
+                                <a class="nav-link text-uppercase active" data-toggle="tab"
                                    href="#kt_portlet_base_demo_1_1_tab_content" role="tab" aria-selected="true">
-                                    <i class="flaticon2-group"></i>Chuyên mục
+                                    <i class="flaticon2-group"></i>Chuyên mục <?php echo ($id != 0) ? '<i class="ml-3 fas fa-long-arrow-alt-right"></i>' . $response['name_vi'] : ''; ?>
                                 </a>
                             </li>
                         </ul>
@@ -46,11 +81,12 @@ $id = (isset($_GET['id']) ? intval($_GET['id']) : 0);
                         <div class="tab-pane active " id="kt_portlet_base_demo_1_1_tab_content" role="tabpanel">
                             <div class="kt-portlet__body pt-0">
                                 <div class="row ">
-                                    <div class="col-12 mb-3">
+                                    <div class="col-12 mb-3 px-0">
                                         <div class="d-flex justify-content-between align-items-center">
                                             <div class="d-flex">
                                                 <div class="form-group mb-0">
                                                     <select class="form-control" name="action" id="exampleSelect1">
+                                                        <option value="0">Hành động</option>
                                                         <option value="delete">Xoá</option>
                                                     </select>
                                                 </div>
@@ -59,87 +95,37 @@ $id = (isset($_GET['id']) ? intval($_GET['id']) : 0);
                                                 </div>
                                             </div>
                                             <div>
-                                                <button type="button" class="btn btn-label-instagram mr-3"
+                                                <?php if($id != 0): ?>
+                                                <button type="button" class="btn btn-label-instagram"
+                                                    data-toggle="modal"
+                                                    data-target="#exampleModalCenter">
+                                                    <i class="fas fa-sitemap"></i> Thêm danh bạ vào chuyên mục này
+                                                </button>
+                                                <?php else: ?>
+                                                <button type="button" class="btn btn-label-instagram"
                                                     data-toggle="modal"
                                                     data-target="#chuyenmucModal">
-                                                    <i class="fas fa-sitemap"></i> Thêm chuyên mục danh bạ
+                                                    <i class="fas fa-sitemap"></i> Thêm chuyên mục
                                                 </button>
+                                                <?php endif; ?>
                                             <!--     <button type="button" class="btn btn-label-instagram" data-toggle="modal"
                                                         data-target="#exampleModalCenter">
                                                     <i class="fa fa-book"></i> Thêm danh bạ
                                                 </button> -->
                                             </div>
-<!--                                             <button type="button" class="btn btn-label-instagram mr-3"
-                                                    data-toggle="modal"
-                                                    data-target="#graphicModal">
-                                                <i class="fa fa-book"></i> Thêm graphics
-                                            </button> -->
-                                         <!--    <button type="button" class="btn btn-label-instagram mr-3"
-                                                    data-toggle="modal"
-                                                    data-target="#chuyenmucModal">
-                                                <i class="fas fa-sitemap"></i> Thêm chuyên mục danh bạ
-                                            </button> -->
-                                        <!--     <button type="button" class="btn btn-label-instagram" data-toggle="modal"
-                                                    data-target="#exampleModalCenter">
-                                                <i class="fa fa-book"></i> Thêm danh bạ
-                                            </button> -->
                                         </div>
                                     </div>
                                     <div class="kt-section col-12">
-                                        <span class="kt-section__info" style="padding-left: 10px;">
-                                            CHUYÊN MỤC
-                                        </span>
                                         <div class="tab-pane active" id="kt_widget4_top10_rating">
-                                            <!-- <div class="kt-scroll" data-scroll="true" data-height="400" style="height: 400px;">
-                                                <div class="kt-list-timeline">
-                                                    <div class="table-responsive">
-                                                        <div class="kt-section__content"> -->
                                             <div class="table-responsive">
-                                                <?php 
-//  GET CATEGORY CONTACT
-                                                if($id == 0) {
-                                                    $url4 =  'http://localhost:2020/telegram/get_cat';
-                                                }else {
-                                                    $url4 =  'http://localhost:2020/telegram/get_contact?idcate='.$id;
-                                                }
-                                                    $curl4 = curl_init($url4);
-                                                    curl_setopt($curl4, CURLOPT_RETURNTRANSFER, true);
-                                                    curl_setopt($curl4, CURLOPT_HTTPHEADER, [
-                                                        'X-RapidAPI-Host: contextualwebsearch-websearch-v1.p.rapidapi.com',
-                                                        'X-RapidAPI-Key: 7xxxxxxxxxxxxxxxxxxxxxxxxxxx',
-                                                        'Authorization: ' . $_SESSION['user_token']
-                                                    ]);
-                                                    $response4 = json_decode(curl_exec($curl4), true);
-                                                    $httpcode4 = curl_getinfo($curl4, CURLINFO_HTTP_CODE);
-                                                    curl_close($curl4);
-                                                    // echo "<pre>";
-                                                    // print_r($response4);
-                                                    // echo "</pre>";
-                                                    // GET CATE BY CAT_ID
-                                                    $cat_id = isset($_GET['cat_id']) ? $_GET['cat_id'] : 0;
-                                                    $url6 = 'http://localhost:2020/telegram/get_cat_by_cat_id?cat_id='. $cat_id;
-                                                    $curl6 = curl_init($url6);
-                                                    curl_setopt($curl6, CURLOPT_RETURNTRANSFER, true);
-                                                    curl_setopt($curl6, CURLOPT_HTTPHEADER, [
-                                                        'X-RapidAPI-Host: contextualwebsearch-websearch-v1.p.rapidapi.com',
-                                                        'X-RapidAPI-Key: 7xxxxxxxxxxxxxxxxxxxxxxxxxxx',
-                                                        'Authorization: ' . $_SESSION['user_token']
-                                                    ]);
-                                                    $response6 = json_decode(curl_exec($curl6), true);
-                                                    $httpcode6 = curl_getinfo($curl6, CURLINFO_HTTP_CODE);
-                                                    curl_close($curl6);
-                                                    // echo "<pre>";
-                                                    // print_r($response6);
-                                                    // echo "</pre>";
-                                                ?>
-                                                <?php 
+                                                <?php
                                                     if($id == 0):
                                                 ?>
-                                                <table class="table">
+                                                <table class="table" id="datatb">
                                                     <thead>
                                                     <tr>
                                                         <th>
-                                                            <label class="kt-checkbox kt-checkbox--bold kt-checkbox--success">
+                                                            <label class="align-top kt-checkbox kt-checkbox--bold kt-checkbox--success">
                                                                 <input id="checkAll" type="checkbox">
                                                                 <span></span>
                                                             </label>
@@ -153,10 +139,17 @@ $id = (isset($_GET['id']) ? intval($_GET['id']) : 0);
                                                         <th>Ngày tạo</th>
                                                         <th>Chức năng</th> -->
                                                     </tr>
+                                                    <tr id="row-search">
+                                                        <th data-is-search="false"></th>
+                                                        <th data-is-search="false"></th>
+                                                        <th data-is-search="true"></th>
+                                                        <th data-is-search="false"></th>
+                                                        <th data-is-search="false"></th>
+                                                    </tr>
                                                     </thead>
                                                     <tbody>
                                                 <?php else: ?>
-                                                    <table class="table">
+                                                    <table class="table" id="datatb">
                                                     <thead>
                                                     <tr>
                                                         <th>
@@ -173,6 +166,17 @@ $id = (isset($_GET['id']) ? intval($_GET['id']) : 0);
                                                         <th>Mô tả</th>
                                                         <th>Ngày tạo</th>
                                                         <th>Chức năng</th>
+                                                    </tr>
+                                                    <tr id="row-search">
+                                                        <th data-is-search="false"></th>
+                                                        <th data-is-search="false"></th>
+                                                        <th data-is-search="true"></th>
+                                                        <th data-is-search="true"></th>
+                                                        <th data-is-search="false"></th>
+                                                        <th data-is-search="false"></th>
+                                                        <th data-is-search="false"></th>
+                                                        <th data-is-search="false"></th>
+                                                        <th data-is-search="false"></th>
                                                     </tr>
                                                     </thead>
                                                     <tbody>
@@ -242,11 +246,11 @@ $id = (isset($_GET['id']) ? intval($_GET['id']) : 0);
                                                         if (!$is) {
                                                             foreach ($data as $index => $value) {
                                                                 if(!in_array($value['Id'],$exists)) {
-                                                                    $xhtml .= '<tr><th><label class="kt-checkbox kt-checkbox--bold kt-checkbox--success">
+                                                                    $xhtml .= '<tr><th><label class="align-top kt-checkbox kt-checkbox--bold kt-checkbox--success">
                                                                                 <input value="'. $value["Id"].'" class="cbx" type="checkbox">
                                                                                 <span></span>
                                                                             </label></th><th>'.++$stt2."</th>";
-                                                                    $xhtml .= '<td><a href="getcategory.php?id='.$value['Id'].'">'.$text.$value['name_vi']."</a></td>";
+                                                                    $xhtml .= '<td><a href="getcategory.php?id='.$value['Id'].'">'.$text.$value['name_vi'].'</a><div class="d-none">'.khong_dau($value['name_vi']).'</div></td>';
                                                                     $xhtml .= "<td>".$value['note']."</td>";
                                                                     // $xhtml .= "<td>".$value['length_cate']."</td>";
                                                                     $xhtml .= "<td>".$value['length_contact']."</td>";
@@ -259,11 +263,11 @@ $id = (isset($_GET['id']) ? intval($_GET['id']) : 0);
                                                             }
                                                         } else {
                                                             foreach ($parent as $index => $value) {
-                                                                $xhtml .= '<tr><th><label class="kt-checkbox kt-checkbox--bold kt-checkbox--success">
+                                                                $xhtml .= '<tr><th><label class="align-top kt-checkbox kt-checkbox--bold kt-checkbox--success">
                                                                                 <input value="'. $data[$value]['Id'].'" class="cbx" type="checkbox">
                                                                                 <span></span>
                                                                             </label></th><th>'.++$stt2."</th>";
-                                                                    $xhtml .= '<td><a href="getcategory.php?id='.$data[$value]['Id'].'">'.$text.$data[$value]['name_vi']."</a></td>";
+                                                                    $xhtml .= '<td><a href="getcategory.php?id='.$data[$value]['Id'].'">'.$text.$data[$value]['name_vi'].'</a><div class="d-none">'.khong_dau($data[$value]['name_vi']).'</div></td>';
                                                                     $xhtml .= "<td>".$data[$value]['note']."</td>";
                                                                     // $xhtml .= "<td>".$data[$value]['length_cate']."</td>";
                                                                     $xhtml .= "<td>".$data[$value]['length_contact']."</td>";
@@ -314,7 +318,7 @@ $id = (isset($_GET['id']) ? intval($_GET['id']) : 0);
                                                         foreach ($response2 as $index => $list) {
                                                             if ($list['parent_id'] == $parent) {
                                                                 echo '<tr>
-                                                                        <td><label class="kt-checkbox align-top mt-0 kt-checkbox--bold kt-checkbox--success">
+                                                                        <td><label class="align-top kt-checkbox align-top mt-0 kt-checkbox--bold kt-checkbox--success">
                                                                                 <input value="'. $list["Id"].'" class="cbx" type="checkbox">
                                                                                 <span></span>
                                                                             </label></td>
@@ -355,7 +359,7 @@ $id = (isset($_GET['id']) ? intval($_GET['id']) : 0);
                                                         }
                                                         return $xhtml;
                                                     }
-                                                    $url2 = 'http://localhost:2020/telegram/get_contact?id=' . $id;;
+                                                    $url2 = 'http://localhost:2020/telegram/get_contact?idcate=' . $id;;
                                                     $curl2 = curl_init($url2);
                                                     curl_setopt($curl2, CURLOPT_RETURNTRANSFER, true);
                                                     curl_setopt($curl2, CURLOPT_HTTPHEADER, [
@@ -366,6 +370,7 @@ $id = (isset($_GET['id']) ? intval($_GET['id']) : 0);
                                                     $response2 = json_decode(curl_exec($curl2), true);
                                                     $httpcode2 = curl_getinfo($curl2, CURLINFO_HTTP_CODE);
                                                     curl_close($curl2);
+
                                                     if ($httpcode2 != 200) {
                                                         $host = $_SERVER['HTTP_HOST'];
                                                         $uri = rtrim(dirname($_SERVER['PHP_SELF']), '/\\');
@@ -443,148 +448,18 @@ $id = (isset($_GET['id']) ? intval($_GET['id']) : 0);
                                                 </div>
                                                 <!-- end modal -->
                                             </div>
-                                            <!-- </div>
-                                        </div>
-                                    </div>
-                                </div> -->
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                        <div class="tab-pane" id="kt_portlet_base_demo_1_2_tab_content" role="tabpanel">
-                            <div class="kt-portlet__body">
-                                <div class="row ">
-                                    <div class="kt-section col-12">
-                                        <form class="kt-form kt-form--label-right" onsubmit="return beforeSubmit();"
-                                              action="addcontact.php" method="post"
-                                              enctype="multipart/form-data">
-                                            <span class="kt-section__info">
-                                               
-                                            </span>
-                                            <div class="kt-section__content">
-                                                <h4>Thêm bằng tay</h4>
-                                                <div class="form-group col-lg-15 row list-contact">
-                                                    <div class=" kt-margin-t-5 col-lg-12 row">
-                                                        <div class="col-lg-3 col-md-5">
-                                                            <label> <strong>Số điện thoại
-                                                                </strong></label>
-                                                        </div>
-                                                        <div class="col-lg-3 col-md-5">
-                                                            <label><strong>First_Name</strong></label>
-                                                        </div>
-                                                        <div class="col-lg-2 col-md-2">
-                                                            <label><strong>Last_Name
-                                                                </strong></label>
-                                                        </div>
-
-                                                    </div>
-                                                    <div class="col-lg-12 kt-margin-t-20 row">
-                                                        <input type="hidden" name="id" value=<?php echo $id ?>>
-                                                        <div class="col-lg-3 input-group">
-                                                            <input type="text" class="form-control" name="phone[]"
-                                                                   placeholder="+84xxxxxxxxx">
-                                                        </div>
-                                                        <div class="col-lg-3 input-group">
-                                                            <input type="text" class="form-control" name="first_name[]"
-                                                                   placeholder="First_name">
-                                                        </div>
-                                                        <div class="col-lg-3 input-group">
-                                                            <input type="text" class="form-control" name="last_name[]"
-                                                                   placeholder="Last_name">
-                                                        </div>
-                                                        <div class="col-lg-1 col-md-1 delete-phone kt-margin-b-5"
-                                                             style="display: none;">
-                                                            <i class="far fa-minus-square"
-                                                               style=" font-size: 3rem; color: #fd1361; cursor: pointer;"></i>
-                                                        </div>
-                                                        <div class="col-lg-1 col-md-1 add-phone kt-margin-b-5">
-                                                            <i class="far fa-plus-square"
-                                                               style=" font-size: 3rem; color: #1dc9b7; cursor: pointer;"></i>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <h4>Thêm từ File CSV</h4>
-                                                <label for="myfile">Thêm từ file:</label>
-                                                <input type="file" id="myfile" name="myfile"
-                                                       accept=".csv">
-                                                <div class="form-group col-lg-15 mt-3 row">
-                                                    <div class="col-lg-3">
-                                                        <label>Vị trí cột Phone trong file danh bạ</label>
-                                                        <input type="number" class="form-control" name="index_phone"
-                                                               value="1">
-                                                    </div>
-                                                    <div class="col-lg-3">
-                                                        <label>Vị trí cột First_Name</label>
-                                                        <input type="number" class="form-control" name="index_firstname"
-                                                               value="2">
-                                                    </div>
-                                                    <div class="col-lg-3">
-                                                        <label>Vị trí cột Last_Name</label>
-                                                        <input type="number" class="form-control" name="index_lastname"
-                                                               value="3">
-                                                    </div>
-                                                    <div class="col-lg-3">
-                                                        <label>Vị trí cột Address</label>
-                                                        <input type="number" class="form-control" name="index_address"
-                                                               value="4">
-                                                    </div>
-                                                </div>
-                                                <h4>Thêm vào danh bạ</h4>
-                                                <div class="form-group row">
-                                                    <div class="col-sm-2">
-                                                        <label for="inputPassword" class="col-form-label">Tên danh
-                                                            bạ:</label>
-                                                    </div>
-                                                    <div class="col-sm-4">
-                                                        <select class=" form-control col-lg-12 groupcontact"
-                                                                name="groupcontact">
-                                                            <option value=-1>-Không sử dụng-</option>
-                                                            <?php
-                                                            if (isset($response2))
-                                                                if (isset($response2))
-                                                                    echo dequy($response2);
-                                                            ?>
-                                                        </select>
-                                                    </div>
-                                                    <div class="col-sm-6 d-flex align-items-end">
-                                                        <label class="kt-checkbox kt-checkbox--success">
-                                                            <input type="checkbox" name="addFriend" value="thembanbe">
-                                                            Thêm làm bạn bè Telegram
-                                                            <span></span>
-                                                        </label>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="kt-portlet__foot">
-                                                <div class="kt-form__actions">
-                                                    <div class="row">
-                                                        <div class="col-lg-12 text-center">
-                                                            <button type="submit" class="btn btn-outline-brand"><i
-                                                                        class="la flaticon2-avatar"></i> Thêm mới
-                                                            </button>
-                                                            <button type="reset" class="btn btn-outline-secondary"><i
-                                                                        class="la flaticon2-delete"></i> Huỷ
-                                                            </button>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </form>
-                                        <div class="kt-separator kt-separator--border-dashed kt-separator--space-lg kt-separator--portlet-fit">
-                                        </div>
-
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
                     </div>
                 </div>
             </div>
         </div>
     </div>
     <!--begin::Modal-->
+    <?php if($id != 0): ?>
     <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog"
          aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered" role="document">
@@ -620,19 +495,10 @@ $id = (isset($_GET['id']) ? intval($_GET['id']) : 0);
                             <div class="input-group-append"><span class="input-group-text" id="basic-addon4"><i
                                             class="fas fa-sticky-note"></i></span></div>
                         </div>
-
-                        <label>Chuyên mục</label>
-                        <div class="input-group mb-3">
-                            <select multiple type="text" class="form-control" name="cat_id[]"
+                        <select multiple type="text" class="form-control d-none" name="cat_id[]"
                                     aria-describedby="basic-addon4">
-                                <option value="0">-- Root --</option>
-                                <?php if (isset($response4))
-                                    echo dequycateoption(convertdequycate($response4));
-                                ?>
+                                <option value="<?= $id ?>" selected>test</option>
                             </select>
-                            <div class="input-group-append"><span class="input-group-text" id="basic-addon4"><i
-                                            class="fas fa-sticky-note"></i></span></div>
-                        </div>
                     </div>
                 </div>
                 <div class="modal-footer">
@@ -642,7 +508,8 @@ $id = (isset($_GET['id']) ? intval($_GET['id']) : 0);
             </div>
         </div>
     </div>
-    <div class="modal fade" id="chuyenmucModal" tabindex="-1" role="dialog"
+<?php else: ?>
+<div class="modal fade" id="chuyenmucModal" tabindex="-1" role="dialog"
          aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
@@ -661,29 +528,27 @@ $id = (isset($_GET['id']) ? intval($_GET['id']) : 0);
                             <div class="input-group-append"><span class="input-group-text" id="basic-addon2"><i
                                             class="la la-group"></i></span></div>
                         </div>
-                        <div class="input-group">
+                        <div class="input-group mb-3">
                             <input type="text" placeholder="Tiếng Anh" class="form-control" name="cat_name_en"
                                    aria-describedby="basic-addon2">
                             <div class="input-group-append"><span class="input-group-text" id="basic-addon2"><i
                                             class="la la-group"></i></span></div>
                         </div>
                         <label>Mô tả</label>
-                        <div class="input-group">
+                        <div class="input-group mb-3">
                             <input type="text" class="form-control" name="cat_note" aria-describedby="basic-addon3">
                             <div class="input-group-append"><span class="input-group-text" id="basic-addon3"><i
                                             class="fas fa-sticky-note"></i></span></div>
                         </div>
                         <label>Chuyên mục</label>
                         <div class="input-group">
-                            <select type="text" class="form-control" name="cat_parent_id[]"
-                                    aria-describedby="basic-addon4" multiple>
+                            <select class="form-control kt-select2" id="kt_select2_3" name="cat_parent_id[]"
+                                    aria-describedby="basic-addon4" multiple="multiple">
                                 <option value="0">-- Root --</option>
                                 <?php if (isset($response4))
                                     echo dequycateoption(convertdequycate($response4));
                                 ?>
                             </select>
-                            <div class="input-group-append"><span class="input-group-text" id="basic-addon4"><i
-                                            class="fas fa-sticky-note"></i></span></div>
                         </div>
                     </div>
                 </div>
@@ -694,47 +559,7 @@ $id = (isset($_GET['id']) ? intval($_GET['id']) : 0);
             </div>
         </div>
     </div>
-    <div class="modal fade" id="graphicModal" tabindex="-1" role="dialog"
-         aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLongTitle">Thêm danh bạ</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <div class="form-group form-group-marginless">
-                        <label>Tên Graphic Việt Name</label>
-                        <div class="input-group">
-                            <input type="text" class="form-control" name="graphic_name_vi"
-                                   aria-describedby="basic-addon2">
-                            <div class="input-group-append"><span class="input-group-text" id="basic-addon2"><i
-                                            class="la la-group"></i></span></div>
-                        </div>
-                        <label>Tên Graphic Tiếng Anh</label>
-                        <div class="input-group">
-                            <input type="text" class="form-control" name="graphic_name_en"
-                                   aria-describedby="basic-addon2">
-                            <div class="input-group-append"><span class="input-group-text" id="basic-addon2"><i
-                                            class="la la-group"></i></span></div>
-                        </div>
-                        <label>Mô tả</label>
-                        <div class="input-group">
-                            <input type="text" class="form-control" name="graphic_note" aria-describedby="basic-addon3">
-                            <div class="input-group-append"><span class="input-group-text" id="basic-addon3"><i
-                                            class="fas fa-sticky-note"></i></span></div>
-                        </div>
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Hủy</button>
-                    <button type="button" class="btn btn-primary addgraphic">Thêm mới</button>
-                </div>
-            </div>
-        </div>
-    </div>
+<?php endif; ?>
     <!--end::Modal-->
 </div>
 <?php include 'footer.php'; ?>
@@ -767,39 +592,113 @@ $id = (isset($_GET['id']) ? intval($_GET['id']) : 0);
             $('.cbx:checkbox').not(this).prop('checked', this.checked);
         });
 
+        <?php if($id == 0): ?>
+        $('#datatb thead #row-search th').each( function () {
+            if($(this).data('is-search')) {
+            var title = $(this).text();
+                    $(this).html('<input type="text" style="width:100%;" placeholder="" />' );
+            }
+        } );
+ 
+        // DataTable
+        var table = $('#datatb').DataTable({
+            "ordering": false,
+            paging:false
+        });
+         
+        // Apply the search
+        table.columns().every( function () {
+            var that = this;
+            $( 'input', this.header() ).on( 'keyup change clear', function () {
+                if ( that.search() !== this.value ) {
+                    that
+                        .search( this.value)
+                        .draw();
+                }
+            } );
+        });
+       
+        <?php else: ?>
+         // DataTable
+        $('#datatb thead #row-search th').each( function () {
+            if($(this).data('is-search')) {
+            var title = $(this).text();
+                    $(this).html('<input type="text" style="width:100%;" placeholder="" />' );
+            }
+        } );
+ 
+        // DataTable
+        var table = $('#datatb').DataTable({
+            "ordering": false,
+            // searching:false
+        });
+         
+        // Apply the search
+        table.columns().every( function () {
+            var that = this;
+            $( 'input', this.header() ).on( 'keyup change clear', function () {
+                if ( that.search() !== this.value ) {
+                    that
+                        .search( this.value)
+                        .draw();
+                }
+            } );
+        });
+        <?php endif; ?>
+
         // doAction
 
         $("#doAction").click(function() {
-            console.log($("select[name=action]").val());
-            var searchIDs = $(".cbx:checked").map(function(){
-              return $(this).val();
-            }).get();
-            $.ajax({
-                url: "./createapp.php",
-                type: "POST",
-                data: {
-                    "function": "do_action",
-                    "ids": JSON.stringify(searchIDs),
-                    "table": "<?= ($id != 0) ? 'contact' : 'category' ?>",
-                    "action": "delete",
-                    "id": <?php echo $id; ?>
-                },
-                success: function (dt) {
-                    console.log(dt);
-                    if (dt) {
+            var name_action = $("select[name=action]").val();
+            if(name_action != 0) {
+                if(name_action) {
+                    var searchIDs = $(".cbx:checked").map(function(){
+                      return $(this).val();
+                    }).get();
+                    if(searchIDs.length > 0) {
+                        $.ajax({
+                            url: "./createapp.php",
+                            type: "POST",
+                            data: {
+                                "function": "do_action",
+                                "ids": JSON.stringify(searchIDs),
+                                "table": "<?= ($id != 0) ? 'contact' : 'category' ?>",
+                                "action": "delete",
+                                "id": <?php echo $id; ?>
+                            },
+                            success: function (dt) {
+                                console.log(dt);
+                                if (dt) {
+                                    Swal.fire(
+                                        'Thao tác thành công',
+                                        'Thao tác thành công',
+                                        'success',
+                                    );
+                                    location.reload();
+                                } else Swal.fire(
+                                    'Lỗi...',
+                                    'Lỗi khi thực hiện tác vụ',
+                                    'error',
+                                );
+                            }
+                        });
+                    }else{
                         Swal.fire(
-                            'Thao tác thành công',
-                            'Thao tác thành công',
-                            'success',
+                            'Lỗi...',
+                            'Bạn chưa đánh đấu record !',
+                            'error',
                         );
-                        location.reload();
-                    } else Swal.fire(
-                        'Lỗi...',
-                        'Lỗi khi thực hiện tác vụ',
-                        'error',
-                    );
+                    }
+                    
                 }
-            });
+            }else {
+                Swal.fire(
+                    'Lỗi...',
+                    'Hãy chọn hành động bạn muốn thực hiện',
+                    'error',
+                );
+            }
+            
         });
         $('.add-group-chat').click(function () {
             $('input[name="id_contact"]').val($(this).attr('data-idcontact'));
@@ -913,37 +812,6 @@ $id = (isset($_GET['id']) ? intval($_GET['id']) : 0);
                         } else Swal.fire(
                             'Lỗi...',
                             'Lỗi khi thêm mới chuyên danh bạ',
-                            'error',
-                        );
-                    }
-                })
-            }
-        });
-
-        $('.addgraphic').on('click', function () {
-            if ($('input[name="graphic_name_vi"]').val() == '') alert("Trường Graphic Việt Nam không được rỗng");
-            else {
-                $('.addgraphic').hide();
-                $.ajax({
-                    url: "./createapp.php",
-                    type: "POST",
-                    data: {
-                        "function": "addgraphic",
-                        "name_vi": $('input[name="graphic_name_vi"]').val(),
-                        "name_en": $('input[name="graphic_name_en"]').val(),
-                        "note": $('input[name="graphic_note"]').val()
-                    },
-                    success: function (dt) {
-                        if (dt == 1) {
-                            Swal.fire(
-                                'Thêm Graphic thành công',
-                                'Thêm Graphic thành công',
-                                'success',
-                            );
-                            location.reload();
-                        } else Swal.fire(
-                            'Lỗi...',
-                            'Lỗi khi thêm mới Graphic',
                             'error',
                         );
                     }

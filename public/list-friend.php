@@ -90,29 +90,43 @@
                             <div class="kt-portlet__body">
                                 <div class="row ">
                                     <div class="kt-section col-12">
-                                        <h3 class="text-center">Danh sách bạn bè</h3>
-                                    <div class="kt-separator kt-separator--border-dashed kt-separator--space-lg kt-separator--portlet-fit">
-                                    </div>
-                                        <span class="kt-section__info">
-                                            Export &nbsp;&nbsp;&nbsp;
-                                            <button type="button" id="exportfile" class="btn btn-outline-brand btn-elevate btn-pill exportfile"><i class="la la-download"></i> File CSV  
-                                            </button>
-                                        </span>
+                                    
+                                        <div class="kt-section__info d-flex justify-content-end">
+                                            <div class="mr-1">
+                                                Export &nbsp;&nbsp;&nbsp;
+                                                <button type="button" id="exportfile" class="btn btn-outline-brand btn-elevate btn-pill exportfile"><i class="la la-download"></i> File CSV
+                                                </button>
+                                            </div>
+                                            <div class="mr-1">
+                                                <button type="button" id="exportfile" class="btn btn-outline-brand btn-elevate btn-pill exportfile"><i class="la la-plus"></i> Thêm vào danh bạ
+                                                </button>
+                                            </div>
+                                            <div>
+                                                <button type="button" id="exportfile" class="btn btn-outline-brand btn-elevate btn-pill exportfile"><i class="la la-plus"></i> Thêm vào danh bạ
+                                                </button>
+                                            </div>
+                                        </div>
                                         <div class="tab-pane active" id="kt_widget4_top10_rating">
-                                            <div class="kt-scroll" data-scroll="true" data-height="400" style="height: 400px;">
+                                            <div>
                                                 <div class="kt-list-timeline">
                                                     <div class="table-responsive">
                                                         <div class="kt-section__content">
-                                                            <table class="table">
+                                                            <table class="table" id="datatb">
                                                                 <thead class="thead-light">
                                                                     <tr>
                                                                         <th>#</th>
-                                                                        <th>First_name</th>
-                                                                        <th>Last_name</th>
+                                                                        <th>Name</th>
                                                                         <th>Phone_Number</th>
                                                                         <th>User_Name</th>
                                                                         <th>Thuộc danh bạ</th>
                                                                         <!--  -->
+                                                                    </tr>
+                                                                    <tr id="row-search">
+                                                                        <th data-is-search="false"></th>
+                                                                        <th data-is-search="true"></th>
+                                                                        <th data-is-search="true"></th>
+                                                                        <th data-is-search="true"></th>
+                                                                        <th data-is-search="false"></th>
                                                                     </tr>
                                                                 </thead>
                                                                 <tbody>
@@ -122,9 +136,10 @@
                                                                     {
                                                                     echo ' <tr>
                                                                         <th scope="row">'.((int)$index+1).'</th>
-                                                                            <td>'.(isset($contact['first_name'])?str_replace("<","&lt;",$contact['first_name']):'').'
-                                                                            </td>
-                                                                            <td>'.(isset($contact['last_name'])?str_replace("<","&lt;",$contact['last_name']):'').'
+                                                                            <td>'.(isset($contact['first_name'])?str_replace("<","&lt;",$contact['first_name']) . ' ' :'').(isset($contact['last_name'])?str_replace("<","&lt;",$contact['last_name']):'').'
+                                                                                <div class="d-none">'.
+                                                                                (isset($contact['first_name'])?str_replace("<","&lt;",khong_dau($contact['first_name'])) . ' ' :'').(isset($contact['last_name'])?str_replace("<","&lt;",khong_dau($contact['last_name'])):'') .'
+                                                                                </div>
                                                                             </td>
                                                                             <td>'.(isset($contact['phone'])?$contact['phone']:'').'
                                                                             </td>
@@ -162,6 +177,37 @@
 <?php include 'footer.php'; ?>
 <script type="text/javascript">
 jQuery(document).ready(function($) {
+    // $('#datatb').ready(function() {
+        // DataTable
+        $('#datatb thead #row-search th').each( function () {
+            if($(this).data('is-search')) {
+            var title = $(this).text();
+                    $(this).html('<input type="text" style="width:100%;" placeholder="" />' );
+            }
+        } );
+
+        // DataTable
+        var table = $('#datatb').DataTable({
+            "ordering": false,
+            "searching":true
+        });
+
+        // Apply the search
+        table.columns().every( function () {
+            var that = this;
+            $( 'input', this.header() ).on( 'keyup change clear', function () {
+                if ( that.search() !== this.value ) {
+                    that
+                        .search( this.value)
+                        .draw();
+                }
+            } );
+        });
+
+        // Apply the search
+
+    // });
+
     $("#exportfile").on("click", function() {
         Swal.fire({
             title: 'Are you sure?',

@@ -10,8 +10,8 @@ function get_extra_phone($phone)
     if ($phone != null) {
         $phone = preg_replace('/\s\s+/', '-', $phone);
         $phone = str_replace(': ', '-', $phone);
+        $phone = str_replace(',', '-', $phone);
         if (!preg_match('(-|–|\/)', $phone)) {
-//                dump(preg_replace('/[^0-9]/', '', $phone));
             $phoneNumbers[] = preg_replace('/[^0-9]/', '', $phone);
         } else {
             $phone = preg_replace('/[^0-9\/\-\–]/', '', $phone);
@@ -46,7 +46,6 @@ function get_extra_phone($phone)
     return $phoneNumbers;
 }
 
-
 if (isset($phone) && is_array($phone)) {
     foreach ($phone as $i => $p) {
         if (isset($p) && !empty($p))
@@ -70,6 +69,133 @@ foreach ($lastname as $i => $last) {
     }
 };
 
+$extra_phone = preg_replace('/\s+/', '', $_POST['extra_phone']);
+foreach ($extra_phone as $i => $last) {
+    if (isset($arraycontact[$i])) {
+        $data = $arraycontact[$i];
+        $data->extra_phone = ((object) explode(',',$last));
+        $arraycontact[$i] = $data;
+    }
+};
+
+$birthday = $_POST['birthday'];
+foreach ($birthday as $i => $last) {
+    if (isset($arraycontact[$i])) {
+        $data = $arraycontact[$i];
+        $data->birthday = $last;
+        $arraycontact[$i] = $data;
+    }
+};
+
+$email = $_POST['email'];
+foreach ($email as $i => $last) {
+    if (isset($arraycontact[$i])) {
+        $data = $arraycontact[$i];
+        $data->email = $last;
+        $arraycontact[$i] = $data;
+    }
+};
+
+$extra_email = $_POST['extra_email'];
+foreach ($extra_email as $i => $last) {
+    if (isset($arraycontact[$i])) {
+        $data = $arraycontact[$i];
+        $data->extra_email = $last;
+        $arraycontact[$i] = $data;
+    }
+};
+
+$address = $_POST['address'];
+foreach ($address as $i => $last) {
+    if (isset($arraycontact[$i])) {
+        $data = $arraycontact[$i];
+        $data->address = $last;
+        $arraycontact[$i] = $data;
+    }
+};
+
+$extra_address = $_POST['extra_address'];
+foreach ($extra_address as $i => $last) {
+    if (isset($arraycontact[$i])) {
+        $data = $arraycontact[$i];
+        $data->extra_address = $last;
+        $arraycontact[$i] = $data;
+    }
+};
+
+$identify_card_id = $_POST['identify_card_id'];
+foreach ($identify_card_id as $i => $last) {
+    if (isset($arraycontact[$i])) {
+        $data = $arraycontact[$i];
+        $data->identify_card_id = $last;
+        $arraycontact[$i] = $data;
+    }
+};
+
+
+$passport_number = $_POST['passport_number'];
+foreach ($passport_number as $i => $last) {
+    if (isset($arraycontact[$i])) {
+        $data = $arraycontact[$i];
+        $data->passport_number = $last;
+        $arraycontact[$i] = $data;
+    }
+};
+
+$country = $_POST['country'];
+foreach ($country as $i => $last) {
+    if (isset($arraycontact[$i])) {
+        $data = $arraycontact[$i];
+        $data->country = $last;
+        $arraycontact[$i] = $data;
+    }
+};
+
+$district = $_POST['district'];
+foreach ($district as $i => $last) {
+    if (isset($arraycontact[$i])) {
+        $data = $arraycontact[$i];
+        $data->district = $last;
+        $arraycontact[$i] = $data;
+    }
+};
+
+$city = $_POST['city'];
+foreach ($city as $i => $last) {
+    if (isset($arraycontact[$i])) {
+        $data = $arraycontact[$i];
+        $data->city = $last;
+        $arraycontact[$i] = $data;
+    }
+};
+
+$state = $_POST['state'];
+foreach ($state as $i => $last) {
+    if (isset($arraycontact[$i])) {
+        $data = $arraycontact[$i];
+        $data->state = $last;
+        $arraycontact[$i] = $data;
+    }
+};
+
+$zipcode = $_POST['zipcode'];
+foreach ($zipcode as $i => $last) {
+    if (isset($arraycontact[$i])) {
+        $data = $arraycontact[$i];
+        $data->zipcode = $last;
+        $arraycontact[$i] = $data;
+    }
+};
+
+$extra_id = $_POST['extra_id'];
+foreach ($extra_id as $i => $last) {
+    if (isset($arraycontact[$i])) {
+        $data = $arraycontact[$i];
+        $data->extra_id = $last;
+        $arraycontact[$i] = $data;
+    }
+};
+
 $addFriend = (isset($_POST['addFriend']) ? 1 : 0);
 //add contact from file
 if (isset($_FILES["myfile"])) {
@@ -82,7 +208,26 @@ if (isset($_FILES["myfile"])) {
             $phone = $extra_phone[0];
             unset($extra_phone[0]);
             if (!empty($column[$_POST['index_phone'] - 1]))
-                array_push($arraycontact, (['phone' => $phone, 'extra_phone' => $extra_phone, 'first_name' => (!empty($column[$_POST['index_firstname'] - 1]) ? $column[$_POST['index_firstname'] - 1] : ''), 'last_name' => (!empty($column[$_POST['index_lastname'] - 1]) ? $column[$_POST['index_lastname'] - 1] : ''), 'address' => (!empty($column[$_POST['index_address'] - 1]) ? trim($column[$_POST['index_address'] - 1]) : '')]));
+                array_push($arraycontact, (
+                    ['phone' => $phone,
+                    'first_name' => (!empty($column[$_POST['index_firstname'] - 1]) ? $column[$_POST['index_firstname'] - 1] : ''),
+                    'last_name' => (!empty($column[$_POST['index_lastname'] - 1]) ? $column[$_POST['index_lastname'] - 1] : ''),
+                    'extra_phone' => $extra_phone,
+                    'address' => (!empty($column[$_POST['index_address'] - 1]) ? trim($column[$_POST['index_address'] - 1]) : ''),
+                    'extra_address' => (!empty($column[$_POST['index_extra_address'] - 1]) ? trim($column[$_POST['index_extra_address'] - 1]) : ''),
+                    'email' => (!empty($column[$_POST['index_email'] - 1]) ? trim($column[$_POST['index_email'] - 1]) : ''),
+                    'extra_mail' => (!empty($column[$_POST['index_extra_email'] - 1]) ? trim($column[$_POST['index_extra_email'] - 1]) : ''),
+                    'birthday' => (!empty($column[$_POST['index_birthday'] - 1]) ? trim($column[$_POST['index_birthday'] - 1]) : ''),
+                    'identify_card_id' => (!empty($column[$_POST['index_identify_card_id'] - 1]) ? trim($column[$_POST['index_identify_card_id'] - 1]) : ''),
+                    'passport_number' => (!empty($column[$_POST['index_passport_number'] - 1]) ? trim($column[$_POST['index_passport_number'] - 1]) : ''),
+                    'country' => (!empty($column[$_POST['index_country'] - 1]) ? trim($column[$_POST['index_country'] - 1]) : ''),
+                    'district' => (!empty($column[$_POST['index_district'] - 1]) ? trim($column[$_POST['index_district'] - 1]) : ''),
+                    'city' => (!empty($column[$_POST['index_city'] - 1]) ? trim($column[$_POST['index_city'] - 1]) : ''),
+                    'state' => (!empty($column[$_POST['index_state'] - 1]) ? trim($column[$_POST['index_state'] - 1]) : ''),
+                    'zipcode' => (!empty($column[$_POST['index_zipcode'] - 1]) ? trim($column[$_POST['index_zipcode'] - 1]) : ''),
+                    'extra_id' => (!empty($column[$_POST['index_extra_id'] - 1]) ? trim($column[$_POST['index_extra_id'] - 1]) : '')
+
+                ]));
         }
     }
 }
@@ -115,7 +260,7 @@ if ($httpcode == 200) {
               })
               .then((kq) => {
                 if (kq && kq.value) {
-                    window.location.href="getcontact.php?id=' . $_POST['id'] . '";  
+                    window.location.href="getcontact.php?id=' . $_POST['id'] . '"; 
                 } ';
     echo '})
               </script>';
@@ -130,3 +275,4 @@ else
             window.location.href="badrequest.php";
         </script>';
 ?>
+
