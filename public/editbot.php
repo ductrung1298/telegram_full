@@ -1,5 +1,7 @@
 <?php 
     include 'header.php';
+    date_default_timezone_set('Asia/Ho_Chi_Minh');
+
     $id=isset($_GET['id'])?intval($_GET['id']):0;
     if ($id!=0)
         {
@@ -68,6 +70,12 @@
                                 <a class="nav-link" data-toggle="tab" href="#kt_portlet_base_demo_1_3_tab_content"
                                     role="tab" aria-selected="true">
                                     <i class="flaticon-bell"></i> Danh sách lệnh
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" data-toggle="tab" href="#kt_portlet_base_demo_1_4_tab_content"
+                                    role="tab" aria-selected="true">
+                                    <i class="flaticon-bell"></i> Gửi tin nhắn
                                 </a>
                             </li>
                         </ul>
@@ -857,6 +865,127 @@
                             <lable>- Để trả về first_name của người dùng, ta sử dụng dấu nhắc {firstname} </lable>
                         </div>
                         <!-- end block 3 -->
+                        <!-- block 4 -->
+                        <div class="tab-pane" id="kt_portlet_base_demo_1_4_tab_content" role="tabpanel">
+                            <div class="col-12 form-group">
+                                <div class="form-row">
+                                    <div class="col-10">
+                                        <label for="">Nội dung tin nhắn</label>
+                                        <textarea class="form-control" name="message_send_sub"></textarea>
+                                    </div>
+                                    <div class="col-2 d-flex align-items-end">
+                                        <button class="btn btn-outline-success btn-send_msg_sub"><i class="fa fa-paper-plane"></i> Gửi</button>
+                                    </div>
+                                </div>
+                                <label class="mt-3">Đính kèm button</label>
+                                <div class="button_link">
+                                    <div class="row mt-3">
+                                        <div class="col-lg-4"> 
+                                            <input type="text" name="text_send_sub" class="form-control text_send_sub" placeholder="Text hiển thị">
+                                        </div>
+                                        <div class="col-lg-4"> 
+                                            <input type="text" name="link_send_sub" class="form-control link_send_sub" placeholder="Đường dẫn">
+                                        </div>
+                                        <div class="col-lg-1 col-md-1 add_button_url_send kt-margin-b-5" >
+                                            <i class="far fa-plus-square"
+                                                style=" font-size: 2rem; color: #1dc9b7; cursor: pointer;"></i>
+                                        </div>
+                                        <div class="col-lg-1 col-md-1 delete_button_url_send kt-margin-b-5" style="display: none;">
+                                            <i class="far fa-minus-square"
+                                                style=" font-size: 2rem; color: #fd1361; cursor: pointer;"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="kt-section col-12 mt-5">
+                                    <h5>Danh sách người dùng đăng kí bot</h5>
+                                    <div class="kt-scroll" data-scroll="true" data-height="400" style="height: 400px;">
+                                        <div class="kt-list-timeline">
+                                            <div class="kt-section__content">
+                                                <table class="table table-striped- table-bordered table-hover table-checkable" id="table_get_user_sub">
+                                                    <thead>
+                                                        <tr>
+                                                            <th>
+                                                                <label class="align-top kt-checkbox kt-checkbox--bold kt-checkbox--success">
+                                                                    <input id="checkAll" type="checkbox">
+                                                                    <span></span>
+                                                                </label>
+                                                            </th>
+                                                            <th>User ID</th>
+                                                            <th>Tên người dùng</th>
+                                                            <th>Loại</th>
+                                                            <th>Ngày đăng kí kênh</th>
+                                                        </tr>
+                                                        <tr id="row-search">
+                                                            <th data-is-search="false"></th>
+                                                            <th data-is-search="true"></th>
+                                                            <th data-is-search="true"></th>
+                                                            <th data-is-search="true"></th>
+                                                            <th data-is-search="true"></th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                    <?php
+                                                        $url='http://localhost:2020/telbot/get_sub?id='.$id;
+                                                        $curl=curl_init($url);
+                                                        curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
+                                                        curl_setopt($curl, CURLOPT_HTTPHEADER, [
+                                                            'X-RapidAPI-Host: contextualwebsearch-websearch-v1.p.rapidapi.com',
+                                                            'X-RapidAPI-Key: 7xxxxxxxxxxxxxxxxxxxxxxxxxxx',
+                                                            'Authorization: '.$_SESSION['user_token']
+                                                        ]);
+                                                        $list_sub=json_decode(curl_exec($curl), true);
+                                                        curl_close($curl);
+                                                        if (!empty($list_sub)) {
+                                                            foreach($list_sub as $index => $sub) {
+                                                                echo '<tr>
+                                                                <th><label class="align-top mt-0 kt-checkbox kt-checkbox--bold kt-checkbox--success">
+                                                                                <input value="'. $sub['user_id'].'" class="cbx" type="checkbox">
+                                                                                <span></span>
+                                                                            </label></th>
+                                                                <td>
+                                                                    <label>
+                                                                        '.(isset($sub['user_id'])?$sub['user_id']:"").'
+                                                                    </label>
+                                                                    <div class="d-none">' . (isset($sub['user_id'])?$sub['user_id']:""). '</div>
+                                                                </td>
+                                                                <td>
+                                                                    <label>
+                                                                        '.(isset($sub['first_name'])?$sub['first_name']:"").' '.(isset($sub['last_name'])?$sub['last_name']:"").'
+                                                                    </label>
+                                                                    <div class="d-none">' . (isset($sub['first_name'])?(khong_dau($sub['first_name'])):"").' '.(isset($sub['last_name'])?khong_dau($sub['last_name']):""). '</div>
+                                                                </td>';
+                                                                if (isset($sub['type']) && $sub['type']=="user")
+                                                                    echo '<td>
+                                                                    <span class="kt-badge  kt-badge--danger kt-badge--inline kt-badge--pill m-1">USER
+                                                                        </span>
+                                                                        <div class="d-none">user</div>
+                                                                    </td>';
+                                                                else
+                                                                echo '<td>
+                                                                <span class="kt-badge kt-badge--primary  kt-badge--inline kt-badge--pill m-1">GROUP
+                                                                    </span>
+                                                                    <div class="d-none">group</div>
+                                                                </td>';
+                                                                echo '<td>
+                                                                    <label>
+                                                                        '.date("d/M/Y h:i:s", strtotime($sub["date"])).'
+                                                                    </label>                                                                          
+                                                                    <div class="d-none">'.date("d/M/Y h:i:s", strtotime($sub["date"])).'</div>
+                                                                </td>
+                                                                </tr>
+                                                                ';
+                                                            };
+                                                        }
+                                                    ?>
+                                                    </tbody>
+                                                </table>    
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- end block 4-->
                     </div>
                 </div>
             </div>
@@ -1110,5 +1239,108 @@ jQuery(document).ready(function($) {
             }
         })
     });
+})
+$('#table_get_user_sub thead #row-search th').each( function () {
+    if($(this).data('is-search')) {
+    var title = $(this).text();
+            $(this).html('<input type="text" style="width:100%;" placeholder="" />' );
+    }
+} );
+
+// DataTable
+var table = $('#table_get_user_sub').DataTable({
+    "ordering": false,
+    // searching:false
+});
+    
+// Apply the search
+table.columns().every( function () {
+    var that = this;
+    $( 'input', this.header() ).on( 'keyup change clear', function () {
+        if ( that.search() !== this.value ) {
+            that
+                .search( this.value)
+                .draw();
+        }
+    } );
+});
+$("#checkAll").click(function(){
+    $('.cbx:checkbox').not(this).prop('checked', this.checked);
+});
+
+$('.button_link').on('click touch', '.add_button_url_send', function (event) {
+    let rdom = `<div class="row mt-3">
+        <div class="col-lg-4"> 
+            <input type="text" name="text" class="form-control" placeholder="Text hiển thị">
+        </div>
+        <div class="col-lg-4"> 
+            <input type="text" name="link" class="form-control" placeholder="Đường dẫn">
+        </div>
+        <div class="col-lg-1 col-md-1 add_button_url_send kt-margin-b-5" >
+            <i class="far fa-plus-square"
+                style=" font-size: 2rem; color: #1dc9b7; cursor: pointer;"></i>
+        </div>
+        <div class="col-lg-1 col-md-1 delete_button_url_send kt-margin-b-5" style="display: none;">
+            <i class="far fa-minus-square"
+                style=" font-size: 2rem; color: #fd1361; cursor: pointer;"></i>
+        </div>
+    </div>`;
+    $('.button_link .add_button_url_send').remove();
+    $('.button_link .delete_button_url_send').last().addClass('display-block');
+    $('.button_link').append(rdom);
+});
+$('.button_link').on('click touch', '.delete_button_url_send', function (event) {
+    $(this).parent().remove();
+});
+$('.btn-send_msg_sub').click(function(){
+    let btn_inline=[];
+    $('.button_link').map(function() {
+        if ($(this).find('.link_send_sub').val()!="") 
+        btn_inline.push({
+            "url": $(this).find('.link_send_sub').val(),
+            "text": $(this).find('.text_send_sub').val(),
+        })
+    })
+    let users=[];
+    $('.cbx').map(function() {
+        if ($(this).val()!="" && this.checked) 
+        users.push($(this).val())
+    })
+    if ($('textarea[name="message_send_sub"]').val()=="")
+        Swal.fire({
+            position: 'inherit',
+            type: 'error',
+            title: 'Tin nhắn không được rỗng',
+        })
+    else if (users.length==0) {
+        Swal.fire({
+            position: 'inherit',
+            type: 'error',
+            title: 'Danh sách người dùng rỗng',
+        })
+    }
+    else {
+        $.ajax({
+            type: "POST",
+            url: "./createapp.php",
+            data: {
+                "function": "send_msg_bot",
+                "id": <?php echo $id;?>,
+                "list_user": users.toString(),
+                "text": $('textarea[name="message_send_sub"]').val(),
+                "keyboard": JSON.stringify(btn_inline),
+            },
+            success: function(data) {
+                if (data) {
+                    Swal.fire({
+                        position: 'inherit',
+                        type: 'success',
+                        title: 'Gửi thành công tới ' + data + 'người dùng',
+                    })
+                } else
+                    alert("Gửi tin nhắn thất bại");
+            }
+        })
+    }
 })
 </script>

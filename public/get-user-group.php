@@ -32,7 +32,7 @@ if ($id!=0) {
                             Tài khoản </a>
                         <span class="kt-subheader__breadcrumbs-separator"></span>
                         <a href="#" class="kt-subheader__breadcrumbs-link">
-                            Danh sách group chat Telegram </a>
+                            Group chat</a>
                     </div>
                 </div>
             </div>
@@ -68,6 +68,7 @@ if ($id!=0) {
                                                         <th>Name</th>
                                                         <th>Số lượng</th>
                                                         <th>Kiểu</th>
+                                                        <th>Hành động<th>
                                                     </tr>
                                                 </thead>
                                                 <tbody>
@@ -83,15 +84,25 @@ if ($id!=0) {
                                                             </label>
                                                         </td>';
                                                         echo '<td>
-                                                            <a href="list_user_in_group.php?id='.$id.(($group['_']=="chat")?("&chat_id=".$group['id']):("&channel_id=".$group['id']."&access_hash=".$group['access_hash'])).'">'.(isset($group['title'])?$group['title']:'').'</a>
+                                                            <a href="list-user-in-group.php?id='.$id.(($group['_']=="chat")?("&chat_id=".$group['id']):("&channel_id=".$group['id']."&access_hash=".$group['access_hash'])).'">'.(isset($group['title'])?$group['title']:'').'</a>
                                                         </td>';
                                                         echo '<td>
                                                             <label>'.(isset($group['count'])?$group['count']:'').'
                                                             </label>
                                                         </td>';
                                                         echo '<td><span class="kt-badge kt-badge--primary  kt-badge--inline kt-badge--pill m-1">
-                                                            '. ((($group['_'])=="chat") ? "GROUP" : ($group['_']=="channel" && isset($group['megagroup']))? "SUPER GROUP" : "CHANNEL") .'</span>
+                                                            '. (($group['_']=="chat") ? "GROUP" : (($group['_']=="channel" && isset($group['megagroup']))? "SUPER GROUP" : "CHANNEL")) .'</span>
                                                         </td>';
+                                                        echo '<td class="d-flex justify-content-center" >
+                                                        <div class="dropdown">
+                                                            <button class="btn btn-info dropdown-toggle" type="button" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                                Action
+                                                            </button>
+                                                            <div class="dropdown-menu add-group-chat" aria-labelledby="dropdownMenu2" data-id="'.$group['id'].'">
+                                                                <a class="dropdown-item btn btn-label-linkedin" data-toggle="modal" data-target="#exampleModalCenter"><i class="fas fa-address-book"></i>Thêm vào group chat</a>                                                                
+                                                            </div>
+                                                        </div>';
+                                                        echo '</td>';
                                                         echo '</tr>';
                                                     }
                                                     ?>
@@ -108,5 +119,123 @@ if ($id!=0) {
         </div>
     </div>
 </div>
+<div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog"
+     aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLongTitle">Thêm vào group chat</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group form-group-marginless">
+                    <!-- cho thành table  -->
+                <input type="hidden" name="from_id_group">
+                <table class="table table-hover">
+                    <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Tên nhóm</th>
+                        <th>Chọn</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td></td>
+                        <td>Chọn tất cả</td>
+                        <td>
+                        <label class="p-2 flex-shrink-1 bd-highlight kt-checkbox kt-checkbox--bold kt-checkbox--success">
+                            <input value="" class="cbx checkall" type="checkbox">
+                            <span></span>
+                        </label>
+                        </td>
+                    </tr>
+                    <?php 
+                    foreach($list_group as $index => $group)
+                    {
+                        echo '
+                    <tr>
+                        <td>'.intval($index+1).'</td>
+                        <td>'.(isset($group['title'])?$group['title']:'').'</td>
+                        <td>
+                        <label class="p-2 flex-shrink-1 bd-highlight kt-checkbox kt-checkbox--bold kt-checkbox--success">
+                            <input data-id="'.$group['id'].'" data-type="'.$group['_'].'" class="cbx" type="checkbox">
+                            <span></span>
+                        </label>
+                        </td>
+                    </tr>';
+                    }
+                    ?>
+                    </tbody>
+                </table>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary add_group_chat" data-dismiss="modal">Thêm</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Hủy</button>
+            </div>
+        </div>
+    </div>
+</div>
 <?php include 'footer.php'; ?>
+<script>
+$('.add-group-chat').click(function () {
+    $('input[name="from_id_group"]').val($(this).attr('data-id'));
+})
+$('.checkall').click(function() {
+    $('.cbx:checkbox').not(this).prop('checked', this.checked);
+})
+$('.add_group_chat').click(function(){
+    let array_chat_id = [];
+    $('.cbx:checkbox').map(function(){
+        if (this.checked && $(this).attr('data-id') != "")
+            array_chat_id.push({
+                id: $(this).attr('data-id'),
+                type: $(this).attr('data-type')
+            })
+    })
+    if (array_chat_id.length == 0) {
+        Swal.fire(
+            'Lỗi...',
+            'Danh sách group chat Telegram rỗng',
+            'error',
+        );
+    } else {
+        $.ajax({
+            url: "./createapp.php",
+            type: "POST",
+            data: {
+                "function": "add_group_chat_telegram",
+                "id_group_chat": JSON.stringify(array_chat_id),
+                "from_id_group": $('input[name="from_id_group"]').val(),
+                "id": <?php echo $id; ?>
+            },
+            success: function (dt) {
+                if (dt=="success") 
+                {
+                    Swal.fire(
+                        'Thêm thành công',
+                        'Lên lịch thành công thêm người dùng vào nhóm chat',
+                        'success',
+                    );
+                }
+                else 
+                if (dt) {
+                    Swal.fire(
+                        'Thêm thành công',
+                        'Thêm thành công ' + dt + ' người dùng vào ' + array_chat_id.length + ' nhóm chat',
+                        'success',
+                    );
+                    // location.reload();
+                } else Swal.fire(
+                    'Lỗi...',
+                    'Lỗi khi thêm người dùng vào nhóm chat',
+                    'error',
+                );
+            }
+        })
+    }
+})
 </script>

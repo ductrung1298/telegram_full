@@ -35,13 +35,7 @@ $id = (isset($_GET['id']) ? intval($_GET['id']) : 0);
                             <li class="nav-item">
                                 <a class="nav-link active" data-toggle="tab"
                                    href="#kt_portlet_base_demo_1_1_tab_content" role="tab" aria-selected="true">
-                                    <i class="flaticon2-group"></i>Danh bạ
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" data-toggle="tab" href="#kt_portlet_base_demo_1_2_tab_content"
-                                   role="tab" aria-selected="false">
-                                    <i class="flaticon-users"></i> Thêm người dùng vào danh bạ
+                                    <i class="flaticon2-group"></i>Chuyên mục
                                 </a>
                             </li>
                         </ul>
@@ -50,9 +44,9 @@ $id = (isset($_GET['id']) ? intval($_GET['id']) : 0);
                 <div class="kt-portlet__body">
                     <div class="tab-content">
                         <div class="tab-pane active " id="kt_portlet_base_demo_1_1_tab_content" role="tabpanel">
-                            <div class="kt-portlet__body">
+                            <div class="kt-portlet__body pt-0">
                                 <div class="row ">
-                                    <div class="col-12 mb-4">
+                                    <div class="col-12 mb-3">
                                         <div class="d-flex justify-content-between align-items-center">
                                             <div class="d-flex">
                                                 <div class="form-group mb-0">
@@ -65,20 +59,49 @@ $id = (isset($_GET['id']) ? intval($_GET['id']) : 0);
                                                 </div>
                                             </div>
                                             <div>
-                                                <button type="button" class="btn btn-label-instagram" data-toggle="modal"
+                                                <button type="button" class="btn btn-label-instagram mr-3"
+                                                    data-toggle="modal"
+                                                    data-target="#chuyenmucModal">
+                                                    <i class="fas fa-sitemap"></i> Thêm chuyên mục danh bạ
+                                                </button>
+                                            <!--     <button type="button" class="btn btn-label-instagram" data-toggle="modal"
                                                         data-target="#exampleModalCenter">
                                                     <i class="fa fa-book"></i> Thêm danh bạ
-                                                </button>
+                                                </button> -->
                                             </div>
-
+<!--                                             <button type="button" class="btn btn-label-instagram mr-3"
+                                                    data-toggle="modal"
+                                                    data-target="#graphicModal">
+                                                <i class="fa fa-book"></i> Thêm graphics
+                                            </button> -->
+                                         <!--    <button type="button" class="btn btn-label-instagram mr-3"
+                                                    data-toggle="modal"
+                                                    data-target="#chuyenmucModal">
+                                                <i class="fas fa-sitemap"></i> Thêm chuyên mục danh bạ
+                                            </button> -->
+                                        <!--     <button type="button" class="btn btn-label-instagram" data-toggle="modal"
+                                                    data-target="#exampleModalCenter">
+                                                <i class="fa fa-book"></i> Thêm danh bạ
+                                            </button> -->
                                         </div>
                                     </div>
                                     <div class="kt-section col-12">
+                                        <span class="kt-section__info" style="padding-left: 10px;">
+                                            CHUYÊN MỤC
+                                        </span>
                                         <div class="tab-pane active" id="kt_widget4_top10_rating">
+                                            <!-- <div class="kt-scroll" data-scroll="true" data-height="400" style="height: 400px;">
+                                                <div class="kt-list-timeline">
+                                                    <div class="table-responsive">
+                                                        <div class="kt-section__content"> -->
                                             <div class="table-responsive">
                                                 <?php 
 //  GET CATEGORY CONTACT
-                                                    $url4 = 'http://localhost:2020/telegram/get_cat';
+                                                if($id == 0) {
+                                                    $url4 =  'http://localhost:2020/telegram/get_cat';
+                                                }else {
+                                                    $url4 =  'http://localhost:2020/telegram/get_contact?idcate='.$id;
+                                                }
                                                     $curl4 = curl_init($url4);
                                                     curl_setopt($curl4, CURLOPT_RETURNTRANSFER, true);
                                                     curl_setopt($curl4, CURLOPT_HTTPHEADER, [
@@ -89,8 +112,51 @@ $id = (isset($_GET['id']) ? intval($_GET['id']) : 0);
                                                     $response4 = json_decode(curl_exec($curl4), true);
                                                     $httpcode4 = curl_getinfo($curl4, CURLINFO_HTTP_CODE);
                                                     curl_close($curl4);
+                                                    // echo "<pre>";
+                                                    // print_r($response4);
+                                                    // echo "</pre>";
+                                                    // GET CATE BY CAT_ID
+                                                    $cat_id = isset($_GET['cat_id']) ? $_GET['cat_id'] : 0;
+                                                    $url6 = 'http://localhost:2020/telegram/get_cat_by_cat_id?cat_id='. $cat_id;
+                                                    $curl6 = curl_init($url6);
+                                                    curl_setopt($curl6, CURLOPT_RETURNTRANSFER, true);
+                                                    curl_setopt($curl6, CURLOPT_HTTPHEADER, [
+                                                        'X-RapidAPI-Host: contextualwebsearch-websearch-v1.p.rapidapi.com',
+                                                        'X-RapidAPI-Key: 7xxxxxxxxxxxxxxxxxxxxxxxxxxx',
+                                                        'Authorization: ' . $_SESSION['user_token']
+                                                    ]);
+                                                    $response6 = json_decode(curl_exec($curl6), true);
+                                                    $httpcode6 = curl_getinfo($curl6, CURLINFO_HTTP_CODE);
+                                                    curl_close($curl6);
+                                                    // echo "<pre>";
+                                                    // print_r($response6);
+                                                    // echo "</pre>";
                                                 ?>
-                                                <table class="table" id="datatb">
+                                                <?php 
+                                                    if($id == 0):
+                                                ?>
+                                                <table class="table">
+                                                    <thead>
+                                                    <tr>
+                                                        <th>
+                                                            <label class="kt-checkbox kt-checkbox--bold kt-checkbox--success">
+                                                                <input id="checkAll" type="checkbox">
+                                                                <span></span>
+                                                            </label>
+                                                        </th>
+                                                        <th>#</th>
+                                                        <th>Tên chuyên mục</th>
+                                                        <th>Mô tả</th>
+                                                        <!-- <th>Số lượng chuyên mục</th> -->
+                                                        <th>Số lượng danh bạ</th>
+                                               <!--          <th>Mô tả</th>
+                                                        <th>Ngày tạo</th>
+                                                        <th>Chức năng</th> -->
+                                                    </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                <?php else: ?>
+                                                    <table class="table">
                                                     <thead>
                                                     <tr>
                                                         <th>
@@ -101,33 +167,28 @@ $id = (isset($_GET['id']) ? intval($_GET['id']) : 0);
                                                         </th>
                                                         <th>#</th>
                                                         <th>Tên danh bạ</th>
-                                                        <th width="15%">Chuyên mục</th>
+                                                        <th>Chuyên mục</th>
                                                         <th>Số lượng thành viên</th>
                                                         <th>Bạn bè Telegram</th>
                                                         <th>Mô tả</th>
                                                         <th>Ngày tạo</th>
                                                         <th>Chức năng</th>
                                                     </tr>
-                                                    <tr id="row-search">
-                                                        <th data-is-search="false"></th>
-                                                        <th data-is-search="false"></th>
-                                                        <th data-is-search="true"></th>
-                                                        <th data-is-search="true"></th>
-                                                        <th data-is-search="false"></th>
-                                                        <th data-is-search="false"></th>
-                                                        <th data-is-search="false"></th>
-                                                        <th data-is-search="false"></th>
-                                                        <th data-is-search="false"></th>
-                                                    </tr>
                                                     </thead>
                                                     <tbody>
+                                                <?php endif; ?>
                                                     <?php
 
-                                                    function dequycate2($data)
+
+
+
+                                                    function convertdequycate($data, $parent = [], $text = "")
                                                     {
                                                         $array = [];
-                                                        foreach ($data as $index => $value) {
-                                                            $array[$value['Id']] = $value;
+                                                        if($data) {
+                                                            foreach ($data as $index => $value) {
+                                                                $array[$value['Id']] = $value;
+                                                            }
                                                         }
                                                         return $array;
                                                     }
@@ -161,6 +222,58 @@ $id = (isset($_GET['id']) ? intval($_GET['id']) : 0);
                                                                 }
                                                             }
                                                         }
+                                                        return $xhtml;
+                                                    }
+
+                                                    $exists = [];
+
+                                                    $stt2 = 0;
+
+                                                    function dequycatetable($data, $parent = [], $text = "", $is = false)
+                                                    {
+                                                        global $stt2;
+                                                        global $exists;
+
+                                                        $xhtml = '';
+
+                                                        foreach($parent as $item) {
+                                                            $exists[] = $item;
+                                                        }
+                                                        if (!$is) {
+                                                            foreach ($data as $index => $value) {
+                                                                if(!in_array($value['Id'],$exists)) {
+                                                                    $xhtml .= '<tr><th><label class="kt-checkbox kt-checkbox--bold kt-checkbox--success">
+                                                                                <input value="'. $value["Id"].'" class="cbx" type="checkbox">
+                                                                                <span></span>
+                                                                            </label></th><th>'.++$stt2."</th>";
+                                                                    $xhtml .= '<td><a href="getcategory.php?id='.$value['Id'].'">'.$text.$value['name_vi']."</a></td>";
+                                                                    $xhtml .= "<td>".$value['note']."</td>";
+                                                                    // $xhtml .= "<td>".$value['length_cate']."</td>";
+                                                                    $xhtml .= "<td>".$value['length_contact']."</td>";
+                                                                    $xhtml .= "</tr>";
+                                                                    if ($value['child_ids']) {
+                                                                        $xhtml .= dequycatetable($data, $value['child_ids'], $text . '<i class="fas fa-long-arrow-alt-right mr-1"></i>', true,$exists);
+                                                                    }
+
+                                                                }
+                                                            }
+                                                        } else {
+                                                            foreach ($parent as $index => $value) {
+                                                                $xhtml .= '<tr><th><label class="kt-checkbox kt-checkbox--bold kt-checkbox--success">
+                                                                                <input value="'. $data[$value]['Id'].'" class="cbx" type="checkbox">
+                                                                                <span></span>
+                                                                            </label></th><th>'.++$stt2."</th>";
+                                                                    $xhtml .= '<td><a href="getcategory.php?id='.$data[$value]['Id'].'">'.$text.$data[$value]['name_vi']."</a></td>";
+                                                                    $xhtml .= "<td>".$data[$value]['note']."</td>";
+                                                                    // $xhtml .= "<td>".$data[$value]['length_cate']."</td>";
+                                                                    $xhtml .= "<td>".$data[$value]['length_contact']."</td>";
+                                                                    $xhtml .= "</tr>";
+                                                                if ($data[$value]['child_ids']) {
+                                                                    $xhtml .= dequycatetable($data, $data[$value]['child_ids'], $text . '<i class="fas fa-long-arrow-alt-right mr-1"></i>', true, $exists);
+                                                                }
+                                                            }
+                                                        }
+
                                                         return $xhtml;
                                                     }
 
@@ -201,19 +314,20 @@ $id = (isset($_GET['id']) ? intval($_GET['id']) : 0);
                                                         foreach ($response2 as $index => $list) {
                                                             if ($list['parent_id'] == $parent) {
                                                                 echo '<tr>
-                                                                        <td><label class="kt-checkbox kt-checkbox--bold kt-checkbox--success">
+                                                                        <td><label class="kt-checkbox align-top mt-0 kt-checkbox--bold kt-checkbox--success">
                                                                                 <input value="'. $list["Id"].'" class="cbx" type="checkbox">
                                                                                 <span></span>
                                                                             </label></td>
                                                                         <th scope="row">' . $stt . '</th>
                                                                         <td>
                                                                             <a href="groupcontact.php?id=' . $list["Id"] . (($id != 0) ? ('&user=' . $id) : "") . '" >' . $text . ' ' . str_replace("<", "&lt;", $list['Name']) . '</a>
+                                                                            <div class="d-none">'.khong_dau($list['Name']).'</div>
                                                                             </td>
                                                                             ';
                                                                 echo '<td>';
                                                                 if (count($list['cat']) > 0) {
                                                                     foreach ($list['cat'] as $index => $_cat) {
-                                                                        echo '<a href="getcategory.php?id='.$_cat['id'].'" class="kt-badge kt-badge--primary  kt-badge--inline kt-badge--pill m-1">' . $_cat['name_vi'] . '</label>';
+                                                                        echo '<a href="getcategory.php?id='.$_cat['id'].'" class="kt-badge kt-badge--primary  kt-badge--inline kt-badge--pill m-1">' . $_cat['name_vi'] . '</label><div class="d-none">'.khong_dau($_cat['name_vi']).'</div>';
                                                                     }
                                                                 }
                                                                 echo '</td>';
@@ -241,7 +355,6 @@ $id = (isset($_GET['id']) ? intval($_GET['id']) : 0);
                                                         }
                                                         return $xhtml;
                                                     }
-
                                                     $url2 = 'http://localhost:2020/telegram/get_contact?id=' . $id;;
                                                     $curl2 = curl_init($url2);
                                                     curl_setopt($curl2, CURLOPT_RETURNTRANSFER, true);
@@ -260,8 +373,12 @@ $id = (isset($_GET['id']) ? intval($_GET['id']) : 0);
                                                         echo("<script>window.location.href='http://" . $host . $uri . '/' . $extra . "'</script>;");
                                                         exit;
                                                     } else {
-                                                        if (isset($response2));
-                                                            echo dequytable($response2);
+                                                        if (isset($response4));
+                                                            if($id == 0) {
+                                                                echo dequycatetable(convertdequycate($response4));
+                                                            }else {
+                                                                echo dequytable($response4);
+                                                            }
                                                     }
                                                     ?>
                                                     </tbody>
@@ -425,7 +542,8 @@ $id = (isset($_GET['id']) ? intval($_GET['id']) : 0);
                                                             <option value=-1>-Không sử dụng-</option>
                                                             <?php
                                                             if (isset($response2))
-                                                                echo dequy($response2);
+                                                                if (isset($response2))
+                                                                    echo dequy($response2);
                                                             ?>
                                                         </select>
                                                     </div>
@@ -502,13 +620,14 @@ $id = (isset($_GET['id']) ? intval($_GET['id']) : 0);
                             <div class="input-group-append"><span class="input-group-text" id="basic-addon4"><i
                                             class="fas fa-sticky-note"></i></span></div>
                         </div>
+
                         <label>Chuyên mục</label>
                         <div class="input-group mb-3">
                             <select multiple type="text" class="form-control" name="cat_id[]"
                                     aria-describedby="basic-addon4">
                                 <option value="0">-- Root --</option>
                                 <?php if (isset($response4))
-                                    echo dequycateoption(dequycate2($response4));
+                                    echo dequycateoption(convertdequycate($response4));
                                 ?>
                             </select>
                             <div class="input-group-append"><span class="input-group-text" id="basic-addon4"><i
@@ -528,7 +647,7 @@ $id = (isset($_GET['id']) ? intval($_GET['id']) : 0);
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLongTitle">Thêm chuyên mục danh bạ</h5>
+                    <h5 class="modal-title" id="exampleModalLongTitle">Thêm chuyên mục </h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
@@ -560,7 +679,7 @@ $id = (isset($_GET['id']) ? intval($_GET['id']) : 0);
                                     aria-describedby="basic-addon4" multiple>
                                 <option value="0">-- Root --</option>
                                 <?php if (isset($response4))
-                                    echo dequycateoption(dequycate2($response4));
+                                    echo dequycateoption(convertdequycate($response4));
                                 ?>
                             </select>
                             <div class="input-group-append"><span class="input-group-text" id="basic-addon4"><i
@@ -644,32 +763,6 @@ $id = (isset($_GET['id']) ? intval($_GET['id']) : 0);
     }
 
     jQuery(document).ready(function ($) {
-        // datatable
-        $('#datatb thead #row-search th').each( function () {
-            if($(this).data('is-search')) {
-            var title = $(this).text();
-                    $(this).html('<input type="text" style="width:100%;" placeholder="" />' );
-            }
-        } );
- 
-        // DataTable
-        var table = $('#datatb').DataTable({
-            "ordering": false,
-            // searching:false
-        });
-         
-        // Apply the search
-        table.columns().every( function () {
-            var that = this;
-            $( 'input', this.header() ).on( 'keyup change clear', function () {
-                if ( that.search() !== this.value ) {
-                    that
-                        .search( this.value)
-                        .draw();
-                }
-            } );
-        });
-
         $("#checkAll").click(function(){
             $('.cbx:checkbox').not(this).prop('checked', this.checked);
         });
@@ -677,6 +770,7 @@ $id = (isset($_GET['id']) ? intval($_GET['id']) : 0);
         // doAction
 
         $("#doAction").click(function() {
+            console.log($("select[name=action]").val());
             var searchIDs = $(".cbx:checked").map(function(){
               return $(this).val();
             }).get();
@@ -686,7 +780,7 @@ $id = (isset($_GET['id']) ? intval($_GET['id']) : 0);
                 data: {
                     "function": "do_action",
                     "ids": JSON.stringify(searchIDs),
-                    "table": "contact",
+                    "table": "<?= ($id != 0) ? 'contact' : 'category' ?>",
                     "action": "delete",
                     "id": <?php echo $id; ?>
                 },
@@ -707,8 +801,6 @@ $id = (isset($_GET['id']) ? intval($_GET['id']) : 0);
                 }
             });
         });
-
-
         $('.add-group-chat').click(function () {
             $('input[name="id_contact"]').val($(this).attr('data-idcontact'));
         })
@@ -738,20 +830,13 @@ $id = (isset($_GET['id']) ? intval($_GET['id']) : 0);
                         "id": <?php echo $id; ?>
                     },
                     success: function (dt) {
-                        if (dt=="success") {
-                            Swal.fire(
-                                'Thêm thành công',
-                                'Đã lên lịch thêm người dùng vào nhóm chat',
-                                'success',
-                            );
-                        }
-                        else if (dt) {
+                        if (dt) {
                             Swal.fire(
                                 'Thêm thành công',
                                 'Thêm thành công ' + dt + ' người dùng vào ' + array_chat_id.length + ' nhóm chat',
                                 'success',
                             );
-                            // location.reload();
+                            location.reload();
                         } else Swal.fire(
                             'Lỗi...',
                             'Lỗi khi thêm người dùng vào nhóm chat',

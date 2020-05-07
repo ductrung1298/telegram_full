@@ -195,11 +195,11 @@
                                                         <table class="table table-hover">
                                                         <thead class="thead-light">
                                                             <tr>
-                                                            <th scope="col">Name</th>
-                                                            <th scope="col">Số điện thoại</th>
-                                                            <th scope="col">Username</th>
-                                                            <th scope="col">Danh bạ</th>
-                                                            <th scope="col" class="text-center">Chọn</th>
+                                                            <th>Name</th>
+                                                            <th>Số điện thoại</th>
+                                                            <th>Username</th>
+                                                            <th>Danh bạ</th>
+                                                            <th class="text-center">Chọn</th>
                                                             </tr>
                                                         </thead>
                                                         <tr>
@@ -212,7 +212,7 @@
                                                             foreach ($response2 as $index => $msg) {
                                                                 {
                                                                 echo '<tr>';
-                                                                echo '<td><span class="kt-font-bolder">'.$msg['first_name'].' '.(isset($msg['last_name'])?$msg['last_name']:'').'</span></td>
+                                                                echo '<td>'.(isset($msg['first_name'])?$msg['first_name']:"").' '.(isset($msg['last_name'])?$msg['last_name']:'').'</td>
                                                                 <td>'.(isset($msg['phone'])?$msg['phone']:'').'</td>
                                                                 <td>'.(isset($msg['username']) ? $msg['username'] : '').'</td>
                                                                 <td>';
@@ -306,10 +306,10 @@
                                                         <thead class="thead-light">
                                                             <tr>
                                                             <th scope="col">#</th>
-                                                            <th scope="col">Name</th>
-                                                            <th scope="col">Số lượng thành viên</th>
-                                                            <th scope="col">Bạn bè Telegram</th>
-                                                            <th scope="col" class="text-center">Chọn</th>
+                                                            <th>Name</th>
+                                                            <th>Số lượng thành viên</th>
+                                                            <th>Bạn bè Telegram</th>
+                                                            <th class="text-center">Chọn</th>
                                                             </tr>
                                                         </thead>
                                                         <tbody  class="send-mess-directory">
@@ -333,11 +333,11 @@
                                                                 if (isset($response3))
                                                                 foreach($response3 as $index => $list) {
                                                                     echo '<tr>
-                                                                    <th scope="col">'.intval($index+1).'</th>
-                                                                    <th scope="col">'.$list["Name"].'</th>
-                                                                    <th scope="col">'.$list["length"].'</th>
-                                                                    <th scope="col">'.$list["lengthfriend"].'</th>
-                                                                    <th><input type="checkbox" class="form-control send-mess-contact" data-type="2" data-idcontact="'.$list["Id"].'"></th>
+                                                                    <td>'.intval($index+1).'</td>
+                                                                    <td>'.$list["Name"].'</td>
+                                                                    <td>'.$list["length"].'</td>
+                                                                    <td>'.$list["lengthfriend"].'</td>
+                                                                    <td><input type="checkbox" class="form-control send-mess-contact" data-type="2" data-idcontact="'.$list["Id"].'"></th>
                                                                     </tr>';
                                                                 }
                                                                 ?>

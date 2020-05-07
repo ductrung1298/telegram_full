@@ -41,7 +41,7 @@
                         <h1 align="center">Đã xảy ra một số lỗi</h1>
                         <h1 align="center">Vui lòng thử lại sau</h1>
                         <div class="col-lg-12 mt-5 text-center bt-end">
-                            <a href="dashboard.php" class="btn btn-success"><i class="flaticon-home-1"></i> Quay về trang chủ</a>
+                            <a href="index.php" class="btn btn-success"><i class="flaticon-home-1"></i> Quay về trang chủ</a>
                         </div>
                         <hr>
                         </div>

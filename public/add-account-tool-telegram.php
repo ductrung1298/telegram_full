@@ -143,7 +143,7 @@
                                                 </thead>
                                                 <tbody>
                                                     <?php 
-                                                    $url='http://localhost:2020/telegram/get_list_user_telegram';
+                                                        $url='http://localhost:2020/telegram/get_list_user_telegram';
                                                     $curl=curl_init($url);
                                                     curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
                                                     curl_setopt($curl, CURLOPT_HTTPHEADER, [
@@ -168,7 +168,7 @@
                                                                 <a href="getcontact.php?id='.$post['Id'].'" class="dropdown-item btn btn-label-linkedin"><i class="fas fa-address-book"></i>Danh bạ</a>
                                                                 <a class="dropdown-item btn btn-label-twitter" href="list-friend.php?id='.$post['Id'].'"><i class="fas fa-user-friends"></i>Bạn bè</a>
                                                                 <a href="getdialogs.php?id='.$post['Id'].'" class="dropdown-item btn btn-label-linkedin"><i class="fab fa-telegram"></i>Gửi tin nhắn</a>
-                                                                <a class="dropdown-item btn btn-label-twitter" href="get-user-group.php?id='.$post['Id'].'"><i class="fas fa-copy"></i>Quét member group</a>
+                                                                <a class="dropdown-item btn btn-label-twitter" href="get-user-group.php?id='.$post['Id'].'"><i class="fas fa-copy"></i>Group chat</a>
                                                                 <a class="dropdown-item btn btn-label-linkedin btn-del-acc" data-id='.$post['Id'].'><i class="fas fa-trash"></i>Xóa</a>
                                                             </div>
                                                         </div>';

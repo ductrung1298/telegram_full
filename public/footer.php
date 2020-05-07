@@ -62,9 +62,19 @@
 
 		<script src="../assets/js/eplus.js"></script>
 		
-<script src="../assets/plugins/custom/datatables/datatables.bundle.js" type="text/javascript"></script>
-
 		<!--end::Page Scripts -->
+
+		<!-- start::Datatables -->
+		<!--begin::Page Vendors(used by this page) -->
+		<script src="../assets/plugins/custom/datatables/datatables.bundle.js" type="text/javascript"></script>
+
+		<!--end::Page Vendors -->
+		<script src="//cdnjs.cloudflare.com/ajax/libs/x-editable/1.5.0/bootstrap3-editable/js/bootstrap-editable.min.js"></script>
+
+
+		<!--begin::Page Scripts(used by this page) -->
+		<script src="../assets/js/pages/crud/datatables/search-options/column-search.js" type="text/javascript"></script>
+		<!-- end::Datatables -->
 	</body>
 
 	<!-- end::Body -->
