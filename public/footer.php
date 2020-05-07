@@ -54,6 +54,7 @@
 		<script src="../assets/plugins/custom/fullcalendar/fullcalendar.bundle.js" type="text/javascript"></script>
 		<script src="//maps.google.com/maps/api/js?key=AIzaSyBTGnKT7dt597vo9QgeQ7BFhvSRP4eiMSM" type="text/javascript"></script>
 		<script src="../assets/plugins/custom/gmaps/gmaps.js" type="text/javascript"></script>
+		<script src="../assets/js/pages/components/extended/toastr.min.js" type="text/javascript"></script>
 
 		<!--end::Page Vendors -->
 		<!--begin::Page Scripts(used by this page) -->
@@ -76,11 +77,7 @@
 
     
 		<script src="//cdnjs.cloudflare.com/ajax/libs/x-editable/1.5.0/bootstrap3-editable/js/bootstrap-editable.min.js"></script>
-		<script type="text/javascript">
-
-	        // $.fn.editable.defaults.mode = 'line';
-
-	    </script>
+		<!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script> -->
     
 	</body>
 

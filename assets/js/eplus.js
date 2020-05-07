@@ -459,6 +459,7 @@ $(document).ready(function () {
     })
     $('#kt_datepicker_7').datetimepicker({
     });
+    var stt = 1;
     $('.list-contact').on('click touch', '.add-phone', function (event) {
         let rdom = `<div class="col-lg-12 kt-margin-t-20 row">
         <div class="col-lg-3 input-group">
@@ -473,6 +474,87 @@ $(document).ready(function () {
             <input type="text" class="form-control" name="last_name[]" placeholder="Last_name"
                 >
         </div>
+         <div class="modal fade" id="detail_one_${stt}" tabindex="-1" role="dialog"
+                                                             aria-labelledby="detail_oneTitle" aria-hidden="true">
+                                                            <div class="modal-dialog modal-dialog-centered" role="document">
+                                                                <div class="modal-content">
+                                                                    <div class="modal-header">
+                                                                        <h5 class="modal-title" id="exampleModalLongTitle">Chi tiết user ${stt} muốn thêm</h5>
+                                                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                                            <span aria-hidden="true">&times;</span>
+                                                                        </button>
+                                                                    </div>
+                                                                    <div class="modal-body">
+                                                                        <div class="form-group form-group-marginless">
+                                                                            <label>Extra Phone ( <span class="text-muted">Mỗi số cách nhau một dấu phẩy</span> ) </label>
+                                                                            <div class="input-group mb-3">
+                                                                                <input type="text" class="form-control" name="extra_phone[]" aria-describedby="basic-addon2">
+                                                                            </div>
+                                                                            <label>Birthday</label>
+                                                                            <div class="input-group mb-3">
+                                                                                <input type="text" class="form-control" name="birthday[]" aria-describedby="basic-addon2">
+                                                                            </div>
+                                                                            <label>Email</label>
+                                                                            <div class="input-group mb-3">
+                                                                                <input type="text" class="form-control" name="email[]" aria-describedby="basic-addon3">
+                                                                            </div>
+                                                                            <label>Extra Email</label>
+                                                                            <div class="input-group mb-3">
+                                                                                <input type="text" class="form-control" name="extra_email[]" aria-describedby="basic-addon3">
+                                                                            </div>
+                                                                            <label>Address</label>
+                                                                            <div class="input-group mb-3">
+                                                                                <input type="text" class="form-control" name="address[]" aria-describedby="basic-addon3">
+                                                                            </div>
+                                                                            <label>Extra Address</label>
+                                                                            <div class="input-group mb-3">
+                                                                                <input type="text" class="form-control" name="extra_address[]" aria-describedby="basic-addon3">
+                                                                            </div>
+                                                                            <label>Identify Card ID</label>
+                                                                            <div class="input-group mb-3">
+                                                                                <input type="text" class="form-control" name="identify_card_id[]" aria-describedby="basic-addon3">
+                                                                            </div>
+                                                                            <label>Passport Number</label>
+                                                                            <div class="input-group mb-3">
+                                                                                <input type="text" class="form-control" name="passport_number[]" aria-describedby="basic-addon3">
+                                                                            </div>
+                                                                            <label>Country</label>
+                                                                            <div class="input-group mb-3">
+                                                                                <input type="text" class="form-control" name="country[]" aria-describedby="basic-addon3">
+                                                                            </div>
+                                                                            <label>District</label>
+                                                                            <div class="input-group mb-3">
+                                                                                <input type="text" class="form-control" name="district[]" aria-describedby="basic-addon3">
+                                                                            </div>
+                                                                            <label>City</label>
+                                                                            <div class="input-group mb-3">
+                                                                                <input type="text" class="form-control" name="city[]" aria-describedby="basic-addon3">
+                                                                            </div>
+                                                                            <label>State</label>
+                                                                            <div class="input-group mb-3">
+                                                                                <input type="text" class="form-control" name="state[]" aria-describedby="basic-addon3">
+                                                                            </div>
+                                                                            <label>Zipcode</label>
+                                                                            <div class="input-group mb-3">
+                                                                                <input type="text" class="form-control" name="zipcode[]" aria-describedby="basic-addon3">
+                                                                            </div>
+                                                                            <label>Extra ID</label>
+                                                                            <div class="input-group mb-3">
+                                                                                <input type="text" class="form-control" name="extra_id[]" aria-describedby="basic-addon3">
+                                                                            </div>
+                                                                            
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="modal-footer">
+                                                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+        <div class="col-lg-1 col-md-1 detail_one_user kt-margin-b-5">
+                                                               <p class="fas fa-info-circle" data-toggle="modal"
+                                                        data-target="#detail_one_${stt}" style="font-size: 3rem; color: dimgrey; cursor: pointer;"></p>
+                                                        </div>
         <div class="col-lg-1 col-md-1 delete-phone kt-margin-b-5"
             style="display: none;">
             <i class="far fa-minus-square"
@@ -487,6 +569,7 @@ $(document).ready(function () {
         $('.list-contact .add-phone').remove();
         $('.list-contact .delete-phone').last().addClass('display-block');
         $('.list-contact').append(rdom);
+        stt++;
     });
     $('.list-contact').on('click touch', '.delete-phone', function (event) {
         $(this).parent().remove();

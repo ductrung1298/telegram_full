@@ -179,42 +179,89 @@ if ($id != 0) {
                                                                                 <label>Phone: </label>
                                                                                 <a class="editable_on" href="#" data-type="text" data-pk="<?= $contact['Id'] ?>" data-url="createapp.php" data-title="Enter username" id="phone"><?= $contact['phone'] ?></a>
                                                                             </div>
-                                                                            <div class="user_info_field">
+                                                                            <div class="bg-light py-1 text-center">
+                                                                                <a class="toggleDetailOption" href="javascript:void(0);">Xem thêm <i class="fas fa-plus"></i></a>
+                                                                            </div>
+                                                                            <div style="display: none;">
+                                                                                <div class="user_info_field">
+                                                                                    <label>Extra Phone:</label>
+                                                                                     <a class="editable_on" href="#" data-type="text"data-pk="<?= $contact['Id'] ?>" data-url="createapp.php" data-title="Enter username" href="#" id="extra_phone">
+                                                                                    <?php
 
-                                                                                   
-                                                                                <label>Extra Phone:</label>
-                                                                                 <a class="editable_on" href="#" data-type="text"data-pk="<?= $contact['Id'] ?>" data-url="createapp.php" data-title="Enter username" href="#" id="extra_phone">
-                                                                                <?php
-
-                                                                                    if(!empty($contact['extra_phone'])) {
-                                                                                            $stt = 0;
-                                                                                            foreach(json_decode($contact['extra_phone'],true) as $index => $value) {
-                                                                                                if($stt > 0) {
-                                                                                                    echo ','.$value;
-                                                                                                }else {
-                                                                                                    echo $value;
+                                                                                        if(!empty($contact['extra_phone'])) {
+                                                                                                $stt = 0;
+                                                                                                foreach(json_decode($contact['extra_phone'],true) as $index => $value) {
+                                                                                                    if($stt > 0) {
+                                                                                                        echo ','.$value;
+                                                                                                    }else {
+                                                                                                        echo $value;
+                                                                                                    }
+                                                                                                    $stt++;
                                                                                                 }
-                                                                                                $stt++;
                                                                                             }
-                                                                                        }
-                                                                                    ?>
-                                                                                </a>
-                                                                            </div>
-                                                                            <div class="user_info_field">
-                                                                                <label>Address: </label>
-                                                                                <a class="editable_on" href="#" data-type="text" data-pk="<?= $contact['Id'] ?>" data-url="createapp.php" data-title="Enter username"  id="address"><?= $contact['address'] ?></a>
-                                                                            </div>
-                                                                            <div class="user_info_field">
-                                                                                <label>Extra Address:</label>
-                                                                                 <a class="editable_on" href="#" data-type="text" data-pk="<?= $contact['Id'] ?>" data-url="createapp.php" data-title="Enter username" id="extra_address"><?= $contact['extra_address'] ?></a>
-                                                                            </div>
-                                                                            <div class="user_info_field">
-                                                                                <label>Other Group: </label>
-                                                                                <a class="" href="#"></a>
-                                                                            </div>
-                                                                            <div class="user_info_field">
-                                                                                <label>Bạn bè Telegram:</label>
-                                                                                 <a class="" href="#"></a>
+                                                                                        ?>
+                                                                                    </a>
+                                                                                </div>
+                                                                                <div class="user_info_field">
+                                                                                    <label>Address: </label>
+                                                                                    <a class="editable_on" href="#" data-type="text" data-pk="<?= $contact['Id'] ?>" data-url="createapp.php" data-title="Enter username"  id="address"><?= $contact['address'] ?></a>
+                                                                                </div>
+                                                                                <div class="user_info_field">
+                                                                                    <label>Extra Address:</label>
+                                                                                     <a class="editable_on" href="#" data-type="text" data-pk="<?= $contact['Id'] ?>" data-url="createapp.php" data-title="Enter username" id="extra_address"><?= $contact['extra_address'] ?></a>
+                                                                                </div>
+                                                                                <div class="user_info_field">
+                                                                                    <label>Email:</label>
+                                                                                     <a class="editable_on" href="#" data-type="text" data-pk="<?= $contact['Id'] ?>" data-url="createapp.php" data-title="Enter username" id="email"><?= $contact['email'] ?></a>
+                                                                                </div>
+                                                                                <div class="user_info_field">
+                                                                                    <label>Extra Email:</label>
+                                                                                     <a class="editable_on" href="#" data-type="text" data-pk="<?= $contact['Id'] ?>" data-url="createapp.php" data-title="Enter username" id="extra_email"><?= $contact['extra_email'] ?></a>
+                                                                                </div>
+                                                                                <div class="user_info_field">
+                                                                                    <label>Birthday:</label>
+                                                                                     <a class="editable_on" href="#" data-type="text" data-pk="<?= $contact['Id'] ?>" data-url="createapp.php" data-title="Enter username" id="birthday"><?= $contact['birthday'] ?></a>
+                                                                                </div>
+                                                                                <div class="user_info_field">
+                                                                                    <label>Identify Card ID:</label>
+                                                                                     <a class="editable_on" href="#" data-type="text" data-pk="<?= $contact['Id'] ?>" data-url="createapp.php" data-title="Enter username" id="identify_cardid"><?= $contact['identify_cardid'] ?></a>
+                                                                                </div>
+                                                                                <div class="user_info_field">
+                                                                                    <label>Passport Number:</label>
+                                                                                     <a class="editable_on" href="#" data-type="text" data-pk="<?= $contact['Id'] ?>" data-url="createapp.php" data-title="Enter username" id="passport_number"><?= $contact['passport_number'] ?></a>
+                                                                                </div>
+                                                                                <div class="user_info_field">
+                                                                                    <label>District:</label>
+                                                                                     <a class="editable_on" href="#" data-type="text" data-pk="<?= $contact['Id'] ?>" data-url="createapp.php" data-title="Enter username" id="district"><?= $contact['district'] ?></a>
+                                                                                </div>
+                                                                                <div class="user_info_field">
+                                                                                    <label>City:</label>
+                                                                                     <a class="editable_on" href="#" data-type="text" data-pk="<?= $contact['Id'] ?>" data-url="createapp.php" data-title="Enter username" id="city"><?= $contact['city'] ?></a>
+                                                                                </div>
+                                                                                <div class="user_info_field">
+                                                                                    <label>State:</label>
+                                                                                     <a class="editable_on" href="#" data-type="text" data-pk="<?= $contact['Id'] ?>" data-url="createapp.php" data-title="Enter username" id="state"><?= $contact['state'] ?></a>
+                                                                                </div>
+                                                                                <div class="user_info_field">
+                                                                                    <label>Zipcode:</label>
+                                                                                     <a class="editable_on" href="#" data-type="text" data-pk="<?= $contact['Id'] ?>" data-url="createapp.php" data-title="Enter username" id="zipcode"><?= $contact['zipcode'] ?></a>
+                                                                                </div>
+                                                                                <div class="user_info_field">
+                                                                                    <label>Country:</label>
+                                                                                     <a class="editable_on" href="#" data-type="text" data-pk="<?= $contact['Id'] ?>" data-url="createapp.php" data-title="Enter username" id="country"><?= $contact['country'] ?></a>
+                                                                                </div>
+                                                                                <div class="user_info_field">
+                                                                                    <label>State:</label>
+                                                                                     <a class="editable_on" href="#" data-type="text" data-pk="<?= $contact['Id'] ?>" data-url="createapp.php" data-title="Enter username" id="extra_id"><?= $contact['extra_id'] ?></a>
+                                                                                </div>
+                                                                                <div class="user_info_field">
+                                                                                    <label>Other Group: </label>
+                                                                                    <a class="" href="#"></a>
+                                                                                </div>
+                                                                                <div class="user_info_field">
+                                                                                    <label>Bạn bè Telegram:</label>
+                                                                                     <a class="" href="#"></a>
+                                                                                </div>
                                                                             </div>
                                                                         </div>
                                                                     </div>
@@ -244,12 +291,14 @@ if ($id != 0) {
                                               action="addcontact.php" method="post" enctype="multipart/form-data">
                                             <input type="hidden" name="groupcontact" value="<?= $id ?>">
                                             <div class="kt-section__content">
+                                                <h4>Thêm bằng tay</h4>
                                                 <div class="form-group col-lg-15 row list-contact">
                                                     <div class=" kt-margin-t-5 col-lg-12 row">
                                                         <div class="col-lg-3 col-md-5">
-                                                            <label> <strong>Số điện thoại
+                                                            <label><strong>Số điện thoại
                                                                 </strong></label>
                                                         </div>
+
                                                         <div class="col-lg-3 col-md-5">
                                                             <label><strong>First_Name</strong></label>
                                                         </div>
@@ -272,6 +321,87 @@ if ($id != 0) {
                                                         <div class="col-lg-3 input-group">
                                                             <input type="text" class="form-control" name="last_name[]"
                                                                    placeholder="Last_name">
+                                                        </div>
+                                                         <div class="modal fade" id="detail_one" tabindex="-1" role="dialog"
+                                                             aria-labelledby="detail_oneTitle" aria-hidden="true">
+                                                            <div class="modal-dialog modal-dialog-centered" role="document">
+                                                                <div class="modal-content">
+                                                                    <div class="modal-header">
+                                                                        <h5 class="modal-title" id="exampleModalLongTitle">Chi tiết user muốn thêm</h5>
+                                                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                                            <span aria-hidden="true">&times;</span>
+                                                                        </button>
+                                                                    </div>
+                                                                    <div class="modal-body">
+                                                                        <div class="form-group form-group-marginless">
+                                                                            <label>Extra Phone ( <span class="text-muted">Mỗi số cách nhau một dấu phẩy</span> ) </label>
+                                                                            <div class="input-group mb-3">
+                                                                                <input type="text" class="form-control" name="extra_phone[]" aria-describedby="basic-addon2">
+                                                                            </div>
+                                                                            <label>Birthday</label>
+                                                                            <div class="input-group mb-3">
+                                                                                <input type="text" class="form-control" name="birthday[]" aria-describedby="basic-addon2">
+                                                                            </div>
+                                                                            <label>Email</label>
+                                                                            <div class="input-group mb-3">
+                                                                                <input type="text" class="form-control" name="email[]" aria-describedby="basic-addon3">
+                                                                            </div>
+                                                                            <label>Extra Email</label>
+                                                                            <div class="input-group mb-3">
+                                                                                <input type="text" class="form-control" name="extra_email[]" aria-describedby="basic-addon3">
+                                                                            </div>
+                                                                            <label>Address</label>
+                                                                            <div class="input-group mb-3">
+                                                                                <input type="text" class="form-control" name="address[]" aria-describedby="basic-addon3">
+                                                                            </div>
+                                                                            <label>Extra Address</label>
+                                                                            <div class="input-group mb-3">
+                                                                                <input type="text" class="form-control" name="extra_address[]" aria-describedby="basic-addon3">
+                                                                            </div>
+                                                                            <label>Identify Card ID</label>
+                                                                            <div class="input-group mb-3">
+                                                                                <input type="text" class="form-control" name="identify_card_id[]" aria-describedby="basic-addon3">
+                                                                            </div>
+                                                                            <label>Passport Number</label>
+                                                                            <div class="input-group mb-3">
+                                                                                <input type="text" class="form-control" name="passport_number[]" aria-describedby="basic-addon3">
+                                                                            </div>
+                                                                            <label>Country</label>
+                                                                            <div class="input-group mb-3">
+                                                                                <input type="text" class="form-control" name="country[]" aria-describedby="basic-addon3">
+                                                                            </div>
+                                                                            <label>District</label>
+                                                                            <div class="input-group mb-3">
+                                                                                <input type="text" class="form-control" name="district[]" aria-describedby="basic-addon3">
+                                                                            </div>
+                                                                            <label>City</label>
+                                                                            <div class="input-group mb-3">
+                                                                                <input type="text" class="form-control" name="city[]" aria-describedby="basic-addon3">
+                                                                            </div>
+                                                                            <label>State</label>
+                                                                            <div class="input-group mb-3">
+                                                                                <input type="text" class="form-control" name="state[]" aria-describedby="basic-addon3">
+                                                                            </div>
+                                                                            <label>Zipcode</label>
+                                                                            <div class="input-group mb-3">
+                                                                                <input type="text" class="form-control" name="zipcode[]" aria-describedby="basic-addon3">
+                                                                            </div>
+                                                                            <label>Extra ID</label>
+                                                                            <div class="input-group mb-3">
+                                                                                <input type="text" class="form-control" name="extra_id[]" aria-describedby="basic-addon3">
+                                                                            </div>
+                                                                            
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="modal-footer">
+                                                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-lg-1 col-md-1 detail_one_user kt-margin-b-5">
+                                                               <p class="fas fa-info-circle" data-toggle="modal"
+                                                        data-target="#detail_one" style="font-size: 3rem; color: dimgrey; cursor: pointer;"></p>
                                                         </div>
                                                         <div class="col-lg-1 col-md-1 delete-phone kt-margin-b-5"
                                                              style="display: none;">
@@ -305,11 +435,76 @@ if ($id != 0) {
                                                                value="3">
                                                     </div>
                                                     <div class="col-lg-3">
-                                                        <label>Vị trí cột Address</label>
-                                                        <input type="number" class="form-control" name="index_address"
-                                                               value="4">
+                                                        <label class="text-center w-100">Hiển thị tất cả option</label>
+                                                        <button type="button" data-id-elm="detail_option_file" class="btn btn-show-detail w-100 btn-secondary d-block">Thêm chi tiết<i class="fas fa-plus ml-2" style="font-size:12px;"></i></button>
                                                     </div>
                                                 </div>
+                                                <div class="form-group col-lg-15 mt-3 row box_detail_option" id="detail_option_file">
+                                                    <div class="col-lg-3">
+                                                        <label>Vị trí cột Birthday</label>
+                                                        <input type="number" class="form-control" name="index_birthday"
+                                                               value="0">
+                                                    </div>
+                                                    <div class="col-lg-3">
+                                                        <label>Vị trí cột Email</label>
+                                                        <input type="number" class="form-control" name="index_email"
+                                                               value="0">
+                                                    </div>
+                                                    <div class="col-lg-3">
+                                                        <label>Vị trí cột Extra Email</label>
+                                                        <input type="number" class="form-control" name="index_extra_email"
+                                                               value="0">
+                                                    </div>
+                                                    <div class="col-lg-3">
+                                                        <label>Vị trí cột Address</label>
+                                                        <input type="number" class="form-control" name="index_address"
+                                                               value="0">
+                                                    </div>
+                                                    <div class="col-lg-3 mt-3">
+                                                        <label>Vị trí cột Extra Address</label>
+                                                        <input type="number" class="form-control" name="index_extra_address"
+                                                               value="0">
+                                                    </div>
+                                                    <div class="col-lg-3 mt-3">
+                                                        <label>Vị trí cột Identify Card ID</label>
+                                                        <input type="number" class="form-control" name="index_identify_card_id"
+                                                               value="0">
+                                                    </div>
+                                                    <div class="col-lg-3 mt-3">
+                                                        <label>Vị trí cột Passport Number</label>
+                                                        <input type="number" class="form-control" name="index_passport_number"
+                                                               value="0">
+                                                    </div>
+                                                    <div class="col-lg-3 mt-3">
+                                                        <label>Vị trí cột Country</label>
+                                                        <input type="number" class="form-control" name="index_country"
+                                                               value="0">
+                                                    </div>
+                                                    <div class="col-lg-3 mt-3">
+                                                        <label>Vị trí cột District</label>
+                                                        <input type="number" class="form-control" name="index_district"
+                                                               value="0">
+                                                    </div>
+                                                    <div class="col-lg-3 mt-3">
+                                                        <label>Vị trí cột City</label>
+                                                        <input type="number" class="form-control" name="index_city"
+                                                               value="0">
+                                                    </div>
+                                                    <div class="col-lg-3 mt-3">
+                                                        <label>Vị trí cột State</label>
+                                                        <input type="number" class="form-control" name="index_state"
+                                                               value="0">
+                                                    </div>
+                                                    <div class="col-lg-3 mt-3">
+                                                        <label>Vị trí cột Zipcode</label>
+                                                        <input type="number" class="form-control" name="index_zipcode"
+                                                               value="0">
+                                                    </div>
+                                                    <div class="col-lg-3 mt-3">
+                                                        <label>Vị trí cột Extra ID</label>
+                                                        <input type="number" class="form-control" name="index_extra_id"
+                                                               value="0">
+                                                    </div>
                                                 <div class="col-sm-6 d-flex align-items-end">
                                                     <label class="kt-checkbox kt-checkbox--success">
                                                         <input type="checkbox" name="addFriend" value="thembanbe">
@@ -375,11 +570,30 @@ if ($id != 0) {
 
     $(document).ready(function() {
 
+        $(".toggleDetailOption").click(function() {
+            $(this).parent("div").next("div").slideToggle('fast');
+            $(this).parent().remove();
+
+        });
+
          $("#checkAll").click(function(){
             $('.cbx:checkbox').not(this).prop('checked', this.checked);
         });
 
         
+
+        // show detail option
+
+        $(".btn-show-detail").click(function() {
+            var idElm = $(this).data('id-elm');
+            $("#" + idElm).slideToggle({
+              start: function () {
+                $(this).css({
+                  display: "flex"
+                })
+              }
+            });
+        });
          // doAction
 
         $("#doAction").click(function() {
@@ -438,7 +652,20 @@ if ($id != 0) {
 
         $(".editable_on").editable({
             mode:'inline',
-            params:  {'function':'update_user'}
+            params:  {'function':'update_user'},
+            emptytext: 'Chưa có',
+            error: function(response, newValue) {
+                if(response.status === 500) {
+                    response = JSON.parse(response.responseText);
+                    console.log(response);
+                    toastr.error(response.sqlMessage,response.code);
+                    // if(response.code == 'ER_DATA_TOO_LONG') {
+                        // toastr.error('Dữ liệu quá dài !');
+                    // }else {
+                        // toastr.error('Đã có lỗi xảy ra !');
+                    // }
+                }
+            }
         });
 
         $('#datatb').ready(function() {
@@ -452,6 +679,7 @@ if ($id != 0) {
             // DataTable
             var table = $('#datatb').DataTable({
                 "ordering": false,
+                "lengthMenu": [[10, 25, 50, -1], [10, 25, 50, "All"]]
                 // searching:false
             });
 

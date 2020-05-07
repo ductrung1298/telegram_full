@@ -65,7 +65,7 @@ curl_close($curl4);
                             <li class="nav-item">
                                 <a class="nav-link text-uppercase active" data-toggle="tab"
                                    href="#kt_portlet_base_demo_1_1_tab_content" role="tab" aria-selected="true">
-                                    <i class="flaticon2-group"></i>Chuyên mục <?php echo ($id != 0) ? $response['name_vi'] : ''; ?>
+                                    <i class="flaticon2-group"></i>Chuyên mục <?php echo ($id != 0) ? '<i class="ml-3 fas fa-long-arrow-alt-right"></i>' . $response['name_vi'] : ''; ?>
                                 </a>
                             </li>
                         </ul>

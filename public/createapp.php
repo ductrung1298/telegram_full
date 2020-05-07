@@ -50,7 +50,10 @@ if ($_POST['function'] == "update_user") {
         echo json_encode($response);
     else if ($httpcode == 405) {
         echo 0;
-    } else echo null;
+    } else {
+        http_response_code($httpcode);
+        echo json_encode($response);
+    }
 }
 if ($_POST['function'] == "get_user") {
     $url = 'http://localhost:2020/telegram/get_user?id='. $_POST['id'];
@@ -312,28 +315,6 @@ if ($_POST['function'] == "addcat") {
         "parent_id" => isset($_POST["parent_id"]) ? json_encode($_POST['parent_id']) : null
     ];
     $url = "http://localhost:2020/telegram/add_cat";
-    $curl = curl_init($url);
-    curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
-    curl_setopt($curl, CURLOPT_HTTPHEADER, [
-        'X-RapidAPI-Host: contextualwebsearch-websearch-v1.p.rapidapi.com',
-        'X-RapidAPI-Key: 7xxxxxxxxxxxxxxxxxxxxxxxxxxx',
-        'Authorization: ' . $_SESSION['user_token']
-    ]);
-    curl_setopt($curl, CURLOPT_POST, 1);
-    curl_setopt($curl, CURLOPT_POSTFIELDS, http_build_query($body));
-    $response = curl_exec($curl);
-    $httpcode = curl_getinfo($curl, CURLINFO_HTTP_CODE);
-    curl_close($curl);
-    if ($httpcode == 200) echo '1';
-    else echo null;
-}
-if ($_POST['function'] == "addgraphic") {
-    $body = [
-        "name_vi" => $_POST["name_vi"],
-        "name_en" => $_POST["name_en"],
-        "note" => isset($_POST["note"]) ? $_POST["note"] : ""
-    ];
-    $url = "http://localhost:2020/telegram/add_graphic";
     $curl = curl_init($url);
     curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
     curl_setopt($curl, CURLOPT_HTTPHEADER, [

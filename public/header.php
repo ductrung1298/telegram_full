@@ -98,6 +98,7 @@ $contact = [
     <!--end::Layout Skins -->
     <link rel="shortcut icon" href="../assets/media/logos/logo_mydas_finall_01_uMl_icon.ico"/>
     <link href="//cdnjs.cloudflare.com/ajax/libs/x-editable/1.5.0/bootstrap3-editable/css/bootstrap-editable.css" rel="stylesheet"/>
+    <!-- <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css"> -->
     <link href="../assets/css/eplus.css" rel="stylesheet" type="text/css"/>
    
 </head>
@@ -164,7 +165,7 @@ $contact = [
                                         class="kt-menu__link-icon flaticon-book"></i><span class="kt-menu__link-text">Danh bạ</span></a>
                         </li> -->
 
-                        <li class="kt-menu__item kt-menu__item--submenu <?php echo in_array($uriName, $contact) ? 'kt-menu__item--active' : '' ?>"
+                        <li class="kt-menu__item kt-menu__item--submenu <?php echo in_array($uriName, $contact) ? 'kt-menu__item--active kt-menu__item--open' : '' ?>"
                             aria-haspopup="true" data-ktmenu-submenu-toggle="hover"><a href="javascript:;"
                                                                                        class="kt-menu__link kt-menu__toggle"><i
                                         class="kt-menu__link-icon flaticon-book"></i><span
