@@ -2,9 +2,15 @@
 $id = isset($_GET['id']) ? intval($_GET['id']) : 0;
 $user = isset($_GET['user']) ? intval($_GET['user']) : 0;
 $page = isset($_GET['page']) ? intval($_GET['page']) : 1;
+$search = isset($_GET['search']) ? $_GET['search'] : '';
+$style = '<style type="text/css">
+    #datatb_filter {
+        display:none;
+    }
+</style>';
 include 'header.php';
 if ($id != 0) {
-    $url = 'http://localhost:2020/telegram/get_contact?idgroupcontact=' . $id . '&page=' .$page;
+    $url = 'http://localhost:2020/telegram/get_contact?idgroupcontact=' . $id . '&page=' .$page . '&search=' . $search;
     $curl = curl_init($url);
     curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
     curl_setopt($curl, CURLOPT_HTTPHEADER, [
@@ -19,8 +25,9 @@ if ($id != 0) {
 
     $group = new Connection();
     $value = $group->connect('telegram/get_contact?idcontact=' . $id);
+
     $length = $list_user_in_contact['userLength'];
-    $countPage = round($length / $list_user_in_contact['pagination']['perPage']);
+    $countPage = ceil($length / $list_user_in_contact['pagination']['perPage']);
     $list_user_in_contact = $list_user_in_contact['data'];
 
     function pagination_link($page) {
@@ -100,6 +107,13 @@ if ($id != 0) {
                                                     <button id="doAction" class="btn btn-info">Thực hiện</button>
                                                 </div>
                                             </div>
+                                            <form method="get" action="" class="d-flex">
+                                                <input type="hidden" name="id" value="<?= $id; ?>">
+                                                <div class="form-group mb-0 mr-2">
+                                                     <input class="form-control" type="text" name="search" placeholder="Tìm kiếm số điện thoại">
+                                                </div>
+                                                    <button type="submit" class="btn btn-info">Tìm kiếm</button>
+                                            </form>
                                         </div>
                                     </div>
                                     <div class="kt-section col-12">
@@ -661,7 +675,6 @@ if ($id != 0) {
                             'error',
                         );
                     }
-                    
                 }
             }else {
                 Swal.fire(
@@ -670,7 +683,6 @@ if ($id != 0) {
                     'error',
                 );
             }
-            
         });
 
         $(".editable_on").editable({

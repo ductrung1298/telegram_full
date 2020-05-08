@@ -100,6 +100,8 @@ $contact = [
     <link href="//cdnjs.cloudflare.com/ajax/libs/x-editable/1.5.0/bootstrap3-editable/css/bootstrap-editable.css" rel="stylesheet"/>
     <!-- <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css"> -->
     <link href="../assets/css/eplus.css" rel="stylesheet" type="text/css"/>
+
+    <?= $style ?>
    
 </head>
 
