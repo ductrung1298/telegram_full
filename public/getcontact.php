@@ -2,7 +2,18 @@
 <?php
 include 'header.php';
 date_default_timezone_set('Asia/Ho_Chi_Minh');
-$id = (isset($_GET['id']) ? intval($_GET['id']) : 0);
+$url='http://localhost:2020/telegram/get_list_user_telegram';
+$curl=curl_init($url);
+curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
+curl_setopt($curl, CURLOPT_HTTPHEADER, [
+    'X-RapidAPI-Host: contextualwebsearch-websearch-v1.p.rapidapi.com',
+    'X-RapidAPI-Key: 7xxxxxxxxxxxxxxxxxxxxxxxxxxx',
+    'Authorization: '.$_SESSION['user_token']
+]);
+$list_user_telegram=json_decode(curl_exec($curl), true);
+$httpcode=curl_getinfo($curl,CURLINFO_HTTP_CODE);
+curl_close($curl);
+
 ?>
 <div class="kt-body kt-grid__item kt-grid__item--fluid kt-grid kt-grid--hor kt-grid--stretch" id="kt_body">
     <div class="kt-content kt-content--fit-top  kt-grid__item kt-grid__item--fluid kt-grid kt-grid--hor"
@@ -11,16 +22,11 @@ $id = (isset($_GET['id']) ? intval($_GET['id']) : 0);
         <div class="kt-subheader  mb-5 kt-grid__item" id="kt_subheader">
             <div class="kt-container ">
                 <div class="kt-subheader__main">
-                    <h4 class="kt-subheader__title">
-                        Tool Telegram </h4>
                     <div class="kt-subheader__breadcrumbs">
                         <a href="#" class="kt-subheader__breadcrumbs-home"><i class="flaticon2-shelter"></i></a>
                         <span class="kt-subheader__breadcrumbs-separator"></span>
-                        <a href="add-account-tool-telegram.php" class="kt-subheader__breadcrumbs-link">
-                            Danh bạ </a>
-                        <span class="kt-subheader__breadcrumbs-separator"></span>
                         <a href="#" class="kt-subheader__breadcrumbs-link">
-                            Danh sách danh bạ </a>
+                            Danh sách tệp khách hàng </a>
                     </div>
                 </div>
             </div>
@@ -36,13 +42,13 @@ $id = (isset($_GET['id']) ? intval($_GET['id']) : 0);
                             <li class="nav-item">
                                 <a class="nav-link active" data-toggle="tab"
                                    href="#kt_portlet_base_demo_1_1_tab_content" role="tab" aria-selected="true">
-                                    <i class="flaticon2-group"></i>Danh bạ
+                                    <i class="flaticon2-group"></i>Danh sách tệp khách hàng
                                 </a>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link" data-toggle="tab" href="#add_user_to_contact"
                                    role="tab" aria-selected="false">
-                                    <i class="flaticon-users"></i> Thêm người dùng vào danh bạ
+                                    <i class="flaticon-users"></i> Thêm người dùng vào tệp khách hàng
                                 </a>
                             </li>
                         </ul>
@@ -59,6 +65,7 @@ $id = (isset($_GET['id']) ? intval($_GET['id']) : 0);
                                                 <div class="form-group mb-0">
                                                     <select class="form-control" name="action" id="exampleSelect1">
                                                         <option value="0">Hành động</option>
+                                                        <option value="export">Export</option>
                                                         <option value="delete">Xoá</option>
                                                     </select>
                                                 </div>
@@ -69,7 +76,7 @@ $id = (isset($_GET['id']) ? intval($_GET['id']) : 0);
                                             <div>
                                                 <button type="button" class="btn btn-label-instagram" data-toggle="modal"
                                                         data-target="#exampleModalCenter">
-                                                    <i class="fa fa-book"></i> Thêm danh bạ
+                                                    <i class="fa fa-book"></i> Thêm tệp khách hàng
                                                 </button>
                                             </div>
 
@@ -111,14 +118,14 @@ $id = (isset($_GET['id']) ? intval($_GET['id']) : 0);
                                                                 <span></span>
                                                             </label>
                                                         </th>
-                                                        <th>#</th>
-                                                        <th>Tên danh bạ</th>
-                                                        <th width="15%">Chuyên mục</th>
-                                                        <th>Số lượng thành viên</th>
-                                                        <th>Bạn bè</th>
-                                                        <th>Mô tả</th>
-                                                        <th>Ngày tạo</th>
-                                                        <th>Chức năng</th>
+                                                        <th width="5%">#</th>
+                                                        <th width="20%">Tên tệp khách hàng</th>
+                                                        <th width="15%">Loại tệp</th>
+                                                        <th width="7%">Số lượng</th>
+                                                        <th width="7%">Bạn bè Telegram</th>
+                                                        <th width="20%">Mô tả</th>
+                                                        <th width="15%">Ngày tạo</th>
+                                                        <th width="10%">Quản lí tệp khách hàng</th>
                                                     </tr>
                                                     <tr id="row-search">
                                                         <th data-is-search="false"></th>
@@ -134,32 +141,21 @@ $id = (isset($_GET['id']) ? intval($_GET['id']) : 0);
                                                     </thead>
                                                     <tbody>
                                                     <?php
-
-
-
-
                                                     function dequycate2($data, $parent = [], $text = "")
                                                     {
                                                         $array = [];
                                                         foreach ($data as $index => $value) {
                                                             $array[$value['Id']] = $value;
-//                                                            if (empty($value['parent_ids'])) {
-//
-//                                                            }
                                                         }
                                                         return $array;
                                                     }
-
                                                     $exists2 = [];
-
                                                     function dequycateoption($data, $parent = [], $text = "", $is = false)
                                                     {
                                                         global $exists2;
-
                                                         foreach($parent as $item) {
                                                             $exists2[] = $item;
                                                         }
-
                                                         $xhtml = '';
                                                         if (!$is) {
                                                             foreach ($data as $index => $value) {
@@ -225,7 +221,7 @@ $id = (isset($_GET['id']) ? intval($_GET['id']) : 0);
                                                                             </label></td>
                                                                         <th scope="row">' . $stt . '</th>
                                                                         <td>
-                                                                            <a href="groupcontact.php?id=' . $list["Id"] . (($id != 0) ? ('&user=' . $id) : "") . '" >' . $text . ' ' . str_replace("<", "&lt;", $list['Name']) . '</a>
+                                                                            <a href="groupcontact.php?id=' . $list["Id"] . '" >' . $text . ' ' . str_replace("<", "&lt;", $list['Name']) . '</a>
                                                                             <div class="d-none">'.khong_dau($list['Name']).'</div>
                                                                             </td>
                                                                             ';
@@ -241,18 +237,9 @@ $id = (isset($_GET['id']) ? intval($_GET['id']) : 0);
                                                                         <td><label>' . (isset($list["describe"]) ? str_replace("<", "&lt;", $list['describe']) : "") . '</label></td>
                                                                         <td><label>' . date("d/M/Y h:i:s", strtotime($list["createAt"])) . '</label></td>
                                                                         <td class="d-flex justify-content-center">
-                                                                            
-                                                                            <div class="dropdown">
-                                                                                <button class="btn btn-info dropdown-toggle" type="button" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                                                                    Action
-                                                                                </button>
-                                                                                <div class="dropdown-menu" aria-labelledby="dropdownMenu2">
-                                                                                    <a class="dropdown-item  btn btn-label-linkedin" href="groupcontact.php?id=' . $list["Id"] . '&user=' . $id . '"><i class="fas fa-list"></i>Chi tiết</a>
-                                                                                    ' . (!empty($id) ? ('<a class="dropdown-item  btn btn-label-twitter add-group-chat" data-toggle="modal" data-target="#data_modal_list_group_chat" data-idcontact="' . $list["Id"] . '"><i class="fas fa-comments"></i>Thêm vào group chat</a>
-                                                                                    <a class="dropdown-item  btn btn-label-linkedin add-friend-telegram" data-idcontact="' . $list["Id"] . '"><i class="fab fa-telegram-plane"></i>Thêm vào bạn bè Telegram</a>'
-                                                                    ) : "") . '<a class="dropdown-item  btn btn-label-twitter export-contact" data-idcontact="' . $list["Id"] . '"><i class="fas fa-download"></i>Export CSV</a>
-                                                                                </div>
-                                                                            </div>
+                                                                                <a class="btn btn-info" href="groupcontact.php?id=' . $list["Id"].'">
+                                                                                    Chi tiết
+                                                                                </a>
                                                                         </td>
                                                                     </tr>';
                                                                 $xhtml .= dequytable($response2, $list["Id"], $text . '<i class="fas fa-long-arrow-alt-right mr-1"></i>', $stt);
@@ -261,7 +248,7 @@ $id = (isset($_GET['id']) ? intval($_GET['id']) : 0);
                                                         return $xhtml;
                                                     }
 
-                                                    $url2 = 'http://localhost:2020/telegram/get_contact?id=' . $id;;
+                                                    $url2 = 'http://localhost:2020/telegram/get_contact';
                                                     $curl2 = curl_init($url2);
                                                     curl_setopt($curl2, CURLOPT_RETURNTRANSFER, true);
                                                     curl_setopt($curl2, CURLOPT_HTTPHEADER, [
@@ -285,70 +272,7 @@ $id = (isset($_GET['id']) ? intval($_GET['id']) : 0);
                                                     ?>
                                                     </tbody>
                                                 </table>
-                                                <!--begin::Modal-->
-                                                <div class="modal fade" id="data_modal_list_group_chat" tabindex="-1"
-                                                     role="dialog"
-                                                     aria-labelledby="exampleModalLabel" style="display: none;"
-                                                     aria-hidden="true">
-                                                    <div class="modal-dialog modal-lg modal-dialog-center"
-                                                         role="document">
-                                                        <div class="modal-content">
-                                                            <input type="hidden" name="id_contact">
-                                                            <div class="modal-header">
-                                                                <h4>Thêm vào group chat Telegram</h4>
-                                                            </div>
-                                                            <div class="modal-body">
-                                                                <table class="table table-hover">
-                                                                    <thead>
-                                                                    <tr>
-                                                                        <th>#</th>
-                                                                        <th>Name</th>
-                                                                        <th>Thêm</th>
-                                                                    </tr>
-                                                                    </thead>
-                                                                    <tbody>
-                                                                    <?php
-                                                                    $url3 = 'http://localhost:2020/telegram/get_list_group_chat_telegram?id=' . $id;;
-                                                                    $curl3 = curl_init($url3);
-                                                                    curl_setopt($curl3, CURLOPT_RETURNTRANSFER, true);
-                                                                    curl_setopt($curl3, CURLOPT_HTTPHEADER, [
-                                                                        'X-RapidAPI-Host: contextualwebsearch-websearch-v1.p.rapidapi.com',
-                                                                        'X-RapidAPI-Key: 7xxxxxxxxxxxxxxxxxxxxxxxxxxx',
-                                                                        'Authorization: ' . $_SESSION['user_token']
-                                                                    ]);
-                                                                    $list_group_chat = json_decode(curl_exec($curl3), true);
-                                                                    $httpcode3 = curl_getinfo($curl3, CURLINFO_HTTP_CODE);
-                                                                    curl_close($curl3);
-                                                                    if (isset($list_group_chat))
-                                                                        foreach ($list_group_chat['chats'] as $index => $list) {
-                                                                            echo '<tr>
-                                                                                        <th scope="col">' . intval($index + 1) . '</th>
-                                                                                        <th scope="col">' . $list["title"] . '</th>
-                                                                                        <th><input type="checkbox" class="form-control add_group_tel" data-type="' . $list['_'] . '" data-chat_id="' . $list["id"] . '"></th>
-                                                                                        </tr>';
-                                                                        }
-                                                                    ?>
-                                                                    </tbody>
-                                                                </table>
-                                                            </div>
-                                                            <div class="modal-footer">
-                                                                <button type="reset" class="btn btn-secondary"
-                                                                        data-dismiss="modal">Hủy
-                                                                </button>
-                                                                <button type="submit"
-                                                                        class="btn btn-primary btn_add_group_chat_telegram">
-                                                                    Thêm
-                                                                </button>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <!-- end modal -->
                                             </div>
-                                            <!-- </div>
-                                        </div>
-                                    </div>
-                                </div> -->
                                         </div>
                                     </div>
                                 </div>
@@ -412,6 +336,10 @@ $id = (isset($_GET['id']) ? intval($_GET['id']) : 0);
                                                                             <div class="input-group mb-3">
                                                                                 <input type="text" class="form-control" name="extra_phone[]" aria-describedby="basic-addon2">
                                                                             </div>
+                                                                            <label>Username Telegram</label>
+                                                                            <div class="input-group mb-3">
+                                                                                <input type="text" class="form-control" name="usernametele[]" aria-describedby="basic-addon2">
+                                                                            </div>
                                                                             <label>Sinh nhật</label>
                                                                             <div class="input-group mb-3">
                                                                                 <input type="text" class="form-control" name="birthday[]" aria-describedby="basic-addon2">
@@ -474,16 +402,16 @@ $id = (isset($_GET['id']) ? intval($_GET['id']) : 0);
                                                         </div>
                                                         <div class="col-lg-1 col-md-1 detail_one_user kt-margin-b-5">
                                                                <p class="fas fa-info-circle" data-toggle="modal"
-                                                        data-target="#detail_one" style="font-size: 3rem; color: dimgrey; cursor: pointer;"></p>
+                                                        data-target="#detail_one" style="font-size: 2rem; color: dimgrey; cursor: pointer;"></p>
                                                         </div>
                                                         <div class="col-lg-1 col-md-1 delete-phone kt-margin-b-5"
                                                              style="display: none;">
                                                             <i class="far fa-minus-square"
-                                                               style=" font-size: 3rem; color: #fd1361; cursor: pointer;"></i>
+                                                               style=" font-size: 2rem; color: #fd1361; cursor: pointer;"></i>
                                                         </div>
                                                         <div class="col-lg-1 col-md-1 add-phone kt-margin-b-5">
                                                             <i class="far fa-plus-square"
-                                                               style=" font-size: 3rem; color: #1dc9b7; cursor: pointer;"></i>
+                                                               style=" font-size: 2rem; color: #1dc9b7; cursor: pointer;"></i>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -513,6 +441,11 @@ $id = (isset($_GET['id']) ? intval($_GET['id']) : 0);
                                                     </div>
                                                 </div>
                                                 <div class="form-group col-lg-15 mt-3 row box_detail_option" id="detail_option_file">
+                                                    <div class="col-lg-3">
+                                                        <label>Vị trí cột Username Telegram</label>
+                                                        <input type="number" class="form-control" name="index_username"
+                                                               value="0">
+                                                    </div>
                                                     <div class="col-lg-3">
                                                         <label>Vị trí cột Birthday</label>
                                                         <input type="number" class="form-control" name="index_birthday"
@@ -579,16 +512,15 @@ $id = (isset($_GET['id']) ? intval($_GET['id']) : 0);
                                                                value="0">
                                                     </div>
                                                 </div>
-                                                <h4 class="mt-3">Thêm vào danh bạ</h4>
+                                                <h4 class="mt-3">Thêm vào tệp khách hàng</h4>
                                                 <div class="form-group row">
                                                     <div class="col-sm-2">
-                                                        <label for="inputPassword" class="col-form-label">Tên danh
-                                                            bạ:</label>
+                                                        <label for="inputPassword" class="col-form-label">Tên tệp khách hàng:</label>
                                                     </div>
                                                     <div class="col-sm-4">
                                                         <select class=" form-control col-lg-12 groupcontact"
                                                                 name="groupcontact">
-                                                            <option value=-1>-Lựa chọn danh bạ-</option>
+                                                            <option value=-1>-Lựa chọn tệp khách hàng-</option>
                                                             <?php
                                                             if (isset($response2))
                                                                 if (isset($response2))
@@ -602,8 +534,31 @@ $id = (isset($_GET['id']) ? intval($_GET['id']) : 0);
                                                             Thêm làm bạn bè Telegram
                                                             <span></span>
                                                         </label>
+                                                        &nbsp;&nbsp;
+                                                        <label class="kt-checkbox kt-checkbox--success">
+                                                            <input disabled type="checkbox" name="addzalo" value="themzalo">
+                                                            Thêm làm bạn bè Zalo (đang phát triển)
+                                                            <span></span>
+                                                        </label>
                                                     </div>
                                                 </div>
+                                                <div class="form-group row account_add_friend_telegram" style="display:none;">
+                                                    <div class="col-sm-2">
+                                                        <label for="inputPassword" class="col-form-label">Tài khoản thêm bạn bè:</label>
+                                                    </div>
+                                                    <div class="col-sm-4">
+                                                        <select class=" form-control col-lg-12"
+                                                                name="id">
+                                                            <?php
+                                                                if (!empty($list_user_telegram)) {
+                                                                    foreach($list_user_telegram as $user) {
+                                                                        echo '<option value="'.$user['Id'].'">'.$user['phone'].'</option>';
+                                                                    }
+                                                                }
+                                                            ?>
+                                                        </select>
+                                                    </div>
+                                                </div>   
                                             </div>
                                             <div class="kt-portlet__foot">
                                                 <div class="kt-form__actions">
@@ -627,7 +582,6 @@ $id = (isset($_GET['id']) ? intval($_GET['id']) : 0);
                                 </div>
                             </div>
                         </div>
-
                     </div>
                 </div>
             </div>
@@ -639,14 +593,14 @@ $id = (isset($_GET['id']) ? intval($_GET['id']) : 0);
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLongTitle">Thêm danh bạ</h5>
+                    <h5 class="modal-title" id="exampleModalLongTitle">Thêm tệp khách hàng</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
                 <div class="modal-body">
                     <div class="form-group form-group-marginless">
-                        <label>Tên nhóm danh bạ</label>
+                        <label>Tên tệp khách hàng</label>
                         <div class="input-group mb-3">
                             <input type="text" class="form-control" name="name" aria-describedby="basic-addon2">
                             <div class="input-group-append"><span class="input-group-text" id="basic-addon2"><i
@@ -658,7 +612,7 @@ $id = (isset($_GET['id']) ? intval($_GET['id']) : 0);
                             <div class="input-group-append"><span class="input-group-text" id="basic-addon3"><i
                                             class="fas fa-sticky-note"></i></span></div>
                         </div>
-                        <label>Danh bạ</label>
+                        <label>Thuộc tệp khách hàng cha</label>
                         <div class="input-group mb-3">
                             <select type="text" class="form-control" name="parent_id" aria-describedby="basic-addon4">
                                 <option value="0">-- Root --</option>
@@ -669,7 +623,7 @@ $id = (isset($_GET['id']) ? intval($_GET['id']) : 0);
                             <div class="input-group-append"><span class="input-group-text" id="basic-addon4"><i
                                             class="fas fa-sticky-note"></i></span></div>
                         </div>
-                        <label>Chuyên mục</label>
+                        <label>Loại tệp khách hàng</label>
                         <div>
                             <select multiple="multiple" class="form-control kt-select2" id="kt_select2_3" name="cat_id[]"
                                     aria-describedby="basic-addon4">
@@ -693,14 +647,14 @@ $id = (isset($_GET['id']) ? intval($_GET['id']) : 0);
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLongTitle">Thêm chuyên mục danh bạ</h5>
+                    <h5 class="modal-title" id="exampleModalLongTitle">Thêm loại tệp khách hàng</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
                 <div class="modal-body">
                     <div class="form-group form-group-marginless">
-                        <label>Tên chuyên mục danh bạ</label>
+                        <label>Tên loại tệp khách hàng</label>
                         <div class="input-group mb-3">
                             <input type="text" placeholder="Tiếng Việt" class="form-control" name="cat_name_vi"
                                    aria-describedby="basic-addon2">
@@ -719,7 +673,7 @@ $id = (isset($_GET['id']) ? intval($_GET['id']) : 0);
                             <div class="input-group-append"><span class="input-group-text" id="basic-addon3"><i
                                             class="fas fa-sticky-note"></i></span></div>
                         </div>
-                        <label>Chuyên mục</label>
+                        <label>Thuộc loại tệp</label>
                         <div class="input-group">
                             <select type="text" class="form-control" name="cat_parent_id[]"
                                     aria-describedby="basic-addon4" multiple>
@@ -786,7 +740,12 @@ $id = (isset($_GET['id']) ? intval($_GET['id']) : 0);
             var str = val.text.replace(/-+/g, '');
             return str;
         }
-
+        $('input[name="addFriend"]').change(function() {
+            if ($(this).is(':checked')) {
+                $('.account_add_friend_telegram').addClass('display-block');
+            }
+            else $('.account_add_friend_telegram').removeClass('display-block');
+        })
         $('#kt_select2_3').select2({
           templateSelection: formatSelection
         });
@@ -804,7 +763,7 @@ $id = (isset($_GET['id']) ? intval($_GET['id']) : 0);
  
         // DataTable
         var table = $('#datatb').DataTable({
-            "ordering": false,
+            // "ordering": false,
             // searching:false
         });
          
@@ -823,38 +782,91 @@ $id = (isset($_GET['id']) ? intval($_GET['id']) : 0);
 
         $("#doAction").click(function() {
             var name_action = $("select[name=action]").val();
+            var searchIDs = $(".cbx:checked").map(function(){
+                        return $(this).val();
+                    }).get();
+            if (searchIDs.length==0) 
+                Swal.fire(
+                    'Lỗi...',
+                    'Vui lòng chọn tệp liên hệ cần thao tác',
+                    'error',
+                );
+            else
             if(name_action != 0) {
-                if(name_action) {
+                var list_account = <?php 
+                    $url='http://localhost:2020/telegram/get_list_user_telegram';
+                    $curl=curl_init($url);
+                    curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
+                    curl_setopt($curl, CURLOPT_HTTPHEADER, [
+                        'X-RapidAPI-Host: contextualwebsearch-websearch-v1.p.rapidapi.com',
+                        'X-RapidAPI-Key: 7xxxxxxxxxxxxxxxxxxxxxxxxxxx',
+                        'Authorization: '.$_SESSION['user_token']
+                    ]);
+                    $response2 = curl_exec($curl);
+                    curl_close($curl);
+                    echo $response2;
+                ?>;
+                var list_option = {};
+                if (list_account.length!=0) 
+                    for (let index of list_account) {
+                        let key = index.Id;
+                        list_option[key] = index.phone
+                    }
+                if(name_action == "delete") {
                     var searchIDs = $(".cbx:checked").map(function(){
-                      return $(this).val();
+                        return $(this).val();
                     }).get();
                     if(searchIDs.length > 0) {
-                        $.ajax({
-                            url: "./createapp.php",
-                            type: "POST",
-                            data: {
-                                "function": "do_action",
-                                "ids": JSON.stringify(searchIDs),
-                                "table": "contact",
-                                "action": "delete",
-                                "id": <?php echo $id; ?>
+                        const swalWithBootstrapButtons = Swal.mixin({
+                            customClass: {
+                                confirmButton: 'btn btn-success',
+                                cancelButton: 'btn btn-danger'
                             },
-                            success: function (dt) {
-                                console.log(dt);
-                                if (dt) {
-                                    Swal.fire(
-                                        'Thao tác thành công',
-                                        'Thao tác thành công',
-                                        'success',
-                                    );
-                                    location.reload();
-                                } else Swal.fire(
-                                    'Lỗi...',
-                                    'Lỗi khi thực hiện tác vụ',
-                                    'error',
-                                );
+                            buttonsStyling: false
+                        })
+                        swalWithBootstrapButtons.fire({
+                            title: 'Xóa tệp khách hàng',
+                            text: "Thực hiện xóa tệp khách hàng?",
+                            type: 'question',
+                            showCancelButton: true,
+                            confirmButtonText: 'Yes, delete!',
+                            cancelButtonText: 'No, cancel!',
+                            reverseButtons: true
+                        }).then((result) => {
+                            if (result.value) {
+                                $.ajax({
+                                    url: "./createapp.php",
+                                    type: "POST",
+                                    data: {
+                                        "function": "do_action",
+                                        "ids": JSON.stringify(searchIDs),
+                                        "table": "contact",
+                                        "action": "delete",
+                                    },
+                                    success: function (dt) {
+                                        if (dt) {
+                                            Swal.fire(
+                                                'Thao tác thành công',
+                                                'Thao tác thành công',
+                                                'success',
+                                            );
+                                            location.reload();
+                                        } else Swal.fire(
+                                            'Lỗi...',
+                                            'Lỗi khi thực hiện tác vụ',
+                                            'error',
+                                        );
+                                    }
+                                });
                             }
-                        });
+                            else if (result.dismiss === Swal.DismissReason.cancel) {
+                                swalWithBootstrapButtons.fire(
+                                    'Cancelled',
+                                    '',
+                                    'error'
+                                )
+                            }
+                        })
                     }else{
                         Swal.fire(
                             'Lỗi...',
@@ -862,9 +874,73 @@ $id = (isset($_GET['id']) ? intval($_GET['id']) : 0);
                             'error',
                         );
                     }
-                    
-                }   
-            }else {
+                        
+                }
+                else 
+                if (name_action == "export") {
+                    var searchIDs = $(".cbx:checked").map(function(){
+                        return $(this).val();
+                    }).get();
+                    if(searchIDs.length > 0) {
+                        const swalWithBootstrapButtons = Swal.mixin({
+                            customClass: {
+                                confirmButton: 'btn btn-success',
+                                cancelButton: 'btn btn-danger'
+                            },
+                            buttonsStyling: false
+                        })
+                        swalWithBootstrapButtons.fire({
+                            title: 'Export Contact',
+                            text: "Tải xuống file CSV danh bạ?",
+                            type: 'question',
+                            showCancelButton: true,
+                            confirmButtonText: 'Yes, download now!',
+                            cancelButtonText: 'No, cancel!',
+                            reverseButtons: true
+                        }).then((result) => {
+                            if (result.value) {
+                                $.ajax({
+                                    url: "./createapp.php",
+                                    type: "POST",
+                                    data: {
+                                        "function": "export_user_in_contact",
+                                        "list_id": JSON.stringify(searchIDs),
+                                    },
+                                    success: function (response) {
+                                        if (response) {
+                                            window.location = "download.php?filename=" + response;
+                                            Swal.fire(
+                                                'Downloaded!',
+                                                'Tải xuống thành công',
+                                                'success'
+                                            )
+                                        } else Swal.fire(
+                                            'Download!',
+                                            'Tải xuống thất bại',
+                                            'error'
+                                        )
+                                    }
+                                })
+                            }
+                            else if (result.dismiss === Swal.DismissReason.cancel) {
+                                swalWithBootstrapButtons.fire(
+                                    'Cancelled',
+                                    '',
+                                    'error'
+                                )
+                            }
+                        })
+                    }
+                    else {
+                        Swal.fire(
+                            'Lỗi...',
+                            'Bạn chưa đánh đấu record !',
+                            'error',
+                        );
+                    }
+                }
+            }
+            else if (name_action ==0){
                 Swal.fire(
                     'Lỗi...',
                     'Hãy chọn hành động bạn muốn thực hiện',
@@ -887,52 +963,6 @@ $id = (isset($_GET['id']) ? intval($_GET['id']) : 0);
             });
         });
 
-
-        $('.add-group-chat').click(function () {
-            $('input[name="id_contact"]').val($(this).attr('data-idcontact'));
-        })
-        $('.btn_add_group_chat_telegram').click(function () {
-            let array_chat_id = [];
-            $('.add_group_tel').map(function () {
-                if (this.checked && $(this).attr('data-chat_id') != "")
-                    array_chat_id.push({
-                        id: $(this).attr('data-chat_id'),
-                        type: $(this).attr('data-type')
-                    })
-            })
-            if (array_chat_id.length == 0 || $('input[name="id_contact"]').val() == "") {
-                Swal.fire(
-                    'Lỗi...',
-                    'Danh sách group chat Telegram rỗng',
-                    'error',
-                );
-            } else {
-                $.ajax({
-                    url: "./createapp.php",
-                    type: "POST",
-                    data: {
-                        "function": "add_group_chat_telegram",
-                        "id_group_chat": JSON.stringify(array_chat_id),
-                        "id_contact": $('input[name="id_contact"]').val(),
-                        "id": <?php echo $id; ?>
-                    },
-                    success: function (dt) {
-                        if (dt) {
-                            Swal.fire(
-                                'Thêm thành công',
-                                'Thêm thành công ' + dt + ' người dùng vào ' + array_chat_id.length + ' nhóm chat',
-                                'success',
-                            );
-                            location.reload();
-                        } else Swal.fire(
-                            'Lỗi...',
-                            'Lỗi khi thêm người dùng vào nhóm chat',
-                            'error',
-                        );
-                    }
-                })
-            }
-        })
         $("select.groupcontact").change(function () {
             let selected = $(this).children("option:selected").val();
             if (selected == 0) {
@@ -953,7 +983,6 @@ $id = (isset($_GET['id']) ? intval($_GET['id']) : 0);
                         "name": $('input[name="name"]').val(),
                         "describe": $('input[name="describe"]').val(),
                         "parent_id": $('select[name="parent_id"]').val(),
-                        "id": <?php echo $id; ?>,
                         "cat_id": $('select[name="cat_id[]"]').val()
                     },
                     success: function (dt) {
@@ -987,7 +1016,6 @@ $id = (isset($_GET['id']) ? intval($_GET['id']) : 0);
                         "name_en": $('input[name="cat_name_en"]').val(),
                         "note": $('input[name="cat_note"]').val(),
                         "parent_id": $('select[name="cat_parent_id[]"]').val(),
-                        "id": <?php echo $id; ?>
                     },
                     success: function (dt) {
                         if (dt == 1) {
@@ -1006,94 +1034,6 @@ $id = (isset($_GET['id']) ? intval($_GET['id']) : 0);
                 })
             }
         });
-
-        $(".export-contact").on("click", function () {
-            const swalWithBootstrapButtons = Swal.mixin({
-                customClass: {
-                    confirmButton: 'btn btn-success',
-                    cancelButton: 'btn btn-danger'
-                },
-                buttonsStyling: false
-            })
-            swalWithBootstrapButtons.fire({
-                title: 'Export Contact',
-                text: "Tải xuống file CSV danh bạ?",
-                type: 'question',
-                showCancelButton: true,
-                confirmButtonText: 'Yes, download now!',
-                cancelButtonText: 'No, cancel!',
-                reverseButtons: true
-            }).then((result) => {
-                if (result.value) {
-                    $.ajax({
-                        url: "./createapp.php",
-                        type: "POST",
-                        data: {
-                            "function": "export_user_in_contact",
-                            "id": <?php echo $id; ?>,
-                            "idcontact": $(this).attr('data-idcontact'),
-                        },
-                        success: function (response) {
-                            if (response) {
-                                window.location = response;
-                                swalWithBootstrapButtons.fire(
-                                    'Downloaded!',
-                                    'Tải xuống thành công',
-                                    'success'
-                                )
-                            } else swalWithBootstrapButtons.fire(
-                                'Download!',
-                                'Tải xuống thất bại',
-                                'error'
-                            )
-                        }
-                    })
-                } else if (result.dismiss === Swal.DismissReason.cancel) {
-                    swalWithBootstrapButtons.fire(
-                        'Cancelled',
-                        '',
-                        'error'
-                    )
-                }
-            })
-        });
-
-        $('.add-friend-telegram').click(function () {
-            Swal.fire({
-                title: 'Thêm bạn bè Telegram?',
-                text: "Thêm danh sách thành viên trong danh bạ vào bạn bè Telegram?",
-                type: 'question',
-                showCancelButton: true,
-                confirmButtonColor: '#3085d6',
-                cancelButtonColor: '#d33',
-                confirmButtonText: 'Yes, add friend!'
-            }).then((result) => {
-                if (result.value) {
-                    $.ajax({
-                        url: "./createapp.php",
-                        type: "POST",
-                        data: {
-                            "function": "add_friend_tel_from_contact",
-                            "id": <?php echo $id; ?>,
-                            "idcontact": $(this).attr('data-idcontact'),
-                        },
-                        success: function (response) {
-                            if (response) {
-                                Swal.fire(
-                                    'Success!',
-                                    'Thêm thành công ' + response + ' người dùng vào bạn bè Telegram.',
-                                    'success'
-                                )
-                            } else Swal.fire(
-                                'Error!',
-                                'Thêm bạn bè thất bại',
-                                'error'
-                            )
-                        }
-                    })
-                }
-            })
-        })
     })
 </script>
 

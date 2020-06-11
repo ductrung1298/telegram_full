@@ -8,13 +8,11 @@
         <div class="kt-subheader mb-5 kt-grid__item" id="kt_subheader">
             <div class="kt-container ">
                 <div class="kt-subheader__main">
-                    <h3 class="kt-subheader__title">
-                        Tool Telegram </h3>
                     <div class="kt-subheader__breadcrumbs">
                         <a href="#" class="kt-subheader__breadcrumbs-home"><i class="flaticon2-shelter"></i></a>
                         <span class="kt-subheader__breadcrumbs-separator"></span>
                         <a href="add-account-tool-telegram.php" class="kt-subheader__breadcrumbs-link">
-                            Tài khoản </a>
+                            Danh sách tài khoản </a>
                     </div>
                 </div>
 
@@ -127,7 +125,7 @@
                         <div class="tab-pane active" id="kt_portlet_base_demo_1_1_tab_content" role="tabpanel">
                             <div class="kt-portlet__body">
                                 <div class="row ">
-                                    <div class="kt-section col-12 table-responsive">
+                                    <div class="kt-section col-12">
                                         <label class="col-10 text-center">
                                             <h2>DANH SÁCH TÀI KHOẢN</h2>
                                         </label>
@@ -135,10 +133,11 @@
                                                 <thead>
                                                     <tr>
                                                         <th>#</th>
-                                                        <th>First_Name</th>
-                                                        <th>Last_Name</th>
-                                                        <th>Phone_Number</th>
-                                                        <th class="text-center">Hành động</th>
+                                                        <th>Tên</th>
+                                                        <th>Họ</th>
+                                                        <th>User_ID</th>
+                                                        <th>Số điện thoại</th>
+                                                        <th class="text-center"></th>
                                                     </tr>
                                                 </thead>
                                                 <tbody>
@@ -156,24 +155,27 @@
                                                     if (!empty($response2)) {
                                                         foreach ($response2 as $index => $post) {   
                                                             echo '<tr>'.'<th scope="row">'.((int)$index+1).'</th>';
-                                                            echo '<td> <label>'.str_replace("<","&lt;",$post['first_name']).'</label> </td>';
-                                                            echo '<td> <label>'.str_replace("<","&lt;",$post['last_name']).'</label> </td>';
-                                                            echo '<td> <label>'.str_replace("<","&lt;",$post['phone']).'</label> </td>';
+                                                            echo '<td>'.str_replace("<","&lt;",$post['first_name']).'</td>';
+                                                            echo '<td>'.str_replace("<","&lt;",$post['last_name']).'</td>';
+                                                            echo '<td>'.str_replace("<","&lt;",$post['user_id']).'</td>';
+                                                            echo '<td>'.str_replace("<","&lt;",$post['phone']).'</td>';
                                                             echo '<td class="d-flex justify-content-center" >';
-                                                            echo '<div class="dropdown">
-                                                            <button class="btn btn-info dropdown-toggle" type="button" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                                                Action
-                                                            </button>
-                                                            <div class="dropdown-menu" aria-labelledby="dropdownMenu2">
-                                                                <a href="getcontact.php?id='.$post['Id'].'" class="dropdown-item btn btn-label-linkedin"><i class="fas fa-address-book"></i>Danh bạ</a>
-                                                                <a class="dropdown-item btn btn-label-twitter" href="list-friend.php?id='.$post['Id'].'"><i class="fas fa-user-friends"></i>Bạn bè</a>
-                                                                <a href="getdialogs.php?id='.$post['Id'].'" class="dropdown-item btn btn-label-linkedin"><i class="fab fa-telegram"></i>Gửi tin nhắn</a>
-                                                                <a class="dropdown-item btn btn-label-twitter" href="get-user-group.php?id='.$post['Id'].'"><i class="fas fa-copy"></i>Group chat</a>
-                                                                <a class="dropdown-item btn btn-label-linkedin btn-del-acc" data-id='.$post['Id'].'><i class="fas fa-trash"></i>Xóa</a>
-                                                            </div>
-                                                        </div>';
-                                                            echo '</td>';
-                                                            echo '</tr>';
+                                                            // echo '<div class="dropdown">
+                                                            // <button class="btn btn-info dropdown-toggle" type="button" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                            //     Action
+                                                            // </button>
+                                                            // <div class="dropdown-menu" aria-labelledby="dropdownMenu2">
+                                                            //     <a href="getcontact.php?id='.$post['Id'].'" class="dropdown-item btn btn-label-linkedin"><i class="fas fa-address-book"></i>Danh bạ</a>
+                                                            //     <a class="dropdown-item btn btn-label-twitter" href="list-friend.php?id='.$post['Id'].'"><i class="fas fa-user-friends"></i>Bạn bè</a>
+                                                            //     <a href="getdialogs.php?id='.$post['Id'].'" class="dropdown-item btn btn-label-linkedin"><i class="fab fa-telegram"></i>Gửi tin nhắn</a>
+                                                            //     <a class="dropdown-item btn btn-label-twitter" href="list-group-chat.php?id='.$post['Id'].'"><i class="fas fa-copy"></i>Group chat</a>
+                                                            //     <a class="dropdown-item btn btn-label-linkedin btn-del-acc" data-id='.$post['Id'].'><i class="fas fa-trash"></i>Xóa</a>
+                                                            // </div>
+                                                        // </div>
+                                                            echo '<a href="manager-account.php?id='.$post['Id'].'" class="btn btn-sm btn-info"><i class="flaticon-menu-2"></i> Chi tiết</a>';
+                                                        echo '
+                                                        </td>
+                                                        </tr>';
                                                         }
                                                     }
                                                 ?>
@@ -313,7 +315,7 @@ jQuery(document).ready(function($) {
                         $('.id_account_add').val(data);
                         $(".sendOtpToRegister").addClass("display-block");
                     } 
-                    else if (data ==0 ){
+                    else if (data ==-1 ){
                         Swal.fire('Thông báo', 'Số điện thoại đã được đăng ký', 'warning');
                         $(".btn-addaccount").removeAttr("disabled");
                         $("i.fas.fa-circle-notch.fa-spin").removeClass("fa-circle-notch");

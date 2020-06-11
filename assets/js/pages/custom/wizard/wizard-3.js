@@ -42,67 +42,6 @@ var KTWizard3 = function () {
 
 			// Validation rules
 			rules: {
-				//= Step 1
-				address1: {
-					required: true
-				},
-				postcode: {
-					required: true
-				},
-				city: {
-					required: true
-				},
-				state: {
-					required: true
-				},
-				country: {
-					required: true
-				},
-
-				//= Step 2
-				package: {
-					required: true
-				},
-				weight: {
-					required: true
-				},
-				width: {
-					required: true
-				},
-				height: {
-					required: true
-				},
-				length: {
-					required: true
-				},
-
-				//= Step 3
-				delivery: {
-					required: true
-				},
-				packaging: {
-					required: true
-				},
-				preferreddelivery: {
-					required: true
-				},
-
-				//= Step 4
-				locaddress1: {
-					required: true
-				},
-				locpostcode: {
-					required: true
-				},
-				loccity: {
-					required: true
-				},
-				locstate: {
-					required: true
-				},
-				loccountry: {
-					required: true
-				},
 			},
 
 			// Display error
@@ -124,44 +63,19 @@ var KTWizard3 = function () {
 		});
 	}
 
-	var initSubmit = function() {
-		var btn = formEl.find('[data-ktwizard-type="action-submit"]');
-
-		btn.on('click', function(e) {
-			e.preventDefault();
-
-			if (validator.form()) {
-				// See: src\js\framework\base\app.js
-				KTApp.progress(btn);
-				//KTApp.block(formEl);
-
-				// See: http://malsup.com/jquery/form/#ajaxSubmit
-				formEl.ajaxSubmit({
-					success: function() {
-						KTApp.unprogress(btn);
-						//KTApp.unblock(formEl);
-
-						swal.fire({
-							"title": "",
-							"text": "The application has been successfully submitted!",
-							"type": "success",
-							"confirmButtonClass": "btn btn-secondary"
-						});
-					}
-				});
-			}
-		});
-	}
 
 	return {
 		// public functions
 		init: function() {
 			wizardEl = KTUtil.get('kt_wizard_v3');
 			formEl = $('#kt_form');
-
+			try {
 			initWizard();
+			}
+			catch(e) {
+				
+			}
 			initValidation();
-			initSubmit();
 		}
 	};
 }();

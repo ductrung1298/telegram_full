@@ -64,3 +64,50 @@ body {
 /* div#kt_header {
     background-color: #086591;
 } */
+span.select2 {
+    width: 100% !important;
+}
+.kt-wizard-v3 .kt-wizard-v3__wrapper .kt-form {
+    width: 100% !important;
+    padding: 4rem 0 5rem;
+}
+.kt-wizard-v3 .kt-wizard-v3__nav .kt-wizard-v3__nav-items {
+    padding: 0 !important;
+}
+.kt-wizard-v3 .kt-wizard-v3__nav .kt-wizard-v3__nav-items .kt-wizard-v3__nav-item {
+    flex: 0 0 33% !important;
+}
+.kt-subheader--transparent .kt-subheader .kt-subheader__main .kt-subheader__breadcrumbs .kt-subheader__breadcrumbs-link {
+    font-size: 16px !important;
+}
+.kt-wizard-v3 .kt-wizard-v3__nav .kt-wizard-v3__nav-items .kt-wizard-v3__nav-item .kt-wizard-v3__nav-body .kt-wizard-v3__nav-label {
+    font-size: 1.0rem !important;
+}
+.kt-wizard-v3 .kt-wizard-v3__nav .kt-wizard-v3__nav-items .kt-wizard-v3__nav-item .kt-wizard-v3__nav-body .kt-wizard-v3__nav-label span{
+    font-size: 1.3rem !important;
+}
+.select2-dropdown{
+    z-index: 9999 !important;
+}
+.btn.btn-icon.btn-reload {
+    width: 9rem !important;
+}
+.kt-badge.kt-badge--xl {
+    height: 30px !important;
+    width: 30px !important;
+    font-size: 0.7rem !important;
+}
+.kt-wizard-v1 .kt-wizard-v1__wrapper .kt-form {
+    width: 90% !important;
+    padding: 0rem !important;   
+}
+.kt-widget.kt-widget--user-profile-2 .kt-widget__head .kt-widget__info {
+    padding-left: 0rem !important;
+}
+.kt-widget.kt-widget--user-profile-2 .kt-widget__head .kt-widget__info .kt-widget__titel {
+    font-size: 2.0rem !important;
+    color: #3da583 !important;
+}
+.kt-widget.kt-widget--user-profile-2 .kt-widget__head {
+    margin-top: 0px !important;
+}

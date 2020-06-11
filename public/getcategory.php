@@ -40,16 +40,11 @@ curl_close($curl4);
         <div class="kt-subheader  mb-5 kt-grid__item" id="kt_subheader">
             <div class="kt-container ">
                 <div class="kt-subheader__main">
-                    <h4 class="kt-subheader__title">
-                        Tool Telegram </h4>
                     <div class="kt-subheader__breadcrumbs">
                         <a href="#" class="kt-subheader__breadcrumbs-home"><i class="flaticon2-shelter"></i></a>
                         <span class="kt-subheader__breadcrumbs-separator"></span>
-                        <a href="add-account-tool-telegram.php" class="kt-subheader__breadcrumbs-link">
-                           Danh bạ </a>
-                        <span class="kt-subheader__breadcrumbs-separator"></span>
-                        <a href="#" class="kt-subheader__breadcrumbs-link">
-                            Chuyên mục </a>
+                        <a href="getcategory.php" class="kt-subheader__breadcrumbs-link">
+                            Loại tệp khách hàng </a>
                         <?php if($id != 0): ?>
                         <span class="kt-subheader__breadcrumbs-separator"></span>
                         <a href="#" class="kt-subheader__breadcrumbs-link">
@@ -99,13 +94,13 @@ curl_close($curl4);
                                                 <button type="button" class="btn btn-label-instagram"
                                                     data-toggle="modal"
                                                     data-target="#exampleModalCenter">
-                                                    <i class="fas fa-sitemap"></i> Thêm danh bạ vào chuyên mục này
+                                                    <i class="fas fa-sitemap"></i> Thêm tệp khách hàng vào chuyên mục này
                                                 </button>
                                                 <?php else: ?>
                                                 <button type="button" class="btn btn-label-instagram"
                                                     data-toggle="modal"
                                                     data-target="#chuyenmucModal">
-                                                    <i class="fas fa-sitemap"></i> Thêm chuyên mục
+                                                    <i class="fas fa-sitemap"></i> Thêm chuyên mục tệp khách hàng
                                                 </button>
                                                 <?php endif; ?>
                                             <!--     <button type="button" class="btn btn-label-instagram" data-toggle="modal"
@@ -134,7 +129,7 @@ curl_close($curl4);
                                                         <th>Tên chuyên mục</th>
                                                         <th>Mô tả</th>
                                                         <!-- <th>Số lượng chuyên mục</th> -->
-                                                        <th>Số lượng danh bạ</th>
+                                                        <th>Số lượng tệp khách hàng</th>
                                                <!--          <th>Mô tả</th>
                                                         <th>Ngày tạo</th>
                                                         <th>Chức năng</th> -->
@@ -159,9 +154,9 @@ curl_close($curl4);
                                                             </label>
                                                         </th>
                                                         <th>#</th>
-                                                        <th>Tên danh bạ</th>
-                                                        <th>Chuyên mục</th>
-                                                        <th>Số lượng thành viên</th>
+                                                        <th>Tên tệp khách hàng</th>
+                                                        <th>Loại tệp</th>
+                                                        <th>Số lượng</th>
                                                         <th>Bạn bè Telegram</th>
                                                         <th>Mô tả</th>
                                                         <th>Ngày tạo</th>
@@ -324,7 +319,7 @@ curl_close($curl4);
                                                                             </label></td>
                                                                         <th scope="row">' . $stt . '</th>
                                                                         <td>
-                                                                            <a href="groupcontact.php?id=' . $list["Id"] . (($id != 0) ? ('&user=' . $id) : "") . '" >' . $text . ' ' . str_replace("<", "&lt;", $list['Name']) . '</a>
+                                                                            <a href="groupcontact.php?id=' . $list["Id"] . '" >' . $text . ' ' . str_replace("<", "&lt;", $list['Name']) . '</a>
                                                                             <div class="d-none">'.khong_dau($list['Name']).'</div>
                                                                             </td>
                                                                             ';
@@ -340,18 +335,7 @@ curl_close($curl4);
                                                                         <td><label>' . (isset($list["describe"]) ? str_replace("<", "&lt;", $list['describe']) : "") . '</label></td>
                                                                         <td><label>' . date("d/M/Y h:i:s", strtotime($list["createAt"])) . '</label></td>
                                                                         <td class="d-flex justify-content-center">
-                                                                            
-                                                                            <div class="dropdown">
-                                                                                <button class="btn btn-info dropdown-toggle" type="button" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                                                                    Action
-                                                                                </button>
-                                                                                <div class="dropdown-menu" aria-labelledby="dropdownMenu2">
-                                                                                    <a class="dropdown-item  btn btn-label-linkedin" href="groupcontact.php?id=' . $list["Id"] . '&user=' . $id . '"><i class="fas fa-list"></i>Chi tiết</a>
-                                                                                    ' . (!empty($id) ? ('<a class="dropdown-item  btn btn-label-twitter add-group-chat" data-toggle="modal" data-target="#data_modal_list_group_chat" data-idcontact="' . $list["Id"] . '"><i class="fas fa-comments"></i>Thêm vào group chat</a>
-                                                                                    <a class="dropdown-item  btn btn-label-linkedin add-friend-telegram" data-idcontact="' . $list["Id"] . '"><i class="fab fa-telegram-plane"></i>Thêm vào bạn bè Telegram</a>'
-                                                                    ) : "") . '<a class="dropdown-item  btn btn-label-twitter export-contact" data-idcontact="' . $list["Id"] . '"><i class="fas fa-download"></i>Export CSV</a>
-                                                                                </div>
-                                                                            </div>
+                                                                            <a class="btn btn-sm btn-info" href="groupcontact.php?id='.$list["Id"].'">Chi tiết</a>
                                                                         </td>
                                                                     </tr>';
                                                                 $xhtml .= dequytable($response2, $list["Id"], $text . '<i class="fas fa-long-arrow-alt-right mr-1"></i>', $stt);
@@ -388,65 +372,6 @@ curl_close($curl4);
                                                     ?>
                                                     </tbody>
                                                 </table>
-                                                <!--begin::Modal-->
-                                                <div class="modal fade" id="data_modal_list_group_chat" tabindex="-1"
-                                                     role="dialog"
-                                                     aria-labelledby="exampleModalLabel" style="display: none;"
-                                                     aria-hidden="true">
-                                                    <div class="modal-dialog modal-lg modal-dialog-center"
-                                                         role="document">
-                                                        <div class="modal-content">
-                                                            <input type="hidden" name="id_contact">
-                                                            <div class="modal-header">
-                                                                <h4>Thêm vào group chat Telegram</h4>
-                                                            </div>
-                                                            <div class="modal-body">
-                                                                <table class="table table-hover">
-                                                                    <thead>
-                                                                    <tr>
-                                                                        <th>#</th>
-                                                                        <th>Name</th>
-                                                                        <th>Thêm</th>
-                                                                    </tr>
-                                                                    </thead>
-                                                                    <tbody>
-                                                                    <?php
-                                                                    $url3 = 'http://localhost:2020/telegram/get_list_group_chat_telegram?id=' . $id;;
-                                                                    $curl3 = curl_init($url3);
-                                                                    curl_setopt($curl3, CURLOPT_RETURNTRANSFER, true);
-                                                                    curl_setopt($curl3, CURLOPT_HTTPHEADER, [
-                                                                        'X-RapidAPI-Host: contextualwebsearch-websearch-v1.p.rapidapi.com',
-                                                                        'X-RapidAPI-Key: 7xxxxxxxxxxxxxxxxxxxxxxxxxxx',
-                                                                        'Authorization: ' . $_SESSION['user_token']
-                                                                    ]);
-                                                                    $list_group_chat = json_decode(curl_exec($curl3), true);
-                                                                    $httpcode3 = curl_getinfo($curl3, CURLINFO_HTTP_CODE);
-                                                                    curl_close($curl3);
-                                                                    if (isset($list_group_chat))
-                                                                        foreach ($list_group_chat['chats'] as $index => $list) {
-                                                                            echo '<tr>
-                                                                                        <th scope="col">' . intval($index + 1) . '</th>
-                                                                                        <th scope="col">' . $list["title"] . '</th>
-                                                                                        <th><input type="checkbox" class="form-control add_group_tel" data-type="' . $list['_'] . '" data-chat_id="' . $list["id"] . '"></th>
-                                                                                        </tr>';
-                                                                        }
-                                                                    ?>
-                                                                    </tbody>
-                                                                </table>
-                                                            </div>
-                                                            <div class="modal-footer">
-                                                                <button type="reset" class="btn btn-secondary"
-                                                                        data-dismiss="modal">Hủy
-                                                                </button>
-                                                                <button type="submit"
-                                                                        class="btn btn-primary btn_add_group_chat_telegram">
-                                                                    Thêm
-                                                                </button>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <!-- end modal -->
                                             </div>
                                         </div>
                                     </div>
@@ -465,14 +390,14 @@ curl_close($curl4);
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLongTitle">Thêm danh bạ</h5>
+                    <h5 class="modal-title" id="exampleModalLongTitle">Thêm tệp khách hàng</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
                 <div class="modal-body">
                     <div class="form-group form-group-marginless">
-                        <label>Tên nhóm danh bạ</label>
+                        <label>Tên tệp khách hàng</label>
                         <div class="input-group mb-3">
                             <input type="text" class="form-control" name="name" aria-describedby="basic-addon2">
                             <div class="input-group-append"><span class="input-group-text" id="basic-addon2"><i
@@ -484,7 +409,7 @@ curl_close($curl4);
                             <div class="input-group-append"><span class="input-group-text" id="basic-addon3"><i
                                             class="fas fa-sticky-note"></i></span></div>
                         </div>
-                        <label>Danh bạ</label>
+                        <label>Thuộc tệp khách hàng cha</label>
                         <div class="input-group mb-3">
                             <select type="text" class="form-control" name="parent_id" aria-describedby="basic-addon4">
                                 <option value="0">-- Root --</option>

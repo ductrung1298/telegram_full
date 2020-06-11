@@ -459,6 +459,7 @@ $(document).ready(function () {
     })
     $('#kt_datepicker_7').datetimepicker({
     });
+   
     var stt = 1;
     $('.list-contact').on('click touch', '.add-phone', function (event) {
         let rdom = `<div class="col-lg-12 kt-margin-t-20 row">
@@ -489,6 +490,10 @@ $(document).ready(function () {
                                                                             <label>Số điện thoại bổ sung ( <span class="text-muted">Mỗi số cách nhau một dấu phẩy</span> ) </label>
                                                                             <div class="input-group mb-3">
                                                                                 <input type="text" class="form-control" name="extra_phone[]" aria-describedby="basic-addon2">
+                                                                            </div>
+                                                                            <label>Username Telegram</label>
+                                                                            <div class="input-group mb-3">
+                                                                                <input type="text" class="form-control" name="usernametele[]" aria-describedby="basic-addon2">
                                                                             </div>
                                                                             <label>Sinh nhật</label>
                                                                             <div class="input-group mb-3">
@@ -552,17 +557,17 @@ $(document).ready(function () {
                                                         </div>
         <div class="col-lg-1 col-md-1 detail_one_user kt-margin-b-5">
                                                                <p class="fas fa-info-circle" data-toggle="modal"
-                                                        data-target="#detail_one_${stt}" style="font-size: 3rem; color: dimgrey; cursor: pointer;"></p>
+                                                        data-target="#detail_one_${stt}" style="font-size: 2rem; color: dimgrey; cursor: pointer;"></p>
                                                         </div>
         <div class="col-lg-1 col-md-1 delete-phone kt-margin-b-5"
             style="display: none;">
             <i class="far fa-minus-square"
-            style=" font-size: 3rem; color: #fd1361; cursor: pointer;"></i>
+            style=" font-size: 2rem; color: #fd1361; cursor: pointer;"></i>
         </div>
         <div
             class="col-lg-1 col-md-1 add-phone kt-margin-b-5">
             <i class="far fa-plus-square"
-            style=" font-size: 3rem; color: #1dc9b7; cursor: pointer;"></i>
+            style=" font-size: 2rem; color: #1dc9b7; cursor: pointer;"></i>
         </div>
      </div>`;
         $('.list-contact .add-phone').remove();
@@ -606,17 +611,13 @@ $(document).ready(function () {
     });
     $('.loichao').on('click touch', '.add-loichao', function (event) {
         let rdom = `<div class="col-lg-12 kt-margin-t-20 row">
-        <div class="col-lg-9 col-md-7 kt-margin-b-5">
+        <div class="col-lg-11 col-md-7 kt-margin-b-5">
             <div class="input-group">
                 <input type="text" class="form-control"
                     name="loichao" placeholder="Chào mừng bạn đã đến với ...">
             </div>
         </div>
-        <div class="col-lg-2 col-md-1">
-            <div class="input-group">
-                <label for="checkid" class="form-control"><input type="checkbox" id="checkid" name="checkid"> Đính kèm mã ID</label> 
-            </div>
-        </div>
+       
         <div class="col-lg-1 col-md-1 add-loichao kt-margin-b-5">
             <i class="far fa-plus-square"
                 style=" font-size: 3rem; color: #1dc9b7; cursor: pointer;"></i>
@@ -790,7 +791,7 @@ $(document).ready(function () {
     });
     $('.list_btn_inline').on('click touch', '.add-btn-inline', function(event) {
         let rdom = `<div class="row col-lg-12 inlines">
-                        <input type="text" class="form-control col-lg-5 btn_inline mt-3"
+                        <input type="text" class="form-control col-lg-5 mr-4 btn_inline mt-3"
                             placeholder="Text hiển thị">
                         <input type="text" class="form-control col-lg-5 id_used mt-3"
                             value="0">

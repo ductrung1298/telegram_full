@@ -2,7 +2,26 @@
     session_start();
     if (isset($_SESSION['user_token'])) {
         header("Location: index.php");
-    }
+	}
+	if (isset($_GET['token']) && isset($_GET['fcode'])) 
+	{
+		// check token
+		$url='http://localhost:2020/auth/check_token?token='.$_GET['token'].'&fcode='.$_GET['fcode'];
+		$curl=curl_init($url);
+		curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
+		curl_setopt($curl, CURLOPT_HTTPHEADER, [
+			'X-RapidAPI-Host: contextualwebsearch-websearch-v1.p.rapidapi.com',
+			'X-RapidAPI-Key: 7xxxxxxxxxxxxxxxxxxxxxxxxxxx',
+		]);
+		$check_token = json_decode(curl_exec($curl), true);
+		curl_close($curl);
+		if ($check_token['status'] == true) {
+			session_start();
+            $_SESSION["user_token"] = $check_token['data']['token'];
+			$_SESSION["username"] = $check_token['data']['username'];
+			header("Location: index.php");
+		}
+	}
 ?>
 <!DOCTYPE html>
 <html lang="en">

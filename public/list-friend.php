@@ -90,26 +90,24 @@
                             <div class="kt-portlet__body">
                                 <div class="row ">
                                     <div class="kt-section col-12">
-                                    
                                         <div class="kt-section__info d-flex justify-content-end">
                                             <div class="mr-1">
                                                 Export &nbsp;&nbsp;&nbsp;
-                                                <button type="button" id="exportfile" class="btn btn-outline-brand btn-elevate btn-pill exportfile"><i class="la la-download"></i> File CSV
+                                                <button type="button" id="exportfile" class="btn btn-success exportfile"><i class="la la-download"></i> File CSV
                                                 </button>
                                             </div>
-                                            <div class="mr-1">
-                                                <button type="button" id="exportfile" class="btn btn-outline-brand btn-elevate btn-pill exportfile"><i class="la la-plus"></i> Thêm vào danh bạ
+                                            <!-- <div class="mr-1">
+                                                <button type="button" id="exportfile" class="btn btn-primary"><i class="la la-plus"></i> Thêm vào danh bạ
                                                 </button>
                                             </div>
                                             <div>
-                                                <button type="button" id="exportfile" class="btn btn-outline-brand btn-elevate btn-pill exportfile"><i class="la la-plus"></i> Thêm vào danh bạ
+                                                <button type="button" id="exportfile" class="btn btn-dark"><i class="la la-plus"></i> Thêm vào group chat
                                                 </button>
-                                            </div>
+                                            </div> -->
                                         </div>
                                         <div class="tab-pane active" id="kt_widget4_top10_rating">
                                             <div>
                                                 <div class="kt-list-timeline">
-                                                    <div class="table-responsive">
                                                         <div class="kt-section__content">
                                                             <table class="table" id="datatb">
                                                                 <thead class="thead-light">
@@ -119,7 +117,6 @@
                                                                         <th>Phone_Number</th>
                                                                         <th>User_Name</th>
                                                                         <th>Thuộc danh bạ</th>
-                                                                        <!--  -->
                                                                     </tr>
                                                                     <tr id="row-search">
                                                                         <th data-is-search="false"></th>
@@ -159,7 +156,6 @@
                                                                 </tbody>
                                                             </table>
                                                         </div>
-                                                    </div>
                                                 </div>
                                             </div>
                                         </div>

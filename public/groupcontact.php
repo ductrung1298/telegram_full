@@ -2,9 +2,15 @@
 $id = isset($_GET['id']) ? intval($_GET['id']) : 0;
 $user = isset($_GET['user']) ? intval($_GET['user']) : 0;
 $page = isset($_GET['page']) ? intval($_GET['page']) : 1;
+$search = isset($_GET['search']) ? intval($_GET['search']) : '';
+$style = '<style type="text/css">
+    #datatb_filter {
+        display:none;
+    }
+</style>';
 include 'header.php';
 if ($id != 0) {
-    $url = 'http://localhost:2020/telegram/get_contact?idgroupcontact=' . $id . '&page=' .$page;
+    $url = 'http://localhost:2020/telegram/get_contact?idgroupcontact=' . $id . '&user='. $user. '&page=' .$page. '&search=' . $search;
     $curl = curl_init($url);
     curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
     curl_setopt($curl, CURLOPT_HTTPHEADER, [
@@ -40,16 +46,14 @@ if ($id != 0) {
         <div class="kt-subheader mb-5 kt-grid__item" id="kt_subheader">
             <div class="kt-container ">
                 <div class="kt-subheader__main">
-                    <h3 class="kt-subheader__title">
-                        Tool Telegram </h3>
                     <div class="kt-subheader__breadcrumbs">
                         <a href="#" class="kt-subheader__breadcrumbs-home"><i class="flaticon2-shelter"></i></a>
                         <span class="kt-subheader__breadcrumbs-separator"></span>
-                        <a href="add-account-tool-telegram.php" class="kt-subheader__breadcrumbs-link">
-                            Danh bạ </a>
+                        <a href="getcontact.php" class="kt-subheader__breadcrumbs-link">
+                            Danh sách tệp khách hàng </a>
                         <span class="kt-subheader__breadcrumbs-separator"></span>
-                        <a href="getcontact.php?id=<?php echo $user; ?>" class="kt-subheader__breadcrumbs-link">
-                            <?= $value['Name'] ?> </a>
+                        <a href="groupcontact.php?id=<?php echo $id; ?>" class="kt-subheader__breadcrumbs-link">
+                            <?= $value['Name'] ?> </a>  
                     </div>
                 </div>
             </div>
@@ -64,13 +68,13 @@ if ($id != 0) {
                             <li class="nav-item">
                                 <a class="nav-link active" data-toggle="tab"
                                    href="#kt_portlet_base_demo_1_1_tab_content" role="tab" aria-selected="true">
-                                    <i class="flaticon2-group"></i>Danh bạ
+                                    <i class="flaticon2-group"></i>Danh sách thành viên
                                 </a>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link" data-toggle="tab" href="#add_user_to_this_contact"
                                    role="tab" aria-selected="false">
-                                    <i class="flaticon-users"></i> Thêm người dùng vào danh bạ này
+                                    <i class="flaticon-users"></i> Thêm người dùng vào tệp khách hàng
                                 </a>
                             </li>
                         </ul>
@@ -82,17 +86,14 @@ if ($id != 0) {
                             <div class="kt-portlet__body pt-0">
                                 <div class="row ">
                                     <div class="col-12 mb-3" style="padding: 0;">
-                                        <h3>
-                                            Danh bạ: <?php
-                                            echo $value['Name'];
-                                            ?>
-                                            <hr>
-                                        </h3>
                                         <div class="d-flex justify-content-between align-items-center">
                                             <div class="d-flex">
                                                 <div class="form-group mb-0">
                                                     <select class="form-control" name="action" id="exampleSelect1">
                                                         <option value="0">Hành động</option>
+                                                        <option value="add_friend_tel">Thêm bạn bè Telegram</option>
+                                                        <option value="add_friend_zalo">Thêm bạn bè Zalo</option>
+                                                        <option value="inviter_group_tel">Mời vào nhóm Telegram</option>
                                                         <option value="delete">Xoá</option>
                                                     </select>
                                                 </div>
@@ -100,6 +101,13 @@ if ($id != 0) {
                                                     <button id="doAction" class="btn btn-info">Thực hiện</button>
                                                 </div>
                                             </div>
+                                            <form method="get" action="" class="d-flex">
+                                                <input type="hidden" name="id" value="<?= $id; ?>">
+                                                <div class="form-group mb-0 mr-2">
+                                                     <input class="form-control" type="text" name="search" placeholder="Tìm kiếm số điện thoại" required>
+                                                </div>
+                                                    <button type="submit" class="btn btn-info">Tìm kiếm</button>
+                                            </form>
                                         </div>
                                     </div>
                                     <div class="kt-section col-12">
@@ -114,13 +122,11 @@ if ($id != 0) {
                                                             </label>
                                                     </th>
                                                     <th class="kt-font-bolder">#</th>
-                                                    <!-- <th>First_name</th> -->
-                                                    <th class="kt-font-bolder">Name</th>
-                                                    <th class="kt-font-bolder">Địa chỉ</th>
-                                                    <th class="kt-font-bolder">Phone_Number</th>
-                                                    <!-- <th>Danh bạ khác</th> -->
-                                                    <th class="kt-font-bolder"  width="10%">Bạn bè</th>
-                                                    <th class="kt-font-bolder"  width="15%">Xem thêm</th>
+                                                    <th class="kt-font-bolder">Tên</th>
+                                                    <th class="kt-font-bolder">Số điện thoại</th>
+                                                    <th class="kt-font-bolder">Tệp khách hàng khác</th>
+                                                    <th class="kt-font-bolder">Bạn bè Telegram</th>
+                                                    <th class="kt-font-bolder">Xem thêm</th>
                                                 </tr>
                                                 <tr id="row-search">
                                                     <th data-is-search="false"></th>
@@ -128,14 +134,13 @@ if ($id != 0) {
                                                     <th data-is-search="true"></th>
                                                     <th data-is-search="true"></th>
                                                     <th data-is-search="true"></th>
-                                                    <th data-is-search="false"></th>
+                                                    <th data-is-search="true"></th>
                                                     <th data-is-search="false"></th>
                                                 </tr>
                                                 </thead>
                                                 <tbody>
                                                     
                                                 <?php
-
                         
                                                 if (!empty($list_user_in_contact))
                                                     // echo "<pre>";
@@ -150,21 +155,27 @@ if ($id != 0) {
                                                         echo '<td>
                                                             <label>' . (isset($contact['user_first_name']) ? $contact['user_first_name'] : ''). ' '.(isset($contact['user_last_name']) ? $contact['user_last_name'] : '') . '</label>
                                                             <div class="d-none">' . (isset($contact['user_last_name']) ? khong_dau($contact['user_last_name']) : '').' '.(isset($contact['user_last_name']) ? khong_dau($contact['user_last_name']) : '') . '</div>
-                                                        </td>';
-                                                        echo '<td>
-                                                            <label>
-                                                                ' . (isset($contact['address']) ? $contact['address'] : '') . '
-                                                            </label>
-                                                            <div class="d-none">' . (isset($contact['address']) ? khong_dau($contact['address']) : '') . '</div>
-                                                        </td>';
-                                                        echo '<td>';
-                                                        echo '<label>' . (isset($contact['phone']) ? $contact['phone'] : '') . '
-                                                            </label>';
-                                                        echo '<td>
-                                                            ' . ((($contact['friend_tele']) == 1) ? '<button class="btn btn-sm btn-outline-success get_friend_tele"><i class="la la-check"></i></button>' : '') . '
-                                                        </td>';
-                                                        echo '<td>';
-                                                            echo '<button type="button" data-id="'.$contact['Id'].'" data-toggle="modal" data-target="#exampleModalCenter_'.$contact['Id'].'" class="btn btn-info btn-more-info">Xem thêm</button>';
+                                                        </td>
+                                                        <td>
+                                                            ' . (isset($contact['phone']) ? $contact['phone'] : '') . '
+                                                        </td>
+                                                        <td>';
+                                                            if (count($contact['othergroup']) > 0) {
+                                                                foreach ($contact['othergroup'] as $group) {
+                                                                    echo '<lable class="kt-badge kt-badge--primary  kt-badge--inline kt-badge--pill m-1">' . $group . '</lable><div class="d-none">'.khong_dau($group).'</div>';
+                                                                }
+                                                            }
+                                                        echo '
+                                                        </td>
+                                                        <td>';
+                                                            if (count($contact['friend_tele']) > 0) {
+                                                                foreach ($contact['friend_tele'] as $friend) {
+                                                                    echo '<lable class="kt-badge kt-badge--primary  kt-badge--inline kt-badge--pill m-1">' . $friend . '</lable><div class="d-none">'.khong_dau($friend).'</div>';
+                                                                }
+                                                            }
+                                                        echo '</td>
+                                                        <td>';
+                                                            echo '<button type="button" data-id="'.$contact['Id'].'" data-toggle="modal" data-target="#exampleModalCenter_'.$contact['Id'].'"><i class="flaticon-more-1"></i></button>';
                                                         ?>
                                                         <div class="modal fade" id="exampleModalCenter_<?php echo $contact['Id'] ?>" tabindex="-1" role="dialog"
      aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
@@ -180,15 +191,15 @@ if ($id != 0) {
                                                                         <div class="form-group form-group-marginless">
                                                                             <div class="user_info_field">
                                                                                 <label>First Name: </label>
-                                                                                <a class="editable_on" href="#" data-type="text" data-pk="<?= $contact['Id'] ?>" data-url="createapp.php" data-title="Enter name" id="user_first_name"><?= $contact['user_first_name'] ?></a>
+                                                                                <a class="editable_on" href="#" data-type="text" data-pk="<?= $contact['Id'] ?>" data-url="createapp.php" data-title="Enter name" id="user_first_name"><?= $contact['user_first_name'] ?><i class="fa fa-edit ml-3"></i></a>
                                                                             </div>
                                                                             <div class="user_info_field">
                                                                                 <label>Last Name: </label>
-                                                                                <a class="editable_on" href="#" data-type="text" data-pk="<?= $contact['Id'] ?>" data-url="createapp.php" data-title="Enter name" id="user_last_name"><?= $contact['user_last_name'] ?></a>
+                                                                                <a class="editable_on" href="#" data-type="text" data-pk="<?= $contact['Id'] ?>" data-url="createapp.php" data-title="Enter name" id="user_last_name"><?= $contact['user_last_name'] ?><i class="fa fa-edit ml-3"></i></a>
                                                                             </div>
                                                                             <div class="user_info_field">
                                                                                 <label>Phone: </label>
-                                                                                <a class="editable_on" href="#" data-type="text" data-pk="<?= $contact['Id'] ?>" data-url="createapp.php" data-title="Enter username" id="phone"><?= $contact['phone'] ?></a>
+                                                                                <a class="editable_on" href="#" data-type="text" data-pk="<?= $contact['Id'] ?>" data-url="createapp.php" data-title="Enter username" id="phone"><?= $contact['phone'] ?><i class="fa fa-edit ml-3"></i></a>
                                                                             </div>
                                                                             <div class="bg-light py-1 text-center">
                                                                                 <a class="toggleDetailOption" href="javascript:void(0);">Xem thêm <i class="fas fa-plus"></i></a>
@@ -211,67 +222,64 @@ if ($id != 0) {
                                                                                                 }
                                                                                             }
                                                                                         ?>
+                                                                                    <i class="fa fa-edit ml-3"></i>
                                                                                     </a>
                                                                                 </div>
                                                                                 <div class="user_info_field">
+                                                                                    <label>Username Telegram: </label>
+                                                                                    <a class="editable_on" href="#" data-type="text" data-pk="<?= $contact['Id'] ?>" data-url="createapp.php" data-title="Enter username"  id="username_telegram"><?= $contact['username_telegram'] ?><i class="fa fa-edit ml-3"></i></a>
+                                                                                </div>
+                                                                                <div class="user_info_field">
                                                                                     <label>Address: </label>
-                                                                                    <a class="editable_on" href="#" data-type="text" data-pk="<?= $contact['Id'] ?>" data-url="createapp.php" data-title="Enter username"  id="address"><?= $contact['address'] ?></a>
+                                                                                    <a class="editable_on" href="#" data-type="text" data-pk="<?= $contact['Id'] ?>" data-url="createapp.php" data-title="Enter username"  id="address"><?= $contact['address'] ?><i class="fa fa-edit ml-3"></i></a>
                                                                                 </div>
                                                                                 <div class="user_info_field">
                                                                                     <label>Extra Address:</label>
-                                                                                     <a class="editable_on" href="#" data-type="text" data-pk="<?= $contact['Id'] ?>" data-url="createapp.php" data-title="Enter username" id="extra_address"><?= $contact['extra_address'] ?></a>
+                                                                                     <a class="editable_on" href="#" data-type="text" data-pk="<?= $contact['Id'] ?>" data-url="createapp.php" data-title="Enter username" id="extra_address"><?= $contact['extra_address'] ?><i class="fa fa-edit ml-3"></i></a>
                                                                                 </div>
                                                                                 <div class="user_info_field">
                                                                                     <label>Email:</label>
-                                                                                     <a class="editable_on" href="#" data-type="text" data-pk="<?= $contact['Id'] ?>" data-url="createapp.php" data-title="Enter username" id="email"><?= $contact['email'] ?></a>
+                                                                                     <a class="editable_on" href="#" data-type="text" data-pk="<?= $contact['Id'] ?>" data-url="createapp.php" data-title="Enter username" id="email"><?= $contact['email'] ?><i class="fa fa-edit ml-3"></i></a>
                                                                                 </div>
                                                                                 <div class="user_info_field">
                                                                                     <label>Extra Email:</label>
-                                                                                     <a class="editable_on" href="#" data-type="text" data-pk="<?= $contact['Id'] ?>" data-url="createapp.php" data-title="Enter username" id="extra_email"><?= $contact['extra_email'] ?></a>
+                                                                                     <a class="editable_on" href="#" data-type="text" data-pk="<?= $contact['Id'] ?>" data-url="createapp.php" data-title="Enter username" id="extra_email"><?= $contact['extra_email'] ?><i class="fa fa-edit ml-3"></i></a>
                                                                                 </div>
                                                                                 <div class="user_info_field">
                                                                                     <label>Birthday:</label>
-                                                                                     <a class="editable_on" href="#" data-type="text" data-pk="<?= $contact['Id'] ?>" data-url="createapp.php" data-title="Enter username" id="birthday"><?= $contact['birthday'] ?></a>
+                                                                                     <a class="editable_on" href="#" data-type="text" data-pk="<?= $contact['Id'] ?>" data-url="createapp.php" data-title="Enter username" id="birthday"><?= $contact['birthday'] ?><i class="fa fa-edit ml-3"></i></a>
                                                                                 </div>
                                                                                 <div class="user_info_field">
                                                                                     <label>CMND:</label>
-                                                                                     <a class="editable_on" href="#" data-type="text" data-pk="<?= $contact['Id'] ?>" data-url="createapp.php" data-title="Enter username" id="identify_cardid"><?= $contact['identify_cardid'] ?></a>
+                                                                                     <a class="editable_on" href="#" data-type="text" data-pk="<?= $contact['Id'] ?>" data-url="createapp.php" data-title="Enter username" id="identify_cardid"><?= $contact['identify_cardid'] ?><i class="fa fa-edit ml-3"></i></a>
                                                                                 </div>
                                                                                 <div class="user_info_field">
                                                                                     <label>Passport Number:</label>
-                                                                                     <a class="editable_on" href="#" data-type="text" data-pk="<?= $contact['Id'] ?>" data-url="createapp.php" data-title="Enter username" id="passport_number"><?= $contact['passport_number'] ?></a>
+                                                                                     <a class="editable_on" href="#" data-type="text" data-pk="<?= $contact['Id'] ?>" data-url="createapp.php" data-title="Enter username" id="passport_number"><?= $contact['passport_number'] ?><i class="fa fa-edit ml-3"></i></a>
                                                                                 </div>
                                                                                 <div class="user_info_field">
                                                                                     <label>Country:</label>
-                                                                                     <a class="editable_on" href="#" data-type="text" data-pk="<?= $contact['Id'] ?>" data-url="createapp.php" data-title="Enter username" id="country"><?= $contact['country'] ?></a>
+                                                                                     <a class="editable_on" href="#" data-type="text" data-pk="<?= $contact['Id'] ?>" data-url="createapp.php" data-title="Enter username" id="country"><?= $contact['country'] ?><i class="fa fa-edit ml-3"></i></a>
                                                                                 </div>
                                                                                 <div class="user_info_field">
                                                                                     <label>City:</label>
-                                                                                     <a class="editable_on" href="#" data-type="text" data-pk="<?= $contact['Id'] ?>" data-url="createapp.php" data-title="Enter username" id="city"><?= $contact['city'] ?></a>
+                                                                                     <a class="editable_on" href="#" data-type="text" data-pk="<?= $contact['Id'] ?>" data-url="createapp.php" data-title="Enter username" id="city"><?= $contact['city'] ?><i class="fa fa-edit ml-3"></i></a>
                                                                                 </div>
                                                                                 <div class="user_info_field">
                                                                                     <label>District:</label>
-                                                                                     <a class="editable_on" href="#" data-type="text" data-pk="<?= $contact['Id'] ?>" data-url="createapp.php" data-title="Enter username" id="district"><?= $contact['district'] ?></a>
+                                                                                     <a class="editable_on" href="#" data-type="text" data-pk="<?= $contact['Id'] ?>" data-url="createapp.php" data-title="Enter username" id="district"><?= $contact['district'] ?><i class="fa fa-edit ml-3"></i></a>
                                                                                 </div>
                                                                                 <div class="user_info_field">
                                                                                     <label>State:</label>
-                                                                                     <a class="editable_on" href="#" data-type="text" data-pk="<?= $contact['Id'] ?>" data-url="createapp.php" data-title="Enter username" id="state"><?= $contact['state'] ?></a>
+                                                                                     <a class="editable_on" href="#" data-type="text" data-pk="<?= $contact['Id'] ?>" data-url="createapp.php" data-title="Enter username" id="state"><?= $contact['state'] ?><i class="fa fa-edit ml-3"></i></a>
                                                                                 </div>
                                                                                 <div class="user_info_field">
                                                                                     <label>Zipcode:</label>
-                                                                                     <a class="editable_on" href="#" data-type="text" data-pk="<?= $contact['Id'] ?>" data-url="createapp.php" data-title="Enter username" id="zipcode"><?= $contact['zipcode'] ?></a>
+                                                                                     <a class="editable_on" href="#" data-type="text" data-pk="<?= $contact['Id'] ?>" data-url="createapp.php" data-title="Enter username" id="zipcode"><?= $contact['zipcode'] ?><i class="fa fa-edit ml-3"></i></a>
                                                                                 </div>
                                                                                 <div class="user_info_field">
                                                                                     <label>Thông tin bổ sung:</label>
-                                                                                     <a class="editable_on" href="#" data-type="text" data-pk="<?= $contact['Id'] ?>" data-url="createapp.php" data-title="Enter username" id="extra_id"><?= $contact['extra_id'] ?></a>
-                                                                                </div>
-                                                                                <div class="user_info_field">
-                                                                                    <label>Other Group: </label>
-                                                                                    <a class="" href="#"></a>
-                                                                                </div>
-                                                                                <div class="user_info_field">
-                                                                                    <label>Bạn bè Telegram:</label>
-                                                                                     <a class="" href="#"></a>
+                                                                                     <a class="editable_on" href="#" data-type="text" data-pk="<?= $contact['Id'] ?>" data-url="createapp.php" data-title="Enter username" id="extra_id"><?= $contact['extra_id'] ?><i class="fa fa-edit ml-3"></i></a>
                                                                                 </div>
                                                                             </div>
                                                                         </div>
@@ -428,16 +436,16 @@ if ($id != 0) {
                                                         </div>
                                                         <div class="col-lg-1 col-md-1 detail_one_user kt-margin-b-5">
                                                                <p class="fas fa-info-circle" data-toggle="modal"
-                                                        data-target="#detail_one" style="font-size: 3rem; color: dimgrey; cursor: pointer;"></p>
+                                                        data-target="#detail_one" style="font-size: 2rem; color: dimgrey; cursor: pointer;"></p>
                                                         </div>
                                                         <div class="col-lg-1 col-md-1 delete-phone kt-margin-b-5"
                                                              style="display: none;">
                                                             <i class="far fa-minus-square"
-                                                               style=" font-size: 3rem; color: #fd1361; cursor: pointer;"></i>
+                                                               style=" font-size: 2rem; color: #fd1361; cursor: pointer;"></i>
                                                         </div>
                                                         <div class="col-lg-1 col-md-1 add-phone kt-margin-b-5">
                                                             <i class="far fa-plus-square"
-                                                               style=" font-size: 3rem; color: #1dc9b7; cursor: pointer;"></i>
+                                                               style=" font-size: 2rem; color: #1dc9b7; cursor: pointer;"></i>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -466,7 +474,7 @@ if ($id != 0) {
                                                         <button type="button" data-id-elm="detail_option_file" class="btn btn-show-detail w-100 btn-secondary d-block">Thêm chi tiết<i class="fas fa-plus ml-2" style="font-size:12px;"></i></button>
                                                     </div>
                                                 </div>
-                                                <div class="form-group col-lg-15 mt-3 row box_detail_option" id="detail_option_file">
+                                                <div class="form-group col-lg-15 mt-3 row box_detail_option" id="detail_option_file" style="display: none;">
                                                     <div class="col-lg-3">
                                                         <label>Vị trí cột Birthday</label>
                                                         <input type="number" class="form-control" name="index_birthday"
@@ -532,12 +540,22 @@ if ($id != 0) {
                                                         <input type="number" class="form-control" name="index_extra_id"
                                                                value="0">
                                                     </div>
-                                                <div class="col-sm-6 d-flex align-items-end">
-                                                    <label class="kt-checkbox kt-checkbox--success">
-                                                        <input type="checkbox" name="addFriend" value="thembanbe">
-                                                        Thêm làm bạn bè Telegram
-                                                        <span></span>
-                                                    </label>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-sm-3 d-flex align-items-end">
+                                                        <label class="kt-checkbox kt-checkbox--success">
+                                                            <input type="checkbox" name="addFriend" value="thembanbe">
+                                                            Thêm làm bạn bè Telegram
+                                                            <span></span>
+                                                        </label>
+                                                    </div>
+                                                    <div class="col-sm-3 d-flex align-items-end">
+                                                        <label class="kt-checkbox kt-checkbox--success">
+                                                            <input type="checkbox" disabled name="addFriendZalo" value="thembanbezalo">
+                                                            Thêm làm bạn bè Zalo
+                                                            <span></span>
+                                                        </label>
+                                                    </div>
                                                 </div>
                                             </div>
                                             <div class="kt-portlet__foot">
@@ -571,6 +589,8 @@ if ($id != 0) {
 </div>
 
 <?php include 'footer.php'; ?>
+<!-- edit trung 22/5 -->
+<script src="../assets/js/pages/custom/wizard/wizard-3.js" type="text/javascript"></script>
 <script>
     function beforeSubmit() {
         if ($('#myfile').val()) {
@@ -582,9 +602,9 @@ if ($id != 0) {
                     'error'
                 )
                 return false;
-            } else return confirm('Thực hiện thêm danh bạ?');
+            } else return confirm('Thực hiện thêm tệp khách hàng?');
         } else if ($('input[name="phone[]"]').val())
-            return confirm('Thực hiện thêm danh bạ?');
+            return confirm('Thực hiện thêm tệp khách hàng?');
         else {
             Swal.fire(
                 'Lỗi...',
@@ -627,7 +647,26 @@ if ($id != 0) {
             // console.log($("select[name=action]").val());
             var name_action = $("select[name=action]").val();
             if(name_action != 0) {
-                if(name_action) {
+                var list_account = <?php 
+                    $url='http://localhost:2020/telegram/get_list_user_telegram';
+                    $curl=curl_init($url);
+                    curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
+                    curl_setopt($curl, CURLOPT_HTTPHEADER, [
+                        'X-RapidAPI-Host: contextualwebsearch-websearch-v1.p.rapidapi.com',
+                        'X-RapidAPI-Key: 7xxxxxxxxxxxxxxxxxxxxxxxxxxx',
+                        'Authorization: '.$_SESSION['user_token']
+                    ]);
+                    $response2 = curl_exec($curl);
+                    curl_close($curl);
+                    echo $response2;
+                ?>;
+                var list_option = {};
+                if (list_account.length!=0) 
+                    for (let index of list_account) {
+                        let key = index.Id;
+                        list_option[key] = index.phone
+                    }
+                if(name_action=="delete") {
                     var searchIDs = $(".cbx:checked").map(function(){
                       return $(this).val();
                     }).get();
@@ -643,14 +682,13 @@ if ($id != 0) {
                                 "id": <?php echo $id; ?>
                             },
                             success: function (dt) {
-                                console.log(dt);
                                 if (dt) {
                                     Swal.fire(
                                         'Thao tác thành công',
                                         'Thao tác thành công',
                                         'success',
                                     );
-                                    location.reload();
+                                    // location.reload();
                                 } else Swal.fire(
                                     'Lỗi...',
                                     'Lỗi khi thực hiện tác vụ',
@@ -666,6 +704,144 @@ if ($id != 0) {
                         );
                     }
                     
+                }
+                else if (name_action == "add_friend_tel") {
+                    Swal.fire({
+                        title: 'Vui lòng chọn tài khoản Telegram',
+                        input: 'select',
+                        inputOptions: list_option,
+                        inputAttributes: {
+                            autocapitalize: 'off'
+                        },
+                        showCancelButton: true,
+                        confirmButtonText: 'Thêm',
+                        showLoaderOnConfirm: true,
+                        allowOutsideClick: () => !Swal.isLoading()
+                        }).then((result) => {
+                        if (result.value) {
+                            $.ajax({
+                                url: "./createapp.php",
+                                type: "POST",
+                                data: {
+                                    "function": "add_friend_tel_from_contact",
+                                    "id": result.value,
+                                    "idcontact": <?php echo $id; ?>,
+                                },
+                                success: function (response) {
+                                    if (response) {
+                                        Swal.fire(
+                                            'Success!',
+                                            'Thêm thành công ' + response + ' người dùng vào bạn bè Telegram.',
+                                            'success'
+                                        )
+                                    } else Swal.fire(
+                                        'Error!',
+                                        'Thêm bạn bè thất bại',
+                                        'error'
+                                    )
+                                }
+                            })
+                        }
+                        })
+                }
+                else if (name_action == "add_friend_zalo") {
+                    Swal.fire(
+                    'Lỗi...',
+                    'Tính năng này đang phát triển. Vui lòng thử lại sau',
+                    'error',
+                );
+                }
+                else if (name_action == "inviter_group_tel") {
+                    let html = `<select class="form-control multi_select" name="multi_select_name[]" multiple>`;
+                    for (let index of list_account) {
+                        html = html + `<option value="${index.Id}">${index.phone}</option>`
+                    }
+                    html = html + `</select>`;
+                    var list_group = <?php 
+                        $url='http://localhost:2020/telegram/get_all_group_chat_telegram_by_login';
+                        $curl=curl_init($url);
+                        curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
+                        curl_setopt($curl, CURLOPT_HTTPHEADER, [
+                            'X-RapidAPI-Host: contextualwebsearch-websearch-v1.p.rapidapi.com',
+                            'X-RapidAPI-Key: 7xxxxxxxxxxxxxxxxxxxxxxxxxxx',
+                            'Authorization: '.$_SESSION['user_token']
+                        ]);
+                        $response2 = curl_exec($curl);
+                        curl_close($curl);
+                        echo $response2;
+                    ?>;
+                    var list_option_group = {};
+                    if (list_group.data.length!=0) 
+                        for (let index of list_group.data) {
+                            let key = index.chat_id;
+                            list_option_group[key] = index.name
+                        }
+
+                    Swal.mixin({
+                        confirmButtonText: 'Next &rarr;',
+                        showCancelButton: true,
+                        progressSteps: ['1', '2']
+                        }).queue([
+                        {
+                            title: 'Chọn tài khoản sử dụng thêm vào group',
+                            text: 'Tài khoản này được sử dụng để luân phiên mời người dùng vào nhóm',
+                            onOpen: function() {
+                                $(".multi_select").select2({
+                                });
+                            },
+                            html: html,
+                            preConfirm: () => {
+                                let array_select = [];
+                                $(".multi_select option:selected").map(function()
+                                { 
+                                    array_select.push($(this).val())
+                                })
+                                return array_select;
+                            }
+                        },
+                        {
+                            title: 'Chọn group cần thêm người dùng vào nhóm', 
+                            text: 'Danh sách người dùng trong tệp khách hàng này sẽ được mời vào trong group chat đã chọn',
+                            input: 'select',
+                            inputPlaceholder: 'Vui lòng chọn nhóm',
+                            inputOptions: list_option_group,
+                        },
+                        ]).then((result) => {
+                            if (result.value) {
+                                let array_chat_id = [{id: result.value[1]}];
+                                
+                                $.ajax({
+                                    url: "./createapp.php",
+                                    type: "POST",
+                                    data: {
+                                        "function": "add_group_chat_telegram",
+                                        "id_group_chat": JSON.stringify(array_chat_id),
+                                        "id_contact": <?php echo $id; ?>,
+                                        "list_user": JSON.stringify(result.value[0]),
+                                    },
+                                    success: function (dt) {
+                                        if (dt) dt= JSON.parse(dt);
+                                        if (dt && dt.process_id) 
+                                        {
+                                            window.location.href="inviter-user-to-group.php?process_id="+ dt.process_id;
+                                        }
+                                        else 
+                                        if (dt) {
+                                            Swal.fire(
+                                                'Thêm thành công',
+                                                'Thêm thành công ' + dt + ' người dùng vào ' + array_chat_id.length + ' nhóm chat',
+                                                'success',
+                                            );
+                                            // location.reload();
+                                        } else Swal.fire(
+                                            'Lỗi...',
+                                            'Lỗi khi thêm người dùng vào nhóm chat',
+                                            'error',
+                                        );
+                                    }
+                                })
+                            }
+                        })
                 }
             }else {
                 Swal.fire(
@@ -695,6 +871,7 @@ if ($id != 0) {
             }
         });
 
+
         $('#datatb').ready(function() {
             $('#datatb thead #row-search th').each( function () {
             if($(this).data('is-search')) {
@@ -707,8 +884,8 @@ if ($id != 0) {
             var table = $('#datatb').DataTable({
                 "ordering": false,
                 "paging": false,
-                "bInfo" : false
-                // searching:false
+                "bInfo" : false,
+                "searching":false
             });
 
             // Apply the search
