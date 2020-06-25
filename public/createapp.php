@@ -500,8 +500,7 @@ if ($_POST['function'] == "get_list_user_group") {
         $response=curl_exec($curl);
         $httpcode=curl_getinfo($curl,CURLINFO_HTTP_CODE);
         curl_close($curl);
-        if ($httpcode==200) echo $response;
-        else echo $response;
+        echo $response;
     }
     if ($_POST['function']=="createbot") {
         $body=[
@@ -579,6 +578,9 @@ if ($_POST['function'] == "get_list_user_group") {
             "list_user" => $_POST['list_user'],
             "text" => $_POST['text'],
             "keyboard" => $_POST['keyboard'],
+            "time_send" => $_POST['time_send'],
+            "btn_callback" => $_POST['btn_callback'],
+            "type_keyboard" => $_POST['type_keyboard'],
         ];
         $url="http://localhost:2020/telbot/send_msg_sub";
         $curl=curl_init($url);
@@ -590,11 +592,10 @@ if ($_POST['function'] == "get_list_user_group") {
         ]);
         curl_setopt($curl, CURLOPT_POST,1);
         curl_setopt($curl, CURLOPT_POSTFIELDS, http_build_query($body));
-        $response=json_decode(curl_exec($curl), true);
+        $response=curl_exec($curl);
         $httpcode=curl_getinfo($curl,CURLINFO_HTTP_CODE);
         curl_close($curl);
-        if ($httpcode==200) echo $response['count'];
-        else echo null;
+        echo $response;
     }
     if ($_POST['function'] == "get_user_inviter") {
         $curl = curl_init();
@@ -763,5 +764,120 @@ if ($_POST['function'] == "get_list_user_group") {
         $stop = json_decode(curl_exec($curl2), true);
         $httpcode = curl_getinfo($curl2,CURLINFO_HTTP_CODE);
         echo $stop['status'];
+    }
+    if ($_POST['function'] == "update_aff") 
+    {
+        $body=[
+            "id" =>$_POST['id'],
+            "affilate_accept" => $_POST['affilate_accept'],
+            "text_send" => $_POST['text_send'],
+        ];
+        $url="http://localhost:2020/telbot/update_affilate";
+        $curl=curl_init($url);
+        curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($curl, CURLOPT_HTTPHEADER, [
+            'X-RapidAPI-Host: contextualwebsearch-websearch-v1.p.rapidapi.com',
+            'X-RapidAPI-Key: 7xxxxxxxxxxxxxxxxxxxxxxxxxxx',
+            'Authorization: '.$_SESSION['user_token']
+        ]);
+        curl_setopt($curl, CURLOPT_POST,1);
+        curl_setopt($curl, CURLOPT_POSTFIELDS, http_build_query($body));
+        $response=curl_exec($curl);
+        curl_close($curl);
+        echo $response;
+    }
+    if ($_POST['function']=="add_callback") {
+        $body=[
+            "id" =>$_POST['id'],
+            "name" => $_POST['name'],
+            "message" => $_POST['message'],
+            "type_keyboard" => $_POST['type_keyboard'],
+            "keyboard" => $_POST['keyboard'],
+            "btn_callback" => $_POST['btn_callback'],
+            "notify" => 0,
+            "text_noti" => "",
+            "edit_msg" => $_POST['edit_msg'],
+        ];
+        $url="http://localhost:2020/telbot/add_data_callback";
+        $curl=curl_init($url);
+        curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($curl, CURLOPT_HTTPHEADER, [
+            'X-RapidAPI-Host: contextualwebsearch-websearch-v1.p.rapidapi.com',
+            'X-RapidAPI-Key: 7xxxxxxxxxxxxxxxxxxxxxxxxxxx',
+            'Authorization: '.$_SESSION['user_token']
+        ]);
+        curl_setopt($curl, CURLOPT_POST,1);
+        curl_setopt($curl, CURLOPT_POSTFIELDS, http_build_query($body));
+        $response=curl_exec($curl);
+        curl_close($curl);
+        echo $response;
+    }
+    if ($_POST['function']=="del_callback") {
+        $body=[
+            "id_callback" => $_POST['id_callback']
+        ];
+        $url="http://localhost:2020/telbot/del_data_callback";
+        $curl=curl_init($url);
+        curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($curl, CURLOPT_HTTPHEADER, [
+            'X-RapidAPI-Host: contextualwebsearch-websearch-v1.p.rapidapi.com',
+            'X-RapidAPI-Key: 7xxxxxxxxxxxxxxxxxxxxxxxxxxx',
+            'Authorization: '.$_SESSION['user_token']
+        ]);
+        curl_setopt($curl, CURLOPT_POST,1);
+        curl_setopt($curl, CURLOPT_POSTFIELDS, http_build_query($body));
+        $response=curl_exec($curl);
+        curl_close($curl);
+        echo $response;
+    }
+    if ($_POST['function']=='update_callback') {
+        $body=[
+            "id" =>$_POST['id'],
+            "name" => $_POST['name'],
+            "message" => $_POST['message'],
+            "type_keyboard" => $_POST['type_keyboard'],
+            "keyboard" => $_POST['keyboard'],
+            "btn_callback" => $_POST['btn_callback'],
+            "mode" => "update",
+            "id_callback" => $_POST['id_callback'],
+            "type_inline" => $_POST['type_inline'] 
+        ];
+        $url="http://localhost:2020/telbot/add_data_callback";
+        $curl=curl_init($url);
+        curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($curl, CURLOPT_HTTPHEADER, [
+            'X-RapidAPI-Host: contextualwebsearch-websearch-v1.p.rapidapi.com',
+            'X-RapidAPI-Key: 7xxxxxxxxxxxxxxxxxxxxxxxxxxx',
+            'Authorization: '.$_SESSION['user_token']
+        ]);
+        curl_setopt($curl, CURLOPT_POST,1);
+        curl_setopt($curl, CURLOPT_POSTFIELDS, http_build_query($body));
+        $response=curl_exec($curl);
+        curl_close($curl);
+        echo $response;
+    }
+    if ($_POST['function']== 'register_account') {
+        $body=[
+            "token" =>$_POST['token'],
+            "network" => $_POST['network'],
+            "api_id" => $_POST['api_id'],
+            "api_hash" => $_POST['api_hash'],
+            "count" => $_POST['count'],
+            "first_name" => $_POST['first_name'],
+            "last_name" => $_POST['last_name'],
+        ];
+        $url="http://localhost:2020/telegram/register_account_telegram";
+        $curl=curl_init($url);
+        curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($curl, CURLOPT_HTTPHEADER, [
+            'X-RapidAPI-Host: contextualwebsearch-websearch-v1.p.rapidapi.com',
+            'X-RapidAPI-Key: 7xxxxxxxxxxxxxxxxxxxxxxxxxxx',
+            'Authorization: '.$_SESSION['user_token']
+        ]);
+        curl_setopt($curl, CURLOPT_POST,1);
+        curl_setopt($curl, CURLOPT_POSTFIELDS, http_build_query($body));
+        $response=curl_exec($curl);
+        curl_close($curl);
+        echo $response;
     }
 ?>

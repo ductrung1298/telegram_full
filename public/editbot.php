@@ -17,11 +17,34 @@
         $httpcode=curl_getinfo($curl,CURLINFO_HTTP_CODE);
         if ($httpcode!=200)
         {
-            header('Location: badrequest.php');
+            echo("<script>window.location.href='badrequest.php'</script>;");
         }
         curl_close($curl);
+        $url2='http://localhost:2020/auth/get_me';
+        $curl2=curl_init($url2);
+        curl_setopt($curl2, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($curl2, CURLOPT_HTTPHEADER, [
+            'X-RapidAPI-Host: contextualwebsearch-websearch-v1.p.rapidapi.com',
+            'X-RapidAPI-Key: 7xxxxxxxxxxxxxxxxxxxxxxxxxxx',
+            'Authorization: '.$_SESSION['user_token']
+        ]);
+        $user = json_decode(curl_exec($curl2), true);
+        $httpcode2=curl_getinfo($curl2,CURLINFO_HTTP_CODE);
+        curl_close($curl2);
+
+        $url3='http://localhost:2020/telbot/list_callback?id='.$id;
+        $curl3=curl_init($url3);
+        curl_setopt($curl3, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($curl3, CURLOPT_HTTPHEADER, [
+            'X-RapidAPI-Host: contextualwebsearch-websearch-v1.p.rapidapi.com',
+            'X-RapidAPI-Key: 7xxxxxxxxxxxxxxxxxxxxxxxxxxx',
+            'Authorization: '.$_SESSION['user_token']
+        ]);
+        $list_config=json_decode(curl_exec($curl3), true);
+        curl_close($curl3);
+
     }
-    else header('Location: badrequest.php');
+    else echo("<script>window.location.href='badrequest.php'</script>;");
 ?>
 <!-- end:: Header -->
 <div class="kt-body kt-grid__item kt-grid__item--fluid kt-grid kt-grid--hor kt-grid--stretch" id="kt_body">
@@ -66,7 +89,13 @@
                             <li class="nav-item">
                                 <a class="nav-link" data-toggle="tab" href="#kt_portlet_base_demo_1_3_tab_content"
                                     role="tab" aria-selected="true">
-                                    <i class="flaticon2-gear"></i> Sổ lệnh
+                                    <i class="flaticon2-gear"></i> Sổ lệnh tin nhắn
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" data-toggle="tab" href="#kt_portlet_base_demo_1_8_tab_content"
+                                    role="tab" aria-selected="true">
+                                    <i class="flaticon2-ui"></i> Sổ lệnh gọi lại
                                 </a>
                             </li>
                             <li class="nav-item">
@@ -75,12 +104,7 @@
                                     <i class="flaticon2-chat-1"></i> Gửi tin nhắn
                                 </a>
                             </li>
-                            <li class="nav-item">
-                                <a class="nav-link" data-toggle="tab" href="#kt_portlet_base_demo_1_7_tab_content"
-                                    role="tab" aria-selected="true">
-                                    <i class="flaticon-cogwheel-1"></i> Khảo sát
-                                </a>
-                            </li>
+                            
                             <li class="nav-item">
                                 <a class="nav-link" data-toggle="tab" href="#kt_portlet_base_demo_1_5_tab_content"
                                     role="tab" aria-selected="true">
@@ -90,10 +114,18 @@
                             <li class="nav-item">
                                 <a class="nav-link" data-toggle="tab" href="#kt_portlet_base_demo_1_6_tab_content"
                                     role="tab" aria-selected="true">
-                                    <i class="flaticon-cogwheel-1"></i> Quản lí nhóm
+                                    <i class="flaticon-network"></i> Quản lí nhóm
                                 </a>
                             </li>
-                            
+                            <?php  
+                            if ($user['data']['affilate'] == 1 ) echo 
+                              '<li class="nav-item">
+                                    <a class="nav-link" data-toggle="tab" href="#kt_portlet_base_demo_1_7_tab_content"
+                                        role="tab" aria-selected="true">
+                                        <i class="flaticon-security"></i> Liên kết Affilate System
+                                    </a>
+                                </li>';
+                            ?>
                         </ul>
                     </div>
                 </div>
@@ -800,11 +832,17 @@
                                     <div class="col-lg-2">
                                         <strong>Câu lệnh</strong>
                                     </div>
-                                    <div class="col-lg-5">
+                                    <div class="col-lg-3">
                                         <strong>Trả lời</strong>
                                     </div>
-                                    <div class="col-lg-4">
-                                        <strong>Button Link đính kèm</strong>
+                                    <div class="col-lg-2">
+                                        <strong>Loại button đính kèm</strong>
+                                    </div>
+                                    <div class="col-lg-2">
+                                        <strong>Text hiển thị</strong>
+                                    </div>
+                                    <div class="col-lg-3">
+                                        <strong>Đường dẫn/Lệnh thực hiện</strong>
                                     </div>
                                 </div>
                                 <?php 
@@ -818,20 +856,46 @@
                                 <div class="col-lg-2">
                                     <input type="text" name="ontext" class="form-control" value="'.$command['ontext'].'">
                                 </div>
-                                <div class="col-lg-5">
-                                    <textarea rows="2" cols="50" name="reply">'.$command['reply'].'</textarea>
+                                <div class="col-lg-3">
+                                    <textarea rows="2" cols="30" name="reply">'.$command['reply'].'</textarea>
                                 </div>
-                                <div class="col-lg-4 button_url">';
+                                <div class="col-lg-6 button_url row">
+                                ';
+                                    
                                 if (!empty($command['arraybtn']))    
-                                foreach($command['arraybtn'] as $btn)
+                                foreach($command['arraybtn'] as $index => $btn)
                                 {
+                                    if ($index == 0) echo '
+                                        <div class="col-lg-3">
+                                            <select class="form-control type_inline_command" name="type_inline_command">
+                                                <option value="1"'.(($command['type_inline']==1)?" selected":"").'>Đường dẫn</option>
+                                                <option value="0"'.(($command['type_inline']==1)?"":" selected").'>Gọi lại</option>
+                                            </select>
+                                        </div>
+                                        <div class="col-lg-9 row">
+                                    ';
+                                    else echo '
+                                        <div class="col-lg-3 mt-2">
+                                        </div>
+                                        <div class="col-lg-9 row mt-2">';
                                     echo '
-                                    <div class="row">
                                         <div class="col-lg-5"> 
                                             <input type="text" name="text_link" class="form-control" value="'.$btn['text_link'].'">
                                         </div>
-                                        <div class="col-lg-5"> 
-                                            <input type="text" name="link" class="form-control" value="'.$btn['link'].'">
+                                        <div class="col-lg-6"> 
+                                            <input type="text" name="link" class="form-control data_url '.(($command['type_inline']==1)?"display-block":"").'" value="'.(isset($btn['link'])?$btn['link']:"").'" style="display: none;">
+                                            <select name="data_callback" class="form-control data_callback '.(($command['type_inline']==0)?"display-block":"").'" style="display: none;">
+                                                <option value="0">Vui lòng chọn câu lệnh gọi lại</option>';
+                                                    if (!empty($list_config['data'])) {
+                                                        foreach($list_config['data'] as $index => $index_conf) {
+                                                            if ($index_conf['id']==$btn['callback_data'] && isset($btn['callback_data'])) 
+                                                                echo '<option value="'.$index_conf['id'].'" selected>'.$index_conf['name'].'</option>';
+                                                            else
+                                                                echo '<option value="'.$index_conf['id'].'">'.$index_conf['name'].'</option>';
+                                                        }
+                                                    }
+                                            echo '
+                                            </select>
                                         </div>
                                         <div class="col-lg-1 col-md-1 add_button_url kt-margin-b-5" style="display: none;">
                                             <i class="far fa-plus-square"
@@ -845,19 +909,31 @@
                                 }
                                 echo '
                                     <div class="row mt-2">
-                                        <div class="col-lg-5"> 
-                                            <input type="text" name="text_link" class="form-control" placeholder="Text hiển thị">
-                                        </div>
-                                        <div class="col-lg-5"> 
-                                            <input type="text" name="link" class="form-control" placeholder="Đường dẫn">
-                                        </div>
-                                        <div class="col-lg-1 col-md-1 add_button_url kt-margin-b-5" >
-                                            <i class="far fa-plus-square"
-                                                style=" font-size: 2rem; color: #1dc9b7; cursor: pointer;"></i>
-                                        </div>
-                                        <div class="col-lg-1 col-md-1 delete_button_url kt-margin-b-5" style="display: none;">
-                                            <i class="far fa-minus-square"
-                                                style=" font-size: 2rem; color: #fd1361; cursor: pointer;"></i>
+                                        <div class="col-lg-3"></div>
+                                        <div class="col-lg-9 row">
+                                            <div class="col-lg-5"> 
+                                                <input type="text" name="text_link" class="form-control" placeholder="Text hiển thị">
+                                            </div>
+                                            <div class="col-lg-6"> 
+                                                <input type="text" name="link" class="form-control data_url '.(($command['type_inline']==1)?"display-block":"").'" placeholder="Đường dẫn" style="display: none;">
+                                                <select name="data_callback" class="form-control data_callback '.(($command['type_inline']==0)?"display-block":"").'" style="display: none;">
+                                                    <option value="0">Vui lòng chọn câu lệnh gọi lại</option>';
+                                                        if (!empty($list_config['data'])) {
+                                                            foreach($list_config['data'] as $index => $index_conf) {
+                                                                echo '<option value="'.$index_conf['id'].'">'.$index_conf['name'].'</option>';
+                                                            }
+                                                        }
+                                                    echo '
+                                                </select>
+                                            </div>
+                                            <div class="col-lg-1 col-md-1 add_button_url kt-margin-b-5" >
+                                                <i class="far fa-plus-square"
+                                                    style=" font-size: 2rem; color: #1dc9b7; cursor: pointer;"></i>
+                                            </div>
+                                            <div class="col-lg-1 col-md-1 delete_button_url kt-margin-b-5" style="display: none;">
+                                                <i class="far fa-minus-square"
+                                                    style=" font-size: 2rem; color: #fd1361; cursor: pointer;"></i>
+                                            </div>
                                         </div>
                                     </div>';
                                 echo '
@@ -878,16 +954,31 @@
                         <div class="col-lg-2">
                             <input type="text" name="ontext" class="form-control" placeholder="Câu lệnh" >
                         </div>
-                        <div class="col-lg-5">
-                            <textarea rows="2" cols="50" name="reply"></textarea>
+                        <div class="col-lg-3">
+                            <textarea rows="2" cols="30" name="reply"></textarea>
                         </div>
-                        <div class="col-lg-4 button_url">
-                            <div class="row">
+                        <div class="col-lg-6 button_url row">
+                            <div class="col-lg-3">
+                                <select class="form-control type_inline_command" name="type_inline_command">
+                                    <option value="1">Đường dẫn</option>
+                                    <option value="0">Gọi lại</option>
+                                </select>
+                            </div>
+                            <div class="row col-lg-9">
                                 <div class="col-lg-5"> 
                                     <input type="text" name="text_link" class="form-control" placeholder="Text hiển thị">
                                 </div>
-                                <div class="col-lg-5"> 
-                                    <input type="text" name="link" class="form-control" placeholder="Đường dẫn">
+                                <div class="col-lg-6"> 
+                                    <input type="text" name="link" class="form-control data_url display-block" placeholder="Đường dẫn" style="display: none;">
+                                    <select name="data_callback" class="form-control data_callback" style="display: none;">
+                                        <option value="0">Vui lòng chọn câu lệnh gọi lại</option>';
+                                            if (!empty($list_config['data'])) {
+                                                foreach($list_config['data'] as $index => $index_conf) {
+                                                    echo '<option value="'.$index_conf['id'].'">'.$index_conf['name'].'</option>';
+                                                }
+                                            }
+                                        echo '
+                                    </select>
                                 </div>
                                 <div class="col-lg-1 col-md-1 add_button_url kt-margin-b-5" >
                                     <i class="far fa-plus-square"
@@ -935,11 +1026,192 @@
                             <label>- Để trả về first_name của người dùng, ta sử dụng dấu nhắc {firstname} </label>
                         </div>
                         <!-- end block 3 -->
+
+                        <!-- begin block 8 sổ lệnh callback -->
+                        <div class="tab-pane" id="kt_portlet_base_demo_1_8_tab_content" role="tabpanel">
+                            <div class="row col-lg-12">
+                                
+                                <div class="col-lg-12 command kt-margin-t-20 row">
+                                    <div class="col-lg-3">
+                                        <strong>Tên</strong>
+                                        <input type="text" name="callback_name_insert" class="form-control mt-3" placeholder="Tên" >
+                                    </div>
+                                    <div class="col-lg-5">
+                                        <strong>Nội dung tin nhắn</strong>
+                                        <textarea rows="2" cols="50" name="callback_message_insert" class="mt-3"></textarea>
+                                    </div>
+                                    <div class="col-lg-4">
+                                        <strong>Option gửi tin</strong>
+                                        <div class="row">
+                                            <label class="col-3 col-form-label">Thay tin mới</label>
+                                            <div class="col-3 mt-3">
+                                                <span class="kt-switch kt-switch--outline kt-switch--icon kt-switch--info">
+                                                    <label>
+                                                        <input type="checkbox" checked="checked" name="edit_msg_bot">
+                                                        <span></span>
+                                                    </label>
+                                                </span>
+                                            </div>
+                                            <label class="col-3 col-form-label">Thay tin cũ</label>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-12 callback_button_url_insert row mt-3">
+                                        <div class="col-lg-3">
+                                            <strong>Loại button đính kèm</strong>
+                                            <select class="form-control type_inline_select mt-3" name="type_inline_select">
+                                                <option value=1>Đường dẫn</option>
+                                                <option value=0>Gọi lại</option>
+                                            </select>
+                                        </div>
+                                        <div class="col-lg-9 row multi_button">
+                                            <div class="row col-lg-12">
+                                                <div class="col-lg-5"> 
+                                                    <strong>Text hiển thị</strong>
+                                                    <input type="text" name="text_link" class="form-control mt-3" placeholder="Text hiển thị">
+                                                </div>
+                                                <div class="col-lg-6"> 
+                                                    <strong>Đường dẫn/Lệnh callback</strong>
+                                                    <input type="text" name="link" class="mt-3 form-control data_url display-block" placeholder="Đường dẫn" style="display: none;">
+                                                    <select name="data_callback" class="mt-3 form-control data_callback" style="display: none;">
+                                                        <option value="0">Vui lòng chọn câu lệnh gọi lại</option>
+                                                        <?php
+                                                            if (!empty($list_config['data'])) {
+                                                                foreach($list_config['data'] as $index => $index_conf) {
+                                                                    echo '<option value="'.$index_conf['id'].'">'.$index_conf['name'].'</option>';
+                                                                }
+                                                            }
+                                                            ?>
+                                                    </select>
+                                                </div>
+                                                <div class="col-lg-1 mt-5 col-md-1 callback_add_button_url kt-margin-b-5 display-block" style="display: none;">
+                                                    <i class="far fa-plus-square"
+                                                        style=" font-size: 2rem; color: #1dc9b7; cursor: pointer;"></i>
+                                                </div>
+                                                <div class="col-lg-1 mt-5 col-md-1 callback_delete_button_url kt-margin-b-5" style="display: none;">
+                                                    <i class="far fa-minus-square"
+                                                        style=" font-size: 2rem; color: #fd1361; cursor: pointer;"></i>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="kt-portlet__foot">
+                                <div class="kt-form__actions">
+                                    <div class="row">
+                                        <div class="col-lg-12 text-center">
+                                            <button type="button" class="btn btn-success add_callback">Thêm mới</button>
+                                            <button type="reset" class="btn btn-secondary">Huỷ</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="kt-section col-12 mt-5">
+                                <h5>Danh sách các lệnh callback</h5>
+                                <div class="col-lg-12 kt-margin-t-20 row">
+                                    <div class="col-lg-2">
+                                        <strong>Tên</strong>
+                                    </div>
+                                    <div class="col-lg-3">
+                                        <strong>Nội dung tin nhắn trả lời</strong>
+                                    </div>
+                                    <div class="col-lg-2">
+                                        <strong>Loại button đính kèm</strong>
+                                    </div>
+                                    <div class="col-lg-2">
+                                        <strong>Text hiển thị</strong>
+                                    </div>
+                                    <div class="col-lg-3">
+                                        <strong>Đường dẫn/Lệnh thực hiện</strong>
+                                    </div>
+                                </div>
+                            <?php
+                            if (!empty($list_config['data'])) 
+                            foreach($list_config['data'] as $config) {
+                                if (isset($config['name']))
+                                    echo '
+                                    <div class="col-lg-12 command kt-margin-t-20 row">
+                                        <div class="col-lg-2">
+                                            <input type="text" disabled name="callback_name" class="form-control" value="'.$config['name'].'">
+                                        </div>
+                                        <div class="col-lg-3">
+                                            <textarea rows="2" disabled cols="30" name="callback_message">'.$config['message'].'</textarea>
+                                        </div>
+                                        <div class="col-lg-6 callback_button_url">';
+                                        $config['inline_keyboard'] = json_decode($config['inline_keyboard'], true);
+                                        if (!empty($config['inline_keyboard']['inline_keyboard']))    
+                                        foreach($config['inline_keyboard']['inline_keyboard'] as $count => $btn)
+                                        {
+                                            echo '
+                                            <div class="row '.(($count != 0)?'mt-2':"").'">';
+                                                if ($count==0) echo '
+                                                <div class="col-lg-3">
+                                                    <select disabled class="form-control type_inline" name="type_inline">
+                                                        <option value=1 '.(($config['type_inline'] == 1)?"selected":"").'>Đường dẫn</option>
+                                                        <option value=0 '.(($config['type_inline'] == 0)?"selected":"").'>Gọi lại</option>
+                                                    </select>
+                                                </div>';
+                                                else echo '<div class="col-lg-3"></div>';
+                                                echo '
+                                                <div class="col-lg-4"> 
+                                                    <input type="text" disabled name="text_link" class="form-control" value="'.$btn[0]['text'].'">
+                                                </div>
+                                                <div class="col-lg-5"> 
+                                                    <input type="text" disabled name="link" class="form-control data_url '.(($config['type_inline'] == 1)?"display-block":"").'" value="'.(isset($btn[0]['url'])?$btn[0]['url']:"").'" style="display: none;"> 
+                                                    <select name="data_callback" disabled class="form-control data_callback '.(($config['type_inline'] == 0)?"display-block":"").'" style="display: none;">
+                                                            <option value="0">Chưa có câu lệnh gọi lại</option>';
+                                                                if (!empty($list_config['data'])) {
+                                                                    foreach($list_config['data'] as $index => $index_conf) {
+                                                                        if (isset($btn[0]['callback_data']) && $index_conf['id'] == $btn[0]['callback_data'])
+                                                                            echo '<option value="'.$index_conf['id'].'" selected>'.$index_conf['name'].'</option>';
+                                                                        else
+                                                                            echo '<option value="'.$index_conf['id'].'">'.$index_conf['name'].'</option>';
+                                                                    }
+                                                                };
+                                                        echo '
+                                                        </select>
+                                                </div>
+                                            </div>';
+                                        }
+                                        else {
+                                            echo '
+                                            <div class="row">
+                                                <div class="col-lg-3">
+                                                    <select disabled class="form-control type_inline" name="type_inline">
+                                                        <option value=1 '.(($config['type_inline'] == 1)?"selected":"").'>Đường dẫn</option>
+                                                        <option value=0 '.(($config['type_inline'] == 0)?"selected":"").'>Gọi lại</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            ';
+                                        }
+                                        echo '
+                                        </div>
+                                        <div class="col-lg-1">
+                                            <a title="Chỉnh sửa" class="btn btn-sm btn-clean btn-icon btn-icon-md edit_callback display-block" data-id="'.$config['id'].'"  style="display: none;">                                
+                                                <i class="flaticon2-writing"></i>
+                                            </a>
+                                            <a title="Lưu" class="btn btn-sm btn-clean btn-icon btn-icon-md update_callback" data-id="'.$config['id'].'"  style="display: none;">                                
+                                                <i class="flaticon2-refresh"></i>
+                                            </a>
+                                            <a title="Xóa" class="btn btn-sm btn-clean btn-icon btn-icon-md delete_callback" data-id="'.$config['id'].'">                                
+                                                <i class="flaticon-delete-1"></i>
+                                            </a>
+                                        </div>
+                                    </div>
+                                    ';
+                            }   
+                            ?>
+                            </div>
+                        </div>
+                        <!-- end block 8 sổ lệnh callback -->
+
                         <!-- block 4 -->
                         <div class="tab-pane" id="kt_portlet_base_demo_1_4_tab_content" role="tabpanel">
                             <div class="col-12 form-group">
                                 <div class="form-row">
-                                    <div class="col-10">
+                                    <div class="col-10" style="position: relative;">
+                                        <div class="kt-spinner kt-spinner--v2 kt-spinner--lg kt-spinner--dark loading" style="position: absolute;left: 50%;top: 50%; display: none;"></div>
                                         <label for="">Nội dung tin nhắn</label>
                                         <textarea class="form-control" name="message_send_sub"></textarea>
                                     </div>
@@ -947,22 +1219,65 @@
                                         <button class="btn btn-outline-success btn-send_msg_sub"><i class="fa fa-paper-plane"></i> Gửi</button>
                                     </div>
                                 </div>
-                                <label class="mt-3">Đính kèm button</label>
-                                <div class="button_link">
-                                    <div class="row mt-3">
-                                        <div class="col-lg-4"> 
-                                            <input type="text" name="text_send_sub" class="form-control text_send_sub" placeholder="Text hiển thị">
+                                <div class="kt-section col-12">
+                                    <label class="mt-3">Hẹn giờ gửi tin</label>
+                                    <input type="datetime-local" class="form-control col-4" name="time-send-bot">
+                                </div>
+                                <div class="kt-section col-12">
+                                    <label class="mt-3">Kiểu button đính kèm</label>
+                                    <select class="form-control col-4" name="type_button">
+                                        <option value="1">Đính kèm button đường dẫn</option>
+                                        <option value="0">Đính kèm button gọi lại lệnh khác</option>
+                                    </select>
+                                </div>
+                                <div class="dinhkem_link display-block" style="display:none;">
+                                    <label>Đính kèm button đường dẫn</label>
+                                    <div class="button_link">
+                                        <div class="row">
+                                            <div class="col-lg-4"> 
+                                                <input type="text" name="text_send_sub" class="form-control text_send_sub" placeholder="Text hiển thị">
+                                            </div>
+                                            <div class="col-lg-4"> 
+                                                <input type="text" name="link_send_sub" class="form-control link_send_sub" placeholder="Đường dẫn">
+                                            </div>
+                                            <div class="col-lg-1 col-md-1 add_button_url_send kt-margin-b-5" >
+                                                <i class="far fa-plus-square"
+                                                    style=" font-size: 2rem; color: #1dc9b7; cursor: pointer;"></i>
+                                            </div>
+                                            <div class="col-lg-1 col-md-1 delete_button_url_send kt-margin-b-5" style="display: none;">
+                                                <i class="far fa-minus-square"
+                                                    style=" font-size: 2rem; color: #fd1361; cursor: pointer;"></i>
+                                            </div>
                                         </div>
-                                        <div class="col-lg-4"> 
-                                            <input type="text" name="link_send_sub" class="form-control link_send_sub" placeholder="Đường dẫn">
-                                        </div>
-                                        <div class="col-lg-1 col-md-1 add_button_url_send kt-margin-b-5" >
-                                            <i class="far fa-plus-square"
-                                                style=" font-size: 2rem; color: #1dc9b7; cursor: pointer;"></i>
-                                        </div>
-                                        <div class="col-lg-1 col-md-1 delete_button_url_send kt-margin-b-5" style="display: none;">
-                                            <i class="far fa-minus-square"
-                                                style=" font-size: 2rem; color: #fd1361; cursor: pointer;"></i>
+                                    </div>
+                                </div>
+                                <div class="dinhkem_callback" style="display:none;">
+                                    <label>Đính kèm button callback</label>
+                                    <div class="button_callback">
+                                        <div class="row">
+                                            <div class="col-lg-4"> 
+                                                <input type="text" name="text_callback" class="form-control text_callback" placeholder="Text hiển thị">
+                                            </div>
+                                            <div class="col-lg-4"> 
+                                                <select name="data_callback" class="form-control data_callback">
+                                                    <option value="0">Cấu lệnh gọi lại</option>
+                                                    <?php
+                                                        if (!empty($list_config['data'])) {
+                                                            foreach($list_config['data'] as $index => $config) {
+                                                                echo '<option value="'.$config['id'].'">'.$config['name'].'</option>';
+                                                            }
+                                                        }
+                                                    ?>
+                                                </select>
+                                            </div>
+                                            <div class="col-lg-1 col-md-1 add_button_callback kt-margin-b-5" >
+                                                <i class="far fa-plus-square"
+                                                    style=" font-size: 2rem; color: #1dc9b7; cursor: pointer;"></i>
+                                            </div>
+                                            <div class="col-lg-1 col-md-1 delete_button_callback kt-margin-b-5" style="display: none;">
+                                                <i class="far fa-minus-square"
+                                                    style=" font-size: 2rem; color: #fd1361; cursor: pointer;"></i>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
@@ -1220,78 +1535,46 @@
                             </div>
                         </div>
                         <!-- end block 6 -->
-                        <!-- block 7 Khảo sát -->
+                        <!-- block 7 -->
                         <div class="tab-pane" id="kt_portlet_base_demo_1_7_tab_content" role="tabpanel">
                             <div class="kt-portlet__body">
                                 <div class="form-group row form-group-marginless kt-margin-t-20">
-                                    <div class="kt-section col-12 mt-5">
-                                        <div class="kt-list-timeline">
-                                            <div class="kt-section__content">
-                                                <table class="table table-striped- table-bordered table-checkable" id="table_vote">
-                                                    <thead>
-                                                        <tr>
-                                                            <th>BOT</th>
-                                                            <th>Tên khảo sát</th>
-                                                            <th>Ngày bắt đầu</th>
-                                                            <th>Ngày kết thúc</th>
-                                                            <th>Số lượng người tham gia</th>
-                                                        </tr>
-                                                        <tr id="row-search">
-                                                            <th data-is-search="true"></th>
-                                                            <th data-is-search="true"></th>
-                                                            <th data-is-search="true"></th>
-                                                            <th data-is-search="true"></th>
-                                                        </tr>
-                                                    </thead>
-                                                    <tbody>
-                                                    <?php
-                                                        $url5='http://localhost:2020/telbot/get_list_vote_bot?id='.$id;
-                                                        $curl5=curl_init($url5);
-                                                        curl_setopt($curl5, CURLOPT_RETURNTRANSFER, true);
-                                                        curl_setopt($curl5, CURLOPT_HTTPHEADER, [
-                                                            'X-RapidAPI-Host: contextualwebsearch-websearch-v1.p.rapidapi.com',
-                                                            'X-RapidAPI-Key: 7xxxxxxxxxxxxxxxxxxxxxxxxxxx',
-                                                            'Authorization: '.$_SESSION['user_token']
-                                                        ]);
-                                                        $list_group=json_decode(curl_exec($curl5), true);
-                                                        curl_close($curl5);
-                                                        if (!empty($list_group['data'])) {
-                                                            foreach($list_group['data'] as $index => $group) {
-                                                                echo '<tr>
-                                                                <td>
-                                                                        '.(isset($group['name_group'])?$group['name_group']:"").'
-                                                                    <div class="d-none">' . (isset($group['user_id'])?$sub['user_id']:""). '</div>
-                                                                </td>
-                                                                <td>
-                                                                    '.(isset($group['username_group'])?$group['username_group']:"").'
-                                                                    <div class="d-none">' . (isset($group['username_group'])?(khong_dau($group['username_group'])):"").'</div>
-                                                                </td>
-                                                                <td class="text-center">
-                                                                    '.(isset($group['count_user'])?$group['count_user']:"").'
-                                                                </td>
-                                                                <td class="text-center">
-                                                                <span class="kt-badge kt-badge--primary  kt-badge--inline kt-badge--pill m-1">'.$group['type'].'
-                                                                    </span>
-                                                                    <div class="d-none">'.$group['type'].'</div>
-                                                                </td>
-                                                                <td class="text-center">
-                                                                    <button type="button" class="btn btn-bold btn-label-brand btn-sm view_user_group" data-toggle="modal" data-target="#kt_modal_2" data-chat_id="'.(substr($group['id_group'],4)).'">Chi tiết</button>
-                                                                </td>
-                                                                </tr>
-                                                                ';
-                                                            };
-                                                        }
-                                                        else echo '<tr class="text-center"><td valign="top" colspan="7" class="dataTables_empty">No data available in table</td></tr>';
-                                                    ?>
-                                                    </tbody>
-                                                </table>    
-                                            </div>
+                                    <div class="col-12 form-group row">
+                                        <div class="col-lg-12 mt-4">
+                                            <label class="kt-checkbox align-top kt-checkbox--bold kt-checkbox--success">
+                                                <input class="affilate_sys" <?php if ($response['affilate_sys']==1) echo "checked";?> type="checkbox">
+                                                <span></span>
+                                            </label>
+                                            <label>Tự động tạo tài khoản trong hệ thống Affiliate marketing khi người dùng tham gia nhóm</label>
+                                        </div>
+                                        <div class="col-lg-12 mt-4">
+                                            <label class="kt-checkbox align-top kt-checkbox--bold kt-checkbox--success">
+                                                <input class="affilate_sys_sub" <?php if (isset($response['affilate_sys_sub']) && $response['affilate_sys_sub']==1) echo "checked";?> type="checkbox">
+                                                <span></span>
+                                            </label>
+                                            <label>Tự động tạo tài khoản trong hệ thống Affiliate marketing khi người dùng đăng kí bot</label>
+                                        </div>
+                                        <div class="col-lg-10 text_send_aff mt-4">
+                                            <label>Text gửi link đường dẫn đăng kí tài khoản</label>
+                                            <textarea rows="4" cols="100" name="text_send_aff"><?php echo $response['text_send_aff_sys']; ?></textarea>
+                                        </div>                                            
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="kt-portlet__foot">
+                                <div class="kt-form__actions">
+                                    <div class="row">
+                                        <div class="col-lg-12 text-center">
+                                            <button type="button" class="btn btn-success update_affilate">Cập
+                                                nhật</button>
+                                            <button type="reset" class="btn btn-secondary">Huỷ</button>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
                         <!-- end block 7 -->
+                       
                     </div>
                 </div>
             </div>
@@ -1352,11 +1635,381 @@
     </div>
 </div>
 
-							<!--end::Modal-->
 <?php include 'footer.php'; ?>
 <script type="text/javascript">
 jQuery(document).ready(function($) {
 
+    // update lenh callback
+    $('.update_callback').click(function() {
+        if ($(this).parent().parent().find('input[name="callback_name"]').val().length==0) {
+            Swal.fire(
+                'Lỗi...',
+                'Tên không được rỗng',
+                'error',
+            );
+        }
+        else if ($(this).parent().parent().find('textarea[name="callback_message"]').val().length==0) {
+            Swal.fire(
+                'Lỗi...',
+                'Nội dung tin nhắn không được trống',
+                'error',
+            );
+        }
+        else {
+            var btn_callback = [];
+            var keyboard = [];
+            if ($(this).parent().parent().find('select[name="type_inline"]').val()== 1 ){
+                // duong dan
+                $(this).parent().parent().find('input[name="text_link"]').map(function () {
+                    if ($(this).val()!="") 
+                        keyboard.push( {
+                            text: $(this).val(),
+                            url: $(this).parent().parent().find('input[name="link"]').val(),
+                        })
+                }) 
+            }
+            else {
+                // callback
+                $(this).parent().parent().find('input[name="text_link"]').map(function() {
+                    if ($(this).val()!="")
+                        btn_callback.push( {
+                            text: $(this).val(),
+                            data: $(this).parent().parent().find('select[name="data_callback"]').val(),
+                        })
+                })
+            }
+            $.ajax({
+                url: "./createapp.php",
+                type: "POST",
+                data: {
+                    "function": "update_callback",
+                    "name": $(this).parent().parent().find('input[name="callback_name"]').val(),
+                    "id": <?php echo $id; ?>,
+                    "message": $(this).parent().parent().find('textarea[name="callback_message"]').val(),
+                    "type_keyboard": $(this).parent().parent().find('select[name="type_inline"]').val(),
+                    "keyboard": JSON.stringify(keyboard),
+                    "btn_callback": JSON.stringify(btn_callback),
+                    "id_callback": $(this).data('id'),
+                    "type_inline": $(this).parent().parent().find('select[name="type_inline"]').val()
+                },
+                success: function (dt) {
+                    if (dt) dt = JSON.parse(dt);
+                    if (dt.status) {
+                        Swal.fire(
+                            'Thành công',
+                            'Thêm mới thành công',
+                            'success',
+                        );
+                        location.reload();
+                    }
+                    else {
+                        Swal.fire(
+                            'Lỗi...',
+                            'Lỗi khi thêm lệnh, code: '+ dt.code,
+                            'error',
+                        );
+                    }
+                }
+            })
+
+        }
+
+    })
+
+    $('.edit_callback').click(function() {
+        if ($(this).parent().parent().find('input[name="callback_name"]').prop('disabled'))
+        {
+            $(this).removeClass('display-block');
+            $(this).parent().find('.update_callback').addClass('display-block');
+            $(this).parent().parent().find('input[name="callback_name"]').prop('disabled', false);
+            $(this).parent().parent().find('textarea[name="callback_message"]').prop('disabled', false);
+            $(this).parent().parent().find('input[name="text_link"]').prop('disabled', false);
+            $(this).parent().parent().find('input[name="link"]').prop('disabled', false);
+            $(this).parent().parent().find('select[name="type_inline"]').prop('disabled', false);
+            $(this).parent().parent().find('.data_callback').prop('disabled', false);
+            var html = `
+            <div class="row mt-2">
+                <div class="col-lg-3"></div>
+                    <div class="col-lg-4"> 
+                        <input type="text" name="text_link" class="form-control" placeholder="Text hiển thị">
+                    </div>
+                    <div class="col-lg-4"> `;
+                    if (($(this).parent().parent().find('.type_inline').val()==1)) 
+                        var check = 1;
+                    else var check = 2;
+                    html = html + `
+                        <input type="text" name="link" class="form-control data_url ${((check==1)?"display-block":"")}" placeholder="Đường dẫn" style="display: none;"> 
+                        <select name="data_callback" class="form-control data_callback ${((check!=1)?"display-block":"")}" style="display: none;">
+                            <option value="0">Vui lòng chọn câu lệnh gọi lại</option>
+                            <?php
+                                if (!empty($list_config['data'])) {
+                                    foreach($list_config['data'] as $index => $index_conf) {
+                                        echo '<option value="'.$index_conf['id'].'">'.$index_conf['name'].'</option>';
+                                    }
+                                }
+                                ?>
+                        </select>`;
+                    html = html + `
+                    </div>
+                    <div class="col-lg-1 col-md-1 callback_add_button_url kt-margin-b-5 display-block" style="display: none;">
+                        <i class="far fa-plus-square"
+                            style=" font-size: 2rem; color: #1dc9b7; cursor: pointer;"></i>
+                    </div>
+                    <div class="col-lg-1 col-md-1 callback_delete_button_url kt-margin-b-5" style="display: none;">
+                        <i class="far fa-minus-square"
+                            style=" font-size: 2rem; color: #fd1361; cursor: pointer;"></i>
+                    </div>
+                </div>
+            </div>`;
+            $(this).parent().parent().find('.callback_button_url').append(html);
+        }
+    })
+    $('.add_callback').click(function() {
+        if ($('input[name="callback_name_insert"]').val().length==0) {
+            Swal.fire(
+                'Lỗi...',
+                'Tên không được rỗng',
+                'error',
+            );
+        }
+        else if ($('textarea[name="callback_message_insert"]').val().length==0) {
+            Swal.fire(
+                'Lỗi...',
+                'Nội dung tin nhắn không được trống',
+                'error',
+            );
+        }
+        else {
+            var btn_callback = [];
+            var keyboard = [];
+            if ($('select[name="type_inline_select"]').val()== 1 ){
+                // duong dan
+                $('.multi_button').map(function() {
+                    if ($(this).find('input[name="text_link"]').val().length!=0) 
+                        keyboard.push( {
+                            text: $(this).find('input[name="text_link"]').val(),
+                            url: $(this).find('input[name="link"]').val(),
+                        })
+                })
+            }
+            else {
+                // callback
+                $('.multi_button').map(function() {
+                    if ($(this).find('input[name="text_link"]').val().length!=0) 
+                        btn_callback.push( {
+                            text: $(this).find('input[name="text_link"]').val(),
+                            data: $(this).find('select[name="data_callback"]').val(),
+                        })
+                })
+            }
+            $.ajax({
+                url: "./createapp.php",
+                type: "POST",
+                data: {
+                    "function": "add_callback",
+                    "name": $('input[name="callback_name_insert"]').val(),
+                    "id": <?php echo $id; ?>,
+                    "message": $('textarea[name="callback_message_insert"]').val(),
+                    "type_keyboard": $('select[name="type_inline_select"]').val(),
+                    "keyboard": JSON.stringify(keyboard),
+                    "btn_callback": JSON.stringify(btn_callback),
+                    "edit_msg": ($('input[name="edit_msg_bot"]').is(':checked'))?1:0,
+                },
+                success: function (dt) {
+                    console.log(dt);
+                    if (dt) dt = JSON.parse(dt);
+                    if (dt.status) {
+                        Swal.fire(
+                            'Thành công',
+                            'Thêm mới thành công',
+                            'success',
+                        );
+                        location.reload();
+                    }
+                    else {
+                        Swal.fire(
+                            'Lỗi...',
+                            'Lỗi khi thêm lệnh, code: '+ dt.code,
+                            'error',
+                        );
+                    }
+                }
+            })
+
+        }
+    })
+
+    $('.callback_button_url_insert').on("click touch", ".callback_add_button_url", function(e) {
+        if ($('.type_inline_select').val() == 1) {
+            // duong dan
+            var html = `
+            <div class="col-lg-12 mt-3 row multi_button">
+                <div class="col-lg-3 mt-3"></div>
+                <div class="row col-lg-9 mt-3">
+                    <div class="col-lg-5"> 
+                        <input type="text" name="text_link" class="form-control" placeholder="Text hiển thị">
+                    </div>
+                    <div class="col-lg-6"> 
+                        <input type="text" name="link" class="form-control data_url display-block" placeholder="Đường dẫn" style="display: none;">
+                        <select name="data_callback" class="form-control data_callback" style="display: none;">
+                            <option value="0">Vui lòng chọn câu lệnh gọi lại</option>
+                            <?php
+                                if (!empty($list_config['data'])) {
+                                    foreach($list_config['data'] as $index => $index_conf) {
+                                        echo '<option value="'.$index_conf['id'].'">'.$index_conf['name'].'</option>';
+                                    }
+                                }
+                                ?>
+                        </select>
+                    </div>
+                    <div class="col-lg-1 col-md-1 callback_add_button_url kt-margin-b-5 display-block" style="display: none;">
+                        <i class="far fa-plus-square"
+                            style=" font-size: 2rem; color: #1dc9b7; cursor: pointer;"></i>
+                    </div>
+                    <div class="col-lg-1 col-md-1 callback_delete_button_url kt-margin-b-5" style="display: none;">
+                        <i class="far fa-minus-square"
+                            style=" font-size: 2rem; color: #fd1361; cursor: pointer;"></i>
+                    </div>
+                </div>
+            </div>`;
+        }
+        else {
+            // callbacks
+            var html = `
+            <div class="col-lg-12 mt-3 row multi_button">
+                <div class="col-lg-3"></div>
+                <div class="row col-lg-9">
+                    <div class="col-lg-5"> 
+                        <input type="text" name="text_link" class="form-control" placeholder="Text hiển thị">
+                    </div>
+                    <div class="col-lg-6"> 
+                        <input type="text" name="link" class="form-control data_url" placeholder="Đường dẫn" style="display: none;">
+                        <select name="data_callback" class="form-control data_callback display-block" style="display: none;">
+                            <option value="0">Vui lòng chọn câu lệnh gọi lại</option>
+                            <?php
+                                if (!empty($list_config['data'])) {
+                                    foreach($list_config['data'] as $index => $index_conf) {
+                                        echo '<option value="'.$index_conf['id'].'">'.$index_conf['name'].'</option>';
+                                    }
+                                }
+                                ?>
+                        </select>
+                    </div>
+                    <div class="col-lg-1 col-md-1 callback_add_button_url kt-margin-b-5 display-block" style="display: none;">
+                        <i class="far fa-plus-square"
+                            style=" font-size: 2rem; color: #1dc9b7; cursor: pointer;"></i>
+                    </div>
+                    <div class="col-lg-1 col-md-1 callback_delete_button_url kt-margin-b-5" style="display: none;">
+                        <i class="far fa-minus-square"
+                            style=" font-size: 2rem; color: #fd1361; cursor: pointer;"></i>
+                    </div>
+                </div>
+            </div>`;
+        }
+        $(this).removeClass('display-block');
+            $('.callback_delete_button_url').addClass('display-block');
+            $('.callback_button_url_insert').append(html);
+    })
+    $('.callback_button_url_insert').on('click touch', '.callback_delete_button_url', function(event) {
+        $(this).parent().parent().remove();
+    })
+
+    $('.callback_button_url').on("click touch", ".callback_add_button_url", function(e) {
+        if ($(this).parent().parent().find('.type_inline').val() == 1) {
+            // duong dan
+            var html = `
+            <div class="col-lg-12 mt-3 row">
+                <div class="col-lg-3 mt-3"></div>
+                <div class="row col-lg-9 mt-3">
+                    <div class="col-lg-5"> 
+                        <input type="text" name="text_link" class="form-control" placeholder="Text hiển thị">
+                    </div>
+                    <div class="col-lg-6"> 
+                        <input type="text" name="link" class="form-control data_url" placeholder="Đường dẫn">
+                    </div>
+                    <div class="col-lg-1 col-md-1 callback_add_button_url kt-margin-b-5 display-block" style="display: none;">
+                        <i class="far fa-plus-square"
+                            style=" font-size: 2rem; color: #1dc9b7; cursor: pointer;"></i>
+                    </div>
+                    <div class="col-lg-1 col-md-1 callback_delete_button_url kt-margin-b-5" style="display: none;">
+                        <i class="far fa-minus-square"
+                            style=" font-size: 2rem; color: #fd1361; cursor: pointer;"></i>
+                    </div>
+                </div>
+            </div>`;
+        }
+        else if ($(this).parent().parent().find('.type_inline').val() == 0) {
+            // callbacks
+            var html = `
+            <div class="col-lg-12 mt-3 row">
+                <div class="col-lg-3"></div>
+                <div class="row col-lg-9">
+                    <div class="col-lg-5"> 
+                        <input type="text" name="text_link" class="form-control" placeholder="Text hiển thị">
+                    </div>
+                    <div class="col-lg-6"> 
+                        <select name="data_callback" class="form-control data_callback display-block" style="display: none;">
+                            <option value="0">Vui lòng chọn câu lệnh gọi lại</option>
+                            <?php
+                                if (!empty($list_config['data'])) {
+                                    foreach($list_config['data'] as $index => $index_conf) {
+                                        echo '<option value="'.$index_conf['id'].'">'.$index_conf['name'].'</option>';
+                                    }
+                                }
+                                ?>
+                        </select>
+                    </div>
+                    <div class="col-lg-1 col-md-1 callback_add_button_url kt-margin-b-5 display-block" style="display: none;">
+                        <i class="far fa-plus-square"
+                            style=" font-size: 2rem; color: #1dc9b7; cursor: pointer;"></i>
+                    </div>
+                    <div class="col-lg-1 col-md-1 callback_delete_button_url kt-margin-b-5" style="display: none;">
+                        <i class="far fa-minus-square"
+                            style=" font-size: 2rem; color: #fd1361; cursor: pointer;"></i>
+                    </div>
+                </div>
+            </div>`;
+        }
+        $(this).removeClass('display-block');
+        $(this).parent().find('.callback_delete_button_url').addClass('display-block');
+        $(this).parent().parent().append(html);
+    })
+    $('.callback_button_url').on('click touch', '.callback_delete_button_url', function(event) {
+        $(this).parent().parent().remove();
+    })
+
+    $('select[name="type_inline_select"]').change(function() {
+        if ($(this).val() == 1) {
+            $('.data_callback').removeClass('display-block');
+            $('.data_url').addClass('display-block');
+        }
+        else {
+            $('.data_callback').addClass('display-block');
+            $('.data_url').removeClass('display-block');    
+        }
+    })
+
+    $('select[name="type_inline"]').change(function() {
+        if ($(this).val() == 1) {
+            $(this).parent().parent().parent().find('.data_callback').removeClass('display-block');
+            $(this).parent().parent().parent().find('.data_url').addClass('display-block');
+        }
+        else {
+            $(this).parent().parent().parent().find('.data_callback').addClass('display-block');
+            $(this).parent().parent().parent().find('.data_url').removeClass('display-block');
+        }
+    })
+
+    $('select[name="type_button"]').change(function() {
+        if ($(this).val() == 1) {
+            $('.dinhkem_callback').removeClass('display-block');
+            $('.dinhkem_link').addClass('display-block');
+        }
+        else {
+            $('.dinhkem_callback').addClass('display-block');
+            $('.dinhkem_link').removeClass('display-block');
+        }
+    })
     $("#doAction").click(function() {
             var name_action = $("select[name=action]").val();
             if(name_action == "kick") {
@@ -1472,6 +2125,11 @@ jQuery(document).ready(function($) {
             $('.reply_inviter_group').addClass('display-block');
         else $('.reply_inviter_group').removeClass('display-block');
     })
+    // $('.affilate_sys').click(function() {
+    //     if ($(this).is(":checked"))
+    //         $('.text_send_aff').addClass('display-block');
+    //     else $('.text_send_aff').removeClass('display-block');
+    // })
     $('.allow_forward').click(function() {
         if ($(this).is(":checked"))
             $('.list_id_allow').addClass('display-block');
@@ -1544,19 +2202,29 @@ jQuery(document).ready(function($) {
             let reply = $(this).find('textarea[name="reply"]').val();
             let arraybtn = [];
             $(this).find('.button_url').children().map(function() {
-                if ($(this).find('input[name="text_link"]').val().length != 0 &&
-                    $(this).find('input[name="link"]').val().length != 0)
-                    arraybtn.push({
-                        "text_link": $(this).find('input[name="text_link"]')
-                            .val(),
-                        "link": $(this).find('input[name="link"]').val(),
-                    })
+                if ($(this).find('input[name="text_link"]').val())
+                {
+                    if ($(this).find('input[name="text_link"]').val().length != 0 &&
+                        $(this).find('input[name="link"]').val().length != 0 && $(this).parent().find('.type_inline_command').val()==1)
+                        arraybtn.push({
+                            "text_link": $(this).find('input[name="text_link"]')
+                                .val(),
+                            "link": $(this).find('input[name="link"]').val(),
+                        })
+                    else if ($(this).find('input[name="text_link"]').val().length != 0 &&
+                        $(this).find('select[name="data_callback"]').val() != 0 && $(this).parent().find('.type_inline_command').val()==0)
+                        arraybtn.push({
+                            "text_link": $(this).find('input[name="text_link"]').val(),
+                            "callback_data": $(this).find('select[name="data_callback"]').val(),
+                        })
+                    }
             })
-            if (ontext.length != 0 && reply.length != 0)
+            if (ontext && reply && ontext.length != 0 && reply.length != 0)
                 request.push({
                     "ontext": ontext,
                     "reply": reply,
-                    "arraybtn": arraybtn
+                    "arraybtn": arraybtn,
+                    "type_inline": $(this).find('.button_url').find('.type_inline_command').val()
                 })
         })
         if (request.length != 0) {
@@ -1577,7 +2245,7 @@ jQuery(document).ready(function($) {
                             showConfirmButton: false,
                             timer: 1500
                         }).then((reslt) => {
-                            window.location.href = "list-bot-telegram.php";
+                            location.reload();
                         })
                     } else
                         alert("Cập hình thất bại");
@@ -1824,6 +2492,40 @@ $('.button_link').on('click touch', '.add_button_url_send', function (event) {
 $('.button_link').on('click touch', '.delete_button_url_send', function (event) {
     $(this).parent().remove();
 });
+
+$('.button_callback').on('click touch', '.add_button_callback', function (event) {
+    let rdom = `<div class="row mt-3">
+        <div class="col-lg-4"> 
+            <input type="text" name="text_callback" class="form-control text_callback" placeholder="Text hiển thị">
+        </div>
+        <div class="col-lg-4"> 
+            <select name="data_callback" class="form-control data_callback">
+                <option value="0">Cấu lệnh gọi lại</option>
+                <?php
+                    if (!empty($list_config['data'])) {
+                        foreach($list_config['data'] as $index => $config) {
+                            echo '<option value="'.$config['id'].'">'.$config['name'].'</option>';
+                        }
+                    }
+                ?>
+            </select>
+        </div>
+        <div class="col-lg-1 col-md-1 add_button_callback kt-margin-b-5" >
+            <i class="far fa-plus-square"
+                style=" font-size: 2rem; color: #1dc9b7; cursor: pointer;"></i>
+        </div>
+        <div class="col-lg-1 col-md-1 delete_button_callback kt-margin-b-5" style="display: none;">
+            <i class="far fa-minus-square"
+                style=" font-size: 2rem; color: #fd1361; cursor: pointer;"></i>
+        </div>
+    </div>`;
+    $('.button_callback .add_button_callback').remove();
+    $('.button_callback .delete_button_callback').last().addClass('display-block');
+    $('.button_callback').append(rdom);
+});
+$('.button_callback').on('click touch', '.delete_button_callback', function (event) {
+    $(this).parent().remove();
+});
 $('.btn-send_msg_sub').click(function(){
     let btn_inline=[];
     $('.button_link').map(function() {
@@ -1833,6 +2535,16 @@ $('.btn-send_msg_sub').click(function(){
             "text": $(this).find('.text_send_sub').val(),
         })
     })
+
+    let btn_callback=[];
+    $('.button_callback').map(function() {
+        if ($(this).find('.text_callback').val()!="") 
+        btn_callback.push({
+            "text": $(this).find('.text_callback').val(),
+            "data": $(this).find('.data_callback').val(),
+        })
+    })
+
     let users=[];
     $('.cbx').map(function() {
         if ($(this).val()!="" && this.checked) 
@@ -1852,6 +2564,7 @@ $('.btn-send_msg_sub').click(function(){
         })
     }
     else {
+        $('.loading').addClass('display-block');
         $.ajax({
             type: "POST",
             url: "./createapp.php",
@@ -1861,19 +2574,251 @@ $('.btn-send_msg_sub').click(function(){
                 "list_user": users.toString(),
                 "text": $('textarea[name="message_send_sub"]').val(),
                 "keyboard": JSON.stringify(btn_inline),
+                "time_send": $('input[name="time-send-bot"]').val(),
+                "btn_callback": JSON.stringify(btn_callback),
+                "type_keyboard": $('select[name="type_button"]').val()
             },
             success: function(data) {
-                if (data) {
-                    Swal.fire({
+                $('.loading').removeClass('display-block');
+                if (data ) data = JSON.parse(data);
+                if (data.status) {
+                    if (data.data.type == 0)
+                        Swal.fire({
+                            position: 'inherit',
+                            type: 'success',
+                            title: 'Gửi thành công tới ' + data.data.count + ' người dùng',
+                        })
+                    else  Swal.fire({
                         position: 'inherit',
                         type: 'success',
-                        title: 'Gửi thành công tới ' + data + 'người dùng',
+                        title: 'Lên lịch gửi thành công',
                     })
-                } else
-                    alert("Gửi tin nhắn thất bại");
+                } else if (data.status == false )
+                    Swal.fire({
+                        position: 'inherit',
+                        type: 'error',
+                        title: 'Gửi tin nhắn thất bại, mã code: ' + data.code,
+                    })
             }
         })
     }
 })
+$('.update_affilate').click(function() {
+    $.ajax({
+        type: "POST",
+        url: "./createapp.php",
+        data: {
+            "function": "update_aff",
+            "id": <?php echo $id;?>,
+            "affilate_accept": ($('.affilate_sys').prop('checked') == true) ? 1 : 0,
+            "text_send": $('textarea[name="text_send_aff"]').val(),
+        },
+        success: function(data) {
+            if (data ) data = JSON.parse(data);
+            if (data.status == true) {
+                Swal.fire({
+                    position: 'inherit',
+                    type: 'success',
+                    title: 'Cập nhật thành công',
+                })
+            } else
+                Swal.fire({
+                    position: 'inherit',
+                    type: 'error',
+                    title: 'Cập nhật thất bại',
+                })
+        }
+    })
+})
+$('.delete_callback').click(function() {
+    Swal.fire({
+        title: 'Xóa cấu hình?',
+        text: "Bạn có muốn xóa cấu hình sổ lệnh gọi lại",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Yes, delete it!'
+        }).then((result) => {
+        if (result.value) {
+            // ajax
+            $.ajax({
+                type: "POST",
+                url: "./createapp.php",
+                data: {
+                    "function": "del_callback",
+                    "id_callback": $(this).data('id'),
+                },
+                success: function(data) {
+                    if (data ) data = JSON.parse(data) ;
+                    if (data.status) {
+                        Swal.fire(
+                            'Deleted!',
+                            'Xóa cấu hình thành công.',
+                            'success'
+                            )
+                        location.reload();
+                        }
+                    else Swal.fire(
+                            'Deleted!',
+                            'Xóa cấu hình thất bại.',
+                            'error'
+                            )
+                        }
+                })
+            }
+        })
+})
 
+    $('.list_command').on('click touch', '.add_command', function (event) {
+        let rdom = `
+        <div class="col-lg-12 command kt-margin-t-20 row">
+            <div class="col-lg-2">
+                <input type="text" name="ontext" class="form-control" placeholder="Câu lệnh" >
+            </div>
+            <div class="col-lg-3">
+                <textarea rows="2" cols="30" name="reply"></textarea>
+            </div>
+            <div class="col-lg-6 button_url row">
+                <div class="col-lg-3">
+                    <select class="form-control type_inline_command" name="type_inline_command">
+                        <option value="1">Đường dẫn</option>
+                        <option value="0">Gọi lại</option>
+                    </select>
+                </div>
+                <div class="row col-lg-9">
+                    <div class="col-lg-5"> 
+                        <input type="text" name="text_link" class="form-control" placeholder="Text hiển thị">
+                    </div>
+                    <div class="col-lg-6"> 
+                        <input type="text" name="link" class="form-control data_url display-block" placeholder="Đường dẫn" style="display: none;">
+                        <select name="data_callback" class="form-control data_callback" style="display: none;">
+                            <option value="0">Vui lòng chọn câu lệnh gọi lại</option>
+                                <?php 
+                                if (!empty($list_config['data'])) {
+                                    foreach($list_config['data'] as $index => $index_conf) {
+                                        echo '<option value="'.$index_conf['id'].'">'.$index_conf['name'].'</option>';
+                                    }
+                                }
+                                ?>
+                        </select>
+                    </div>
+                    <div class="col-lg-1 col-md-1 add_button_url kt-margin-b-5" >
+                        <i class="far fa-plus-square"
+                            style=" font-size: 2rem; color: #1dc9b7; cursor: pointer;"></i>
+                    </div>
+                    <div class="col-lg-1 col-md-1 delete_button_url kt-margin-b-5" style="display: none;">
+                        <i class="far fa-minus-square"
+                            style=" font-size: 2rem; color: #fd1361; cursor: pointer;"></i>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-1 col-md-1 add_command kt-margin-b-5" >
+                <i class="far fa-plus-square"
+                    style=" font-size: 3rem; color: #1dc9b7; cursor: pointer;"></i>
+            </div>
+            <div class="col-lg-1 col-md-1 delete_command kt-margin-b-5" style="display: none;">
+                    <i class="far fa-minus-square"
+                        style=" font-size: 3rem; color: #fd1361; cursor: pointer;"></i>
+                </div>
+        </div>
+        `;
+        $('.list_command .add_command').remove();
+        $('.list_command .delete_command').addClass('display-block');
+        $('.list_command').append(rdom);
+        // ta dao
+        $('.button_url').on('click touch', '.add_button_url', function (event) {
+            let rdom = `
+            <div class="row mt-2">
+            <div class="col-lg-3"></div>
+            <div class="col-lg-9 row">
+                <div class="col-lg-5"> 
+                    <input type="text" name="text_link" class="form-control" placeholder="Text hiển thị">
+                </div>
+                <div class="col-lg-6"> 
+                    <input type="text" name="link" class="form-control data_url display-block" placeholder="Đường dẫn" style="display: none;">
+                    <select name="data_callback" class="form-control data_callback" style="display: none;">
+                        <option value="0">Vui lòng chọn câu lệnh gọi lại</option>
+                        <?php
+                            if (!empty($list_config['data'])) {
+                                foreach($list_config['data'] as $index => $index_conf) {
+                                    echo '<option value="'.$index_conf['id'].'">'.$index_conf['name'].'</option>';
+                                }
+                            }
+                        ?>
+                    </select>
+                </div>
+                <div class="col-lg-1 col-md-1 add_button_url kt-margin-b-5" >
+                    <i class="far fa-plus-square"
+                        style=" font-size: 2rem; color: #1dc9b7; cursor: pointer;"></i>
+                </div>
+                <div class="col-lg-1 col-md-1 delete_button_url kt-margin-b-5" style="display: none;">
+                    <i class="far fa-minus-square"
+                        style=" font-size: 2rem; color: #fd1361; cursor: pointer;"></i>
+                </div>
+            </div>
+        </div>
+            `;
+            $(this).parent().children().last().addClass('display-block');
+            $(this).parent().parent().append(rdom);
+            $(this).remove();
+        });
+        $('.button_url').on('click touch', '.delete_button_url', function (event) {
+            $(this).parent().remove();
+        });
+
+    });
+    $('.list_command').on('click touch', '.delete_command', function (event) {
+        $(this).parent().remove();
+    });
+
+    $('.button_url').on('click touch', '.add_button_url', function (event) {
+        let rdom = `
+        <div class="row mt-2">
+            <div class="col-lg-3"></div>
+            <div class="col-lg-9 row">
+                <div class="col-lg-5"> 
+                    <input type="text" name="text_link" class="form-control" placeholder="Text hiển thị">
+                </div>
+                <div class="col-lg-6"> 
+                    <input type="text" name="link" class="form-control data_url display-block" placeholder="Đường dẫn" style="display: none;">
+                    <select name="data_callback" class="form-control data_callback" style="display: none;">
+                        <option value="0">Vui lòng chọn câu lệnh gọi lại</option>
+                        <?php
+                            if (!empty($list_config['data'])) {
+                                foreach($list_config['data'] as $index => $index_conf) {
+                                    echo '<option value="'.$index_conf['id'].'">'.$index_conf['name'].'</option>';
+                                }
+                            }
+                        ?>
+                    </select>
+                </div>
+                <div class="col-lg-1 col-md-1 add_button_url kt-margin-b-5" >
+                    <i class="far fa-plus-square"
+                        style=" font-size: 2rem; color: #1dc9b7; cursor: pointer;"></i>
+                </div>
+                <div class="col-lg-1 col-md-1 delete_button_url kt-margin-b-5" style="display: none;">
+                    <i class="far fa-minus-square"
+                        style=" font-size: 2rem; color: #fd1361; cursor: pointer;"></i>
+                </div>
+            </div>
+        </div>
+        `;
+        $(this).parent().children().last().addClass('display-block');
+        $(this).parent().parent().append(rdom);
+        $(this).remove();
+    });
+    $('.button_url').on('click touch', '.delete_button_url', function (event) {
+        $(this).parent().remove();
+    });
+    $('body').on('change', 'select[name="type_inline_command"]' ,function() {
+        if ($(this).val() == 1) {
+            $(this).parent().parent().find('.data_callback').removeClass('display-block');
+            $(this).parent().parent().find('.data_url').addClass('display-block');
+        }
+        else {
+            $(this).parent().parent().find('.data_callback').addClass('display-block');
+            $(this).parent().parent().find('.data_url').removeClass('display-block');
+        }
+    })
 </script>

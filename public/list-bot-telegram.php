@@ -59,9 +59,9 @@
                                                     echo '<tr>'.'<th scope="row">'.((int)$index+1).'</th>';
                                                     echo '<td> <label>'.str_replace("<","&lt;",$post['first_name']).'</label> </td>';
                                                     echo '<td> <label>'.str_replace("<","&lt;",$post['username']).'</label> </td>';
-                                                    echo '<td> <span> <a title="Cấu hình" data-id='.$post['id'].' class="btn btn-sm btn-clean btn-icon btn-icon-sm editbot"><i class="fas fa-tools"></i></a>';
-                                                        echo '<a title="Thống kê" href="log-bot-telegram.php?id='.$post['id'].'" class="btn btn-sm btn-clean btn-icon btn-icon-sm"><i class="fas fa-chart-line"></i></a>'; 
-                                                        echo '<a title="Xóa" class="btn btn-sm btn-clean btn-icon btn-icon-sm del-bot" data-id='.$post['id'].'><i class="fas fa-trash"></i></a>'; 
+                                                    echo '<td> <span> <a title="Cấu hình" data-id='.$post['id'].' class="btn btn-sm btn-clean btn-icon btn-icon-sm editbot"><i class="flaticon2-gear"></i></a>';
+                                                        echo '<a title="Thống kê" href="log-bot-telegram.php?id='.$post['id'].'" class="btn btn-sm btn-clean btn-icon btn-icon-sm"><i class="flaticon-graphic-2"></i></a>'; 
+                                                        echo '<a title="Xóa" class="btn btn-sm btn-clean btn-icon btn-icon-sm del-bot" data-id='.$post['id'].'><i class="flaticon2-trash"></i></a>'; 
                                                     echo '</tr>';
                                                 }
                                             }

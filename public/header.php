@@ -53,13 +53,11 @@ $documentName = [
 ];
 $toolTelegramName = [
     "add-account-tool-telegram.php",
-    "list-group-chat.php",
-    "list-account-tool-telegram.php",
     "list-user-in-group.php",
-    "get-user-group.php",
     "manager-account.php",
-    "manager-process.php",
-    "getdialogs.php",
+    "inviter-user-to-group.php",
+    "list-group-chat.php",
+    "manager-process.php"
 ];
 $contact = [
     "getcontact.php",
@@ -92,18 +90,19 @@ $contact = [
     <link href="../assets/plugins/custom/fullcalendar/fullcalendar.bundle.css" rel="stylesheet" type="text/css"/>
 
     <!--end::Page Vendors Styles -->
-    
 
     <!--begin::Global Theme Styles(used by all pages) -->
     <link href="../assets/plugins/global/plugins.bundle.css" rel="stylesheet" type="text/css"/>
     <link href="../assets/css/style.bundle.css" rel="stylesheet" type="text/css"/>
 
     <!--end::Global Theme Styles -->
+
+    <!--begin::Layout Skins(used by all pages) -->
     <!-- edit 22/5 -->
         <!--begin::Page Custom Styles(used by this page) -->
-            <link href="../assets/css/pages/wizard/wizard-3.css" rel="stylesheet" type="text/css" />
-            <link href="../assets/css/pages/wizard/wizard-1.css" rel="stylesheet" type="text/css" />
-    <!--begin::Layout Skins(used by all pages) -->
+        <link href="../assets/css/pages/wizard/wizard-3.css" rel="stylesheet" type="text/css" />
+        <link href="../assets/css/pages/wizard/wizard-1.css" rel="stylesheet" type="text/css" />
+
 
     <!--end::Layout Skins -->
     <link rel="shortcut icon" href="../assets/media/logos/logo_mydas_finall_01_uMl_icon.ico"/>
@@ -233,26 +232,21 @@ $contact = [
                                     <li class="kt-menu__item  kt-menu__item--parent" aria-haspopup="true"><span
                                                 class="kt-menu__link"><span
                                                     class="kt-menu__link-text">Pages</span></span></li>
-                                    <li class="kt-menu__item <?php echo in_array($uriName, $accountToolTelegramName) ? 'kt-menu__item--active' : '' ?>"
+                                    <li class="kt-menu__item <?php echo $uriName == 'add-account-tool-telegram.php' ? 'kt-menu__item--active' : '' ?>"
                                         aria-haspopup="true"><a href="add-account-tool-telegram.php"
                                                                 class="kt-menu__link "><i
                                                     class="kt-menu__link-bullet kt-menu__link-bullet--dot"><span></span></i><span
                                                     class="kt-menu__link-text">Tài khoản</span></a></li>
-                                    <li class="kt-menu__item <?php echo in_array($uriName, $accountToolTelegramName) ? 'kt-menu__item--active' : '' ?>"
+                                    <li class="kt-menu__item <?php echo $uriName == 'list-group-chat.php' ? 'kt-menu__item--active' : '' ?>"
                                         aria-haspopup="true"><a href="list-group-chat.php"
                                                                 class="kt-menu__link "><i
                                                     class="kt-menu__link-bullet kt-menu__link-bullet--dot"><span></span></i><span
                                                     class="kt-menu__link-text">Danh sách group chat</span></a></li>
-                                    <li class="kt-menu__item <?php echo in_array($uriName, $accountToolTelegramName) ? 'kt-menu__item--active' : '' ?>"
-                                        aria-haspopup="true"><a href="getdialogs.php"
-                                                                class="kt-menu__link "><i
-                                                    class="kt-menu__link-bullet kt-menu__link-bullet--dot"><span></span></i><span
-                                                    class="kt-menu__link-text">Quản lí tin nhắn</span></a></li>
-                                    <li class="kt-menu__item <?php echo in_array($uriName, $accountToolTelegramName) ? 'kt-menu__item--active' : '' ?>"
+                                    <li class="kt-menu__item <?php echo $uriName == 'manager-process.php' ? 'kt-menu__item--active' : '' ?>"
                                         aria-haspopup="true"><a href="manager-process.php"
                                                                 class="kt-menu__link "><i
                                                     class="kt-menu__link-bullet kt-menu__link-bullet--dot"><span></span></i><span
-                                                    class="kt-menu__link-text">Quản lí tiến trình</span></a></li>
+                                                    class="kt-menu__link-text">Danh sách tiến trình</span></a></li>
                                 </ul>
                             </div>
                         </li>
@@ -330,7 +324,7 @@ $contact = [
 
                 <!-- begin:: Header Topbar -->
                 <div class="kt-header__topbar">
-                    <!--begin: User Bar -->
+
                     <div class="kt-header__topbar-item kt-header__topbar-item--user">
                         <div class="kt-header__topbar-wrapper" data-toggle="dropdown" data-offset="0px,0px">
                             <div class="kt-header__topbar-user">
@@ -379,6 +373,7 @@ $contact = [
                     </div>
                     <!--end: User Bar -->
                 </div>
+
                 <!-- end:: Header Topbar -->
             </div>
 

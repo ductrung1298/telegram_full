@@ -226,10 +226,6 @@ if ($id != 0) {
                                                                                     </a>
                                                                                 </div>
                                                                                 <div class="user_info_field">
-                                                                                    <label>Username Telegram: </label>
-                                                                                    <a class="editable_on" href="#" data-type="text" data-pk="<?= $contact['Id'] ?>" data-url="createapp.php" data-title="Enter username"  id="username_telegram"><?= $contact['username_telegram'] ?><i class="fa fa-edit ml-3"></i></a>
-                                                                                </div>
-                                                                                <div class="user_info_field">
                                                                                     <label>Address: </label>
                                                                                     <a class="editable_on" href="#" data-type="text" data-pk="<?= $contact['Id'] ?>" data-url="createapp.php" data-title="Enter username"  id="address"><?= $contact['address'] ?><i class="fa fa-edit ml-3"></i></a>
                                                                                 </div>
@@ -882,7 +878,7 @@ if ($id != 0) {
  
             // DataTable
             var table = $('#datatb').DataTable({
-                "ordering": false,
+                // "ordering": false,
                 "paging": false,
                 "bInfo" : false,
                 "searching":false

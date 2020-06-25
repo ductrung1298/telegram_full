@@ -336,10 +336,6 @@ curl_close($curl);
                                                                             <div class="input-group mb-3">
                                                                                 <input type="text" class="form-control" name="extra_phone[]" aria-describedby="basic-addon2">
                                                                             </div>
-                                                                            <label>Username Telegram</label>
-                                                                            <div class="input-group mb-3">
-                                                                                <input type="text" class="form-control" name="usernametele[]" aria-describedby="basic-addon2">
-                                                                            </div>
                                                                             <label>Sinh nhật</label>
                                                                             <div class="input-group mb-3">
                                                                                 <input type="text" class="form-control" name="birthday[]" aria-describedby="basic-addon2">
@@ -441,11 +437,6 @@ curl_close($curl);
                                                     </div>
                                                 </div>
                                                 <div class="form-group col-lg-15 mt-3 row box_detail_option" id="detail_option_file">
-                                                    <div class="col-lg-3">
-                                                        <label>Vị trí cột Username Telegram</label>
-                                                        <input type="number" class="form-control" name="index_username"
-                                                               value="0">
-                                                    </div>
                                                     <div class="col-lg-3">
                                                         <label>Vị trí cột Birthday</label>
                                                         <input type="number" class="form-control" name="index_birthday"

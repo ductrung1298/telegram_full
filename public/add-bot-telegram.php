@@ -8,13 +8,11 @@
         <div class="kt-subheader mb-5 kt-grid__item" id="kt_subheader">
             <div class="kt-container ">
                 <div class="kt-subheader__main">
-                    <h3 class="kt-subheader__title">
-                        Bot telegram </h3>
                     <div class="kt-subheader__breadcrumbs">
                         <a href="list-bot-telegram.php" class="kt-subheader__breadcrumbs-home"><i class="flaticon2-shelter"></i></a>
                         <span class="kt-subheader__breadcrumbs-separator"></span>
                         <a href="add-bot-telegram.php" class="kt-subheader__breadcrumbs-link">
-                            Tạo tài khoản BOT</a>
+                            Tạo BOT Telegram</a>
                     </div>
                 </div>
 
@@ -39,10 +37,7 @@
                 </div>
                 <div class="kt-portlet__body">
                     <div class="tab-content">
-                        
                     <!-- end:: Notification 1-->
-                    
-                    <!-- end:: Notification 2 -->
                     <div class="tab-pane active" id="kt_portlet_base_demo_1_3_tab_content" role="tabpanel">
                         <div class="kt-portlet__body">
                             <div class="row ">

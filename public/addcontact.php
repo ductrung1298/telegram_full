@@ -77,14 +77,6 @@ foreach ($extra_phone as $i => $last) {
         $arraycontact[$i] = $data;
     }
 };
-$username = $_POST['usernametele'];
-foreach ($username as $i => $user) {
-    if (isset($arraycontact[$i])) {
-        $data = $arraycontact[$i];
-        $data->username = $user;
-        $arraycontact[$i] = $data;
-    }
-};
 
 $birthday = $_POST['birthday'];
 foreach ($birthday as $i => $last) {
@@ -222,7 +214,6 @@ if (isset($_FILES["myfile"])) {
                     'last_name' => (!empty($column[$_POST['index_lastname'] - 1]) ? $column[$_POST['index_lastname'] - 1] : ''),
                     'extra_phone' => $extra_phone,
                     'address' => (!empty($column[$_POST['index_address'] - 1]) ? trim($column[$_POST['index_address'] - 1]) : ''),
-                    'username' => (!empty($column[$_POST['index_username'] - 1]) ? trim($column[$_POST['index_username'] - 1]) : ''),
                     'extra_address' => (!empty($column[$_POST['index_extra_address'] - 1]) ? trim($column[$_POST['index_extra_address'] - 1]) : ''),
                     'email' => (!empty($column[$_POST['index_email'] - 1]) ? trim($column[$_POST['index_email'] - 1]) : ''),
                     'extra_mail' => (!empty($column[$_POST['index_extra_email'] - 1]) ? trim($column[$_POST['index_extra_email'] - 1]) : ''),

@@ -44,8 +44,7 @@
                                         <fieldset class="collapsible collapsed collapse-processed"><strong>I. GIỚI THIỆU
                                                 VỀ
                                                 TOOL TELEGRAM </strong>
-                                            <div class="fieldset-wrapper">
-                                                <p class="rtejustify">- Tool Telegram là một công cụ nhằm giúp hỗ trợ
+                                                <p>- Tool Telegram là một công cụ nhằm giúp hỗ trợ
                                                     việc
                                                     gửi tin nhắn tự động tới một danh sách người dùng số lượng lớn. Bạn
                                                     có
@@ -57,20 +56,20 @@
                                                     group, gửi tin nhắn cho người dùng, group (có đặt lịch hẹn tự động
                                                     gửi
                                                     nhiều lần).
-                                            </div>
                                         </fieldset>
                                         <fieldset class="collapsible collapsed collapse-processed"><strong>II. ĐĂNG KÍ
                                                 VÀ ỦY
                                                 QUYỀN ỨNG DỤNG </strong>
-                                            <div class="fieldset-wrapper">
                                                 <p class="rtejustify">- Để sử dụng được tool này ta cần lấy mã API_ID và
                                                     API_HASH của tài khoản mình.
                                                     Ta vào địa chỉ: <a
-                                                        href="https://my.telegram.org/auth"><b>https://my.telegram.org/auth</b></a>
+                                                        href="https://my.telegram.org/auth" target="_blank"><b>https://my.telegram.org/auth</b></a>
                                                     sau đó nhập số điện thoại đăng nhập. Một
                                                     mã xác thực sẽ được gửi đến ứng dụng của bạn. Sau khi đăng nhập
                                                     thành
-                                                    công ta chọn "<b>API development tools</b>", điền vào biểu mẫu, ta
+                                                    công ta chọn "<b>API development tools</b>", điền vào biểu mẫu
+                                                    các thông tin như tiêu đề ứng dụng, nền tảng chạy là Web, địa chỉ website chạy ứng dụng là https://mydas.life, nếu 
+                                                    hệ thống báo lỗi thì hãy load lại trang và thay đổi tên các giá trị, ta
                                                     sẽ
                                                     nhận được trường
                                                     <b>api_id</b> và <b>api_hash</b>.
@@ -83,101 +82,70 @@
                                                 <p class="rtejustify">- Sau khi có được mã api_id và api_hash ta vào địa
                                                     chỉ
                                                     tool <a
-                                                        href="https://mydas.life/add-account-tool-telegram.php"><b>https://mydas.life/add-account-tool-telegram.php</b></a>
+                                                        href="https://mydas.life/add-account-tool-telegram.php" target="_blank"><b>https://mydas.life/add-account-tool-telegram.php</b></a>
                                                     vào tab Đăng kí tài khoản, ta nhập <b>Số điện thoại, API_ID,
                                                         API_HASH</b> vừa lấy được ở bước trên, sau đó nhấn nút Thêm mới.
                                                     Mã
                                                     code <b>OTP</b> sẽ được gửi đến ứng dụng của bạn(khoảng 5s),
                                                     Điền mã OTP vào trường OPT Code, sau đó nhấn nút Thêm mới.
                                                 </p>
-                                            </div>
                                         </fieldset>
-                                        <fieldset class="collapsible collapsed collapse-processed"><strong>III. DANH BẠ
+                                        <fieldset class="collapsible collapsed collapse-processed"><strong>III. QUẢN LÍ TỆP KHÁCH HÀNG
                                             </strong>
-                                            <div class="fieldset-wrapper">
-                                                <p class="rtejustify">- Tại tab Danh sách ta chọn tài khoản cần truy cập
-                                                    danh bạ sau đó chọn cột Action là Danh bạ
-                                                    để truy cập vào Tab Danh bạ
-                                                </p>
-                                                <p>
-                                                    <img src="../assets/media/howtouse/telegram-action.jpg"
-                                                        alt="Danh bạ" width="800"
-                                                        style="display: block; margin-left: auto; margin-right: auto;">
-                                                </p>
-                                                <p class="rtejustify">- Chức năng chính của mục này là hiển thị danh
-                                                    sách
-                                                    danh bạ, trích xuất danh bạ sang file csv, thêm số điện thoại vào
-                                                    danh
-                                                    bạ từ file.
-                                                </p>
-                                                <p class="rtejustify">- Nhấn thêm danh bạ để thêm mới một danh bạ.
-                                                </p>
-                                                <p class="rtejustify">- Danh sách danh bạ:
-                                                    <ul>
-                                                        <li>Chi tiết: Xem thông tin danh sách người dùng trong danh bạ.
-                                                        </li>
-                                                        <li>Thêm vào group chat: Thêm danh sách người dùng trong danh bạ
-                                                            vào group chat Telegram
-                                                        </li>
-                                                        <li>Thêm vào bạn bè Telegram: Add danh sách người dùng trong
-                                                            danh bạ làm bạn bè trên Telegram
-                                                        </li>
-                                                        <li>Export: Xuất danh sách thành viên trong danh bạ sang file
-                                                            CSV
-                                                        </li>
-                                                    </ul>
-                                                </p>
-                                            </div>
+                                                <ul>
+                                                    <li> Để quản lí nhiều khách hàng khác nhau ta thêm danh sách người dùng đó vào các tệp khách hàng để quản lí</li>
+                                                    <li>Để tạo mới tệp khách hàng ta nhấn button Thêm tệp khách hàng
+                                                    </li>
+                                                    <li>Để thêm mới người dùng vào tệp khách hàng ta có thể thêm người dùng bằng tay hoặc định dạng file có đuôi CSV, chọn
+                                                    tệp khách hàng cần thêm vào. Để thêm danh sách người dùng đó đồng thời làm bạn bè Telegram ta click vào thêm bạn bè Telegram sau đó chọn tài 
+                                                    khoản cần thêm</li>
+                                                    <li>Để chỉnh sửa thông tin người dùng trong tệp khách hàng ta chọn xem thêm để chỉnh sửa thông tin chi tiết của người dùng đó.</li>
+                                                    <li>Để thêm danh sách người dùng trong danh bạ vào bạn bè Telegram ta chọn Hành động Thêm làm bạn bè Telegram sau đó nhấn thực hiện</li>
+                                                    <li>Để mời danh sách người dùng trong danh bạ vào nhóm chat trên Telegram ta chọn Hành động Mời vào nhóm Telegram, sau đó chọn tài khoản 
+                                                    Telegram sử dụng để thêm vào group chat và group đích cần thêm. Chỉ có thể thêm những người dùng đã là bạn bè trên Telegram trước đó.</li>
+                                                </ul>
                                         </fieldset>
-                                        <fieldset class="collapsible collapsed collapse-processed"><strong>IV. BẠN BÈ
+                                        <fieldset class="collapsible collapsed collapse-processed"><strong>IV. GỬI TIN NHẮN
                                             </strong>
-                                            <div class="fieldset-wrapper">
-                                                <p class="rtejustify">- Tại tab Danh sách ta chọn tài khoản cần truy cập
-                                                    danh bạ sau đó chọn cột Action là Bạn bè
-                                                    để truy cập vào Tab Bạn bè
-                                                </p>
-                                                <p class="rtejustify">- Chức năng chính của mục này là hiển thị danh
-                                                    sách
-                                                    bạn bè của người dùng trong telegram.
-                                                </p>
-                                            </div>
+                                                <ul>
+                                                    <li>Để gửi tin nhắn ta chọn tài khỏa cần thao tác sau đó nhấn Chi tiết, tại Tab Gửi tin nhắn: Ta có thể gửi tin nhắn đến bạn bè Telegram, đến người dùng có liên hệ Telegram trong tệp khách hàng 
+                                                    hoặc gửi tin nhắn đến group chat</li>
+                                                    <li>Có 2 kiểu gửi tin nhắn là gửi 1 lần hoặc gửi theo chu kì
+                                                            <ol type="1">
+                                                                <li>Gửi 1 lần: Hẹn giờ gửi tin</li>
+                                                                <li>Gửi theo chu kì: Tự động gửi tuần hoàn sau bao nhiều giờ hoặc 
+                                                                tự động gửi tuần hoàn vào lúc mấy giờ và thời gian bắt đầu và kết thúc việc gửi tin 
+                                                                </li>
+                                                            </ol>
+                                                    </li>
+                                                    <li>Nhấn Now để gửi ngay không hẹn giờ</li>
+                                                    <li>Chọn tài khoản cần gửi tin nhắn đến, sau đó soạn nội dung cần gửi và nhấn Gửi đển gửi tin</li>
+                                                </ul>
                                         </fieldset>
-                                        <fieldset class="collapsible collapsed collapse-processed"><strong>V. TIN NHẮN
+                                        <fieldset class="collapsible collapsed collapse-processed"><strong>V. NHÓM CHAT TELEGRAM
                                             </strong>
-                                            <div class="fieldset-wrapper">
-                                                <p class="rtejustify">- Tại tab Danh sách ta chọn tài khoản cần truy cập
-                                                    danh bạ sau đó chọn cột Action là Gửi tin nhắn
-                                                    để nhắn tin cho người dùng
-                                                </p>
-                                                <p class="rtejustify">- Chức năng chính của mục này là gửi tin nhắn có
-                                                    hẹn giờ cho bạn bè telegram, group chat hoặc danh bạ người dùng đã
-                                                    lưu
-                                                </p>
-                                                <p class="rtejustify">- Tab Gửi cho bạn bè: Chọn danh sách bạn bè cần
-                                                    gửi tin nhắn, sau đó chọn hẹn giờ gửi 1 lần hoặc gửi theo chu kì
-                                                    sau đó nhập nội dung tin nhắn cần gửi và nhấn Gửi
-                                                </p>
-                                                <p class="rtejustify">- Tab Gửi cho group chat: Chọn danh sách group cần
-                                                    gửi tin nhắn, sau đó chọn hẹn giờ gửi 1 lần hoặc gửi theo chu kì
-                                                    sau đó nhập nội dung tin nhắn cần gửi và nhấn Gửi. Nhấn vào group
-                                                    chat cụ thể để xem danh sách thành viên trong group chat
-                                                </p>
-                                                <p class="rtejustify">- Tab Gửi theo danh bạ: Chọn danh sách danh bạ cần
-                                                    gửi tin nhắn, sau đó chọn hẹn giờ gửi 1 lần hoặc gửi theo chu kì
-                                                    sau đó nhập nội dung tin nhắn cần gửi và nhấn Gửi.
-                                                </p>
-                                            </div>
+                                            <ul>
+                                                <li>Chức năng này chứa thông tin liên quan đến các nhóm chat mà user đó đã tham gia trên Telegram</li>
+                                                <li>Để xem danh sách nhóm chat đã tham gia ta chọn tài khoản cần thao tác sau đó nhấn Chi tiết, chuyển Tab Danh sách 
+                                                group chat để xem danh sách group chat mà tài khoản đó đã tham gia hoặc tại thành Menu chọn Tool Telegram -> Danh sách group chat </li>
+                                                <li>Chuyển user từ group này sang group khác: Chọn user nguồn cần lấy user để chuyển, sau đó nhấn button Chuyển user 
+                                                sang nhóm khác, chọn tài khoản để thêm vào nhóm và group đích, sau đó nhấn Submit. </li>
+                                                <li>Nhằm tránh tình trạng spam người dùng, mỗi tài khoản chỉ được phép mời 45 người dùng vào nhóm và chỉ mời 
+                                                những người dùng có username, sau đó sẽ sleep trong vòng 24h. Để quá trình chuyển user nhanh chóng, ta nên add nhiều tài khoản để
+                                                chạy luân phiên</li>
+                                                <li>Để nhắn tin đến tất cả người dùng trong nhóm chat, ta chọn Nhắn tin user trong group, sau đó chọn tài khoản để nhắn tin. Những tài khoản này sẽ luân phiên 
+                                                nhắn tin khi có lỗi xảy ra, sau đó chọn người dùng cần nhắn tin</li>
+                                            </ul>
                                         </fieldset>
                                         <fieldset class="collapsible collapsed collapse-processed"><strong>VI. MỘT SỐ
                                                 LỖI
                                                 THƯỜNG GẶP </strong>
-                                            <div class="fieldset-wrapper">
                                                 <p>
                                                     <img src="../assets/media/howtouse/errorlogin.jpg"
                                                         alt="Lỗi hết phiên đăng nhập" width="800"
                                                         style="display: block; margin-left: auto; margin-right: auto;">
                                                 </p>
-                                                <p class="rtejustify">- Lỗi không thể đăng nhập vào tài khoản: Lỗi này
+                                                <p>- Lỗi không thể đăng nhập vào tài khoản: Lỗi này
                                                     xảy
                                                     ra khi bạn chưa xác thực tài khoản
                                                     hoặc thời gian phiên đăng nhập hết hạn. Vui lòng truy cập <a
@@ -191,18 +159,15 @@
                                                         alt="Lỗi hết phiên đăng nhập" width="800"
                                                         style="display: block; margin-left: auto; margin-right: auto;">
                                                 </p>
-                                            </div>
                                         </fieldset>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                        <!-- end: Notification 1 -->
                     </div>
                 </div>
             </div>
         </div>
     </div>
 </div>
-<!-- end:: Notification -->
 <?php include 'footer.php';?>

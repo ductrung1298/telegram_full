@@ -61,14 +61,16 @@
                                         <fieldset class="collapsible collapsed collapse-processed"><strong>III. CẤU HÌNH BOT
                                             </strong>
                                             <div class="fieldset-wrapper">
-                                                <p class="rtejustify">- Chọn Bot cần cấu hình sau đó nhấn Cấu hình. Tab Cấu hình Bot lưu thông tin giao tiếp giữa người dùng và bot. Tab Forward 
-                                                tin nhắn dùng để tự động forward tin nhắn/ bài viết từ Channel này đến Group hoặc Channel khác. Tab Danh sách lệnh dùng để cấu hình các lệnh cho bot.
+                                                <p class="rtejustify">- Chọn Bot cần cấu hình sau đó nhấn Cấu hình. Tab Bot Welcome lưu thông tin giao tiếp giữa người dùng và bot khi người dùng subscribe bot. Tab Forward 
+                                                tin nhắn dùng để tự động forward tin nhắn/ bài viết từ Channel này đến Group hoặc Channel khác. Tab Sổ lệnh dùng để cấu hình các lệnh cho bot. Tab Gửi tin nhắn dùng để 
+                                                gửi tin nhắn đến người dùng đã subscribe bot. Tab Thông báo nhóm liên quan đến các thông báo trong nhóm chat Telegram như lời chào khi người dùng 
+                                                tham gia nhóm, cho phép người dùng mời BOT vào nhóm,... Tab Quản lí nhóm dùng để quản lí thành viên trong nhóm mà BOT quản lí.
                                                 </p>
                                             </div>
                                             <ol type="1">
-                                                    <li>Cấu hình BOT
+                                                    <li>BOT Welcome
                                                         <ol type="a">
-                                                            <li>Lời chào khi đăng kí kênh: Tin nhắn trả về khi có người dùng bắt đầu cuộc trò chuyện với Bot. Nhấn dấu + để thêm tin nhắn mới</li>
+                                                            <li>Lời chào khi subscribe kênh: Tin nhắn trả về khi có người dùng bắt đầu cuộc trò chuyện với Bot. Nhấn dấu + để thêm tin nhắn mới</li>
                                                             <li>Tin nhắn danh sách kênh kết nối: Mặc định khi người dùng bắt đầu cuộc trò chuyện với bot, bot sẽ trả về 2 button gợi ý
                                                             tin nhắn đó là Danh sách kênh kết nối và báo cáo. Thay đổi trường này để đặt lại text cho button danh sách kênh kết nối</li>
                                                             <li>Đính kèm danh sách kết nối cộng đồng: Chọn tích để khi người dùng đăng kí kênh sẽ gửi luôn thông tin các kênh liên hệ
@@ -80,7 +82,7 @@
                                                                         style="display: block; margin-left: auto; margin-right: auto;">
                                                                 </ul>
                                                             </li>
-                                                            <li>Hẹn giờ tự động gửi tin nhắn: Tự động gửi tin nhắn sau thời gian bao nhiêu ngày kể từ ngày người dùng đăng kí kênh
+                                                            <li>Tự động gửi tin nhắn: Tự động gửi tin nhắn sau thời gian bao nhiêu ngày kể từ ngày người dùng đăng kí kênh
                                                                 <ul>
                                                                     <li>Nội dung tin nhắn
                                                                     </li>
@@ -88,7 +90,7 @@
                                                                     <li>Thời gian gửi tin: Sau bao nhiều ngày tính từ thời điểm người dùng đăng kí kênh. Thời gian gửi tin</li>
                                                                 </ul>
                                                             </li>
-                                                            <li>List Button Inline: Mặc định khi người dùng bắt đầu cuộc trò chuyện với bot, bot sẽ trả về 2 button gợi ý
+                                                            <li>Cấu hình Button Inline: Mặc định khi người dùng bắt đầu cuộc trò chuyện với bot, bot sẽ trả về 2 button gợi ý
                                                             tin nhắn đó là Danh sách kênh kết nối và báo cáo. Để thêm các button mới, ta chọn text hiển thị của button và chỉ định ID người dùng hiển thị, mặc định 0 sẽ hiển thị tất cả, có thể chọn nhiều id người dùng hiển thị, ngăn cách bởi dấu phẩy
                                                                 <img src="../assets/media/howtouse/button_inline.jpg"
                                                                         alt="Danh sách kết nối cộng đồng" width="400"
@@ -105,7 +107,7 @@
                                                             <li>Kiểu: Tin nhắn từ Channel đến Group hoặc từ Channel đến Channel
                                                             </li>
                                                             <li>From: Username của Channel. Xem chi tiết thông tin Channel, ở mục link Channel sẽ có cấu trúc t.me/username_của_channel. 
-                                                            <img src="../assets/media/howtouse/usernamechannel.jpg"
+                                                            <img src="../assets/media/howtouse/usernamechannel2.jpg"
                                                                         alt="Username của Channel" width="400"
                                                                         style="display: block; margin-left: auto; margin-right: auto;">
                                                             </li>
@@ -119,7 +121,7 @@
                                                             </li>
                                                         </ol>
                                                     </li>
-                                                    <li>Danh sách lệnh
+                                                    <li>Sổ lệnh
                                                         <ol type="a">
                                                             <li>Câu lệnh</li>
                                                             <img src="../assets/media/howtouse/caulenh.jpg"
@@ -131,6 +133,33 @@
                                                                         style="display: block; margin-left: auto; margin-right: auto;">
                                                             <li>Button Link đính kèm: Danh sách các button đính kèm khi trả lời người dùng. Cần nhập tên hiển thị và đường dẫn cần đính kèm</li> 
                                                         </ol>
+                                                    </li>
+                                                    <li>Gửi tin nhắn
+                                                        <ul>
+                                                            <li>Nội dung tin nhắn cần gửi</li>
+                                                            <li>Đính kèm button inline</li>
+                                                            <li>Chọn đối tượng nhận tin nhắn. Bot chỉ có thể gửi tin nhắn đến người dùng đã liên hệ trước đó</li> 
+                                                        </ul>
+                                                    </li>
+                                                    <li>Thông báo nhóm
+                                                        <ul>
+                                                            <li>Xóa tin nhắn thông báo khi người dùng vào nhóm: BOT cần có quyền quản trị viên để thực hiện chức năng xóa tin nhắn</li>
+                                                            <li>Xóa tin nhắn thông báo khi có người dùng rời khỏi nhóm: BOT cần có quyền quản trị viên để thực hiện chức năng xóa tin nhắn</li>
+                                                            <img src="../assets/media/howtouse/inviter_user.jpg"
+                                                                        alt="/" width="400"
+                                                                        style="display: block; margin-left: auto; margin-right: auto;">
+                                                            <li>Gửi lời chào khi người dùng vào nhóm. Khi có người dùng tham gia vào nhóm chat, BOT sẽ tự động gửi tin nhắn đến group chào đón thành viên mới. Để BOT gửi tin nhắn không có âm thanh notification, ta chọn Gửi tin nhắn không có âm thanh</li>
+                                                            <img src="../assets/media/howtouse/welcom.jpg"
+                                                                        alt="/" width="400"
+                                                                        style="display: block; margin-left: auto; margin-right: auto;">
+                                                            <li>Cho phép mời BOT vào nhóm: BOT cần quyền quản trị viên để thực hiện chức năng này</li> 
+                                                        </ul>
+                                                    </li>
+                                                    <li>Quản lí nhóm
+                                                        <ul>
+                                                            <li>Nhấn chi tiết để xem danh sách người dùng trong group chat</li>
+                                                            <li>Kick người dùng khỏi nhóm: Chọn người dùng trong nhóm sau đó chọn Hành động Kíck khỏi nhóm, sau đó chọn thời gian chặn người dùng vào lại nhóm (đơn vị số ngày)</li>
+                                                        </ul>
                                                     </li>
                                             </ol>
                                         </fieldset>

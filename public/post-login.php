@@ -24,7 +24,8 @@
             $_SESSION["username"] = $_GET['username'];
             $result = [
                 "status" => "success",
-                "message" => 'Đăng nhập thành công'
+                "message" => 'Đăng nhập thành công',
+                "token" => $response['token'],
             ];
         }
         else {

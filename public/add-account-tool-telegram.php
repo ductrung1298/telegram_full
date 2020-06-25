@@ -44,6 +44,12 @@
                                     <i class="la la-user-plus"></i> Đăng ký tài khoản
                                 </a>
                             </li>
+                            <li class="nav-item">
+                                <a class="nav-link" data-toggle="tab" href="#kt_portlet_base_demo_1_4_tab_content"
+                                    role="tab" aria-selected="false">
+                                    <i class="la la-user-plus"></i> Tạo mới tài khoản Telegram
+                                </a>
+                            </li>
                         </ul>
                     </div>
                 </div>
@@ -82,7 +88,7 @@
                                                                 placeholder="OTP code" required>
                                                         </div>
                                                     </div>
-                                                    </div>
+                                                </div>
                                                 <br>
                                                 <div class="kt-portlet__foot">
                                                     <div class="kt-form__actions">
@@ -109,13 +115,13 @@
                                                     <div class="form-group row form-group-marginless kt-margin-t-20">
                                                         <div class="col-sm-12 col-md-6">
                                                             <div class="form-group">
-                                                                <label>Truy cập vào <a style="color:blue; font-size:16px !important;" href="tele-document.php">👉đây</a> để biết cách lấy API_ID và API_HASH</label>
+                                                                <label>Truy cập vào <a style="color:blue; font-size:16px !important;" href="tele-document.php" target="_blank">👉đây</a> để biết cách lấy API_ID và API_HASH</label>
                                                             </div>
                                                         </div>
                                                     </div>
                                                 </div>
-                                            </form>
-                                        </div>
+                                            </div>
+                                        </form>
                                     </div>
                                 </div>
                             </div>
@@ -160,18 +166,6 @@
                                                             echo '<td>'.str_replace("<","&lt;",$post['user_id']).'</td>';
                                                             echo '<td>'.str_replace("<","&lt;",$post['phone']).'</td>';
                                                             echo '<td class="d-flex justify-content-center" >';
-                                                            // echo '<div class="dropdown">
-                                                            // <button class="btn btn-info dropdown-toggle" type="button" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                                            //     Action
-                                                            // </button>
-                                                            // <div class="dropdown-menu" aria-labelledby="dropdownMenu2">
-                                                            //     <a href="getcontact.php?id='.$post['Id'].'" class="dropdown-item btn btn-label-linkedin"><i class="fas fa-address-book"></i>Danh bạ</a>
-                                                            //     <a class="dropdown-item btn btn-label-twitter" href="list-friend.php?id='.$post['Id'].'"><i class="fas fa-user-friends"></i>Bạn bè</a>
-                                                            //     <a href="getdialogs.php?id='.$post['Id'].'" class="dropdown-item btn btn-label-linkedin"><i class="fab fa-telegram"></i>Gửi tin nhắn</a>
-                                                            //     <a class="dropdown-item btn btn-label-twitter" href="list-group-chat.php?id='.$post['Id'].'"><i class="fas fa-copy"></i>Group chat</a>
-                                                            //     <a class="dropdown-item btn btn-label-linkedin btn-del-acc" data-id='.$post['Id'].'><i class="fas fa-trash"></i>Xóa</a>
-                                                            // </div>
-                                                        // </div>
                                                             echo '<a href="manager-account.php?id='.$post['Id'].'" class="btn btn-sm btn-info"><i class="flaticon-menu-2"></i> Chi tiết</a>';
                                                         echo '
                                                         </td>
@@ -214,11 +208,86 @@
                                             <div class="col-6 form-group d-flex align-items-end">
                                                 <button type="button" class="btn btn-outline-success btn-elevate btn-pill sendcodeotp">Đăng nhập </button>
                                             </div>
-                                        
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
+
+                        <!-- begin tạo mới tài khoản telegram -->
+                        <div class="tab-pane  " id="kt_portlet_base_demo_1_4_tab_content" role="tabpanel">
+                            <div class="kt-portlet__body">
+                                <div class="row ">
+                                    <div class="kt-section col-12">
+                                        <form class="kt-form kt-form--label-right">
+                                            <div class="kt-portlet__body">
+                                                <div class="form-group row form-group-marginless kt-margin-t-20">
+                                                    <div class="col-sm-12 row">
+                                                        <div class="form-group col-6">
+                                                            <label>MÃ TOKEN TÀI KHOẢN OTP SIM:</label>
+                                                            <input type="text" class="form-control" name="token_register"
+                                                                required="">
+                                                        </div>
+                                                        <div class="form-group col-6">
+                                                            <label>NHÀ MẠNG:</label>
+                                                            <select class="form-control" name="network">
+                                                                <option value="5">Viettel</option>
+                                                                <option value="6">Mobifone</option>
+                                                                <option value="2">Vinaphone</option>
+                                                                <option value="7">Vietnamobile</option>
+                                                                <option value="8">Gmobile</option>
+                                                            </select>
+                                                        </div>
+                                                        <div class="form-group col-6">
+                                                            <label>API_ID:</label>
+                                                            <input type="text" class="form-control" name="api_id_register"
+                                                                value="1391312">
+                                                        </div>
+                                                        <div class="form-group col-6">
+                                                            <label>API_HASH:</label>
+                                                            <input type="text" class="form-control" name="api_hash_register"
+                                                                value="22fb1522a31b1f9eaaef6202ec102367">
+                                                        </div>
+                                                        <div class="form-group col-6">
+                                                            <label>SỐ TÀI KHOẢN TẠO:</label>
+                                                            <input type="number" class="form-control" name="count_register">
+                                                        </div>
+                                                        <div class="col-6"></div>
+                                                        <div class="form-group col-6">
+                                                            <label>TÊN TÀI KHOẢN FIRST_NAME:</label>
+                                                            <input type="text" class="form-control" name="first_name_register">
+                                                        </div>
+                                                        <div class="form-group col-6">
+                                                            <label>TÊN TÀI KHOẢN LAST_NAME:</label>
+                                                            <input type="text" class="form-control" name="last_name_register">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <br>
+                                                <div class="kt-portlet__foot">
+                                                    <div class="kt-form__actions">
+                                                        <div class="row">
+                                                            <div class="col-lg-12 text-center bt-end">
+                                                                <button type="button"
+                                                                    class="btn btn-outline-brand btn-square btn-elevate btn-pill btn-register">Khởi tạo</button>
+                                                                <button type="reset"
+                                                                    class="btn btn-secondary btn-elevate btn-pill">Huỷ</button>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div id="overlay">
+                                                    <div class="cv-spinner">
+                                                        <span class="spinner"></span>
+                                                    </div>
+                                                </div>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- end tạo mới tài khoản telegram -->
                     </div>
                 </div>
             </div>
@@ -232,6 +301,58 @@
 <?php include 'footer.php';?>
 <script type="text/javascript">
 jQuery(document).ready(function($) {
+
+    $('.btn-register').click(function() {
+        if ($('input[name="token_register"]').val().length==0) {
+            Swal.fire(
+                'Lỗi...',
+                'Mã token không được rỗng. Vui lòng đăng nhập địa chỉ http://otpsim.com để lấy mã token của tài khoản',
+                'error',
+            );
+        }
+        else 
+        if (!($('input[name="count_register"]').val() > 0 )) {
+            Swal.fire(
+                'Lỗi...',
+                'Số tài khoản tạo không được rỗng',
+                'error',
+            );
+        }
+        else {
+            $.ajax( 
+                {
+                    url: "./createapp.php",
+                    type: "POST",
+                    data: {
+                        "function": "register_account",
+                        "token": $('input[name="token_register"]').val(),
+                        "network": $('select[name="network"]').val(),
+                        "api_id": $('input[name="api_id_register"]').val(),
+                        "api_hash": $('input[name="api_hash_register').val(),
+                        "count": $('input[name="count_register"]').val(),
+                        "first_name": $('input[name="first_name_register"]').val(),
+                        "last_name": $('input[name="last_name_register"]').val()
+                    },
+                    success: function (dt) {
+                        if (dt) dt= JSON.parse(dt);
+                        console.log(dt);
+                        if (dt.status) {
+                            Swal.fire(
+                                'Success...',
+                                'Yêu cầu tạo tài khoản thành công',
+                                'success',
+                            );
+                        }
+                        else Swal.fire(
+                            'Lỗi...',
+                            'Lỗi hệ thống không thể tạo tài khoản',
+                            'error',
+                        );
+                    }
+                }
+            )
+        }
+    })
 
     // delete account
     $('.btn-del-acc').on('click', function() {
