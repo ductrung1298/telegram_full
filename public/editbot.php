@@ -70,7 +70,7 @@ if ($id != 0) {
                     <div class="kt-portlet__head-toolbar">
                         <ul class="nav nav-tabs nav-tabs-line nav-tabs-line-success nav-tabs-line-2x" role="tablist">
                             <li class="nav-item">
-                                <a class="nav-link" data-toggle="tab" href="#kt_portlet_base_demo_1_1_tab_content" role="tab" aria-selected="true">
+                                <a class="nav-link active" data-toggle="tab" href="#kt_portlet_base_demo_1_1_tab_content" role="tab" aria-selected="true">
                                     <i class="flaticon2-bell-2"></i> BOT Welcome
                                 </a>
                             </li>
@@ -85,7 +85,7 @@ if ($id != 0) {
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link active" data-toggle="tab" href="#kt_portlet_base_demo_1_8_tab_content" role="tab" aria-selected="true">
+                                <a class="nav-link" data-toggle="tab" href="#kt_portlet_base_demo_1_8_tab_content" role="tab" aria-selected="true">
                                     <i class="flaticon2-ui"></i> Sổ lệnh gọi lại
                                 </a>
                             </li>
@@ -1816,7 +1816,7 @@ if ($id != 0) {
                         <div class="col-4 col-xl-1 col-lg-1">
                             <div class="form-group anh-select-color">
                                 <label><strong>Chọn số</strong></label>
-                                <input type="text" name="text_col" class="form-control">
+                                <input type="number" name="text_col" class="form-control">
                             </div>
                         </div>
                         <div class="col-8 col-xl-5 col-lg-5"> 
