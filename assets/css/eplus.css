@@ -191,4 +191,72 @@ span.select2 {
   }
   
   .slider.round:before {
-    border-radius: 50%;}
+    border-radius: 50%;
+}
+.wrapp-loading {
+    display: none;
+    background: rgba(0, 0, 0, 0.5);
+    height: 100%;
+    position: fixed;
+    width: 100%;
+    top: 0;
+    z-index: 999;
+}
+
+.inside-loading {
+    position: absolute;
+    margin: 0 auto;
+    z-index: 2;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.anh-box1 {
+    position: absolute;
+    height: 100px;
+    width: 100px;
+    border: 2px solid white;
+    transform: rotate(45deg);
+    background-color: #FC766AFF;
+    animation: spiin 1s linear infinite;
+}
+
+.anh-box2 {
+    position: absolute;
+    height: 100px;
+    width: 100px;
+    border: 2px solid white;
+    transform: rotate(0deg);
+    background-color: #5B84B1FF;
+    z-index: -1;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spiin {
+    0% {
+        transform: rotate(45deg);
+    }
+
+    50% {
+        transform: rotate(135deg);
+    }
+
+    100% {
+        transform: rotate(135deg);
+    }
+}
+
+@keyframes spin {
+    0% {
+        transform: rotate(0deg);
+    }
+
+    50% {
+        transform: rotate(-90deg);
+    }
+
+    100% {
+        transform: rotate(-90deg);
+    }
+}

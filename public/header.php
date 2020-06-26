@@ -115,7 +115,14 @@ $contact = [
 
 <!-- begin::Body -->
 <body class="kt-quick-panel--right kt-demo-panel--right kt-offcanvas-panel--right kt-header--fixed kt-header-mobile--fixed kt-subheader--enabled kt-subheader--transparent kt-aside--enabled kt-aside--fixed kt-page--loading">
-
+<!--loadingPopup-->
+    <div class="wrapp-loading">
+        <div class="inside-loading">
+            <div class="anh-box1"></div>
+            <div class="anh-box2"></div>
+        </div>
+    </div>
+    <!--end-->
 <!-- begin:: Page -->
 
 <!-- begin:: Header Mobile -->

@@ -1062,6 +1062,7 @@ jQuery(document).ready(function($) {
     })
     //send msg
     $(".btn-sendallmsg").click(function() {
+        $(".wrapp-loading").css('display','block');
         var count = 0;
         var countmsg=0;
         $(this).hide()

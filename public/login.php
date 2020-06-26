@@ -188,7 +188,7 @@
 		<!--end::Global Theme Bundle -->
 
 		<!--begin::Page Scripts(used by this page) -->
-		<script src="../assets/js/pages/custom/login/login-general.js" type="text/javascript"></script>
+		<!-- <script src="../assets/js/pages/custom/login/login-general.js" type="text/javascript"></script> -->
 
 		<!--end::Page Scripts -->
 	</body>
@@ -289,7 +289,7 @@ var KTLoginGeneral = function() {
                     if (obj.status == 'danger') {
                         setTimeout(function() {
                             btn.removeClass('kt-spinner kt-spinner--right kt-spinner--sm kt-spinner--light').attr('disabled', false);
-                            showErrorMsg(form, obj.status, obj.message);
+                            showErrorMsg(form, obj.status, obj.msg);
                         }, 2000);
                     } else {
                         window.location.href = "index.php";
@@ -354,7 +354,7 @@ var KTLoginGeneral = function() {
 					else {
 						setTimeout(function() {
                             btn.removeClass('kt-spinner kt-spinner--right kt-spinner--sm kt-spinner--light').attr('disabled', false);
-                            showErrorMsg(form, obj.status, obj.message);
+                            showErrorMsg(form, obj.status, obj.msg);
                         }, 2000);
 					}
                 }

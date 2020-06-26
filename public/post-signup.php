@@ -20,29 +20,14 @@
 
         $httpcode=curl_getinfo($curl,CURLINFO_HTTP_CODE);
         curl_close($curl);
-        if ($httpcode==200) {
-            $result = [
-                "status" => "success",
-                "message" => 'Đăng kí thành công'
-            ];
-        }
-        else if ($httpcode==403) {
-            $result = [
-                "status" => "danger",
-                "message" => 'Tên đăng nhập đã tồn tại'
-            ];
-        }
-        else 
-        {
-            $result = [
-                "status" => "danger",
-                "message" => 'Vui lòng nhập đúng và đủ nội dung yêu cầu'
-            ];
-        }
+        $result = [
+            "status" => ($response['status'])?"success":"danger",
+            "msg" => $response['msg']
+        ];
     } else {
         $result = [
             "status" => "danger",
-            "message" => 'Vui lòng nhập đúng và đủ nội dung yêu cầu'
+            "msg" => 'Vui lòng nhập đúng và đủ nội dung yêu cầu'
         ];
     }
     echo json_encode($result);
