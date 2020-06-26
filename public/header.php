@@ -58,7 +58,8 @@ $toolTelegramName = [
     "inviter-user-to-group.php",
     "list-group-chat.php",
     "manager-process.php",
-    "manager-messages.php"
+    "manager-messages.php",
+    "add-user.php"
 ];
 $contact = [
     "getcontact.php",
@@ -109,6 +110,7 @@ $contact = [
     <link rel="shortcut icon" href="../assets/media/logos/logo_mydas_finall_01_uMl_icon.ico"/>
 
     <link href="../assets/css/eplus.css" rel="stylesheet" type="text/css"/>
+    <link href="../assets/css/anhEplus.css" rel="stylesheet" type="text/css"/>
 </head>
 
 <!-- end::Head -->
@@ -135,7 +137,7 @@ $contact = [
     <div class="kt-header-mobile__toolbar">
         <button class="kt-header-mobile__toolbar-toggler kt-header-mobile__toolbar-toggler--left"
                 id="kt_aside_mobile_toggler"><span></span></button>
-        <button class="kt-header-mobile__toolbar-toggler" id="kt_header_mobile_toggler"><span></span></button>
+        <!-- <button class="kt-header-mobile__toolbar-toggler" id="kt_header_mobile_toggler"><span></span></button> -->
         <button class="kt-header-mobile__toolbar-topbar-toggler" id="kt_header_mobile_topbar_toggler"><i
                     class="flaticon-more"></i></button>
     </div>
@@ -244,7 +246,12 @@ $contact = [
                                         aria-haspopup="true"><a href="add-account-tool-telegram.php"
                                                                 class="kt-menu__link "><i
                                                     class="kt-menu__link-bullet kt-menu__link-bullet--dot"><span></span></i><span
-                                                    class="kt-menu__link-text">Tài khoản</span></a></li>
+                                                    class="kt-menu__link-text">Danh sách tài khoản</span></a></li>
+                                    <li class="kt-menu__item <?php echo $uriName == 'add-user.php' ? 'kt-menu__item--active' : '' ?>"
+                                        aria-haspopup="true"><a href="add-user.php"
+                                                                class="kt-menu__link "><i
+                                                    class="kt-menu__link-bullet kt-menu__link-bullet--dot"><span></span></i><span
+                                                    class="kt-menu__link-text">Đăng kí tài khoản</span></a></li>
                                     <li class="kt-menu__item <?php echo $uriName == 'list-group-chat.php' ? 'kt-menu__item--active' : '' ?>"
                                         aria-haspopup="true"><a href="list-group-chat.php"
                                                                 class="kt-menu__link "><i
@@ -259,7 +266,7 @@ $contact = [
                                         aria-haspopup="true"><a href="manager-messages.php"
                                                                 class="kt-menu__link "><i
                                                     class="kt-menu__link-bullet kt-menu__link-bullet--dot"><span></span></i><span
-                                                    class="kt-menu__link-text">Quản lí tin nhắn nhiều tài khoản</span></a></li>
+                                                    class="kt-menu__link-text">Quản lí tin nhắn</span></a></li>
                                 </ul>
                             </div>
                         </li>

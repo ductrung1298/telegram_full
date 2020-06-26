@@ -11,7 +11,7 @@
                         <a href="#" class="kt-subheader__breadcrumbs-home"><i class="flaticon2-shelter"></i></a>
                         <span class="kt-subheader__breadcrumbs-separator"></span>
                         <a href="add-account-tool-telegram.php" class="kt-subheader__breadcrumbs-link">
-                            Danh sách tài khoản </a>
+                            Thêm mới tài khoản </a>
                     </div>
                 </div>
 
@@ -26,42 +26,29 @@
                     <div class="kt-portlet__head-toolbar">
                         <ul class="nav nav-tabs nav-tabs-line nav-tabs-line-success nav-tabs-line-2x" role="tablist">
                             <li class="nav-item">
-                                <a class="nav-link active" data-toggle="tab" href="#kt_portlet_base_demo_1_1_tab_content" role="tab" aria-selected="true">
-                                    <i class="flaticon-list"></i> Danh sách
-                                </a>
-                            </li>
-                            <!-- <li class="nav-item">
-                                <a class="nav-link" data-toggle="tab" href="#kt_portlet_base_demo_1_2_tab_content"
-                                    role="tab" aria-selected="false">
-                                    <i class="flaticon-safe-shield-protection"></i> Xác thực tài khoản
-                                </a>
-                            </li> -->
-                            <!-- <li class="nav-item">
-                                <a class="nav-link" data-toggle="tab" href="#kt_portlet_base_demo_1_3_tab_content"
-                                    role="tab" aria-selected="false">
+                                <a class="nav-link active" data-toggle="tab" href="#kt_portlet_base_demo_1_3_tab_content" role="tab" aria-selected="false">
                                     <i class="la la-user-plus"></i> Đăng ký tài khoản
                                 </a>
-                            </li> -->
-                            <!-- <li class="nav-item">
-                                <a class="nav-link" data-toggle="tab" href="#kt_portlet_base_demo_1_4_tab_content"
-                                    role="tab" aria-selected="false">
-                                    <i class="la la-user-plus"></i> Tạo mới tài khoản Telegram
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" data-toggle="tab" href="#kt_portlet_base_demo_1_2_tab_content" role="tab" aria-selected="false">
+                                    <i class="flaticon-safe-shield-protection"></i> Xác thực tài khoản
                                 </a>
-                            </li> -->
+                            </li>
                         </ul>
                     </div>
                 </div>
                 <div class="kt-portlet__body">
                     <div class="tab-content">
                         <!-- begin:: Notification 1 -->
-                        <div class="tab-pane  " id="kt_portlet_base_demo_1_3_tab_content" role="tabpanel">
+                        <div class="tab-pane  active" id="kt_portlet_base_demo_1_3_tab_content" role="tabpanel">
                             <div class="kt-portlet__body">
                                 <div class="row ">
                                     <div class="kt-section col-12">
                                         <form class="kt-form kt-form--label-right">
                                             <div class="kt-portlet__body">
                                                 <div class="form-group row form-group-marginless kt-margin-t-20">
-                                                    <div class="col-sm-12 col-md-6">
+                                                    <div class="col-xl-6 col-lg-6 col-md-6 m-auto">
                                                         <div class="form-group">
                                                             <label>SỐ ĐIỆN THOẠI:</label>
                                                             <input type="text" class="form-control phone_add" name="phone_add" placeholder="+84xxxxxxxxx" required="">
@@ -88,9 +75,17 @@
                                                     <div class="kt-form__actions">
                                                         <div class="row">
                                                             <div class="col-lg-12 text-center bt-end">
-                                                                <button type="button" class="btn btn-outline-brand btn-square btn-elevate btn-pill btn-addaccount">Thêm
-                                                                    mới </button>
-                                                                <button type="reset" class="btn btn-secondary btn-elevate btn-pill">Huỷ</button>
+                                                                <div class="row">
+                                                                    <div class="col-xl-4 col-lg-4 col-md-4"></div>
+                                                                    <div class="col-6 col-xl-2 col-lg-2 col-md-2">
+                                                                        <button type="button" class="btn btn-outline-brand btn-square btn-elevate btn-pill btn-addaccount anh-btn">Thêm
+                                                                            mới </button>
+                                                                    </div>
+                                                                    <div class="col-6 col-xl-2 col-lg-2 col-md-2">
+                                                                        <button type="reset" class="btn btn-secondary btn-elevate btn-pill anh-btn">Huỷ</button>
+                                                                    </div>
+                                                                    <div class="col-xl-4 col-lg-4 col-md-4"></div>
+                                                                </div>
                                                             </div>
                                                             <div class="col-lg-12 d-flex justify-content-center">
                                                                 <button type="button" class="btn btn-outline-brand btn-square btn-elevate btn-pill sendOtpToRegister" style="display:none;">Xác nhận</button>
@@ -105,7 +100,7 @@
                                                 </div>
                                                 <div class="kt-portlet__body">
                                                     <div class="form-group row form-group-marginless kt-margin-t-20">
-                                                        <div class="col-sm-12 col-md-6">
+                                                        <div class="col-xl-6 col-lg-6 col-md-6 m-auto">
                                                             <div class="form-group">
                                                                 <label>Truy cập vào <a style="color:blue; font-size:16px !important;" href="tele-document.php" target="_blank">👉đây</a> để biết cách lấy API_ID và API_HASH</label>
                                                             </div>
@@ -118,73 +113,19 @@
                                 </div>
                             </div>
                         </div>
-                        <!-- end:: Notification 1-->
-
-                        <div class="tab-pane active" id="kt_portlet_base_demo_1_1_tab_content" role="tabpanel">
-                            <div class="kt-portlet__body">
-                                <div class="row ">
-                                    <div class="kt-section col-12">
-                                        <label class="col-10 text-center">
-                                            <h2>DANH SÁCH TÀI KHOẢN</h2>
-                                        </label>
-                                        <table class="table table-hover" id="datalistAc">
-                                            <thead>
-                                                <tr>
-                                                    <th>#</th>
-                                                    <th>Tên</th>
-                                                    <th>Họ</th>
-                                                    <th>User_ID</th>
-                                                    <th>Số điện thoại</th>
-                                                    <th class="text-center"></th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                <?php
-                                                $url = 'http://192.168.1.8:2020/telegram/get_list_user_telegram';
-                                                $curl = curl_init($url);
-                                                curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
-                                                curl_setopt($curl, CURLOPT_HTTPHEADER, [
-                                                    'X-RapidAPI-Host: contextualwebsearch-websearch-v1.p.rapidapi.com',
-                                                    'X-RapidAPI-Key: 7xxxxxxxxxxxxxxxxxxxxxxxxxxx',
-                                                    'Authorization: ' . $_SESSION['user_token']
-                                                ]);
-                                                $response2 = json_decode(curl_exec($curl), true);
-                                                curl_close($curl);
-                                                if (!empty($response2)) {
-                                                    foreach ($response2 as $index => $post) {
-                                                        echo '<tr>' . '<th scope="row">' . ((int) $index + 1) . '</th>';
-                                                        echo '<td>' . str_replace("<", "&lt;", $post['first_name']) . '</td>';
-                                                        echo '<td>' . str_replace("<", "&lt;", $post['last_name']) . '</td>';
-                                                        echo '<td>' . str_replace("<", "&lt;", $post['user_id']) . '</td>';
-                                                        echo '<td>' . str_replace("<", "&lt;", $post['phone']) . '</td>';
-                                                        echo '<td class="d-flex justify-content-center" >';
-                                                        echo '<a href="manager-account.php?id=' . $post['Id'] . '" class="btn btn-sm btn-info"><i class="flaticon-menu-2"></i> Chi tiết</a>';
-                                                        echo '
-                                                        </td>
-                                                        </tr>';
-                                                    }
-                                                }
-                                                ?>
-                                            </tbody>
-                                        </table>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
                         <div class="tab-pane" id="kt_portlet_base_demo_1_2_tab_content" role="tabpanel">
                             <div class="kt-portlet__body">
                                 <div class="row ">
                                     <div class="kt-section col-12">
                                         <div class="row verify_show">
-                                            <div class="col-6 form-group ">
+                                            <div class="col-8 form-group ">
                                                 <label>Số điện thoại</label>
                                                 <div class="input-group">
                                                     <input type="text" class="form-control" name="phone_number" placeholder="+84xxxxxxxxxxx" aria-describedby="basic-addon2">
                                                     <div class="input-group-append"><span class="input-group-text" id="basic-addon2"><i class="la la-phone"></i></span></div>
                                                 </div>
                                             </div>
-                                            <div class="col-6 form-group d-flex align-items-end">
+                                            <div class="col-4 form-group d-flex align-items-end">
                                                 <button type="button" class="btn btn-outline-brand btn-elevate btn-pill vertify_pending">Xác thực </button>
                                             </div>
                                         </div>
@@ -205,95 +146,21 @@
                                 </div>
                             </div>
                         </div>
-
-                        <!-- begin tạo mới tài khoản telegram -->
-                        <div class="tab-pane  " id="kt_portlet_base_demo_1_4_tab_content" role="tabpanel">
-                            <div class="kt-portlet__body">
-                                <div class="row ">
-                                    <div class="kt-section col-12">
-                                        <form class="kt-form kt-form--label-right">
-                                            <div class="kt-portlet__body">
-                                                <div class="form-group row form-group-marginless kt-margin-t-20">
-                                                    <div class="col-sm-12 row">
-                                                        <div class="form-group col-6">
-                                                            <label>MÃ TOKEN TÀI KHOẢN OTP SIM:</label>
-                                                            <input type="text" class="form-control" name="token_register" required="">
-                                                        </div>
-                                                        <div class="form-group col-6">
-                                                            <label>NHÀ MẠNG:</label>
-                                                            <select class="form-control" name="network">
-                                                                <option value="5">Viettel</option>
-                                                                <option value="6">Mobifone</option>
-                                                                <option value="2">Vinaphone</option>
-                                                                <option value="7">Vietnamobile</option>
-                                                                <option value="8">Gmobile</option>
-                                                            </select>
-                                                        </div>
-                                                        <div class="form-group col-6">
-                                                            <label>API_ID:</label>
-                                                            <input type="text" class="form-control" name="api_id_register" value="1391312">
-                                                        </div>
-                                                        <div class="form-group col-6">
-                                                            <label>API_HASH:</label>
-                                                            <input type="text" class="form-control" name="api_hash_register" value="22fb1522a31b1f9eaaef6202ec102367">
-                                                        </div>
-                                                        <div class="form-group col-6">
-                                                            <label>SỐ TÀI KHOẢN TẠO:</label>
-                                                            <input type="number" class="form-control" name="count_register">
-                                                        </div>
-                                                        <div class="col-6"></div>
-                                                        <div class="form-group col-6">
-                                                            <label>TÊN TÀI KHOẢN FIRST_NAME:</label>
-                                                            <input type="text" class="form-control" name="first_name_register">
-                                                        </div>
-                                                        <div class="form-group col-6">
-                                                            <label>TÊN TÀI KHOẢN LAST_NAME:</label>
-                                                            <input type="text" class="form-control" name="last_name_register">
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <br>
-                                                <div class="kt-portlet__foot">
-                                                    <div class="kt-form__actions">
-                                                        <div class="row">
-                                                            <div class="col-lg-12 text-center bt-end">
-                                                                <button type="button" class="btn btn-outline-brand btn-square btn-elevate btn-pill btn-register">Khởi tạo</button>
-                                                                <button type="reset" class="btn btn-secondary btn-elevate btn-pill">Huỷ</button>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div id="overlay">
-                                                    <div class="cv-spinner">
-                                                        <span class="spinner"></span>
-                                                    </div>
-                                                </div>
-                                        </form>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+                        <!-- end:: Notification 1-->
                     </div>
-                    <!-- end tạo mới tài khoản telegram -->
                 </div>
             </div>
+
         </div>
 
+        <!-- end:: Content -->
     </div>
-
-    <!-- end:: Content -->
-</div>
 </div>
 <!-- begin:: Footer -->
 <?php include 'footer.php'; ?>
 <script type="text/javascript">
     jQuery(document).ready(function($) {
-      
-        // DataTable
-        var table = $('#datalistAc').DataTable({
-            "ordering": true,
-            "searching":true,
-        });
+
         $('.btn-register').click(function() {
             if ($('input[name="token_register"]').val().length == 0) {
                 Swal.fire(
@@ -489,6 +356,6 @@
         $('.sendcodeotp').on('click', function() {
             sendOTPCodeToVerify($('.id_account').val(), $('input[name="otpcode"]').val());
         })
-
+       
     })
 </script>
