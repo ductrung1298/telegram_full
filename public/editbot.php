@@ -1041,7 +1041,7 @@ if ($id != 0) {
                                                                 <label for="choice-5"></label>
                                                             </div>
                                                         </div> -->
-                                                        <input type="text" name="text_col" class="form-control">
+                                                        <input type="number" name="text_col" class="form-control">
                                                     </div>
                                                 </div>
                                                 <div class="col-8 col-xl-5 col-lg-5">
@@ -1090,10 +1090,7 @@ if ($id != 0) {
                             <div class="kt-section col-12 mt-5">
                                 <h5>Danh sách các lệnh callback</h5>
                                 <div class="col-lg-12 kt-margin-t-20 row">
-                                    <div class="col-lg-1">
-                                        <strong>Số</strong>
-                                    </div>
-                                    <div class="col-lg-1">
+                                    <div class="col-lg-2">
                                         <strong>Tên</strong>
                                     </div>
                                     <div class="col-lg-3">
@@ -1115,10 +1112,7 @@ if ($id != 0) {
                                         if (isset($config['name']))
                                             echo '
                                     <div class="col-lg-12 command kt-margin-t-20 row">
-                                        <div class="col-lg-1">
-                                                <input type="text" disabled name="callback_name" class="form-control" value="' . $config['number'] . '">
-                                        </div>
-                                        <div class="col-lg-1">
+                                        <div class="col-lg-2">
                                             <input type="text" disabled name="callback_name" class="form-control" value="' . $config['name'] . '">
                                         </div>
                                         <div class="col-lg-3">
@@ -1128,6 +1122,7 @@ if ($id != 0) {
                                         $config['inline_keyboard'] = json_decode($config['inline_keyboard'], true);
                                         if (!empty($config['inline_keyboard']['inline_keyboard']))
                                             foreach ($config['inline_keyboard']['inline_keyboard'] as $count => $btn) {
+                                                
                                                 echo '
                                             <div class="row ' . (($count != 0) ? 'mt-2' : "") . '">';
                                                 if ($count == 0) echo '
@@ -1760,7 +1755,7 @@ if ($id != 0) {
                     $('.multi_button').map(function() {
                         if ($(this).find('input[name="text_link"]').val().length != 0)
                             keyboard.push({
-                                textNum: $(this).find('input[name="text_col"]').val(),
+                                number: $(this).find('input[name="text_col"]').val(),
                                 text: $(this).find('input[name="text_link"]').val(),
                                 url: $(this).find('input[name="link"]').val(),
                             })
@@ -1770,7 +1765,7 @@ if ($id != 0) {
                     $('.multi_button').map(function() {
                         if ($(this).find('input[name="text_link"]').val().length != 0)
                             btn_callback.push({
-                                textNum: $(this).find('input[name="text_col"]').val(),
+                                number: $(this).find('input[name="text_col"]').val(),
                                 text: $(this).find('input[name="text_link"]').val(),
                                 data: $(this).find('select[name="data_callback"]').val(),
                             })
