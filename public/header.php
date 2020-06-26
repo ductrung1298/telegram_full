@@ -57,7 +57,8 @@ $toolTelegramName = [
     "manager-account.php",
     "inviter-user-to-group.php",
     "list-group-chat.php",
-    "manager-process.php"
+    "manager-process.php",
+    "manager-messages.php"
 ];
 $contact = [
     "getcontact.php",
@@ -247,6 +248,11 @@ $contact = [
                                                                 class="kt-menu__link "><i
                                                     class="kt-menu__link-bullet kt-menu__link-bullet--dot"><span></span></i><span
                                                     class="kt-menu__link-text">Danh sách tiến trình</span></a></li>
+                                    <li class="kt-menu__item <?php echo $uriName == 'manager-messages.php' ? 'kt-menu__item--active' : '' ?>"
+                                        aria-haspopup="true"><a href="manager-messages.php"
+                                                                class="kt-menu__link "><i
+                                                    class="kt-menu__link-bullet kt-menu__link-bullet--dot"><span></span></i><span
+                                                    class="kt-menu__link-text">Quản lí tin nhắn nhiều tài khoản</span></a></li>
                                 </ul>
                             </div>
                         </li>

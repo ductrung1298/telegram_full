@@ -335,13 +335,13 @@ jQuery(document).ready(function($) {
                     },
                     success: function (dt) {
                         if (dt) dt= JSON.parse(dt);
-                        console.log(dt);
                         if (dt.status) {
                             Swal.fire(
                                 'Success...',
                                 'Yêu cầu tạo tài khoản thành công',
                                 'success',
                             );
+                            location.reload();
                         }
                         else Swal.fire(
                             'Lỗi...',
